@@ -1008,6 +1008,9 @@ public class StaticConfigurationUtils {
 //				.getConfigurationManager().getStaticConfiguration();
 		GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector
 				.getGraderSettingsManager();
+		if (graderSettingsManager == null) {
+			return null;
+		}
 		String aModule = graderSettingsManager.getModule();
 		if (aModule ==null) {
 			System.err.println("Null module:");

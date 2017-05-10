@@ -41,6 +41,10 @@ public class AModuleProblemManager implements ModuleProblemManager{
 	
 	public void saveModules() {
 		try {
+			if (dynamicModuleConfiguration == null) {
+				System.err.println("null dynamic module config");
+				return;
+			}
 			dynamicModuleConfiguration.setProperty(MODULES, getModules());
 			dynamicModuleConfiguration.save();
         } catch (ConfigurationException e) {
