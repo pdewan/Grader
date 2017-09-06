@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import util.misc.Common;
 
 /**
@@ -27,6 +30,7 @@ import util.misc.Common;
  * To change this template use File | Settings | File Templates.
  */
 public class AlphabeticNavigationListManager implements NavigationListManager {
+	public static final String END_ONYEN_POSITIVE_INFINITY = "$";
 	List<String> savedOnyens = null;
 	String savedDirectoryName = null;
 	String savedStartOnyen = null;
@@ -138,20 +142,23 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 		
 //    	String aStartOnyen = GraderSettings.get().get("start");
 //    	String anEndOnyen = GraderSettings.get().get("end");
-    	String aStartFilePart = "(" + aStartOnyen + ")";
-    	String anEndFilePart = "(" + anEndOnyen + ")";
-    	System.out.println("Searching for onyens between:" + aStartOnyen + "->" + anEndOnyen);
+//    	String aStartFilePart = "(" + aStartOnyen + ")";
+//    	String anEndFilePart = "(" + anEndOnyen + ")";
+    	String aStartFilePart = ".*\\(" + aStartOnyen.trim() + "\\)$";
+    	String anEndFilePart = ".*\\(" + anEndOnyen.trim() + "\\)$";
+    	boolean goToEnd = anEndOnyen.equals(END_ONYEN_POSITIVE_INFINITY);
+		
+		System.out.println("Searching for onyens between:" + aStartOnyen + "->" + anEndOnyen);
     	boolean foundStart = false;
 
         for (File file : files) {
             if (file.isDirectory()) {
 //                if (file.getName().contains("(" + GraderSettings.get().get("start") + ")"))
-                if (file.getName().contains(aStartFilePart)) {
+//                if (file.getName().contains(aStartFilePart)) {
+                if (file.getName().matches(aStartFilePart)) {
                     include = true;
                 	System.out.println ("Found start onyen:" + file.getName());
                 	foundStart = true;
-
-
                 }
                 if (include) {
 //                	foundStart = true;
@@ -165,20 +172,27 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
                     anOnyens.add(anOnyen);
 //                	}
                 }
-                if (file.getName().contains("(" + GraderSettings.get().get("end") + ")")) {
+//                if (file.getName().contains("(" + GraderSettings.get().get("end") + ")")) {
+//                if (file.getName().matches("(" + GraderSettings.get().get("end") + ")")) {
+                if (file.getName().matches(anEndFilePart)) {
                 	System.out.println ("Found end onyen:" + file.getName());
                     include = false;
                     break;
                 }
             }
         }
+                       
         if (!foundStart) {
         	System.out.println ("Did not find start onyen:" +  aStartOnyen + " in:" + Arrays.toString(files));
 
         }
-        if (include) { // did not find ending onyen
+        if (include && !goToEnd) { // did not find ending onyen
         	System.out.println ("Did not find end onyen:" + anEndOnyen + " in:" + Arrays.toString(files));
-
+        	//Attempting to handle not matching end onyen
+//        	int res = JOptionPane.showConfirmDialog(null, "End Onyen "+anEndOnyen+" Not Found. Continue?","End Onyen Not Found",JOptionPane.YES_NO_OPTION);
+//        	if(res == JOptionPane.NO_OPTION) {
+//        		anOnyens.clear();
+//        	}
         	anOnyens.clear(); // maybe should throw OnyenRangeError rather than let caller throw it
         }
 //        if (aSakaiProjectDatabase.getProjectStepper() != null)

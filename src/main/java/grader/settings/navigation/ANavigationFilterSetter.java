@@ -28,7 +28,7 @@ public class ANavigationFilterSetter implements NavigationFilterSetter {
 //	NavigationKind navigationKind = NavigationKind.AUTOMATIC_THEN_MANUAL;
 //	AutomaticNavigationSetter automaticNavigationSetter = new AnAutomaticNavigationSetter();
 	DynamicEnum<String> navigationFilterEnum;
-	NavigationFilter currentNavigationFilter;
+	NavigationFilter<Object> currentNavigationFilter;
 	String currentNavigationFilterName;
 	Object navigationParameters;
 	PropertyChangeSupport propertyChangeSupport =  new PropertyChangeSupport(this);
@@ -49,7 +49,7 @@ public class ANavigationFilterSetter implements NavigationFilterSetter {
 //		Collections.sort(filterNamesList);
 		List<String> filterNamesList = NavigationFilterRepository.filterTypes();
 
-		navigationFilterEnum = new ADynamicEnum(filterNamesList);
+		navigationFilterEnum = new ADynamicEnum<String>(filterNamesList);
 		navigationFilterEnum.addPropertyChangeListener(this);
 		if (filterNamesList.size() > 0) {
 		  currentNavigationFilterName =  filterNamesList.get(0);
@@ -69,7 +69,7 @@ public class ANavigationFilterSetter implements NavigationFilterSetter {
 	@Row(2)	
 	@Label("Filter Type")
 	@Explanation("A list of filters to select which student records are displayed in manual navigation.")
-	public DynamicEnum getNavigationFilterType() {
+	public DynamicEnum<String> getNavigationFilterType() {
 		return navigationFilterEnum;
 	}
 	public boolean preSetNavigationFilterType() {
@@ -77,7 +77,7 @@ public class ANavigationFilterSetter implements NavigationFilterSetter {
 //		return false;
 
 	}
-	public void setNavigationFilterType(DynamicEnum newVal) {
+	public void setNavigationFilterType(DynamicEnum<String> newVal) {
 		navigationFilterEnum = newVal;
 	}
 	
@@ -105,8 +105,8 @@ public class ANavigationFilterSetter implements NavigationFilterSetter {
 		
 	}
 	
-	public static String getExplanation(Class aClass) {
-		Explanation explanation = (Explanation) aClass.getAnnotation(Explanation.class);
+	public static String getExplanation(Class<? extends Object> aClass) {
+		Explanation explanation = aClass.getAnnotation(Explanation.class);
 		if (explanation == null) return "";
 		return explanation.value();
 		

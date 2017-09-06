@@ -16,8 +16,8 @@ public class AModuleProblemSelector implements ModuleProblemSelector {
 	DynamicEnum<String> problem;
 	
 	public AModuleProblemSelector(List<String> aModules, List<String> aProblems) {
-		module = new ADynamicEnum(aModules);
-		problem = new ADynamicEnum(aProblems);		
+		module = new ADynamicEnum<String>(aModules);
+		problem = new ADynamicEnum<String>(aProblems);		
 	}
 	
 	

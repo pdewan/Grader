@@ -32,6 +32,7 @@ public class AnArgsHolder implements ArgsHolder {
 		return history;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static void main (String[] args) {
 //		ObjectEditor.edit(new AnArgsHolder());
 		ObjectEditor.edit (new ADynamicEnum());

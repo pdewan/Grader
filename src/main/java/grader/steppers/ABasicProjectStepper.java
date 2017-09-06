@@ -86,10 +86,10 @@ public class ABasicProjectStepper extends AClearanceManager implements
 //	StudentFolder studentFolder;
 	Object frame;
 	uiFrame oeFrame;
-	List<ObjectAdapter> gradingObjectAdapters = new ArrayList();
+	List<ObjectAdapter> gradingObjectAdapters = new ArrayList<ObjectAdapter>();
 //	ClassAdapter stepperViewAdapter;
 //	ObjectAdapter multiplierAdapter, scoreAdapter, gradingFeaturesAdapter, overallNotesAdapter; 
-	List<Color> currentColors = new ArrayList(), nextColors = new ArrayList();
+	List<Color> currentColors = new ArrayList<Color>(), nextColors = new ArrayList<Color>();
 	Color /*currentScoreColor, currentMultiplierColor,*/ currentOverallNotesColor;
 	Color /*nextScoreColor, nextMultiplierColor,*/ nextOverallNotesColor;
 
