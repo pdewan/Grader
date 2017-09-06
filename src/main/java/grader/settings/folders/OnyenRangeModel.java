@@ -9,6 +9,6 @@ public interface OnyenRangeModel extends PropertyListenerRegisterer{
 
 	public void setDisplayedEndingOnyen(String endingOnyen) ;
 	String getGoToOnyens();
-	void setGoToOnyen(String goToOnyen);
+	void setGoToOnyens(String goToOnyen);
 
 }

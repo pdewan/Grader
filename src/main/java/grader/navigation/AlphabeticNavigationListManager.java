@@ -7,7 +7,9 @@ import grader.navigation.sorter.FileNameSorterSelector;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.AGraderSettingsModel;
+import grader.settings.GraderSettingsModel;
 import grader.settings.GraderSettingsModelSelector;
+import grader.settings.folders.OnyenRangeModel;
 import grader.steppers.OverviewProjectStepper;
 import grader.trace.sakai_bulk_folder.StudentFolderNamesSorted;
 import grader.trace.steppers.NavigationListCreated;
@@ -87,6 +89,13 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 //    	String anEndOnyen = GraderSettings.get().get("end");
     	String aStartOnyen = GraderSettings.get().get(AGraderSettingsModel.START_ONYEN);
     	String anEndOnyen = GraderSettings.get().get(AGraderSettingsModel.END_ONYEN);
+    	
+    	// alternate way to get start onyen
+    	GraderSettingsModel aGraderSettingsModel = GraderSettingsModelSelector.getGraderSettingsModel();
+    	OnyenRangeModel anOnyenRangeModel = aGraderSettingsModel.getOnyens();
+//    	String aStartOnyen = anOnyenRangeModel.getStartingOnyen();
+//    	String anEndOnyen = anOnyenRangeModel.getEndingOnyen();
+    	
     	String aGoToOnyen = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens().getGoToOnyens();
 //    	if (aStartOnyen == null ||
 //    			aStartOnyen.isEmpty() ||
@@ -145,7 +154,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 //    	String aStartFilePart = "(" + aStartOnyen + ")";
 //    	String anEndFilePart = "(" + anEndOnyen + ")";
     	String aStartFilePart = ".*\\(" + aStartOnyen.trim() + "\\)$";
-    	String anEndFilePart = ".*\\(" + anEndOnyen.trim() + "\\)$";
+    	String anEndFilePart = ".*\\(" + anEndOnyen.trim()  + "\\)$";
     	boolean goToEnd = anEndOnyen.equals(END_ONYEN_POSITIVE_INFINITY);
 		
 		System.out.println("Searching for onyens between:" + aStartOnyen + "->" + anEndOnyen);
@@ -203,6 +212,22 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     	savedRawEndOnyen = anEndOnyen;
     	savedRawGoToOnyens = aGoToOnyen;
     	savedRawDirectoryName = aDirectory.getName(); 
+    	if (anOnyens.size() != 0) {
+    		String aRealStartOnyen = anOnyens.get(0);
+    		String aRealEndOnyen = anOnyens.get(anOnyens.size() - 1);
+    		if (!aRealStartOnyen.equals(aStartOnyen)) {
+    		GraderSettings.get().set(AGraderSettingsModel.START_ONYEN, aRealStartOnyen);
+    		anOnyenRangeModel.setDisplayedStartingOnyen(aRealStartOnyen);
+    		
+    		
+    		}
+    		if (!aRealEndOnyen.equals(anEndOnyen)) {
+    		GraderSettings.get().set(AGraderSettingsModel.END_ONYEN, aRealEndOnyen);
+    		anOnyenRangeModel.setDisplayedEndingOnyen(aRealEndOnyen);
+
+    		}
+
+    	}
         return anOnyens;
     }
 	

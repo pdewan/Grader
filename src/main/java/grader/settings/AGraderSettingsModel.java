@@ -62,7 +62,8 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     GraderFilesSetterModel fileBrowsing = new AGraderFilesSetterModel();
     NavigationSetter navigationSetter = new ANavigationSetter(this);
     OnyenRangeModel onyens = new AnOnyenRangeModel(this);
-    ModuleProblemSelector moduleProblemSelector;
+    ModuleProblemSelector moduleProblemSelector;   
+    protected int graceDays = 0;
     List<String> modules = new ArrayList();
     List<String> problems = new ArrayList();
     String editor;
@@ -743,6 +744,16 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         maybeCreateProjectDatabase();
         projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();
 
+    }
+    @Override
+    @Position(7)
+    public void setGraceDays (int newVal) {
+    	graceDays = newVal;
+    }
+    @Override
+    @Visible(false)
+    public int getGraceDays() {
+    	return graceDays;
     }
 
     @Override

@@ -21,6 +21,7 @@ import grader.basics.project.CurrentProjectHolder;
 import grader.basics.project.Project;
 import grader.language.LanguageDependencyManager;
 import grader.sakai.project.SakaiProject;
+import grader.settings.GraderSettingsModelSelector;
 
 /**
  * This is the fundamental container which holds all the features and
@@ -188,7 +189,7 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         }
         return results;
     }
-
+    public static int MILLI_SECONDS_IN_DAY = 24*60*60*1000;
     /**
      * Given a due date, this figures out what score modifier (a percentage)
      * should be given.
@@ -201,6 +202,12 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
             return 1;
         }
         double percentage = 0;
+        DateTime graceDataTime = dateTime;
+        int aGraceDays = GraderSettingsModelSelector.getGraderSettingsModel().getGraceDays();
+//        aGraceDays = 1; // to see if it works right
+        if (aGraceDays > 0) {
+        	graceDataTime = dateTime.minus(aGraceDays*MILLI_SECONDS_IN_DAY);
+        }
         for (DueDate dueDate : dueDates) {
             if (dueDate.getCutoffDate().isAfter(dateTime)) {
                 percentage = Math.max(percentage, dueDate.getPercentage());

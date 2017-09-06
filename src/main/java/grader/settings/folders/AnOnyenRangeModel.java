@@ -71,7 +71,7 @@ public class AnOnyenRangeModel implements OnyenRangeModel{
 		return goToOnyen;
 	}
     @Override
-	public void setGoToOnyen(String goToOnyen) {
+	public void setGoToOnyens(String goToOnyen) {
 		this.goToOnyen = goToOnyen;
 	}
 

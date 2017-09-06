@@ -13,6 +13,7 @@ import grader.execution.FlexibleMainClassFinder;
 import grader.execution.ProjectRunnerSelector;
 import grader.execution.ProxyBasedClassesManager;
 import grader.execution.ProxyClassLoader;
+import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 import grader.file.filesystem.AFileSystemRootFolderProxy;
 import grader.file.zipfile.AZippedRootFolderProxy;
@@ -137,8 +138,14 @@ public class AFlexibleProject implements FlexibleProject {
     public AFlexibleProject(StudentCodingAssignment aStudentCodingAssignment, String aSourceSuffix, String anOutputSuffix) {
         sourceSuffix = aSourceSuffix;
         outputSuffix = anOutputSuffix;
+        RootFolderProxy aProjectFolder = aStudentCodingAssignment.getProjectFolder();
+        FileProxy aFeedbackFolder = aStudentCodingAssignment.getFeedbackFolder();
+        String aFeedbackFolderName = aFeedbackFolder.getMixedCaseAbsoluteName();
+        
         //init(aStudentCodingAssignment.getProjectFolder(), aStudentCodingAssignment.getFeedbackFolder().getAbsoluteName());
         init(aStudentCodingAssignment.getProjectFolder(), aStudentCodingAssignment.getFeedbackFolder().getMixedCaseAbsoluteName());
+        init(aProjectFolder, aFeedbackFolderName);
+
     }
 
     public String toString() {
