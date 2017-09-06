@@ -35,7 +35,7 @@ public class CheckstyleMethodCalledTestCase extends CheckStyleTestCase {
 //	    	 return fail("Type " + typeTag + "not defined, cannot check method");
 //	     }
 //	     typeName = aClass.getSimpleName();
-		 int i = 0;
+//		 int i = 0;
 		 TestCaseResult aResult = super.test(project, autoGrade);
 //		 TestCaseResult aResult = fail("foo");
 	        return aResult;
