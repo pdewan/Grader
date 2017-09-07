@@ -202,14 +202,15 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
             return 1;
         }
         double percentage = 0;
-        DateTime graceDataTime = dateTime;
+        DateTime graceDateTime = dateTime;
         int aGraceDays = GraderSettingsModelSelector.getGraderSettingsModel().getGraceDays();
 //        aGraceDays = 1; // to see if it works right
         if (aGraceDays > 0) {
-        	graceDataTime = dateTime.minus(aGraceDays*MILLI_SECONDS_IN_DAY);
+        	graceDateTime = dateTime.minus(aGraceDays*MILLI_SECONDS_IN_DAY);
         }
         for (DueDate dueDate : dueDates) {
-            if (dueDate.getCutoffDate().isAfter(dateTime)) {
+        	if (dueDate.getCutoffDate().isAfter(graceDateTime)) {
+//            if (dueDate.getCutoffDate().isAfter(dateTime)) {
                 percentage = Math.max(percentage, dueDate.getPercentage());
             }
         }
