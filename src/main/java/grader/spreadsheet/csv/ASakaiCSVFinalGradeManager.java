@@ -166,7 +166,9 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		if (aColumn >= aRow.length) {
 			System.err.println("No column:" + aColumn + " in row:" + Arrays.toString(aRow));
 		}
-		aRow[aColumn] = Double.toString(aScore);
+//		aRow[aColumn] = Double.toString(aScore);
+		String aRoundedString = String.format("%1$.1f", aScore);
+		aRow[aColumn] = aRoundedString;
 		
 	}
 	

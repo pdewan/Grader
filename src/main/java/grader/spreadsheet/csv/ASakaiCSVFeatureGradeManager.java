@@ -319,8 +319,14 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 	
     public static double getTotalGrade(double featureScore, double multiplier, double sourcePoints) {
 		
+		double anActualPoints = (featureScore + sourcePoints) * multiplier;
+		long anActualPoint10timesRounded =  Math.round(anActualPoints*10);
+		double anActualPointsRounded = anActualPoint10timesRounded/10.0;
+		return anActualPointsRounded;
 		
-		return  Math.max(0, (Math.round(featureScore + sourcePoints) * multiplier * 10)/10);
+//		return  Math.max(0, (Math.round(featureScore + sourcePoints) * multiplier * 10)/10);
+//		return  Math.max(0, (Math.round(featureScore + sourcePoints) * multiplier * 10)/10);
+
 
 	}
 	
