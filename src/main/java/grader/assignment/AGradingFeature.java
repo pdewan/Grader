@@ -417,10 +417,12 @@ public class AGradingFeature implements GradingFeature {
 		return validate;
 	}
 	@Override
-	public void setValidate(boolean newVal) {		
-		if (newVal) // let true remain true as once validated, always validated. 
+	public void setValidate(boolean newVal) {	
+		boolean oldVal = validate;
+//		if (newVal) // let true remain true as once validated, always validated. 
 			validate = newVal;
-		propertyChangeSupport.firePropertyChange("Validate", false, true);
+//		propertyChangeSupport.firePropertyChange("Validate", false, true);
+		propertyChangeSupport.firePropertyChange("Validate", oldVal, newVal);
 		FeatureValidated.newCase(projectDatabase, (OverviewProjectStepper) projectDatabase.getProjectStepper(), project, this, this);
 
 	}

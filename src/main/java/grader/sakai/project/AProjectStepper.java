@@ -1524,6 +1524,31 @@ public class AProjectStepper extends AClearanceManager implements
 
 	}
 	
+	void validate (GradingFeature aGradingFeature, boolean isValidate) {
+		NotesGenerator notesGenerator = projectDatabase.getNotesGenerator();
+		String newNotes = "";
+		if (isValidate) {
+			
+		  newNotes =
+				notesGenerator.appendNotes(
+				aGradingFeature.getManualNotes(), 
+				notesGenerator.validationNotes(this, aGradingFeature));
+		}
+		aGradingFeature.setManualNotes(newNotes);
+		if (selectedGradingFeature == aGradingFeature) {
+			setManualNotes(newNotes);
+		}
+//		setManualNotes(notesGenerator.appendNotes(
+//				getManualNotes(), 
+//				notesGenerator.validationNotes(this, aGradingFeature)));
+		
+//		
+//		String aNotes = projectDatabase.getNotesGenerator().validationNotes(this, aGradingFeature);
+//		setManualNotes(aNotes);
+		
+//		setNotes(aGradingFeature, aNotes);;
+	}
+	
 	void validate (GradingFeature aGradingFeature) {
 		NotesGenerator notesGenerator = projectDatabase.getNotesGenerator();
 		String newNotes = notesGenerator.appendNotes(
@@ -2019,8 +2044,12 @@ public class AProjectStepper extends AClearanceManager implements
 		} else if (evt.getSource() instanceof GradingFeature
 				&& evt.getPropertyName().equalsIgnoreCase("validate") && !settingUpProject) {
 			GradingFeature gradingFeature = (GradingFeature) evt.getSource();
-			validate(gradingFeature);
+			if (evt.getNewValue() != evt.getOldValue()) {
+//			validate(gradingFeature);
+			validate(gradingFeature, (Boolean)evt.getNewValue() );
+
 			setGradingFeatureColors();
+			}
 			gradingFeature.setSelected(true); 
 		
 		} else if (evt.getSource() == this) {

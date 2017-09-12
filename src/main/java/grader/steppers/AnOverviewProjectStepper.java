@@ -910,7 +910,22 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		return project.isNoProjectFolder() || getGradingFeatures().isAllGraded();
 	}
 
+	void validate (GradingFeature aGradingFeature, boolean isValidate) {
+		NotesGenerator notesGenerator = projectDatabase.getNotesGenerator();
+		String newNotes = "";
+		if (isValidate) {
+			
+		  newNotes =
+				notesGenerator.appendNotes(
+				aGradingFeature.getManualNotes(), 
+				notesGenerator.validationNotes(this, aGradingFeature));
+		}
+		aGradingFeature.setManualNotes(newNotes);
+		if (selectedGradingFeature == aGradingFeature) {
+			setManualNotes(newNotes);
+		}
 
+	}
 	
 	void validate (GradingFeature aGradingFeature) {
 		NotesGenerator notesGenerator = projectDatabase.getNotesGenerator();
@@ -1277,9 +1292,16 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		} else if (evt.getSource() instanceof GradingFeature
 				&& evt.getPropertyName().equalsIgnoreCase("validate") && !settingUpProject) {
 			GradingFeature gradingFeature = (GradingFeature) evt.getSource();
-			validate(gradingFeature);
-			setGradingFeatureColors();
+			if (evt.getNewValue() != evt.getOldValue()) {
+				// validate(gradingFeature);
+				validate(gradingFeature, (Boolean) evt.getNewValue());
+
+				setGradingFeatureColors();
+			}
 			gradingFeature.setSelected(true); 
+//			validate(gradingFeature);
+//			setGradingFeatureColors();
+//			gradingFeature.setSelected(true); 
 		
 //		} else if (evt.getSource() instanceof GradingFeature
 //				&& evt.getPropertyName().equalsIgnoreCase("autograde") && !settingUpProject) {
