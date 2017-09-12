@@ -48,7 +48,9 @@ public class AGradingFeatureList extends AListenableVector<GradingFeature> imple
 	@Visible(false)
 	public boolean isAllAutoGraded() {
 		for (GradingFeature gradingFeature:this) {
-			if (! (gradingFeature.isGraded() && gradingFeature.isAutoGradable()))
+//			if (! (gradingFeature.isGraded() && gradingFeature.isAutoGradable()))
+			if ((!gradingFeature.isGraded() && gradingFeature.isAutoGradable()))
+
 					return false;
 		}
 		return true;
