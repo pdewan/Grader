@@ -212,7 +212,8 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     	savedRawEndOnyen = anEndOnyen;
     	savedRawGoToOnyens = aGoToOnyen;
     	savedRawDirectoryName = aDirectory.getName(); 
-    	if (anOnyens.size() != 0) {
+    	if (anOnyens.size() != 0 && 
+    			(aGoToOnyensList == null || aGoToOnyensList.size() == 0)) {
     		String aRealStartOnyen = anOnyens.get(0);
     		String aRealEndOnyen = anOnyens.get(anOnyens.size() - 1);
     		if (!aRealStartOnyen.equals(aStartOnyen)) {
