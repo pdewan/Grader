@@ -40,6 +40,9 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 	// List<String> classNamesToCompile = new ArrayList();
 
 	SakaiProject				project;
+//	boolean hasCompileErrors = false;
+
+	
 
 	protected void setProject(Object aProject) {
 		project = (SakaiProject) aProject;
@@ -298,11 +301,14 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 					RunningProject runningProject = LanguageDependencyManager.getSourceFilesCompiler()
 						.compile(sourceFolder, buildFolder, aFilesToCompile);
 					if (runningProject != null) {
-						// String outputAndErrors =
-						// runningProject.getOutputAndErrors();
-						// runningProject.appendOutputAndErrorsToTranscriptFile(project);
+						String anErrors = runningProject.getErrorOutput();
+						 String outputAndErrors =
+						 runningProject.getOutputAndErrors();
+//						 runningProject.appendOutputAndErrorsToTranscriptFile(project);
 						appendOutputAndErrorsToTranscriptFile(runningProject);
 
+					} else {
+						System.err.println ("Compiler could not be started");
 					}
 					System.out.println("Compilation attempt finished.");
 					maybeSetCanBeCompiled(true);
@@ -864,6 +870,14 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 	public void setClassNamesToCompile(List<String> classNamesToCompile) {
 		this.classNamesToCompile = classNamesToCompile;
 	}
+//	@Override
+//	public boolean isHasCompileErrors() {
+//		return hasCompileErrors;
+//	}
+//	@Override
+//	public void setHasCompileErrors(boolean hasCompileErrors) {
+//		this.hasCompileErrors = hasCompileErrors;
+//	}
 
 
 }

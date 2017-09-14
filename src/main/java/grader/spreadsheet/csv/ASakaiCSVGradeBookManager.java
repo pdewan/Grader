@@ -340,6 +340,11 @@ public class ASakaiCSVGradeBookManager implements SakaiCSVFinalGradeRecorder {
 	public String getFileName() {
 		return gradeSpreadsheet.getAbsoluteName();
 	}
+	@Override
+	public String[] getRow(String anOnyen) {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("Not implemented");
+	}
 	
 
 }

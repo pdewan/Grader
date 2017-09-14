@@ -128,13 +128,32 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		}
 		
 	}
+	@Override
+	public String[] getRow(String anOnyen) {
+		maybeCreateTable();
+		return getRow(table, anOnyen);
+	}
 	
-	public String[] getStudentRow(List<String[]> aSheet, String aStudentName, String anOnyen) {
+	public String[] getRow(List<String[]> aSheet, String anOnyen) {
 		 for (int rowNum = 0; rowNum < aSheet.size(); rowNum ++) {
 			 String[] aRow = aSheet.get(rowNum);
 			 if (aRow[ONYEN_COLUMN].equals(anOnyen))
 				 return aRow;
 		 }
+		 return null;
+	}
+	
+	public String[] getStudentRow(List<String[]> aSheet, String aStudentName, String anOnyen) {
+//		 for (int rowNum = 0; rowNum < aSheet.size(); rowNum ++) {
+//			 String[] aRow = aSheet.get(rowNum);
+//			 if (aRow[ONYEN_COLUMN].equals(anOnyen))
+//				 return aRow;
+//		 }
+		 String[] retVal = getRow(aSheet, anOnyen);
+		 if (retVal != null) {
+			 return retVal;
+		 }
+	
 		System.err.println("Cannot find row for:" + aStudentName + " " + anOnyen);
 		System.err.println("Creating row for:" + aStudentName + " " + anOnyen);
 		return createNewRow(aStudentName, anOnyen);

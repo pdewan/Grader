@@ -4,15 +4,19 @@ package grader.navigation;
 import framework.utils.GraderSettings;
 import grader.navigation.sorter.AFileObjectSorter;
 import grader.navigation.sorter.FileNameSorterSelector;
+import grader.sakai.ASakaiBulkAssignmentFolder;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.AGraderSettingsModel;
 import grader.settings.GraderSettingsModel;
 import grader.settings.GraderSettingsModelSelector;
 import grader.settings.folders.OnyenRangeModel;
+import grader.spreadsheet.csv.ASakaiCSVFinalGradeManager;
+import grader.spreadsheet.csv.SakaiCSVFinalGradeRecorder;
 import grader.steppers.OverviewProjectStepper;
 import grader.trace.sakai_bulk_folder.StudentFolderNamesSorted;
 import grader.trace.steppers.NavigationListCreated;
+import gradingTools.Driver;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ import util.misc.Common;
  */
 public class AlphabeticNavigationListManager implements NavigationListManager {
 	public static final String END_ONYEN_POSITIVE_INFINITY = "$";
+	SakaiCSVFinalGradeRecorder gradesFile;
 	List<String> savedOnyens = null;
 	String savedDirectoryName = null;
 	String savedStartOnyen = null;
@@ -69,10 +74,18 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 	public static boolean isGoToOnyenList() {
 		return maybeGetGoToOnyenList() != null;
 	}
+	
+
+	boolean includeOnyen(String anOnyen) {
+		return Driver.isHeadless()|| 
+				gradesFile.getRow(anOnyen) != null; 
+	}
 
 	@Override
 	// this is called only once so let us not do caching
     public List<String> getRawOnyenNavigationList() {
+		
+		
 //    	List<String> aGoToOnyensList = maybeGetGoToOnyenList();
 //    	if (aGoToOnyensList != null) {
 //    		return aGoToOnyensList;
@@ -84,6 +97,10 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 		}
 //        File aDirectory = new File(GraderSettings.get().get("path"));
         File aDirectory = new File(aPath);
+        
+        if (!Driver.isHeadless()) {
+			gradesFile = new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiBulkAssignmentFolder.GRADES_SPREADSHEET_NAME);
+		}
 
 //        String aStartOnyen = GraderSettings.get().get("start");
 //    	String anEndOnyen = GraderSettings.get().get("end");
@@ -178,8 +195,11 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 //                		;
 //                	} else {
 //                    onyens.add(file.getName().substring(file.getName().indexOf("(") + 1, file.getName().indexOf(")")));
-                    anOnyens.add(anOnyen);
+                	
 //                	}
+                	if (includeOnyen(anOnyen)) {
+                		anOnyens.add(anOnyen);
+                	}
                 }
 //                if (file.getName().contains("(" + GraderSettings.get().get("end") + ")")) {
 //                if (file.getName().matches("(" + GraderSettings.get().get("end") + ")")) {

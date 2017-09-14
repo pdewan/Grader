@@ -514,7 +514,9 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 
 			if (currentOnyenIndex >= onyens.size()) {
 				hasMoreSteps = false;
-				return false;
+				JOptionPane.showMessageDialog(null, "No more entries matchin filter, exiting");
+				System.exit(0);
+//				return false;
 			}
 		} else {
 //			currentOnyenIndex--;

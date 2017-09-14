@@ -1,5 +1,7 @@
 package grader.settings.folders;
 
+import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
@@ -18,6 +20,7 @@ public class AFileSetterModel extends ALabelSetterModel implements FileSetterMod
 	int filterOption;
 	public AFileSetterModel (int aFilterOption) {
 		filterOption = aFilterOption;
+//		fileChooser.setCurrentDirectory(dir);
 //		frame = (JFrame) aFrame.getFrame().getPhysicalComponent();
 	}
 	@Visible(false)
@@ -33,12 +36,20 @@ public class AFileSetterModel extends ALabelSetterModel implements FileSetterMod
 	public void browse() {
 //        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setFileSelectionMode(filterOption);
+        String anOldValue = getText();
+        if (anOldValue != null && !anOldValue.isEmpty()) {
+        	setCurrentDirectory(anOldValue);
+        }
 
         int returnValue = fileChooser.showOpenDialog(frame);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             setText( fileChooser.getSelectedFile().getAbsolutePath());
         }
 		
+	}
+	
+	protected void setCurrentDirectory(String aFile) {
+		fileChooser.setCurrentDirectory(new File(aFile));
 	}
 	
 	public static void main (String[] args) {

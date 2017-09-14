@@ -11,5 +11,6 @@ public interface SakaiCSVFinalGradeRecorder extends FinalGradeRecorder{
 	public double getGrade (int aRowIndex) ;
 	public String[] getStudentRow(int aRowIndex) ;
 	public void createTable();
+	String[] getRow(String anOnyen);
 
 }
