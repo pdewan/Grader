@@ -2,9 +2,12 @@ package gradingTools;
 
 import static grader.driver.GradingManagerType.A_HEADLESS_GRADING_MANAGER;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -87,6 +90,11 @@ public class Driver {
 	
 	static void setPreSettingsModelParameters() {
 		
+	}
+	public static void maybeShowMessage(String aMessage) {
+		System.out.println (aMessage);
+		if (!GraphicsEnvironment.isHeadless() && !Driver.isHeadless()) 
+			JOptionPane.showMessageDialog(null, aMessage);
 	}
 	
 	static void setPostSettingsModelParameters() {
