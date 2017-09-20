@@ -698,7 +698,7 @@ public class AnAutoVisitBehavior implements
         // : 0;
         System.out.println("time stamp defined:" + timestamp);
         double aMultiplier = timestamp.isDefined()
-                ? projectDatabase.getProjectRequirements().checkDueDate(timestamp.get())
+                ? projectDatabase.getProjectRequirements().checkDueDate(wrappedProject, timestamp.get())
                 : 0;
         MultiplierAutoChange.newCase(projectDatabase, projectStepper, project, projectStepper.getScore(), this);
 

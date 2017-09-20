@@ -223,17 +223,18 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	
 	boolean noNextFilteredRecords;
 	
-	boolean noNextFilteredRecords () {
-		return knowLastFilteredItem && currentOnyenIndex >= lastMatchedIndex;
+	boolean hasNextFilteredRecords () {
+		return !knowLastFilteredItem || 
+				currentOnyenIndex < lastMatchedIndex;
 	}
-	boolean noPreviousFilteredRecords() {
-		return firstMatchedIndex != -1 && currentOnyenIndex == firstMatchedIndex;
+	boolean hasPreviousFilteredRecords() {
+		return firstMatchedIndex != -1 && currentOnyenIndex > firstMatchedIndex;
 	}
 
 	@Override
 	public boolean preNext() {
 		return /*!noNextFilteredRecords /*&& preProceed()* && */
-				!noNextFilteredRecords() &&
+				hasNextFilteredRecords() &&
 				currentOnyenIndex < onyens.size() - 1;
 		// this does not make sense, next is a stronger condition than next
 
@@ -271,7 +272,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 
 	@Override
 	public boolean prePrevious() {
-		return !noPreviousFilteredRecords() && /*preProceed() &&*/ currentOnyenIndex > 0;
+		return hasPreviousFilteredRecords() && /*preProceed() &&*/ currentOnyenIndex > 0;
 //				&& currentOnyenIndex > firstMatchedIndex;
 	}
 	@Row(0)
@@ -433,6 +434,8 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		setCurrentOnyenIndex( 0);
 //		hasMoreSteps = true;
 		setHasMoreSteps(true);
+		firstMatchedIndex = -1;
+		lastMatchedIndex = -1;
 		
 
 		
@@ -502,9 +505,10 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 //			return ;
 //		}
 		if (!checkLeave()) return;
-		if (move(forward)) {
-		setSuccessfulUserMove(currentOnyenIndex);
-		}
+		move(forward);
+//		if (move(forward)) {
+//		setSuccessfulUserMove(currentOnyenIndex);
+//		}
 	}
 	int firstMatchedIndex = -1;
 	int lastMatchedIndex = -1;
@@ -512,7 +516,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	protected void processReachedEnd() {
 		hasMoreSteps = false;
 		knowLastFilteredItem = true;
-		if (firstMatchedIndex == -1) { // have matched nothing
+		if (firstMatchedIndex == -1 || firstMatchedIndex == onyens.size()) { // have matched nothing
 //			if (GraphicsEnvironment.isHeadless() || Driver.isHeadless()) {
 //				JOptionPane.showMessageDialog(null, "No entries matchin filter, exiting");
 //			}
@@ -612,7 +616,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 				
 //				setFilteredOnyenIndex(filteredOnyenIndex);
 				setFilteredOnyenIndex(currentOnyenIndex);
-//				setSuccessfulMove(currentOnyenIndex);
+//				setSuccessfulForwardMove(currentOnyenIndex);
 //				filteredOnyenIndex = currentOnyenIndex;
 				setSuccessfulMoveFlags(forward);
 			}
@@ -672,7 +676,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		return filteredOnyenIndex;
 	}
 	
-	protected void setSuccessfulUserMove (int anIndex) {
+	protected void setSuccessfulMove (int anIndex) {
 		if (firstMatchedIndex == -1) {
 			firstMatchedIndex = anIndex;
 		}
@@ -684,12 +688,14 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	@Override
 	public void setFilteredOnyenIndex(int filteredOnyenIndex) {
 		this.filteredOnyenIndex = filteredOnyenIndex;
+		
 //		if (firstMatchedIndex == -1) {
 //			firstMatchedIndex = currentOnyenIndex;
 //		}
 //		if (currentOnyenIndex > lastMatchedIndex) {
 //			lastMatchedIndex = currentOnyenIndex;	
 //		 }
+		setSuccessfulMove(filteredOnyenIndex);
 	}
 
 

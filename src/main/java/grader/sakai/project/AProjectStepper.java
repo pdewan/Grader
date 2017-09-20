@@ -1281,8 +1281,10 @@ public class AProjectStepper extends AClearanceManager implements
 				// double gradePercentage = timestamp.isDefined() ?
 				// projectDatabase.getProjectRequirements().checkDueDate(timestamp.get())
 				// : 0;
+		
+		// this should not be called
 		double aMultiplier = timestamp.isDefined() ?
-				 projectDatabase.getProjectRequirements().checkDueDate(timestamp.get())
+				 projectDatabase.getProjectRequirements().checkDueDate(null, timestamp.get())
 				 : 0;
 		internalSetMultiplier(aMultiplier);
 //		featureGradeRecorder.setEarlyLatePoints(name, onyen, aMultiplier);

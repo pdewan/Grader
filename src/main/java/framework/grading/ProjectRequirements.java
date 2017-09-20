@@ -54,7 +54,7 @@ public interface ProjectRequirements extends Permissible{
 
     public List<CheckResult> checkRestrictions(Project project);
 
-    public double checkDueDate(DateTime dateTime);
+    public double checkDueDate(Project aProject, DateTime dateTime);
     
 
 	Object getUserObject(Object aKey);
@@ -66,5 +66,9 @@ public interface ProjectRequirements extends Permissible{
 	Restriction getInteractiveRunRestriction();
 
 	void clearUserObjects();
+
+	List<DueDate> getDueDates();
+
+	void setDueDates(List<DueDate> dueDates);
 
 }

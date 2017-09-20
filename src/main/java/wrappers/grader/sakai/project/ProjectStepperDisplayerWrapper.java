@@ -42,6 +42,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
     private ProjectStepper projectStepper;
     private SakaiProject project = null;
     private SakaiProjectDatabase projectDatabase;
+    grader.basics.project.Project wrappedProject = null;
 
     @Override
     public Object display(ProjectStepper aProjectStepper) {
@@ -127,7 +128,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
             // Figure out the late penalty
             Option<DateTime> timestamp = studentFolder.getTimestamp();
-            double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
+            double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(wrappedProject, timestamp.get()) : 0;
             ConglomerateRecorder.getInstance().saveMultiplier(gradePercentage);
 
             // Save the comments

@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import util.trace.Tracer;
 import wrappers.framework.project.ProjectWrapper;
 import framework.execution.ARunningProject;
 import framework.grading.testing.CheckResult;
@@ -33,8 +34,11 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
     private List<Restriction> restrictions;
 //    protected Map<Object, Object> userData = new HashMap();
     private List<DueDate> dueDates = new ArrayList<DueDate>();
+    
 
-    /**
+    
+
+	/**
      * It's important that there is a nullary constructor because this needs to
      * be able to be simply instantiated via reflection.
      */
@@ -105,6 +109,8 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
     public void addManualRestriction(String name, double points, TestCase... testCases) {
         addRestriction(new Restriction(true, name, points, false, testCases));
     }
+    
+     
 
     // Due date adding methods
     public void addDueDate(DateTime dateTime, double percentage) {
@@ -190,6 +196,67 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         return results;
     }
     public static int MILLI_SECONDS_IN_DAY = 24*60*60*1000;
+    
+    public static final String ASSIGNENT_ID = "Assignment";
+    
+   
+   
+    public static ProjectRequirements getRequirement(Project aProject, ProjectRequirements anOriginal, int aShift) {
+    	Class anOriginalClass = anOriginal.getClass();
+    	String aClassName = anOriginalClass.getName();
+    	int anAssignmentStartIndex = aClassName.indexOf(ASSIGNENT_ID);
+    	if (anAssignmentStartIndex == -1)
+    		return null;
+    	if (anAssignmentStartIndex == -1) {
+    		return anOriginal;
+    	}
+    	int anAssignmentNumberStartIndex = anAssignmentStartIndex + ASSIGNENT_ID.length();
+    	int anAssignmentNumberEndIndex;
+    	for (anAssignmentNumberEndIndex = anAssignmentNumberStartIndex +1;
+    			
+    			anAssignmentNumberEndIndex < aClassName.length() && 
+    			Character.isDigit(aClassName.charAt(anAssignmentNumberEndIndex));
+    			anAssignmentNumberEndIndex++);   
+    	
+    	// This may not have a number actually
+        String anAssignmentNumberString = aClassName.substring(
+        		anAssignmentNumberStartIndex, anAssignmentNumberEndIndex);
+             	
+    	try {
+    		int anAssignmentNumber = Integer.parseInt(anAssignmentNumberString);
+    		int aNewAssignmentNumber = anAssignmentNumber + aShift;
+    		String aNewAssignmentClass = ASSIGNENT_ID + aNewAssignmentNumber;
+    		String aNewClassName = aClassName.replace(
+    				ASSIGNENT_ID + anAssignmentNumber,
+    				ASSIGNENT_ID + aNewAssignmentNumber);
+    		Class<?> aNewClass = Class.forName(aNewClassName);
+
+			return (ProjectRequirements) aNewClass.newInstance();
+    		
+    		
+    	} catch (NumberFormatException e) {
+    		Tracer.error(aClassName + " does not have a number following " + ASSIGNENT_ID );
+    		return anOriginal;
+    	} catch (InstantiationException e) {			
+			e.printStackTrace();
+			return anOriginal;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return anOriginal;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return anOriginal;
+
+		}
+    }
+
+   
+    @Override
+    public double checkDueDate(Project aProject, DateTime dateTime) {
+    	return checkDueDate(dateTime);
+    	
+    }
     /**
      * Given a due date, this figures out what score modifier (a percentage)
      * should be given.
@@ -197,7 +264,7 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
      * @param dateTime The submission time of the project
      * @return A score modifier percentage
      */
-    public double checkDueDate(DateTime dateTime) {
+    protected double checkDueDate(DateTime dateTime) {
         if (dueDates.isEmpty()) {
             return 1;
         }
@@ -214,6 +281,13 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
                 percentage = Math.max(percentage, dueDate.getPercentage());
             }
         }
+        Class aCurrentClass;
+        
+        // if percentage is 0, find the first subsequent assignment that gives them non zero
+        // return that percentage
+        // maybe record that shift in file
+        // if current assignment is sacrificed, put multiplier of 0 regardless of value returned.
+        
         return percentage;
     }
 
@@ -261,6 +335,15 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
 	@Override
 	public void clearUserObjects() {
 		BasicProjectIntrospection.clearUserObjects();
+	}
+	
+	@Override
+	public List<DueDate> getDueDates() {
+		return dueDates;
+	}
+	@Override
+	public void setDueDates(List<DueDate> dueDates) {
+		this.dueDates = dueDates;
 	}
 
 }

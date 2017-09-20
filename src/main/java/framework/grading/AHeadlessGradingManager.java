@@ -89,7 +89,7 @@ public class AHeadlessGradingManager implements GradingManager {
 
                 // Figure out the late penalty
                 Option<DateTime> timestamp = folder.getTimestamp();
-                double gradePercentage = timestamp.isDefined() ? projectRequirements.checkDueDate(timestamp.get()) : 0;
+                double gradePercentage = timestamp.isDefined() ? projectRequirements.checkDueDate(project.get(), timestamp.get()) : 0;
 
                 // Save the results
                 ConglomerateRecorder.getInstance().newSession(folder.getOnyen());
