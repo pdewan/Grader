@@ -197,59 +197,59 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
     }
     public static int MILLI_SECONDS_IN_DAY = 24*60*60*1000;
     
-    public static final String ASSIGNENT_ID = "Assignment";
+//    public static final String ASSIGNENT_ID = "Assignment";
     
    
    
-    public static ProjectRequirements getRequirement(Project aProject, ProjectRequirements anOriginal, int aShift) {
-    	Class anOriginalClass = anOriginal.getClass();
-    	String aClassName = anOriginalClass.getName();
-    	int anAssignmentStartIndex = aClassName.indexOf(ASSIGNENT_ID);
-    	if (anAssignmentStartIndex == -1)
-    		return null;
-    	if (anAssignmentStartIndex == -1) {
-    		return anOriginal;
-    	}
-    	int anAssignmentNumberStartIndex = anAssignmentStartIndex + ASSIGNENT_ID.length();
-    	int anAssignmentNumberEndIndex;
-    	for (anAssignmentNumberEndIndex = anAssignmentNumberStartIndex +1;
-    			
-    			anAssignmentNumberEndIndex < aClassName.length() && 
-    			Character.isDigit(aClassName.charAt(anAssignmentNumberEndIndex));
-    			anAssignmentNumberEndIndex++);   
-    	
-    	// This may not have a number actually
-        String anAssignmentNumberString = aClassName.substring(
-        		anAssignmentNumberStartIndex, anAssignmentNumberEndIndex);
-             	
-    	try {
-    		int anAssignmentNumber = Integer.parseInt(anAssignmentNumberString);
-    		int aNewAssignmentNumber = anAssignmentNumber + aShift;
-    		String aNewAssignmentClass = ASSIGNENT_ID + aNewAssignmentNumber;
-    		String aNewClassName = aClassName.replace(
-    				ASSIGNENT_ID + anAssignmentNumber,
-    				ASSIGNENT_ID + aNewAssignmentNumber);
-    		Class<?> aNewClass = Class.forName(aNewClassName);
-
-			return (ProjectRequirements) aNewClass.newInstance();
-    		
-    		
-    	} catch (NumberFormatException e) {
-    		Tracer.error(aClassName + " does not have a number following " + ASSIGNENT_ID );
-    		return anOriginal;
-    	} catch (InstantiationException e) {			
-			e.printStackTrace();
-			return anOriginal;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return anOriginal;
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return anOriginal;
-
-		}
-    }
+//    public static ProjectRequirements getRequirement(Project aProject, ProjectRequirements anOriginal, int aShift) {
+//    	Class anOriginalClass = anOriginal.getClass();
+//    	String aClassName = anOriginalClass.getName();
+//    	int anAssignmentStartIndex = aClassName.indexOf(ASSIGNENT_ID);
+//    	if (anAssignmentStartIndex == -1)
+//    		return null;
+//    	if (anAssignmentStartIndex == -1) {
+//    		return anOriginal;
+//    	}
+//    	int anAssignmentNumberStartIndex = anAssignmentStartIndex + ASSIGNENT_ID.length();
+//    	int anAssignmentNumberEndIndex;
+//    	for (anAssignmentNumberEndIndex = anAssignmentNumberStartIndex +1;
+//    			
+//    			anAssignmentNumberEndIndex < aClassName.length() && 
+//    			Character.isDigit(aClassName.charAt(anAssignmentNumberEndIndex));
+//    			anAssignmentNumberEndIndex++);   
+//    	
+//    	// This may not have a number actually
+//        String anAssignmentNumberString = aClassName.substring(
+//        		anAssignmentNumberStartIndex, anAssignmentNumberEndIndex);
+//             	
+//    	try {
+//    		int anAssignmentNumber = Integer.parseInt(anAssignmentNumberString);
+//    		int aNewAssignmentNumber = anAssignmentNumber + aShift;
+//    		String aNewAssignmentClass = ASSIGNENT_ID + aNewAssignmentNumber;
+//    		String aNewClassName = aClassName.replace(
+//    				ASSIGNENT_ID + anAssignmentNumber,
+//    				ASSIGNENT_ID + aNewAssignmentNumber);
+//    		Class<?> aNewClass = Class.forName(aNewClassName);
+//
+//			return (ProjectRequirements) aNewClass.newInstance();
+//    		
+//    		
+//    	} catch (NumberFormatException e) {
+//    		Tracer.error(aClassName + " does not have a number following " + ASSIGNENT_ID );
+//    		return anOriginal;
+//    	} catch (InstantiationException e) {			
+//			e.printStackTrace();
+//			return anOriginal;
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//			return anOriginal;
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return anOriginal;
+//
+//		}
+//    }
 
    
     @Override
@@ -264,7 +264,7 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
      * @param dateTime The submission time of the project
      * @return A score modifier percentage
      */
-    protected double checkDueDate(DateTime dateTime) {
+    public double checkDueDate(DateTime dateTime) {
         if (dueDates.isEmpty()) {
             return 1;
         }

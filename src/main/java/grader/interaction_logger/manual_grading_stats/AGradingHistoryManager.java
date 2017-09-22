@@ -304,7 +304,9 @@ public class AGradingHistoryManager implements GradingHistoryManager {
 //		System.out.println(aRows);
 //		System.out.println(scanCSVRow(aRows));
         StudentProblemHistory newVisit = parser.parseStudentHistory(scanCSVRow(aRows));
-        currentProblemHistory.newStudentHistory(newVisit.getOnyen(), newVisit);
+        if (newVisit != null) {
+           currentProblemHistory.newStudentHistory(newVisit.getOnyen(), newVisit);
+        }
 
 //		String newState = unparser.unparseAllStudentsProblemGradingHistory(currentProblemHistory);
 //		System.out.println(newState);
