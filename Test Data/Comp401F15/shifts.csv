@@ -1,0 +1,6 @@
+Gradebook Item,Points,,,
+,,,,
+Display ID,ID,Last Name,First Name,grade
+acorrect,acorrect,Correct,All,3.0
+ecredit,ecredit,Credit,Extra,5.0
+tstudent,tstudent,Student,Test,2.0
