@@ -1,2 +1,1 @@
-Starting audit...
-Audit done.
+Unable to create Checker: cannot initialize module TreeWalker - Unable to instantiate NoDuplicateShortTypeName

@@ -84,12 +84,15 @@ public class AnAutoVisitBehavior implements
     }
 
     boolean runExecuted;
-
+   
     @Override
     public boolean runAttempted() {
         return runExecuted || isAutoRun() || isAutoAutoGrade();
     }
-
+    @Override
+    public StudentFolder getStudentFolder() {
+    	return studentFolder;
+    }
     String getCommentsFileName(SakaiProject aProject) {
         return AGradingFeature.getFeedbackFolderName(aProject)
                 + COMMENTS_FILE_PREFIX + AGradingFeature.FEEDBACK_FILE_SUFFIX;
@@ -696,7 +699,7 @@ public class AnAutoVisitBehavior implements
 				// double gradePercentage = timestamp.isDefined() ?
         // projectDatabase.getProjectRequirements().checkDueDate(timestamp.get())
         // : 0;
-        System.out.println("time stamp defined:" + timestamp);
+        System.out.println("time stamp defined:" + timestamp.get());
         double aMultiplier = timestamp.isDefined()
                 ? projectDatabase.getProjectRequirements().checkDueDate(wrappedProject, timestamp.get())
                 : 0;

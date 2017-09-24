@@ -1,8 +1,13 @@
 package framework.logging.serializers;
 
+import org.joda.time.DateTime;
+
+import wrappers.framework.project.ProjectWrapper;
 import framework.grading.testing.CheckResult;
 import framework.logging.recorder.RecordingSession;
+import framework.navigation.StudentFolder;
 import grader.assignment.GradingFeature;
+import grader.assignment.shift.AnAssignmentShiftManager;
 import grader.spreadsheet.csv.ASakaiCSVFeatureGradeManager;
 
 /**
@@ -13,6 +18,9 @@ import grader.spreadsheet.csv.ASakaiCSVFeatureGradeManager;
  * To change this template use File | Settings | File Templates.
  */
 public class TextSerializer implements RecordingSessionSerializer {
+	/*
+	 * Not sure this method is called
+	 */
      String resultsBasedSerialize(RecordingSession recordingSession) {
         String log = "";
         double awarded = 0;
@@ -28,6 +36,9 @@ public class TextSerializer implements RecordingSessionSerializer {
         }
         log += "----------------------------------\n";
         log += "  Points Awarded: " + awarded + "\n\n";
+//        log += "  Points Awarded: " + awarded + "\n";
+        
+        log += "  Early Reward/Late Penalty Multiplier: " + recordingSession.getLatePenalty() + "\n\n";
 
         if (!recordingSession.getRestrictionResults().isEmpty()) {
             log += "Grading restrictions...\n";
@@ -109,7 +120,13 @@ public class TextSerializer implements RecordingSessionSerializer {
          log += "----------------------------------\n";
          log += "  Points Awarded: " + awarded + "\n\n";
          
-
+//         log += "  Points Awarded: " + awarded + "\n";
+//         double aMultiplier = recordingSession.getLatePenalty() ;
+//         if (aMultiplier != 1) {
+//         log += "  Early Reward/Late Penalty Multiplier: " + recordingSession.getLatePenalty() + "\n\n";
+//         } else {
+//        	 log += "\n";
+//         }
 //         if (!recordingSession.getRestrictionResults().isEmpty()) {
          if (hasRestrictions) {
              log += "Grading restrictions...\n";
@@ -192,9 +209,21 @@ public class TextSerializer implements RecordingSessionSerializer {
 //                 log += note + "\n";
          }
          }
-
+         StudentFolder aStudentFolder = recordingSession.getStudentFolder();
+         if (aStudentFolder == null) {
+        	 ProjectWrapper.getStudentFolder(recordingSession.getOnyen());
+         }
+         if (aStudentFolder != null) {
+        	Object aDateTime = aStudentFolder.getTimestamp().get();
+        	log += "Submission time: " + aDateTime + "\n";
+        	
+         }
+         int aShift = AnAssignmentShiftManager.getShift(recordingSession.getOnyen());
+         if (aShift > 0) {
+             log += "\nAssignment Shift: " + aShift + "\n";
+         }
          if (recordingSession.getLatePenalty() < 1)
-             log += "\nLate penalty: " + (recordingSession.getLatePenalty() * 100) + "%\n";
+             log += "\nLate penalty: " + (100 - recordingSession.getLatePenalty() * 100) + "%\n";
          if (recordingSession.getLatePenalty()> 1)
              log += "\nEarly benefit: " + (recordingSession.getLatePenalty() * 100) + "%\n";
          if (!recordingSession.getSourceCodeTAComments().isEmpty()) {
@@ -216,7 +245,7 @@ public class TextSerializer implements RecordingSessionSerializer {
          log += recordingSession.getComments();
          log += "----------------------------------\n";
          }
-         log += "  Total Score: " + ASakaiCSVFeatureGradeManager.getTotalGrade(featureTotal, recordingSession.getLatePenalty(), recordingSession.getSourcePoints()) + "\n";
+         log += "TOTAL SCORE: " + ASakaiCSVFeatureGradeManager.getTotalGrade(featureTotal, recordingSession.getLatePenalty(), recordingSession.getSourcePoints()) + "\n";
 
          return log;
      }

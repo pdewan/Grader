@@ -193,4 +193,9 @@ public class ASakaiSpreadsheetGradeRecorder implements FinalGradeRecorder {
 		return gradeSpreadsheet;
 	}
 
+	@Override
+	public String getFullName(String anOnyen) {
+		throw new RuntimeException("Not implemented");
+	}
+
 }

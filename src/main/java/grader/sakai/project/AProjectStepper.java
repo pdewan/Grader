@@ -725,8 +725,8 @@ public class AProjectStepper extends AClearanceManager implements
 		// Josh: Added event
 		propertyChangeSupport.firePropertyChange("Project", null, project);
 		// this can be achived through property change listener also
-		featureGradeRecorder.newSession(onyen);
-		AllStudentsHistoryManagerFactory.getAllStudentsHistoryManager().newSession(onyen);
+		featureGradeRecorder.newSession(onyen, studentFolder);
+		AllStudentsHistoryManagerFactory.getAllStudentsHistoryManager().newSession(onyen, studentFolder);
 		// Josh's code from ProjectStepperDisplayerWrapper
 		// Figure out the late penalty
 		Option<DateTime> timestamp = studentFolder.getTimestamp();

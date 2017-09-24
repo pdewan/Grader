@@ -1,11 +1,1 @@
-Starting audit...
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\Assignment1.java:1: classDefined: (Assignment1.java:1) Class matching main.Assignment(.*) defined, unmatched expected classes/tags []
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\Assignment1.java:11: warning: minCalledMethods: (Assignment1.java:11) Min called methods: 1, actual 0
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\Assignment1.java:11: warning: minDeclaredMethods: (Assignment1.java:11) Min declared methods: 2, actual 1
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\Assignment1.java:21: warning: 'if' construct must use '{}'s.
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\Assignment1.java:21: warning: uncessaryMethodCall: (Assignment1.java:21) called unnecessary method main-->String.equals
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\Assignment1.java:21:32: warning: String literal expressions should be on the left side of an equals comparison.
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\StringScanner.java:3: warning: minCalledMethods: (StringScanner.java:3) Min called methods: 1, actual 0
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\StringScanner.java:3: warning: minDeclaredMethods: (StringScanner.java:3) Min declared methods: 2, actual 1
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\src\main\StringScanner.java:36:51: warning: The String " " appears 3 times in the file.
-Audit done.
+Unable to create Checker: cannot initialize module TreeWalker - Unable to instantiate NoDuplicateShortTypeName

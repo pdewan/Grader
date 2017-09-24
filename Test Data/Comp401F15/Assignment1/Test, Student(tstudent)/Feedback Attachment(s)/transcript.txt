@@ -40,51 +40,6 @@ Exception in thread "main" java.util.NoSuchElementException: No line found
 	at java.util.Scanner.nextLine(Scanner.java:1540)
 	at main.Scan.main(Scan.java:18)
 
-*****************************(Process & print tokens)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$12479 
-.
-
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$12479
-Process line:Numbers: 12479 Sum: 12479 Product: 12479
-Numbers: 12479 Sum: 12479 Product: 12479
-New output Numbers: 12479 Sum: 12479 Product: 12479
- aprocess main
-### Single token test case: 1.0
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$22 44 66 
-11 33 55 
-.
-
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$22 44 66
-11 33 55
-Process line:Numbers: 22 44 66 Sum: 132 Product: 63888
-Numbers: 22 44 66 Sum: 132 Product: 63888
-New output Numbers: 22 44 66 Sum: 132 Product: 63888
- aprocess main
-Process line:Numbers: 11 33 55 Sum: 99 Product: 19965
-Numbers: 11 33 55 Sum: 99 Product: 19965
-New output Numbers: 11 33 55 Sum: 99 Product: 19965
- aprocess main
-### Multiple tokens test case: 1.0
 *****************************(Sum and product)*****************************
 INPUT(Sum and product)
 19 28 
@@ -123,41 +78,6 @@ Exception in thread "main" java.util.NoSuchElementException: No line found
 	at java.util.Scanner.nextLine(Scanner.java:1540)
 	at main.Scan.main(Scan.java:18)
 
-*****************************(Sum and product)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$19 28 
-.
-
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$19 28
-Process line:Numbers: 19 28 Sum: 47 Product: 532
-Numbers: 19 28 Sum: 47 Product: 532
-New output Numbers: 19 28 Sum: 47 Product: 532
- aprocess main
-### Sum test case: 1.0
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$19 28 
-.
-
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$19 28
-Process line:Numbers: 19 28 Sum: 47 Product: 532
-Numbers: 19 28 Sum: 47 Product: 532
-New output Numbers: 19 28 Sum: 47 Product: 532
- aprocess main
-### Product test case: 1.0
 *****************************(Terminates with period)*****************************
 INPUT(Terminates with period)
 10 20 
@@ -174,30 +94,6 @@ INPUT(Terminates with period)
 OUTPUT(Terminates with period)
 Numbers: 10 20 Sum: 30 Product: 200
 
-*****************************(Terminates with period)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$10 20 
-.the end
-
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$10 20
-.the end
-
-Process line:Numbers: 10 20 Sum: 30 Product: 200
-Numbers: 10 20 Sum: 30 Product: 200
-New output Numbers: 10 20 Sum: 30 Product: 200
- aprocess main
-### Terminates with period test case: 1.0
-*****************************(Two declared methods)*****************************
-### Min declared method test case: 1.0
-*****************************(One called method)*****************************
-### Min declared method test case: 1.0
 *****************************(Variable spaces)*****************************
 INPUT(Variable spaces)
 10   20 
@@ -207,21 +103,6 @@ OUTPUT(Variable spaces)
 Numbers: 
 Numbers: 
 
-*****************************(Variable spaces)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$10   20 
-   40 50 
-.
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-### Variable Space Test: 0.0
 *****************************(Handle invalid chars)*****************************
 INPUT(Handle invalid chars)
 10 ten 20
@@ -247,32 +128,3 @@ OUTPUT(Handle invalid chars)
 Numbers: 
 Numbers: 
 
-*****************************(Handle invalid chars)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$10 ten 20
-40 forty 50 ! 
-.
-Process line:Numbers: 10 ten 
-Numbers: 10 ten 
-New output Numbers: 10 ten 
- aprocess main
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Scan
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Test, Student(tstudent)\Submission attachment(s)\Assignment1\A1\bin
-$10 ten 20 
-40 50 ! 
-.
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-Process line:Numbers: 
-Numbers: 
-New output Numbers: 
- aprocess main
-### Invalid Character Test Case: 0.0
-*****************************(Screenshots enclosed)*****************************
-### Image enclosed test case: 1.0
-*****************************(Interactive Run)*****************************
-### No warning test case: 0.0
-### No warning test case: 0.0

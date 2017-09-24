@@ -1,1 +1,0 @@
-  -- Number of declared methods less than2

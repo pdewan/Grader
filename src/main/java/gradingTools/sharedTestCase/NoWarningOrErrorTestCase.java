@@ -63,7 +63,7 @@ public class NoWarningOrErrorTestCase extends OldOutputAndErrorCheckingTestCase 
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
         try {
         	if (!autoGrade || project == null)
-        		return fail("No graded in auto run");
+        		return fail("Not graded in auto run");
         	SakaiProject aSakaiProject = ((ProjectWrapper) project).getProject();
         	RunningProject aRunner = aSakaiProject.getCurrentRunningProject();
         	if (aRunner == null ) {

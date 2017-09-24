@@ -7,6 +7,7 @@ import framework.grading.testing.Restriction;
 import framework.logging.loggers.FeedbackTextSummaryLogger;
 import framework.logging.loggers.Logger;
 import framework.logging.serializers.SerializationUtils;
+import framework.navigation.StudentFolder;
 import framework.utils.GraderSettings;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
@@ -24,6 +25,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
+
+import util.trace.Tracer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -159,7 +162,7 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 
     // Session methods
     @Override
-    public void newSession(final String onyen) {
+    public void newSession(final String onyen, StudentFolder aStudentFolder) {
         if (onyen == null) {
             recordingSession = null;
             return;
@@ -186,8 +189,8 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
                 featureResults.add(new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, restriction));
             }
         }
-
-        recordingSession = new RecordingSession(userId, featureResults, restrictionResults, "", 1, gradingFeatures);
+        Tracer.info(this, "created recording session");
+        recordingSession = new RecordingSession(onyen,  userId, aStudentFolder, featureResults, restrictionResults, "", 1, gradingFeatures);
 
     }
 
@@ -298,10 +301,10 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 
     private void checkSession(String onyen) {
         if (recordingSession == null) {
-            newSession(onyen);
+            newSession(onyen, null);
         } else if (!recordingSession.getUserId().contains("(" + onyen + ")")) {
             finish();
-            newSession(onyen);
+            newSession(onyen, null);
         }
     }
 
@@ -434,4 +437,9 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
         basicFeatureGradeRecorder.clearGrades(anOnyen, aStudentName);
 
     }
+
+	@Override
+	public String getFullName(String anOnyen) {
+		return basicFeatureGradeRecorder.getFullName(anOnyen);
+	}
 }

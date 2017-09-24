@@ -1,6 +1,7 @@
 package grader.steppers;
 
 import framework.execution.ARunningProject;
+import framework.navigation.StudentFolder;
 import grader.assignment.AGradingFeature;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
@@ -73,6 +74,7 @@ import util.models.ADynamicEnum;
 import util.models.DynamicEnum;
 import util.models.LabelBeanModel;
 import util.trace.Tracer;
+import wrappers.framework.project.ProjectWrapper;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.uiFrame;
@@ -460,15 +462,19 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 //			return false;
 //		if (!autoVisitBehavior.setProject(newVal))
 //			return false;
-		featureGradeRecorder.newSession(getOnyen());
+		StudentFolder aStudentFolder = autoVisitBehavior.getStudentFolder();
+		if (aStudentFolder == null) {
+			aStudentFolder = ProjectWrapper.getStudentFolder(getOnyen());
+		}
+		featureGradeRecorder.newSession(getOnyen(), aStudentFolder);
 		featureGradeRecorder.setGrade(getName(), getOnyen(), getScore()); // pass the first score to recording session
 		
 		if (!gradedProjectOverview.setProject(newVal)) {
-			featureGradeRecorder.newSession(null);
+			featureGradeRecorder.newSession(null, null);
 			return false;
 		} 
 		if (!autoVisitBehavior.setProject(newVal)) {
-			featureGradeRecorder.newSession(null); // this is the one that matters
+			featureGradeRecorder.newSession(null, null); // this is the one that matters
 
 			return false;
 		}

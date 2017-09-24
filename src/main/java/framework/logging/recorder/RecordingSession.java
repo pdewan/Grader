@@ -3,6 +3,7 @@ package framework.logging.recorder;
 import java.util.List;
 
 import framework.grading.testing.CheckResult;
+import framework.navigation.StudentFolder;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 
@@ -22,10 +23,14 @@ public class RecordingSession {
     String sourceCodeComments = "";
 
     List<GradingFeature> gradingFeatures;
+    String onyen;
+    StudentFolder studentFolder;
 
-    public RecordingSession(String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults,
+    public RecordingSession(String anOnyen, String userId, StudentFolder aStudentFolder, List<CheckResult> featureResults, List<CheckResult> restrictionResults,
             String comments, double latePenalty, GradingFeatureList newGradingFeatures) {
-        this.userId = userId;
+        onyen = anOnyen;
+        studentFolder = aStudentFolder;
+    	this.userId = userId;
         this.featureResults = featureResults;
         this.restrictionResults = restrictionResults;
         this.comments = comments;
@@ -44,7 +49,9 @@ public class RecordingSession {
     public List<CheckResult> getRestrictionResults() {
         return restrictionResults;
     }
-
+    public StudentFolder getStudentFolder() {
+    	return studentFolder;
+    }
     public String getComments() {
         return comments;
     }
@@ -56,7 +63,9 @@ public class RecordingSession {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
+    public String getOnyen() {
+    	return onyen;
+    }
     public void setFeatureResults(List<CheckResult> featureResults) {
         this.featureResults = featureResults;
     }

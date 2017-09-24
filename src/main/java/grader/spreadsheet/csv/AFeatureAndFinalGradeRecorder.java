@@ -27,6 +27,11 @@ public class AFeatureAndFinalGradeRecorder implements FinalGradeRecorder {
 	public FileProxy getGradeSpreadsheet() {
 		return featureGradeRecorder.getGradeSpreadsheet();
 	}
+	@Override
+	public String getFullName(String anOnyen) {
+		// TODO Auto-generated method stub
+		return finalGradeRecorder.getFullName(anOnyen);
+	}
 	
 
 }

@@ -16,6 +16,7 @@ import framework.grading.testing.Checkable;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.grading.testing.TestCase;
+import grader.assignment.shift.AnAssignmentShiftManager;
 import grader.basics.execution.BasicProjectExecution;
 import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.CurrentProjectHolder;
@@ -254,7 +255,8 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
    
     @Override
     public double checkDueDate(Project aProject, DateTime dateTime) {
-    	return checkDueDate(dateTime);
+    	return AnAssignmentShiftManager.checkDueDate(this, aProject, dateTime);
+//    	return checkDueDate(dateTime);
     	
     }
     /**

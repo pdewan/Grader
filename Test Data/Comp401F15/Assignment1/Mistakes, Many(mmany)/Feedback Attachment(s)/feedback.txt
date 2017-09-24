@@ -19,11 +19,11 @@ Interactive Run                                        0.0 / 20.0 (Extra credit)
 Grading restrictions...
 ----------------------------------
 Interactive Run                                        0.0 / 20.0 (Extra credit)
-Illegal import or call                      -25.0 /  -25.0
+Illegal import or call                      0.0 /  -25.0
 ----------------------------------
-  Points Deducted: -25.0
+  Points Deducted: 0.0
 
-  Features Score: 55.0
+  Features Score: 80.0
 
 Notes from grading features:
 ----------------------------------
@@ -39,9 +39,7 @@ Notes from grading restrictions:
 Illegal import or call:
   -- No project run interactively
 
-Single main.Assigment:
-  -- Illegal type or call
+Submission time: 2015-10-03T16:03:28.874-04:00
 
-
-Early benefit: 105.0%
-  Total Score: 57.75
+Late penalty: 100.0%
+TOTAL SCORE: 0.0

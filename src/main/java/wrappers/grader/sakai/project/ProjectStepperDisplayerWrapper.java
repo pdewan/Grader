@@ -124,7 +124,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
             // Wait for the grader window to finish then we'll start recording data
             boolean continueGrading = window.awaitDone();
-            ConglomerateRecorder.getInstance().newSession(onyen);
+            ConglomerateRecorder.getInstance().newSession(onyen, studentFolder);
 
             // Figure out the late penalty
             Option<DateTime> timestamp = studentFolder.getTimestamp();

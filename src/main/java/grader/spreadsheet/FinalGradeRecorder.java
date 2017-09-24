@@ -9,6 +9,8 @@ public interface FinalGradeRecorder {
 //	 double getGrade (Row aRow, int aColumn);
 	public String getFileName();
 	public FileProxy getGradeSpreadsheet();
+	String getFullName(String anOnyen);
+
 
 
 }

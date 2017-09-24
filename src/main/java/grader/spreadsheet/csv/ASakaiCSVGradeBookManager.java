@@ -345,6 +345,12 @@ public class ASakaiCSVGradeBookManager implements SakaiCSVFinalGradeRecorder {
 		// TODO Auto-generated method stub
 		throw new RuntimeException("Not implemented");
 	}
+	@Override
+	public String getFullName(String anOnyen) {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("Not implemented");
+//		return null;
+	}
 	
 
 }

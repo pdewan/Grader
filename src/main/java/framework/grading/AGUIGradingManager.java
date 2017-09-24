@@ -105,7 +105,7 @@ public class AGUIGradingManager implements GradingManager {
                 double gradePercentage = timestamp.isDefined() ? projectRequirements.checkDueDate(project.get(), timestamp.get()) : 0;
 
                 // Save the results
-                ConglomerateRecorder.getInstance().newSession(folder.getOnyen());
+                ConglomerateRecorder.getInstance().newSession(folder.getOnyen(), folder);
                 ConglomerateRecorder.getInstance().save(featureResults);
                 ConglomerateRecorder.getInstance().save(restrictionResults);
                 ConglomerateRecorder.getInstance().saveOverallNotes(comments);

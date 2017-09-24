@@ -1,14 +1,45 @@
 package grader.assignment.shift;
 
+import java.io.File;
+
 import org.joda.time.DateTime;
 
 import framework.grading.ProjectRequirements;
 import grader.basics.project.Project;
+import grader.basics.trace.CSVSerializable;
+import grader.sakai.project.SakaiProject;
+import grader.spreadsheet.TotalScoreRecorderSelector;
+import grader.spreadsheet.csv.ASakaiStudentNumberAssociator;
+import grader.spreadsheet.csv.SakaiStudentNumberAssociator;
+import gradingTools.Driver;
 import util.trace.Tracer;
+import wrappers.framework.project.ProjectWrapper;
 
 public class AnAssignmentShiftManager {
     public static final String ASSIGNENT_ID = "ssignment";
     public static final String SHIFT_FILE_NAME = "shifts.csv";
+ 
+    static SakaiStudentNumberAssociator csvAssignmentShiftRecorder;
+    
+    static void maybeInitializeShiftSpreadsheet() {
+    	if (csvAssignmentShiftRecorder == null) {
+    		String bulkFolderName = Driver.getDatabase().getBulkAssignmentFolder().getAssignmentFolder().getMixedCaseAbsoluteName();
+    		File aBulkFolderParent = (new File(bulkFolderName)).getParentFile();
+    		
+    		String shiftFileName = aBulkFolderParent.getAbsolutePath() + "/" + SHIFT_FILE_NAME ;
+    		csvAssignmentShiftRecorder = new ASakaiStudentNumberAssociator(shiftFileName);
+    	}
+    	
+    }
+    
+    public static void cleanupShiftFile() {
+    	String aFileName = csvAssignmentShiftRecorder.getFileName();
+    	
+    	File aFile = new File(aFileName);
+    	if (aFile.exists()) {
+    		aFile.delete();
+    	}
+    }
 
 	 public static ProjectRequirements getRequirement(ProjectRequirements anOriginal, int aShift) {
 	    	if (aShift == 0)
@@ -40,7 +71,7 @@ public class AnAssignmentShiftManager {
 //	    		String aNewAssignmentClass = ASSIGNENT_ID + aNewAssignmentNumber;
 	    		aNewClassName = aClassName.replaceAll(
 	    				ASSIGNENT_ID + anAssignmentNumber,
-	    				Integer.toString(aNewAssignmentNumber));
+	    				ASSIGNENT_ID + aNewAssignmentNumber);
 	    		Class<?> aNewClass = Class.forName(aNewClassName);
 
 				return (ProjectRequirements) aNewClass.newInstance();
@@ -74,17 +105,49 @@ public class AnAssignmentShiftManager {
 			 }
 			 aShift++;
 			 ProjectRequirements aNewRequirements = getRequirement(anOriginal, aShift);
-			 if (aRequirements == aNewRequirements) {
-				 aShift--;
+			 if (aNewRequirements == anOriginal) {
+				 aShift = 0;
+				 System.err.println("Grading sacrificed assignment:" + aNewRequirements);
+//				 aShift--;
 				 break;
 			 }
-			 aRequirements = aNewRequirements; 			 
-			 
+			 aRequirements = aNewRequirements;			 
 		 }
 		 return new AShiftAndPercentage(aPercentage, aShift);	
 	 }
+	public static int getShift(String anOnyen) {
+    	maybeInitializeShiftSpreadsheet();
+    	double aDouble = csvAssignmentShiftRecorder.getNumber(anOnyen);
+    	return (int) (aDouble);
+
+	}
+    public static double checkDueDate(
+    		ProjectRequirements anOriginal,
+    		Project aProject, 
+    		DateTime dateTime) {
+    	maybeInitializeShiftSpreadsheet();
+    	SakaiProject aSakaiProject = ((ProjectWrapper) aProject).getProject();
+    	String anOnyen = aSakaiProject.getStudentAssignment().getOnyen();
+    	int aStoredShift = getShift(anOnyen);
+    	ProjectRequirements aBaseRequirements = getRequirement(anOriginal, aStoredShift);
+    	ShiftAndPercentage aShiftAndPercentage = findShiftedNonZeroPercentage(aBaseRequirements, dateTime);
+    	
+    	if ( aShiftAndPercentage.getShift() > 0) {
+    		int aNewShift = aStoredShift + aShiftAndPercentage.getShift();
+        	String aFullName = TotalScoreRecorderSelector.getFactory().getGradeRecorder(Driver.getDatabase()).getFullName(anOnyen);
+        	csvAssignmentShiftRecorder.setNumber(anOnyen, aFullName, aNewShift );
+    	}
+    	return aShiftAndPercentage.getPercentage();
+    	
+//    	String aFullName = TotalScoreRecorderSelector.getFactory().getGradeRecorder(Driver.getDatabase()).getFullName(anOnyen);
+//    	System.out.println ("Current shift of" + anOnyen + " is " + getShift(anOnyen));
+
+//    	csvAssignmentShiftRecorder.setNumber(anOnyen, aFullName, 0);
+    	
+//    	return anOriginal.checkDueDate(dateTime);
+    }
 	 public static void testShiftedClass() {
-		 ProjectRequirements anOriginal = new gradingTools.assignment3.Assignment3ProjectRequirements();
+		 ProjectRequirements anOriginal = new gradingTools.comp401f15.assignment1.Assignment1Requirements();
 		 System.out.println("Shifted class" + getRequirement(anOriginal, 3));
 	 }
 	 /*
@@ -113,13 +176,13 @@ public class AnAssignmentShiftManager {
 		
 	  */
 	 static DateTime intimeA1 = new DateTime(2015, 8, 28, 0, 0);
-	 static DateTime inTimeA2 = new DateTime(2015, 9, 4, 0, 0);
+	 static DateTime inTimeA2AndA3 = new DateTime(2015, 9, 4, 0, 0);
 	 static DateTime inTimeA3 = new DateTime(2015, 9, 13, 0, 0);
 	 public static void testDates(ProjectRequirements anOriginal) {
 		 ShiftAndPercentage aShiftAndPercentage = 
 				 findShiftedNonZeroPercentage(anOriginal, intimeA1);
 		  aShiftAndPercentage = 
-				 findShiftedNonZeroPercentage(anOriginal, inTimeA2);
+				 findShiftedNonZeroPercentage(anOriginal, inTimeA2AndA3);
 		  aShiftAndPercentage = 
 					 findShiftedNonZeroPercentage(anOriginal, inTimeA3);
 		 
@@ -130,6 +193,7 @@ public class AnAssignmentShiftManager {
 		 ProjectRequirements anOriginal = new gradingTools.comp401f15.assignment1.Assignment1Requirements();
 //		 System.out.println("Shifted class" + getRequirement(anOriginal, 3));
 		 testDates(anOriginal);
+//		 testShiftedClass();
 	 }
 
 }

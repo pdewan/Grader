@@ -42,6 +42,7 @@ Notes from grading restrictions:
 Illegal import or call:
   -- No project run interactively
 
+Submission time: 2015-12-13T15:03:28.874-05:00
 
-Early benefit: 105.0%
-  Total Score: 84.0
+Assignment Shift: 2
+TOTAL SCORE: 80.0

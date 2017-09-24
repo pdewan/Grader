@@ -1,5 +1,6 @@
 package grader.steppers;
 
+import framework.navigation.StudentFolder;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
 import util.models.PropertyListenerRegisterer;
@@ -69,6 +70,9 @@ public interface AutoVisitBehavior  extends  PropertyListenerRegisterer{
 	void terminate();
 	boolean preRun();
 	void run();
+
+	StudentFolder getStudentFolder();
+	
 
 //	void setFrame(Object aFrame);
 //

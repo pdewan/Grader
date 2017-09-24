@@ -494,7 +494,7 @@ public class ABasicProjectStepper extends AClearanceManager implements
 		// Josh: Added event
 		propertyChangeSupport.firePropertyChange("Project", null, project);
 
-		featureGradeRecorder.newSession(getOnyen());
+		featureGradeRecorder.newSession(getOnyen(), autoVisitBehavior.getStudentFolder());
 		if (!gradedProjectOverview.setProject(newVal) ) // this calls autovisit behavior setProject
 			return false;
 		if (!autoVisitBehavior.setProject(newVal) ) 

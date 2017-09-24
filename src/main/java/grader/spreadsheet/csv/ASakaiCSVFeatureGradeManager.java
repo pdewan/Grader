@@ -1,6 +1,7 @@
 package grader.spreadsheet.csv;
 
 import framework.grading.testing.CheckResult;
+import framework.navigation.StudentFolder;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 import grader.basics.junit.TestCaseResult;
@@ -405,7 +406,7 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 	}
 	String onyen;
 	@Override
-	public void newSession(String anOnyen) {
+	public void newSession(String anOnyen, StudentFolder aStudentFolder) {
 		onyen = anOnyen;
 		
 	}

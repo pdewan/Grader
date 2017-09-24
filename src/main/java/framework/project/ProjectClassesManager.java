@@ -27,6 +27,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import util.trace.Tracer;
+
 /**
  * @see ClassesManager
  */
@@ -308,7 +310,7 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 						appendOutputAndErrorsToTranscriptFile(runningProject);
 
 					} else {
-						System.err.println ("Compiler could not be started");
+						Tracer.info (this, "No output from compiler"); 
 					}
 					System.out.println("Compilation attempt finished.");
 					maybeSetCanBeCompiled(true);

@@ -2,6 +2,7 @@ package grader.spreadsheet.csv;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import framework.grading.testing.CheckResult;
+import framework.navigation.StudentFolder;
 import grader.assignment.AnAssignmenDataFolder;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
@@ -95,7 +96,7 @@ public class AnAllStudentsHistoryManager implements AllStudentsHistoryManager, F
 		}
 //
 		String anOnyen = (String) evt.getNewValue();
-		newSession(anOnyen);
+		newSession(anOnyen, null);
 //		IndividualStidentHistoryManager aManager = getOrCreateSpreadsheet(anOnyen);
 //		System.out.println("Property change event:" + evt);
 //		aManager.addNewRow();
@@ -157,7 +158,7 @@ public class AnAllStudentsHistoryManager implements AllStudentsHistoryManager, F
 	}
 
 	@Override
-	public void newSession(String anOnyen) {
+	public void newSession(String anOnyen, StudentFolder aStudentFolder) {
 		IndividualStudentHistoryManager aManager = getOrCreateSpreadsheet(anOnyen);
 		aManager.addNewRow();
 		
@@ -286,6 +287,12 @@ public class AnAllStudentsHistoryManager implements AllStudentsHistoryManager, F
 	public void clearGrades(String anOnyen, String aStudentName) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getFullName(String anOnyen) {
+		// TODO Auto-generated method stub
+		 throw new RuntimeException("Not implemented");
 	}
 
 }

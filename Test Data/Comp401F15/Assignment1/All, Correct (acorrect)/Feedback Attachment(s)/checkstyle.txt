@@ -1,8 +1,1 @@
-Starting audit...
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\All, Correct (acorrect)\Submission attachment(s)\Assignment1\Assignment1\src\main\ProcString.java:12: warning: minCalledMethods: (ProcString.java:12) Min called methods: 1, actual 0
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\All, Correct (acorrect)\Submission attachment(s)\Assignment1\Assignment1\src\main\ProcString.java:12: warning: minDeclaredMethods: (ProcString.java:12) Min declared methods: 2, actual 1
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\All, Correct (acorrect)\Submission attachment(s)\Assignment1\Assignment1\src\main\ProcString.java:19:27: warning: Literal Strings should be compared using equals(), not '!='.
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\All, Correct (acorrect)\Submission attachment(s)\Assignment1\Assignment1\src\main\ProcString.java:50:51: warning: The String " " appears 3 times in the file.
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\All, Correct (acorrect)\Submission attachment(s)\Assignment1\Assignment1\src\main\ProcString.java:51:61: warning: The String "the num :" appears 3 times in the file.
-D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\All, Correct (acorrect)\Submission attachment(s)\Assignment1\Assignment1\src\main\ProcString.java:51:77: warning: The String " and the integer is: " appears 3 times in the file.
-Audit done.
+Unable to create Checker: cannot initialize module TreeWalker - Unable to instantiate NoDuplicateShortTypeName

@@ -18,40 +18,6 @@ please enter a string:
 Numbers: 22 44 66 Sum: 132 Product: 63888
 Numbers: 11 33 55 Sum: 99 Product: 19965
 
-*****************************(Process & print tokens)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Assignment1
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\bin
-$12479 
-.
-
-Process line:please enter a string:
-please enter a string:
-New output please enter a string:
- aprocess main
-Process line:Numbers: 12479 Sum: 12479 Product: 12479
-Numbers: 12479 Sum: 12479 Product: 12479
-New output Numbers: 12479 Sum: 12479 Product: 12479
- aprocess main
-### Single token test case: 1.0
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Assignment1
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\bin
-$22 44 66 
-11 33 55 
-.
-
-Process line:please enter a string:
-please enter a string:
-New output please enter a string:
- aprocess main
-Process line:Numbers: 22 44 66 Sum: 132 Product: 63888
-Numbers: 22 44 66 Sum: 132 Product: 63888
-New output Numbers: 22 44 66 Sum: 132 Product: 63888
- aprocess main
-Process line:Numbers: 11 33 55 Sum: 99 Product: 19965
-Numbers: 11 33 55 Sum: 99 Product: 19965
-New output Numbers: 11 33 55 Sum: 99 Product: 19965
- aprocess main
-### Multiple tokens test case: 1.0
 *****************************(Sum and product)*****************************
 INPUT(Sum and product)
 19 28 
@@ -70,35 +36,6 @@ OUTPUT(Sum and product)
 please enter a string:
 Numbers: 19 28 Sum: 47 Product: 532
 
-*****************************(Sum and product)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Assignment1
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\bin
-$19 28 
-.
-
-Process line:please enter a string:
-please enter a string:
-New output please enter a string:
- aprocess main
-Process line:Numbers: 19 28 Sum: 47 Product: 532
-Numbers: 19 28 Sum: 47 Product: 532
-New output Numbers: 19 28 Sum: 47 Product: 532
- aprocess main
-### Sum test case: 1.0
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Assignment1
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\bin
-$19 28 
-.
-
-Process line:please enter a string:
-please enter a string:
-New output please enter a string:
- aprocess main
-Process line:Numbers: 19 28 Sum: 47 Product: 532
-Numbers: 19 28 Sum: 47 Product: 532
-New output Numbers: 19 28 Sum: 47 Product: 532
- aprocess main
-### Product test case: 1.0
 *****************************(Terminates with period)*****************************
 INPUT(Terminates with period)
 10 20 
@@ -108,25 +45,6 @@ OUTPUT(Terminates with period)
 please enter a string:
 Numbers: 10 20 Sum: 30 Product: 200
 
-*****************************(Terminates with period)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Assignment1
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\bin
-$10 20 
-.the end
-
-Process line:please enter a string:
-please enter a string:
-New output please enter a string:
- aprocess main
-Process line:Numbers: 10 20 Sum: 30 Product: 200
-Numbers: 10 20 Sum: 30 Product: 200
-New output Numbers: 10 20 Sum: 30 Product: 200
- aprocess main
-### Terminates with period test case: 1.0
-*****************************(Two declared methods)*****************************
-### Min declared method test case: 1.0
-*****************************(One called method)*****************************
-### Min declared method test case: 1.0
 *****************************(Variable spaces)*****************************
 INPUT(Variable spaces)
 10   20 
@@ -137,25 +55,6 @@ please enter a string:
 Numbers: 10 20 Sum: 30 Product: 200
 Numbers: 40 50 Sum: 90 Product: 2000
 
-*****************************(Variable spaces)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Assignment1
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\bin
-$10   20 
-   40 50 
-.
-Process line:please enter a string:
-please enter a string:
-New output please enter a string:
- aprocess main
-Process line:Numbers: 10 20 Sum: 30 Product: 200
-Numbers: 10 20 Sum: 30 Product: 200
-New output Numbers: 10 20 Sum: 30 Product: 200
- aprocess main
-Process line:Numbers: 40 50 Sum: 90 Product: 2000
-Numbers: 40 50 Sum: 90 Product: 2000
-New output Numbers: 40 50 Sum: 90 Product: 2000
- aprocess main
-### Variable Space Test: 1.0
 *****************************(Handle invalid chars)*****************************
 INPUT(Handle invalid chars)
 10 ten 20
@@ -175,63 +74,3 @@ unexpected character:y
 unexpected character:!
 Numbers: 40 50 Sum: 90 Product: 2000
 
-*****************************(Handle invalid chars)*****************************
-Running command:java -cp ".;..;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\UNCChecks_6.5.0.jar;D:\Program Files\eclipse-standard-kepler-SR1-win32-x86_64\eclipse\plugins\net.sf.eclipsecs.checkstyle_6.5.0.201504121610\checkstyle-6.5-all.jar;D:\dewan_backup\Java\lib\oeall22.jar;D:\Program Files\eclipse-java-luna-R-win32-x86_64\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar" main.Assignment1
-Running in folder: D:\dewan_backup\Java\Grader\Test Data\Comp401F15\Assignment1\Extra, Credit (ecredit)\Submission attachment(s)\Assignment1\Assignment1\bin
-$10 ten 20
-40 forty 50 ! 
-.
-Process line:please enter a string:
-please enter a string:
-New output please enter a string:
- aprocess main
-Process line:unexpected character:t
-unexpected character:t
-New output unexpected character:t
- aprocess main
-Process line:unexpected character:e
-unexpected character:e
-New output unexpected character:e
- aprocess main
-Process line:unexpected character:n
-unexpected character:n
-New output unexpected character:n
- aprocess main
-Process line:Numbers: 10 20 Sum: 30 Product: 200
-Numbers: 10 20 Sum: 30 Product: 200
-New output Numbers: 10 20 Sum: 30 Product: 200
- aprocess main
-Process line:unexpected character:f
-unexpected character:f
-New output unexpected character:f
- aprocess main
-Process line:unexpected character:o
-unexpected character:o
-New output unexpected character:o
- aprocess main
-Process line:unexpected character:r
-unexpected character:r
-New output unexpected character:r
- aprocess main
-Process line:unexpected character:t
-unexpected character:t
-New output unexpected character:t
- aprocess main
-Process line:unexpected character:y
-unexpected character:y
-New output unexpected character:y
- aprocess main
-Process line:unexpected character:!
-unexpected character:!
-New output unexpected character:!
- aprocess main
-Process line:Numbers: 40 50 Sum: 90 Product: 2000
-Numbers: 40 50 Sum: 90 Product: 2000
-New output Numbers: 40 50 Sum: 90 Product: 2000
- aprocess main
-### Invalid Character Test Case: 1.0
-*****************************(Screenshots enclosed)*****************************
-### Image enclosed test case: 0.0
-*****************************(Interactive Run)*****************************
-### No warning test case: 0.0
-### No warning test case: 0.0

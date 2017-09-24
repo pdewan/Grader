@@ -3,6 +3,7 @@ package grader.spreadsheet;
 import java.util.List;
 
 import framework.grading.testing.CheckResult;
+import framework.navigation.StudentFolder;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 import grader.basics.junit.TestCaseResult;
@@ -14,7 +15,7 @@ public interface FeatureGradeRecorder extends FinalGradeRecorder{
 	void setNotes(String aStudentName, String anOnyen, String aFeature, String aNotes);
 	String getNotes(String aStudentName, String anOnyen, String aFeature);
 	// making all feature grade recorders have the same functionality as Josh's ConglomerateRecorder
-	public void newSession(final String onyen);
+	public void newSession(final String onyen, StudentFolder aStudentFolder);
 	public void saveMultiplier(double gradePercentage);
 //	public void saveScore(double score);
 
