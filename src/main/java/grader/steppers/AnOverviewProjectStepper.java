@@ -1228,7 +1228,8 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getSource() instanceof GradingFeature
-				&& evt.getPropertyName().equalsIgnoreCase("score")) {
+				&& (evt.getPropertyName().equalsIgnoreCase("score")
+				    || evt.getPropertyName().equalsIgnoreCase("autoNotes") )) {
 			GradingFeature aGradingFeature = (GradingFeature) evt.getSource();
 			// setInternalScore(aGradingFeature.getScore());
 			if (!settingUpProject)

@@ -34,6 +34,7 @@ public class InteractiveConsoleProcessRunner implements Runner {
     Project project;
     Thread outputThread; // can we share this also?
     static Thread inputThread;
+    static Thread errorThread;
     StringBuffer input;
     
 
@@ -195,6 +196,11 @@ public class InteractiveConsoleProcessRunner implements Runner {
     }
     static OutputStreamWriter osw;
     static BufferedWriter bw;
+//    static OutputStreamWriter esw; 
+//    static BufferedWriter bew;
+
+    
+    
     static Scanner scanner = new Scanner(System.in);
     static ARunningProject runner; // need the runner to change for single input thread
     // only one of these should be executing at one time as static vars are accessed
@@ -295,6 +301,75 @@ public class InteractiveConsoleProcessRunner implements Runner {
 //	                    }
 //	                }
 //	            }).start();
+	            
+	            // start error thread
+	            // Print output to the console
+	            InputStreamReader esr = new InputStreamReader(process.getErrorStream());
+	            final BufferedReader ebr = new BufferedReader(esr);
+	            runner.addDependentCloseable(ebr);
+	            errorThread = new Thread(new Runnable() {
+	                @Override
+	                public void run() {
+	                    try {
+	                        String line = null;
+	                        while ((line = ebr.readLine()) != null && !runner.isDestroyed()) {
+	                            System.err.println(line);
+	                            runner.appendErrorOutput(line + "\n");
+	                        }
+	                    } catch (IOException e) {
+	                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+	                    }
+	                }
+	            });
+	            errorThread.setName ("Error Thread");
+	            runner.addDependentThread(errorThread);
+	            errorThread.start();
+//	            new Thread(new Runnable() {
+//	                @Override
+//	                public void run() {
+//	                    try {
+//	                        String line = null;
+//	                        while ((line = br.readLine()) != null)
+//	                            System.out.println(line);
+//	                    } catch (IOException e) {
+//	                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//	                    }
+//	                }
+//	            }).start();
+
+	            // Feed console input to the process
+//	            OutputStreamWriter osw = new OutputStreamWriter(process.getOutputStream());
+	            
+	            // reset static variables to current process
+//	            esw = new OutputStreamWriter(process.getOutputStream());
+//	            bew = new BufferedWriter(esw);
+//	            new Thread(new Runnable() {
+//	                @Override
+//	                public void run() {
+//	                    boolean loop = true;
+//	                    Scanner scanner = new Scanner(System.in);
+//	                    while (loop) {
+//	                        try {
+//	                            process.getProcess().exitValue();
+//	                            loop = false;
+//	                        } catch (IllegalThreadStateException e) {
+//
+//	                            try {
+//	                                if (scanner.hasNextLine()) {
+//	                                    bw.write(scanner.nextLine());
+//	                                    bw.newLine();
+//	                                    bw.flush();
+//	                                }
+//	                                Thread.sleep(50);
+//	                            } catch (Exception e1) {
+//	                                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//	                            }
+//	                        }
+//	                    }
+//	                }
+//	            }).start();
+	            // end error thread
+	            
 	            if (inputThread == null) {
 	           inputThread =  new Thread(new Runnable() {
 	                @Override

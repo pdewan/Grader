@@ -34,10 +34,14 @@ public class NoWarningOrErrorTestCase extends OldOutputAndErrorCheckingTestCase 
     	return includeFilter;
     }
     public static boolean isErrorOrWarning (String aLine) {
-    	return aLine.contains("E**") || aLine.contains("W**");
+    	return aLine.contains("E**") || aLine.contains("W**") || aLine.contains("Error:");
     }
-    public  List<String> warningAndErrorLines(String anOutput) {
+    
+    public  List<String> oeWarningAndErrorLines(String anOutput) {
     	List<String> retVal = new ArrayList<>();
+    	if (anOutput == null || anOutput.isEmpty()) {
+    		return retVal;
+    	}
     	String[] anOutputLines = anOutput.split("\n");
     	String anIgnoreFilter = ignoreFilter();
     	String anIncludeFilter = includeFilter();
@@ -73,13 +77,19 @@ public class NoWarningOrErrorTestCase extends OldOutputAndErrorCheckingTestCase 
 //        		System.err.println("Have already graded this interactive run");
         	} else {
         		lastRunningProject = aRunner;
+//        		String anOutput = lastRunningProject.getOutput();
         		String anOutput = lastRunningProject.getOutput();
-        		List<String> anErrorOrWarnings = warningAndErrorLines(anOutput);
+        		String anError = lastRunningProject.getErrorOutput();
+        		if (!anError.isEmpty()) {
+//        			System.err.println("Project running results in  error");
+            		return fail("Interactive run:" + anError);
+        		}
+        		List<String> anErrorOrWarnings = oeWarningAndErrorLines(anOutput);
         		double score = Math.max(0.0, 1 - (anErrorOrWarnings.size() * pointsPerErrorOrWarning()));
         		if (score == 1.0) {
         			return pass();
         		} else {
-        			return partialPass(score, anErrorOrWarnings.toString());
+        			return partialPass(score, "Interactive run: " + anErrorOrWarnings.toString());
         		}
 //        		if (anOutput.contains("E**"))
 //        			return fail("output contains errors");

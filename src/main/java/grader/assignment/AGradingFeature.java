@@ -264,7 +264,10 @@ public class AGradingFeature implements GradingFeature {
 		project.setCurrentGradingFeature(feature); // change the selected feature before autograding
 
 		CheckResult result = featureChecker.check();
-		setAutoNotes(result.getAutoNotes());
+		String anAutoNotes = result.getAutoNotes() + result.getLog();
+//		setAutoNotes(result.getAutoNotes());
+		setAutoNotes(anAutoNotes);
+
 		if (result == null) {
 			Tracer.error("Could not autograde:" + this.getFeatureName());
 			cannotAutoGrade = true;
