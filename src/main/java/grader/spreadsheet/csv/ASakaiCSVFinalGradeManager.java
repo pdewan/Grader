@@ -212,7 +212,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	
 	public double getGrade (String[] aRow, int aColumn) {
 		try {
-		String aGradeCell = aRow[aColumn];
+		String aGradeCell = removeQuotes( aRow[aColumn]);
 		if (aGradeCell.equals(DEFAULT_CHAR))
 			return DEFAULT_VALUE; 
 		
@@ -296,7 +296,8 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		try {
 			csvWriter.close();
 			output.close();
-			removeQuotesAndTrim();
+			trim();
+//			removeQuotesAndTrim();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -372,6 +373,26 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		
 	}
 		
+	}
+	
+	String removeQuotes(String aText) {
+		return aText.toString().replaceAll("\"", "");
+	}
+	
+	void trim() {
+//		String aFileName = gradeSpreadsheet.getAbsoluteName();
+		String aFileName = gradeSpreadsheet.getMixedCaseAbsoluteName();
+
+		StringBuffer aText = Common.toText(aFileName);
+//		String aNewText = aText.toString().replaceAll("\"", "");
+//		 aNewText = aNewText.toString().replaceAll("\\n\\n", "\\n");
+		 String aNewText = aText.toString().trim(); //an extra line is added when graded
+		try {
+			Common.writeText(aFileName, aNewText);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	void removeQuotesAndTrim() {
