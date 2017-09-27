@@ -329,9 +329,10 @@ public class ARunningProject extends BasicRunningProject implements ProcessInput
 
         }
         if (output == null) {
-            Tracer.error("Null output!");
-            output = ""; //new
-            return "";
+//            Tracer.error("Null output!");
+            output = "No output from program";
+//            return "";
+//            return transcript.toString() + ;
         }
         if (!output.isEmpty()) {
             transcript.append("OUTPUT(" + featureName + ")\n");

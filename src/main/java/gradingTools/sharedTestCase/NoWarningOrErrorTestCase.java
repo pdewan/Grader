@@ -80,6 +80,7 @@ public class NoWarningOrErrorTestCase extends OldOutputAndErrorCheckingTestCase 
 //        		String anOutput = lastRunningProject.getOutput();
         		String anOutput = lastRunningProject.getOutput();
         		String anError = lastRunningProject.getErrorOutput();
+        		lastRunningProject.appendCumulativeOutput();
         		if (!anError.isEmpty()) {
 //        			System.err.println("Project running results in  error");
             		return fail("Interactive run:" + anError);
