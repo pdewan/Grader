@@ -8,6 +8,10 @@ import grader.file.FileProxy;
 import grader.file.FileProxyUtils;
 import grader.file.filesystem.AFileSystemFileProxy;
 import grader.file.filesystem.AFileSystemRootFolderProxy;
+import grader.sakai.project.ASakaiProjectDatabase;
+import grader.settings.AGraderSettingsManager;
+import grader.settings.GraderSettingsManager;
+import grader.settings.GraderSettingsManagerSelector;
 import grader.trace.assignment_data.FeatureGradeFileCleared;
 import grader.trace.assignment_data.FeatureGradeFileCreatedFromFinalGradeFile;
 import grader.trace.assignment_data.FeatureGradeFileLoaded;
@@ -126,14 +130,39 @@ public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements
         		aFile = aFoundFile;
         		checkStyleConfigurationFileName = aFoundFile.getAbsolutePath();
         		System.out.println ("Found check style file:" + checkStyleConfigurationFileName);
-
+        		
         	}
+        }
+        if (!aFile.exists()) {
+        	GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector
+    				.getGraderSettingsManager();
+    		String aModule = graderSettingsManager.getModule();
+    		String aProblem = graderSettingsManager.getNormalizedProblem(aModule);
+    		// "Comp401f17"
+    		int aCourseIndex = "Comp".length();
+    		int aSemesterIndex = aCourseIndex + "401".length();
+    		
+    		
+    		String aCourseNumber = aModule.substring(aCourseIndex, aSemesterIndex);
+    		String aSemester = aModule.substring(aSemesterIndex);
+    		String aProblemNumber = aProblem.replace("Assignment", "a");
+    		String aFileName = String.join("_", "unc_checks", aCourseNumber, aSemester, 
+    				aProblemNumber) + ".xml";
+    		aFile = new File("config" + "/checkstyle/" + aModule  + "/" + aFileName);
+    		
+    		
+    		
+    		
         }
         if (!aFile.exists()) {
         	Tracer.warning("Could not find checkstyle file:" + checkStyleConfigurationFileName);
         	checkStyleConfigurationFileName = AConfigurationManager.CONFIG_DIR + "/"  + DEFAULT_CONFIGURATION_FILE;
         	Tracer.warning("Using default checkstyle file:" + checkStyleConfigurationFileName );
+        } else {
+        	System.out.println("Using check style file:" + aFile.getAbsolutePath());
+        	setCheckStyleConfigurationFileName(aFile.getAbsolutePath());
         }
+        
         clearLogFile();
         requirementsSpreadsheetFile = getFileEntryFromLocalName(requirementsSpreadsheetFileName);
         initFeatureGradeFiles();
