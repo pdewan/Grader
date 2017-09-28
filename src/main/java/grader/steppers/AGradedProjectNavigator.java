@@ -810,11 +810,14 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 //		maybeSaveState();
 //		UserQuit.newCase(projectDatabase, projectStepper, project, this);
 //		ProjectStepperEnded.newCase(projectDatabase, projectStepper, this);
-		if (exitOnQuit)
+		if (exitOnQuit) {
+			Driver.clear();
 
 		System.exit(0);
-		else
+		} else {
 			ASakaiProjectDatabase.dispose(frame);
+		}
+		
 			
 	}
 	@Override
@@ -860,6 +863,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 
 		UserWindowClose.newCase(projectDatabase, projectStepper, project, this);
 		System.exit(0);
+		Driver.clear();
 		
 	}
 	@Override

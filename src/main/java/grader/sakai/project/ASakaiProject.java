@@ -24,7 +24,11 @@ public class ASakaiProject extends AFlexibleProject implements SakaiProject {
         documents.remove(getOutputFileName());
         documents.remove(getSourceFileName());
     }
-
+	@Override
+	public void clear() {
+		super.clear();
+		
+	}
     public StudentAssignment getStudentAssignment() {
         return studentAssignment;
     }
@@ -58,4 +62,6 @@ public class ASakaiProject extends AFlexibleProject implements SakaiProject {
 //     public void setWrapper(ProjectWrapper newValue) {
 // 		this.wrapper = newValue;
 // 	}
+
+	
 }

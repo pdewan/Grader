@@ -147,6 +147,10 @@ public class AFlexibleProject implements FlexibleProject {
         init(aProjectFolder, aFeedbackFolderName);
 
     }
+    public void clear() {
+		classesManager.clear();
+		proxyClassLoader.clear();
+    }
 
     public String toString() {
         return "(" + projectFolderName + "," + outputFolder + ")";

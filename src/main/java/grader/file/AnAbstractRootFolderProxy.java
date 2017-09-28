@@ -25,6 +25,11 @@ public abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implemen
     		subFolderNameLowerCase = subFolderName.toLowerCase();
     	
     }
+    @Override
+    public void clear() {
+    	entries.clear();
+    	nameToFileProxy.clear();
+    }
     
     protected boolean inTreeOfSubFolder(String anEntryName) {
     	return subFolderNameLowerCase == null || 

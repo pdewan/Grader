@@ -29,6 +29,8 @@ public interface RootFolderProxy {
     boolean exists();
 
     public List<FileProxy> getChildrenOf(String aParentName);
+
+	void clear();
    
 
 

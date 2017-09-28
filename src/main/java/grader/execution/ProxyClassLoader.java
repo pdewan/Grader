@@ -17,6 +17,7 @@ public interface ProxyClassLoader {
 	String getBinaryFileSystemFolderName();
 
 	void setBinaryFileSystemFolderName(String binaryFileSystemFolderName);
+	void clear();
 
 
 }

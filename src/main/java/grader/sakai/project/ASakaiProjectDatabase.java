@@ -1189,6 +1189,37 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	// assignmentRoot);
 	// }
 
+	public void clear() {
+		bulkFolder.clear();
+		assignmentDataFolder.clear();
+		GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
+
+		Collection<StudentCodingAssignment> studentAssignments = aStudentAssignmentDatabase
+				.getStudentAssignments();
+		for (StudentCodingAssignment anAssignment : studentAssignments) {
+			RootFolderProxy projectFolder = anAssignment.getProjectFolder();
+			
+
+//			if (assignmentDataFolder != null
+//					&& !assignmentDataFolder.getStudentIDs().contains(
+//							anAssignment.getOnyen()))
+//				continue;
+//			if (anAssignment.getStudentFolder() == null
+//					|| anAssignment.getSubmissionFolder() == null)
+//				continue; // assume a message has already been given
+
+			SakaiProject project = onyenToProject.get(anAssignment.getOnyen());
+			if (project != null) {
+				project.clear();
+			}
+			if (projectFolder != null) {
+				projectFolder.clear();
+			}
+			
+			
+		}
+		
+	}
 	/*
 	 * this does more than initialize projects
 	 */

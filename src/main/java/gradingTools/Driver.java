@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import util.trace.Traceable;
 import util.trace.TraceableBus;
 import util.trace.Tracer;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
@@ -387,7 +388,14 @@ public class Driver {
             database.getProjectNavigator().navigate(settingsModel, settingsFrame, true);
         } else {
             database.getAutomaticProjectNavigator().navigate(settingsModel, null, isHeadlessExitOnComplete());
+            clear();
+            
         }
+
+    }
+    public static void clear() {
+    	database.clear();
+//    	Traceable.clear();
     }
 //    public static void oldDrive(String[] args, int settingsFrameX, int settingsFrameY) {
 ////  	  ObjectEditor.setDefaultAttribute(AttributeNames.SHOW_SYSTEM_MENUS, false);

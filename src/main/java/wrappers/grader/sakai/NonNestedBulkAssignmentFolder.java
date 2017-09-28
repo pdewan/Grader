@@ -64,4 +64,10 @@ public class NonNestedBulkAssignmentFolder implements BulkAssignmentFolder {
     public String getMixedCaseAssignmentName() {
         return BasicGradingEnvironment.get().getAssignmentName();
     }
+
+	@Override
+	public void clear() {
+		rootProxy.clear();
+		
+	}
 }

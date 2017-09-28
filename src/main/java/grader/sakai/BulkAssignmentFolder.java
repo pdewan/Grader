@@ -17,5 +17,6 @@ public interface BulkAssignmentFolder {
     public String getAssignmentName();
 
     public String getMixedCaseAssignmentName();
+    public void clear();
 
 }

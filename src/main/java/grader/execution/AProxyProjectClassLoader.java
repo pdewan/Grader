@@ -113,7 +113,9 @@ public class AProxyProjectClassLoader extends ClassLoader implements ProxyClassL
             return null;
         }
     }
-
+    public void clear() {
+    	classesLoaded.clear();
+    }
     public Class loadClass(String aClassName) throws ClassNotFoundException {
     	try {
         return super.loadClass(aClassName);

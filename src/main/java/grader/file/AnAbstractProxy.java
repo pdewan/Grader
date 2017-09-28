@@ -10,6 +10,12 @@ public abstract class AnAbstractProxy implements RootFolderProxy{
     public Set<String> getChildrenNames() {
         return childrenNames;
     }
-   
+    @Override
+    public void clear() {
+    	if (descendentNames != null)
+    		descendentNames.clear();
+    	childrenNames.clear();
+    	
+    }
 
 }

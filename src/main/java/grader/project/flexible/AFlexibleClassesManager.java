@@ -65,6 +65,12 @@ public class AFlexibleClassesManager implements FlexibleClassesManager {
         classNameToDescription.put(aClassName, aClass);
         classDescriptions.add(aClass);
     }
+    @Override
+	public void clear() {
+		classNameToDescription.clear();
+		classDescriptions.clear();
+		
+	}
 
     /* (non-Javadoc)
      * @see grader.project.ClassesManager#put(java.lang.String[], grader.project.ClassDescription)
@@ -224,4 +230,6 @@ public class AFlexibleClassesManager implements FlexibleClassesManager {
             }
         }
     }
+
+	
 }

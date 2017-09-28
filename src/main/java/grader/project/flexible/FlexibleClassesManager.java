@@ -34,5 +34,6 @@ public interface FlexibleClassesManager {
 	FlexibleClassDescription tagToUniqueClassDescription(String aTag);
 
 	FlexibleClassDescription tagsToUniqueClassDescription(List<String> aTags);
+	void clear();
 
 }

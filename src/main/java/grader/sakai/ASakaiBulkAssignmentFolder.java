@@ -76,7 +76,12 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
         setGradeSpreadsheet();
         setStudentFolderNames();
     }
-
+    @Override
+	public void clear() {
+		rootBulkDownloadFolder.clear();
+		assignmentFolder.clear();
+		
+	}
     public String getAssignmentName() {
         return assignmentName;
     }
@@ -190,5 +195,7 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
     public FileProxy getStudentFolder(String aName) {
         return rootBulkDownloadFolder.getFileEntry(aName);
     }
+
+	
 
 }

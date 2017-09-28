@@ -15,6 +15,7 @@ public interface SakaiProject extends FlexibleProject {
 	void setStudentPhoto(Icon studentPhoto);
 
 	String getProjectZipFileOrFolderMixedCaseAbsoluteName();
+	void clear();
 
 //	ProjectWrapper getWrapper();
 //

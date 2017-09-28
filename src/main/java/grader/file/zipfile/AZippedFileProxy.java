@@ -12,6 +12,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import util.misc.Common;
+import util.trace.Tracer;
 
 // zip system interface to common interface
 public class AZippedFileProxy extends AnAbstractFileProxy implements FileProxy {
@@ -90,6 +91,20 @@ public class AZippedFileProxy extends AnAbstractFileProxy implements FileProxy {
     @Override
     public String getMixedCaseLocalName() {
         return mixedCaseName;
+    }
+    
+    @Override
+    public void clear() {
+    	super.clear();
+//    	if (zipFile != null) {
+//    		try {
+//    			Tracer.info(this, "Closing zip file " + zipFile);
+//				zipFile.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    	}
     }
     
 }
