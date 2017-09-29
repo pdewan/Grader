@@ -12,6 +12,7 @@ public abstract class AnAbstractProxy implements RootFolderProxy{
     }
     @Override
     public void clear() {
+    	System.out.println (this + " Clearing abstract proxy descendent names");
     	if (descendentNames != null)
     		descendentNames.clear();
     	childrenNames.clear();

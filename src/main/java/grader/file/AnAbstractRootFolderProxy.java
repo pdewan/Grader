@@ -27,6 +27,8 @@ public abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implemen
     }
     @Override
     public void clear() {
+    	super.clear();
+    	System.out.println (this + " clearning entries");
     	entries.clear();
     	nameToFileProxy.clear();
     }

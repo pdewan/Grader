@@ -34,6 +34,14 @@ public abstract class AnAbstractFileProxy extends AnAbstractProxy implements Fil
         return Common.getParentFileName(getAbsoluteName());
 //        return this.getFileEntry(parentName);
     }
+    
+    public void clear() {
+    	super.clear();
+    	if (descendentNames != null)
+    	descendentNames.clear();
+    	if (fileEntries != null)
+    	fileEntries.clear();   	
+    }
 
     public void initRootData() {
         String myName = getAbsoluteName();
