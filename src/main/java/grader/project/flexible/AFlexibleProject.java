@@ -140,6 +140,10 @@ public class AFlexibleProject implements FlexibleProject {
         outputSuffix = anOutputSuffix;
         RootFolderProxy aProjectFolder = aStudentCodingAssignment.getProjectFolder();
         FileProxy aFeedbackFolder = aStudentCodingAssignment.getFeedbackFolder();
+        if (aFeedbackFolder == null) {
+//        	System.err.println("No feedback folder,not creating project");
+        	throw new RuntimeException("No feedback folder,not creating project");
+        }
         String aFeedbackFolderName = aFeedbackFolder.getMixedCaseAbsoluteName();
         
         //init(aStudentCodingAssignment.getProjectFolder(), aStudentCodingAssignment.getFeedbackFolder().getAbsoluteName());

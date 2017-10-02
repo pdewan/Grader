@@ -54,6 +54,7 @@ import wrappers.framework.project.ProjectWrapper;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import bus.uigen.models.AFileSetterModel;
 
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 @Label("Starter")
@@ -199,7 +200,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 
     void noValidDownloadPath(String aPath) {
         if (!GraphicsEnvironment.isHeadless()) {
-            JOptionPane.showMessageDialog(null, "No folder found for download path:" + problemDownloadPath + " . When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
+            JOptionPane.showMessageDialog(null, "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
         } else {
             Tracer.error("No valid download path.");
         }
@@ -221,6 +222,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
             if (!folder.exists()) {
 //				JOptionPane.showMessageDialog(null, "Please enter download path for current problem in module:" + currentModule);
                 noValidDownloadPath(problemDownloadPath);
+                getFileBrowsing().getDownloadFolder().setText("");
                 return;
 //				Tracer.error("No folder found for:" + downloadPath);				
             } else {
@@ -925,6 +927,9 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 
         } else if (evt.getSource() == fileBrowsing.getDownloadFolder().getLabel()) {
             String newPath = fileBrowsing.getDownloadFolder().getLabel().getText();
+            if (grader.settings.folders.AFileSetterModel.INVALID_FILE_NAME_MESSAGE.equals(newPath)) {
+            	return; // no need to do anything, this is a side effect of a previous action
+            }
             if (newPath == null) {
                 return;
             }

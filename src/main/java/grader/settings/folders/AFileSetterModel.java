@@ -14,7 +14,7 @@ import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 public class AFileSetterModel extends ALabelSetterModel implements FileSetterModel {
-	
+	public static final String INVALID_FILE_NAME_MESSAGE = "Please browse to a valid folder";
 	JFileChooser fileChooser = new JFileChooser();
 	JFrame frame;
 	int filterOption;
@@ -27,6 +27,16 @@ public class AFileSetterModel extends ALabelSetterModel implements FileSetterMod
 	public void initFrame(JFrame aFrame) {
 		frame = aFrame;
 	}
+	String lastValidFolder = "";
+	public void setText(String aText) {
+		if ((aText != null) && (!aText.isEmpty()) ) {
+			lastValidFolder  = aText;
+			super.setText(aText);
+		} else {
+			super.setText(INVALID_FILE_NAME_MESSAGE);
+		}
+		
+	}
 
 	@Override
 	@Column(2)
@@ -36,7 +46,9 @@ public class AFileSetterModel extends ALabelSetterModel implements FileSetterMod
 	public void browse() {
 //        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setFileSelectionMode(filterOption);
-        String anOldValue = getText();
+//        String anOldValue = getText();
+        String anOldValue = lastValidFolder;
+
         if (anOldValue != null && !anOldValue.isEmpty()) {
         	setCurrentDirectory(anOldValue);
         }

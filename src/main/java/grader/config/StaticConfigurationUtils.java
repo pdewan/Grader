@@ -1136,6 +1136,7 @@ public class StaticConfigurationUtils {
 		ProjectRequirements requirements = null;
 
 		String requirementsSpec = "";
+		String normalizedRequirementsSpec = "";
 
 		try {
 			requirementsSpec = getInheritedStringModuleProblemProperty(
@@ -1159,7 +1160,7 @@ public class StaticConfigurationUtils {
 			// }
 			// }
 			// }
-			String normalizedRequirementsSpec = graderSettingsManager
+			 normalizedRequirementsSpec = graderSettingsManager
 					.replaceModuleProblemVars(requirementsSpec);
 
 			// }
@@ -1172,7 +1173,7 @@ public class StaticConfigurationUtils {
 			requirements = getInterpretedRequirements();
 			if (requirements == null)
 				System.err.println("Could not find project requirements:"
-						+ requirementsSpec);
+						+ requirementsSpec + " -->" + normalizedRequirementsSpec);
 			// System.err.println(e.getMessage());
 		} catch (InstantiationException e) {
 			System.err.println("Could not create project requirements."
