@@ -1,4 +1,4 @@
-//START OF FILE: amixedtypeairthmeticclientlauncher.java
+//START OF FILE: src/examples/rmi/arithmetic/amixedtypeairthmeticclientlauncher.java
 package examples.rmi.arithmetic;
 
 import java.rmi.registry.LocateRegistry;
@@ -29,7 +29,7 @@ public class AMixedTypeAirthmeticClientLauncher {
 
 }
 //END OF FILE
-//START OF FILE: amixedtypearithmeticserverlauncher.java
+//START OF FILE: src/examples/rmi/arithmetic/amixedtypearithmeticserverlauncher.java
 package examples.rmi.arithmetic;
 
 
@@ -55,7 +55,7 @@ public class AMixedTypeArithmeticServerLauncher implements MixedTypeAirthmeticSe
 	}
 }
 //END OF FILE
-//START OF FILE: amixedtypeprocessor.java
+//START OF FILE: src/examples/rmi/arithmetic/amixedtypeprocessor.java
 package examples.rmi.arithmetic;
 
 public class AMixedTypeProcessor implements RemoteMixedTypeProcessor {
@@ -87,7 +87,7 @@ public class AMixedTypeProcessor implements RemoteMixedTypeProcessor {
 
 }
 //END OF FILE
-//START OF FILE: demoerofmixedtypearithmetic.java
+//START OF FILE: src/examples/rmi/arithmetic/demoerofmixedtypearithmetic.java
 package examples.rmi.arithmetic;
 
 import bus.uigen.models.MainClassLaunchingUtility;
@@ -135,7 +135,7 @@ public class DemoerOfMixedTypeArithmetic {
 
 }
 //END OF FILE
-//START OF FILE: distributedrmiregistrystarter.java
+//START OF FILE: src/examples/rmi/arithmetic/distributedrmiregistrystarter.java
 package examples.rmi.arithmetic;
 import java.rmi.registry.LocateRegistry;
 import java.util.Scanner;
@@ -157,14 +157,14 @@ public class DistributedRMIRegistryStarter {
 	}
 }
 //END OF FILE
-//START OF FILE: mixedtypeairthmeticserver.java
+//START OF FILE: src/examples/rmi/arithmetic/mixedtypeairthmeticserver.java
 package examples.rmi.arithmetic;
 
 public interface MixedTypeAirthmeticServer {
 	public static final String SERVER_NAME = "Remote Mixed Type Arithmetic";
 }
 //END OF FILE
-//START OF FILE: remotemixedtypeprocessor.java
+//START OF FILE: src/examples/rmi/arithmetic/remotemixedtypeprocessor.java
 package examples.rmi.arithmetic;
 
 import java.rmi.Remote;

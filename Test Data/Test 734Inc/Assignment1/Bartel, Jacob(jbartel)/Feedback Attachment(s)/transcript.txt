@@ -2,6 +2,7 @@
 INPUT(Prompts for inputs)
 1
 1.4
+1
 
 OUTPUT(Prompts for inputs)
 Please input an integer
@@ -15,16 +16,26 @@ The int multiplication:1
 The double multiplication:1.4
 The double multiplication:1.4
 
+*****************************(Prompts for inputs)*****************************
+Got outputPlease input an integer
+
+Found int prompt true
+Got outputPlease input a decimal
+
+Found double prompt true
+Got outputThe int addition:2
+
+Found int prompt true
 *****************************(Takes in Double and Integer)*****************************
 OUTPUT(Takes in Double and Integer)
 Please input an integer
 
 ERRORS(Takes in Double and Integer)
 java.util.NoSuchElementException
-	at java.util.Scanner.throwFor(Scanner.java:907)
-	at java.util.Scanner.next(Scanner.java:1530)
-	at java.util.Scanner.nextInt(Scanner.java:2160)
-	at java.util.Scanner.nextInt(Scanner.java:2119)
+	at java.util.Scanner.throwFor(Scanner.java:862)
+	at java.util.Scanner.next(Scanner.java:1485)
+	at java.util.Scanner.nextInt(Scanner.java:2117)
+	at java.util.Scanner.nextInt(Scanner.java:2076)
 	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:16)
 
 *****************************(Takes in Double and Integer)*****************************
@@ -36,9 +47,9 @@ Please input a decimal
 
 ERRORS(Takes in Double and Integer)
 java.util.NoSuchElementException
-	at java.util.Scanner.throwFor(Scanner.java:907)
-	at java.util.Scanner.next(Scanner.java:1530)
-	at java.util.Scanner.nextDouble(Scanner.java:2456)
+	at java.util.Scanner.throwFor(Scanner.java:862)
+	at java.util.Scanner.next(Scanner.java:1485)
+	at java.util.Scanner.nextDouble(Scanner.java:2413)
 	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:18)
 
 *****************************(Takes in Double and Integer)*****************************
@@ -66,9 +77,9 @@ Please input a decimal
 
 ERRORS(Adds and multiplies the numbers)
 java.util.NoSuchElementException
-	at java.util.Scanner.throwFor(Scanner.java:907)
-	at java.util.Scanner.next(Scanner.java:1530)
-	at java.util.Scanner.nextDouble(Scanner.java:2456)
+	at java.util.Scanner.throwFor(Scanner.java:862)
+	at java.util.Scanner.next(Scanner.java:1485)
+	at java.util.Scanner.nextDouble(Scanner.java:2413)
 	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:18)
 
 *****************************(Adds and multiplies the numbers)*****************************
@@ -96,9 +107,9 @@ Please input a decimal
 
 ERRORS(Displays results of addition and multiplication)
 java.util.NoSuchElementException
-	at java.util.Scanner.throwFor(Scanner.java:907)
-	at java.util.Scanner.next(Scanner.java:1530)
-	at java.util.Scanner.nextDouble(Scanner.java:2456)
+	at java.util.Scanner.throwFor(Scanner.java:862)
+	at java.util.Scanner.next(Scanner.java:1485)
+	at java.util.Scanner.nextDouble(Scanner.java:2413)
 	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:18)
 
 *****************************(Displays results of addition and multiplication)*****************************

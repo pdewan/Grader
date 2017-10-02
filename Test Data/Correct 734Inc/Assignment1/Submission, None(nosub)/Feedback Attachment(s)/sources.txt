@@ -1,0 +1,180 @@
+//START OF FILE: amixedtypeairthmeticclientlauncher.java
+package examples.rmi.arithmetic;
+
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Scanner;
+
+import util.annotations.Tags;
+@Tags({"RMIClient", "Client"})
+public class AMixedTypeAirthmeticClientLauncher {
+	public static void main (String[] args) {	
+		try {
+			Registry rmiRegistry = LocateRegistry.getRegistry();
+			RemoteMixedTypeProcessor mixedTypeProcessor = (RemoteMixedTypeProcessor) rmiRegistry.lookup(MixedTypeAirthmeticServer.SERVER_NAME);
+			Scanner scan = new Scanner(System.in);
+			System.out.println("Please input an integer");
+			int num1 = scan.nextInt();
+			System.out.println("Please input a decimal");
+			double num2 = scan.nextDouble();
+			System.out.println("The int addition:"+ mixedTypeProcessor.intAdd(num1, num2));
+			System.out.println("The double addition:"+ mixedTypeProcessor.doubleAdd(num1, num2));
+			System.out.println("The int multiplication:"+ mixedTypeProcessor.intMultiply(num1, num2));
+			System.out.println("The double multiplication:"+ mixedTypeProcessor.doubleMultiply(num1, num2));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
+}
+//END OF FILE
+//START OF FILE: amixedtypearithmeticserverlauncher.java
+package examples.rmi.arithmetic;
+
+
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+
+import util.annotations.Tags;
+@Tags({"RMIServer", "Server"})
+public class AMixedTypeArithmeticServerLauncher implements MixedTypeAirthmeticServer {	
+	public static void main (String[] args) {
+		try {
+			Registry rmiRegistry = LocateRegistry.getRegistry();
+			RemoteMixedTypeProcessor mixedTypeProcessor = new AMixedTypeProcessor();
+			//create proxy
+			UnicastRemoteObject.exportObject(mixedTypeProcessor, 0);	
+			// make it available for clients
+			rmiRegistry.rebind(SERVER_NAME, mixedTypeProcessor);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+}
+//END OF FILE
+//START OF FILE: amixedtypeprocessor.java
+package examples.rmi.arithmetic;
+
+public class AMixedTypeProcessor implements RemoteMixedTypeProcessor {
+
+	@Override
+	public int intAdd(int num1, double num2) {
+		int retVal = num1 + (int) num2;
+		System.out.println("The int addition:"+ (num1 + (int) num2));
+		return retVal;
+	}
+	@Override
+	public double doubleAdd(int num1, double num2) {
+		double retVal = (double) num1 +  num2;
+		System.out.println("The double addition:"+ ( (double) num1 + num2));
+		return retVal;
+	}
+	@Override
+	public int intMultiply(int num1, double num2) {
+		int retVal = num1 * (int) num2;
+		System.out.println("The int multiplication:"+ (num1 * (int) num2));
+		return retVal;
+	}
+	@Override
+	public double doubleMultiply(int num1, double num2) {
+		double retVal = (double) num1 *  num2;
+		System.out.println("The double multiplication:"+ ( (double) num1 * num2));
+		return retVal;
+	}
+
+}
+//END OF FILE
+//START OF FILE: demoerofmixedtypearithmetic.java
+package examples.rmi.arithmetic;
+
+import bus.uigen.models.MainClassLaunchingUtility;
+// this is a distrbuted implementation of a CS 1 (UNC Comp 110) first assignment submission described below
+/******************************************************************
+ * Program or Assignment #: Assignment1
+ *
+ * Programmer: Jacob
+ *
+ * Due Date: Tuesday, Jan. 28
+ *
+ * COMP110-002, Spring 2014       Instructor: Prof. Jay Aikat
+ *
+ * Pledge: I have neither given nor received unauthorized aid
+ *         on this program. 
+ *
+ * Description: Insert a brief paragraph describing the program
+ *
+ * Input: Insert a brief description of user inputs, or "None" if
+ *        there is no user input
+ *
+ * Output: Insert a brief description of the program output
+ *
+ ******************************************************************/
+public class DemoerOfMixedTypeArithmetic {
+	public static void main(String args[]) {
+		demo();
+	}
+	
+	public static void demo() {
+//		String currentDir = System.getProperty("user.dir");
+//        System.out.println("Current dir using System:" +currentDir);
+		
+		Class[] classes = {
+				DistributedRMIRegistryStarter.class,
+				AMixedTypeArithmeticServerLauncher.class,
+				AMixedTypeAirthmeticClientLauncher.class
+
+				
+		};
+		MainClassLaunchingUtility.createInteractiveLauncher(classes);
+	}
+	
+	
+
+}
+//END OF FILE
+//START OF FILE: distributedrmiregistrystarter.java
+package examples.rmi.arithmetic;
+import java.rmi.registry.LocateRegistry;
+import java.util.Scanner;
+import java.util.concurrent.Semaphore;
+
+import util.annotations.Tags;
+
+@Tags({"RMIRegistry", "Registry"})
+public class DistributedRMIRegistryStarter {
+	public static void main (String[] args) {
+		try {
+			LocateRegistry.createRegistry(1099);
+			(new Semaphore(0)).acquire(); // wait for ever to avoid termination
+//			Scanner scanner = new Scanner(System.in);
+//			scanner.nextLine();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+//END OF FILE
+//START OF FILE: mixedtypeairthmeticserver.java
+package examples.rmi.arithmetic;
+
+public interface MixedTypeAirthmeticServer {
+	public static final String SERVER_NAME = "Remote Mixed Type Arithmetic";
+}
+//END OF FILE
+//START OF FILE: remotemixedtypeprocessor.java
+package examples.rmi.arithmetic;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface RemoteMixedTypeProcessor extends Remote  {
+	int intAdd (int num1, double num2) throws RemoteException;
+	double doubleAdd (int num1, double num2) throws RemoteException;
+	int intMultiply (int num1, double num2) throws RemoteException;
+	double doubleMultiply (int num1, double num2) throws RemoteException;
+
+}
+//END OF FILE

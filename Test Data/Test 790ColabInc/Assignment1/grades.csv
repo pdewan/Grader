@@ -1,8 +1,8 @@
-Assignment 1,Points,,,
-,,,,
-Display ID,ID,Last Name,First Name,grade
-skproject,skproject,Sakai,Project,20
-nosub,nosub,Submission,None,0
-jbartel,jbartel,Bartel,Jacob,85.0
-acorrect,acorrect,All,Correct,95.0
-binmiss,binmiss,Missing,Bin,92.0
+"Assignment 1","Points","","",""
+"","","","",""
+"Display ID","ID","Last Name","First Name","grade"
+"skproject","skproject","Sakai","Project","20"
+"nosub","nosub","Submission","None","0"
+"jbartel","jbartel","Bartel","Jacob","80.0"
+"acorrect","acorrect","All","Correct","95.0"
+"binmiss","binmiss","Missing","Bin","92.0"

@@ -1,0 +1,22 @@
+Grading result for: Bartel, Jacob(jbartel)
+
+Grading features...
+----------------------------------
+Contains a main method                                 10.0 / 10.0
+Prompts for inputs                                     10.0 / 10.0
+Takes in Double and Integer                            10.0 / 10.0
+Adds and multiplies the numbers                        10.0 / 10.0
+Displays results of addition and multiplication        40.0 / 40.0
+Has a proper header                                    5.0 / 10.0
+Clear messages with output                             0.0 / 10.0
+----------------------------------
+  Points Awarded: 85.0
+
+  Features Score: 85.0
+
+Notes from grading features:
+----------------------------------
+Has a proper header:
+  -- Did not fill in all parts of the header
+
+  Total Score: 85.0

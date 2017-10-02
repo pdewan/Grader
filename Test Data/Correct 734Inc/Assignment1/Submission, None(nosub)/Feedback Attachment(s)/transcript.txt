@@ -1,0 +1,119 @@
+*****************************(Prompts for inputs)*****************************
+INPUT(Prompts for inputs)
+1
+1.4
+
+OUTPUT(Prompts for inputs)
+Please input an integer
+Please input a decimal
+The int addition:2
+The int addition:2
+The double addition:2.4
+The double addition:2.4
+The int multiplication:1
+The int multiplication:1
+The double multiplication:1.4
+The double multiplication:1.4
+
+*****************************(Takes in Double and Integer)*****************************
+OUTPUT(Takes in Double and Integer)
+Please input an integer
+
+ERRORS(Takes in Double and Integer)
+java.util.NoSuchElementException
+	at java.util.Scanner.throwFor(Scanner.java:907)
+	at java.util.Scanner.next(Scanner.java:1530)
+	at java.util.Scanner.nextInt(Scanner.java:2160)
+	at java.util.Scanner.nextInt(Scanner.java:2119)
+	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:16)
+
+*****************************(Takes in Double and Integer)*****************************
+INPUT(Takes in Double and Integer)
+1
+OUTPUT(Takes in Double and Integer)
+Please input an integer
+Please input a decimal
+
+ERRORS(Takes in Double and Integer)
+java.util.NoSuchElementException
+	at java.util.Scanner.throwFor(Scanner.java:907)
+	at java.util.Scanner.next(Scanner.java:1530)
+	at java.util.Scanner.nextDouble(Scanner.java:2456)
+	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:18)
+
+*****************************(Takes in Double and Integer)*****************************
+INPUT(Takes in Double and Integer)
+1
+2.5
+OUTPUT(Takes in Double and Integer)
+Please input an integer
+Please input a decimal
+The int addition:3
+The int addition:3
+The double addition:3.5
+The double addition:3.5
+The int multiplication:2
+The int multiplication:2
+The double multiplication:2.5
+The double multiplication:2.5
+
+*****************************(Adds and multiplies the numbers)*****************************
+INPUT(Adds and multiplies the numbers)
+4
+OUTPUT(Adds and multiplies the numbers)
+Please input an integer
+Please input a decimal
+
+ERRORS(Adds and multiplies the numbers)
+java.util.NoSuchElementException
+	at java.util.Scanner.throwFor(Scanner.java:907)
+	at java.util.Scanner.next(Scanner.java:1530)
+	at java.util.Scanner.nextDouble(Scanner.java:2456)
+	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:18)
+
+*****************************(Adds and multiplies the numbers)*****************************
+INPUT(Adds and multiplies the numbers)
+4
+5.213025
+OUTPUT(Adds and multiplies the numbers)
+Please input an integer
+Please input a decimal
+The int addition:9
+The int addition:9
+The double addition:9.213025
+The double addition:9.213025
+The int multiplication:20
+The int multiplication:20
+The double multiplication:20.8521
+The double multiplication:20.8521
+
+*****************************(Displays results of addition and multiplication)*****************************
+INPUT(Displays results of addition and multiplication)
+4
+OUTPUT(Displays results of addition and multiplication)
+Please input an integer
+Please input a decimal
+
+ERRORS(Displays results of addition and multiplication)
+java.util.NoSuchElementException
+	at java.util.Scanner.throwFor(Scanner.java:907)
+	at java.util.Scanner.next(Scanner.java:1530)
+	at java.util.Scanner.nextDouble(Scanner.java:2456)
+	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:18)
+
+*****************************(Displays results of addition and multiplication)*****************************
+INPUT(Displays results of addition and multiplication)
+4
+5.213025
+OUTPUT(Displays results of addition and multiplication)
+Please input an integer
+Please input a decimal
+The int addition:9
+The int addition:9
+The double addition:9.213025
+The double addition:9.213025
+The int multiplication:20
+The int multiplication:20
+The double multiplication:20.8521
+The double multiplication:20.8521
+
