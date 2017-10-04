@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
 
 /**
  *
@@ -147,8 +148,13 @@ public class RedirectionEnvironment implements AutoCloseable {
             try {
                 newStream.flush();
                 sb.ensureCapacity((int) Files.size(bufferPath) / Character.BYTES);
-                /*List<String> lines = */Files.lines(bufferPath)//Files.readAllLines(bufferPath);
-                /*lines.stream()*/.forEachOrdered((line) -> sb.append(line).append("\n"));
+                
+//                /*List<String> lines = */Files.lines(bufferPath)//Files.readAllLines(bufferPath);
+//                /*lines.stream()*/.forEachOrdered((line) -> sb.append(line).append("\n"));
+
+                // the above does not close the file handle it opens for bufferPath, this does
+                try (Stream<String> lines = Files.lines(bufferPath)) {
+                }
                 if (sb.length() > 0) { 
                     sb.setLength(Math.max(0, sb.length() - 1));
                 }
