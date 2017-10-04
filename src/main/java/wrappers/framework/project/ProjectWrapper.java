@@ -134,6 +134,7 @@ public class ProjectWrapper extends StandardProject {
 //                System.out.println("Made directory:" + dir);
 
                 try {
+                	System.out.println ("unzipping:" + path);
                     ZipFile zip = new ZipFile(path);
                     zip.extractAll(dir.getAbsolutePath());
                     FileUnzipped.newCase(path.getName(), ProjectWrapper.class);

@@ -123,10 +123,12 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
         } else {
             FileProxy unzippedFolder = getUnzippedFolder(submissionFolder, zipFile);
             if (unzippedFolder == null) {
+            	System.out.println ("Did not find unzipped folder, processing zip file:" + zipFile);
 //                projectFolder = new AZippedRootFolderProxy(zipFile.getAbsoluteName());
                 projectFolder = new AZippedRootFolderProxy(zipFile.getMixedCaseAbsoluteName());
 
             } else {
+            	System.out.println ("Found unzipped folder, processing zip folder:" + unzippedFolder);
                 projectFolder = getUniqueNonMACOSFolderChild(unzippedFolder);
                 if (projectFolder == null) {
                     projectFolder = unzippedFolder; // not sure if this is ever reasonable

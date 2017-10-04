@@ -1190,6 +1190,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	// }
 
 	public void clear() {
+		System.out.println("Clearing project database");
 		bulkFolder.clear();
 		assignmentDataFolder.clear();
 		GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();

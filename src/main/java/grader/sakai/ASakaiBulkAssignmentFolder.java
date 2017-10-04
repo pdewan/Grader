@@ -78,6 +78,7 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
     }
     @Override
 	public void clear() {
+    	System.out.println ("Clearing bulk assignment folder");
 		rootBulkDownloadFolder.clear();
 		assignmentFolder.clear();
 		

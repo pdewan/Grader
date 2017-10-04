@@ -144,5 +144,10 @@ public class AFileSystemRootFolderProxy extends AnAbstractRootFolderProxy
     public String getLocalName() {
         return localName;
     }
+    @Override
+    public void clear() {
+    	super.clear();
+    	System.out.println ("Clearing file system folder");
 
+    }
 }

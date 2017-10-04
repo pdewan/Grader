@@ -9,7 +9,7 @@ public class ARootFolderCreator implements RootFolderCreator {
         boolean isZipperFolder = aFolder.endsWith(AFlexibleProject.ZIP_SUFFIX_1) || aFolder.endsWith(AFlexibleProject.ZIP_SUFFIX_2);
         
         if (isZipperFolder) {
-//        	System.out.println ("Found zipped folder:" + aFolder + " with siffx2 " + AProject.ZIP_SUFFIX_2);
+        	System.out.println ("Creating zipped folder:" + aFolder + " with siffx2 " + AFlexibleProject.ZIP_SUFFIX_2);
             return new AZippedRootFolderProxy(aFolder);
         } else {
             return new AFileSystemRootFolderProxy(aFolder);

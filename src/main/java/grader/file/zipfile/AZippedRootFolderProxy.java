@@ -13,7 +13,7 @@ import util.misc.Common;
 import util.trace.Tracer;
 
 public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements RootFolderProxy {
-    ZipFile zipFile;
+    private ZipFile zipFile;
     String rootLocalName;
     String absoluteName;
     public static final String MACOS = "_MACOS";
@@ -30,6 +30,7 @@ public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements
         }
         initRootName();
         initEntries();
+        
     }
     public AZippedRootFolderProxy(String aZipFileName) {
     	this(aZipFileName, null);
@@ -107,17 +108,32 @@ public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements
     public String getMixedCaseLocalName() {
         return rootLocalName;
     }
-    @Override
-    public void clear() {
-    	super.clear();
+    protected void closeZipFile() {
     	if (zipFile != null) {
     		try {
 				zipFile.close();
 				System.out.println ("Closing zip file:" + zipFile);
+				zipFile = null;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
+    }
+    @Override
+    public void clear() {
+    	
+    	super.clear();
+    	System.out.println ("Clearing zipped root folder");
+    	closeZipFile();
+//    	if (zipFile != null) {
+//    		try {
+//				zipFile.close();
+//				System.out.println ("Closing zip file:" + zipFile);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    	}
     }
 }
