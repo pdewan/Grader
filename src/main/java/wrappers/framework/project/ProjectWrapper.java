@@ -147,7 +147,7 @@ public class ProjectWrapper extends StandardProject {
             }
         } else {
             return path;
-            }
+        }
     }
 
     /**

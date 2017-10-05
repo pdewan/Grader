@@ -1189,6 +1189,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	// assignmentRoot);
 	// }
 
+	@Override
 	public void clear() {
 		System.out.println("Clearing project database");
 		bulkFolder.clear();

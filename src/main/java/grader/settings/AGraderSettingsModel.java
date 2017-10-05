@@ -745,6 +745,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 //		projectDatabase.setGraderSettings(this);
         maybeCreateProjectDatabase();
         projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();
+        clear();
 
     }
     @Override
@@ -764,6 +765,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     public void resetFeatureSpreadsheet() {
         maybeCreateProjectDatabase();
         projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
+        clear();
     }
 
     @Override
@@ -774,12 +776,19 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         maybeCreateProjectDatabase();
         projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
         projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();
+        clear();
     }
 
     @Override
     @Position(6)
     public void compileExecutor() {
         ExecutorSelector.getExecutor().compile();
+    }
+    
+    protected void clear() {
+    	if (projectDatabase != null) {
+    		projectDatabase.clear();
+    	}
     }
 
     @Override
@@ -805,6 +814,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 
 //        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
 //        projectDatabase.getStudentAssignmentDatabase().cleanFeedbackAndSubmissionFolder(anOnyen);
+        clear();
     }
     @Override
     @Position(1)
@@ -870,6 +880,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 //			}
         }
 
+        clear();
         return true;
 
     }
@@ -890,13 +901,17 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         for (String anOnyen : onyens) {
 //			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {
             try {
-                new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);
+                ProjectWrapper project = new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);
+                project.getProject().clear();
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 //			}
         }
+
+        clear();
+
         return true;
 
     }

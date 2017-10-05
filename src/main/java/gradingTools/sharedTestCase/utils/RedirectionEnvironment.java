@@ -154,6 +154,7 @@ public class RedirectionEnvironment implements AutoCloseable {
 
                 // the above does not close the file handle it opens for bufferPath, this does
                 try (Stream<String> lines = Files.lines(bufferPath)) {
+                	lines.forEach((line) -> sb.append(line).append("\n"));
                 }
                 if (sb.length() > 0) { 
                     sb.setLength(Math.max(0, sb.length() - 1));

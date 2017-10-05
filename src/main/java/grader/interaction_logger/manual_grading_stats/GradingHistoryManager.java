@@ -68,4 +68,6 @@ public interface GradingHistoryManager extends InteractionLogListener{
 
 	void saveStudentHistories();
 
+	void clear();
+
 }

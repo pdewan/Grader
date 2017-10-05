@@ -168,6 +168,13 @@ public class AnInteractionLogWriter implements InteractionLogWriter {
         InteractionLogFileCreatedOrLoaded.newCase(fileName, this);
 
     }
+    
+    @Override
+    public void clear() {
+    	if (out != null) {
+    		out.close();
+    	}
+    }
 
     public static final String NEW_LINE_REPLACEMENT = "New Line";
 

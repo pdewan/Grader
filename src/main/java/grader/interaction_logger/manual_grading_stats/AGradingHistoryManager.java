@@ -43,6 +43,11 @@ public class AGradingHistoryManager implements GradingHistoryManager {
         interactionDirectory = AnInteractionLogWriter.getOrCreateInteractionFolder();
 
     }
+    
+    @Override
+    public void clear() {
+    	interactionLogWriter.clear();
+    }
 
     @Override
     public String getProblemHistoryFileName(String aModule, String aProblem) {

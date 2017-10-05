@@ -17,4 +17,6 @@ public interface InteractionLogWriter extends TraceableListener, PropertyListene
 	
 	void addLogListener(InteractionLogListener aListener);
 
+	void clear();
+
 }

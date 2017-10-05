@@ -47,6 +47,7 @@ import grader.execution.AFlexibleMainClassFinder;
 import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.interaction_logger.InteractionLogWriter;
 import grader.interaction_logger.InteractionLogWriterSelector;
+import grader.interaction_logger.manual_grading_stats.GradingHistoryManagerSelector;
 import grader.language.LanguageDependencyManager;
 import grader.modules.ModuleProblemManager;
 import grader.modules.ModuleProblemManagerSelector;
@@ -395,6 +396,7 @@ public class Driver {
     }
     public static void clear() {
     	database.clear();
+    	GradingHistoryManagerSelector.getGradingHistoryManager().clear();
 //    	Traceable.clear();
     }
 //    public static void oldDrive(String[] args, int settingsFrameX, int settingsFrameY) {

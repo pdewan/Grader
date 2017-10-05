@@ -181,6 +181,8 @@ public interface SakaiProjectDatabase {
 	void setCSVRequirementsSpecification(CSVRequirementsSpecification newValue);
 
 	void restoreGraderDirectory();
+
+	void clear();
 	
 
 
