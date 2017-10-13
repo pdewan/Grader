@@ -395,7 +395,9 @@ public class Driver {
 
     }
     public static void clear() {
-    	database.clear();
+    	if (database != null) {
+    		database.clear();
+    	}
     	GradingHistoryManagerSelector.getGradingHistoryManager().clear();
 //    	Traceable.clear();
     }
@@ -795,5 +797,12 @@ public class Driver {
 		Tracer.showInfo(true);
 		Tracer.setKeywordPrintStatus(AZippedRootFolderProxy.class, true);
 		Driver.headlessExitOnComplete = headlessExitOnComplete;
+	}
+	
+	public static void kill() {
+		System.out.println("*** Kiling grader");
+		clear();
+		System.out.println("*** Exit");
+		System.exit(-1);
 	}
 }

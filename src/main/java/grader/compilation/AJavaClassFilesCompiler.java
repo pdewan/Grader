@@ -39,11 +39,10 @@ public class AJavaClassFilesCompiler implements ClassFilesCompiler{
 //			String graderClassPath = BasicGradingEnvironment
 //					.get().getCanonicalClasspath();
 			String myClassPath = StaticConfigurationUtils.getExecutionCommandRawClassPath(); // no quotes on PC!
-
 //			String myClassPath = graderClassPath; // classpath can inclide spaces and should not be in quotes
 //			myClassPath = myClassPath.replaceAll("\"", "");
 			if (myClassPath != null) {
-			optionList.addAll(Arrays.asList("-d", buildFolderPath, "-cp", myClassPath, "-Xlint:unchecked"));
+				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-cp", myClassPath, "-Xlint:unchecked"));
 			} else {
 				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-Xlint:unchecked"));
 
@@ -57,6 +56,7 @@ public class AJavaClassFilesCompiler implements ClassFilesCompiler{
 				SourceFileCompiled.newCase(javaFile.getAbsolutePath(), this);
 				
 			}
+			fileManager.close();
 		} else {
 			String home = System.getProperty("java.home");
 			System.out.println("Java Home =" + home);

@@ -95,7 +95,8 @@ public class AnAutomaticProjectNavigator implements AutomaticProjectNavigator {
         System.out.println(automaticExitMessage);
 //		JOptionPane.showMessageDialog(null, "Automatic grading complete.");
         if (exitOnCompletion) {
-            System.exit(0);
+        	return;
+//            System.exit(0);
         }
 
     }
