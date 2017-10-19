@@ -42,5 +42,6 @@ public interface GraderSettingsModel extends PropertyListenerRegisterer, Propert
 	void cleanSlateSpecified();
 	void setGraceDays(int newVal);
 	int getGraceDays();
+	void unzipSelectedOnyens();
 
 }

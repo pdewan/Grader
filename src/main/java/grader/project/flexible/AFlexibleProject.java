@@ -152,7 +152,9 @@ public class AFlexibleProject implements FlexibleProject {
 
     }
     public void clear() {
+    	if (classesManager != null)
 		classesManager.clear();
+    	if (proxyClassLoader != null)
 		proxyClassLoader.clear();
     }
 

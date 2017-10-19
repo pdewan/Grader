@@ -29,17 +29,21 @@ import grader.trace.settings.NavigationInitiated;
 import grader.trace.settings.ProblemUserChange;
 import gradingTools.Driver;
 
+import java.awt.Desktop;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import plaigarism.PlaigarismRunner;
 import util.annotations.ComponentHeight;
 import util.annotations.Explanation;
 import util.annotations.Label;
@@ -853,6 +857,42 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         if (!BasicGradingEnvironment.get().isUnzipFiles()) {
             return false;
         }
+        unzipSelectedOnyens();
+//        maybeCreateProjectDatabase();
+//
+//        List<String> onyens = projectDatabase.getOnyenNavigationList();
+////		OnyenRangeModel anOnyenRangeModel = getOnyens();
+////		String aStartOnyen = GraderSettings.get().
+////		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();
+//
+//        for (String anOnyen : onyens) {
+//            try {
+//                System.out.println("Unzipping directory for onyen:" + anOnyen);
+//                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getProject(anOnyen));
+//            } catch (FileNotFoundException e) {
+//                // TODO Auto-generated catch block
+////		e.printStackTrace();
+//                System.out.println("Could not unzip project for student:" + anOnyen + " " + e);
+//                e.printStackTrace();
+//            }
+//////			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {
+////            try {
+////                new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);
+////            } catch (FileNotFoundException e) {
+////                // TODO Auto-generated catch block
+////                e.printStackTrace();
+////            }
+////			}
+//        }
+//
+//        clear();
+        return true;
+
+    }
+    @Override
+    @Position(8)
+    public void unzipSelectedOnyens() {
+       
         maybeCreateProjectDatabase();
 
         List<String> onyens = projectDatabase.getOnyenNavigationList();
@@ -881,8 +921,40 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         }
 
         clear();
-        return true;
+//        return true;
 
+    }
+    @Position(8)
+    public void runPlaigarismDetector() {
+    	PlaigarismRunner.ReadProperties(); 
+    	File aProblemDownloadPathFile = new File(problemDownloadPath);
+    	if (!aProblemDownloadPathFile.exists()) {
+    		System.err.println("Cannot find input folder " + aProblemDownloadPathFile);
+    		return;
+    	}
+    	try {
+			PlaigarismRunner.setInputFileFolderName("\"" + aProblemDownloadPathFile.getCanonicalPath() + "\"");
+		
+    	    PlaigarismRunner.processAfterProperties();
+    	    String anIndexFileName = PlaigarismRunner.getJplagIndex();
+    	    if (!Driver.isHeadless()) {
+    	    	if(Desktop.isDesktopSupported())
+    	    	{
+    	    	  Desktop.getDesktop().browse(new URI(anIndexFileName));
+    	    	}
+    	    }
+    	    String[] aMossArgs = PlaigarismRunner.getMossArgs();
+//    	    String aMossCommandFile = PlaigarismRunner.getMossCommandFile();
+//    	    StringBuffer aText = Common.toText(aMossCommandFile);
+    	    (new ProcessBuilder(aMossArgs)).start();
+//    	    Runtime.getRuntime().exec(aMossArgs);
+
+    	    
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+    	}
+    	
     }
 
     @Override
