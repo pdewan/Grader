@@ -28,6 +28,9 @@ public class GradeScopeFileGenerator {
 		StringBuilder aStringBuilder = new StringBuilder();
 		SakaiCSVFinalGradeRecorder aFinalGradeRecorder = new ASakaiCSVFinalGradeManager(aFileName);
 		aFinalGradeRecorder.createTable();
+		aStringBuilder.append("Full Name,");
+		aStringBuilder.append("Email,");
+		aStringBuilder.append("Onyen\n");
 		for (int i=0; i < aFinalGradeRecorder.size(); i++) {
 			aStringBuilder.append(aFinalGradeRecorder.getFullName(i));
 			String anOnyen = aFinalGradeRecorder.getOnyen(i);
