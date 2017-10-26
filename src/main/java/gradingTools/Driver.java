@@ -120,8 +120,17 @@ public class Driver {
         BasicGradingEnvironment.get().setCheckStyle(StaticConfigurationUtils.getCheckStyle());
         BasicProjectExecution.setUseMethodAndConstructorTimeOut(true);
 	}
+	
+	public static void drive(String[] args, int settingsFrameX, int settingsFrameY) {
+		try {
+			_drive(args, settingsFrameX, settingsFrameY);
+		} catch (OutOfMemoryError e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
 
-    public static void drive(String[] args, int settingsFrameX, int settingsFrameY) {
+    private static void _drive(String[] args, int settingsFrameX, int settingsFrameY) {
 //	  ObjectEditor.setDefaultAttribute(AttributeNames.SHOW_SYSTEM_MENUS, false);
 //        BasicGradingEnvironment.set(new GradingEnvironment());
 
