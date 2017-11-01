@@ -67,6 +67,13 @@ In Eclipse, import a Maven project. Select the project you just cloned.
 
 *Note:* The compliance level may be set to **1.5** so be sure to change this to **1.7**.
 
+## Step 5: Add Project Dependencies
+The grader relies on 3 other projects, all of which can be found on GitHub. The first of these dependencies is the GraderBasics project by pdewan and the other are PlagirismCoupler and PlayingwPlaggie by mdaum. These projects must be imported into Eclipse and added as Project dependencies in the Java Build Path.
+
+Grader: <a href="https://github.com/pdewan/GraderBasics">GitHub link</a>
+PlagirismCoupler: <a href="https://github.com/mdaum/PlaigarismCoupler">GitHub link</a>
+PlayingwPlaggie: <a href="https://github.com/mdaum/PlayingwPlaggie">GitHub link</a>
+
 ## Step 6: Run the Program
 if you are going to run tests that use checkstyle, install chekstyle jars in your class path 
 
