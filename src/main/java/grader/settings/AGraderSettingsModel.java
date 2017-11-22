@@ -43,7 +43,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import plaigarism.PlaigarismRunner;
+import plagiarism.PlagiarismRunner;
 import util.annotations.ComponentHeight;
 import util.annotations.Explanation;
 import util.annotations.Label;
@@ -926,24 +926,24 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     }
     @Position(8)
     public void runPlaigarismDetector() {
-    	PlaigarismRunner.ReadProperties(); 
+    	PlagiarismRunner.ReadProperties(); 
     	File aProblemDownloadPathFile = new File(problemDownloadPath);
     	if (!aProblemDownloadPathFile.exists()) {
     		System.err.println("Cannot find input folder " + aProblemDownloadPathFile);
     		return;
     	}
     	try {
-			PlaigarismRunner.setInputFileFolderName("\"" + aProblemDownloadPathFile.getCanonicalPath() + "\"");
+    		PlagiarismRunner.setInputFileFolderName("\"" + aProblemDownloadPathFile.getCanonicalPath() + "\"");
 		
-    	    PlaigarismRunner.processAfterProperties();
-    	    String anIndexFileName = PlaigarismRunner.getJplagIndex();
+    		PlagiarismRunner.processAfterProperties();
+    	    String anIndexFileName = PlagiarismRunner.getJplagIndex();
     	    if (!Driver.isHeadless()) {
     	    	if(Desktop.isDesktopSupported())
     	    	{
     	    	  Desktop.getDesktop().browse(new URI(anIndexFileName));
     	    	}
     	    }
-    	    String[] aMossArgs = PlaigarismRunner.getMossArgs();
+    	    String[] aMossArgs = PlagiarismRunner.getMossArgs();
 //    	    String aMossCommandFile = PlaigarismRunner.getMossCommandFile();
 //    	    StringBuffer aText = Common.toText(aMossCommandFile);
     	    (new ProcessBuilder(aMossArgs)).start();

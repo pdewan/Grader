@@ -408,7 +408,7 @@ public class Driver {
     		database.clear();
     	}
     	GradingHistoryManagerSelector.getGradingHistoryManager().clear();
-    	Traceable.clear(); // this was commented out for some reason
+//    	Traceable.clear(); // this was commented out for some reason
     }
 //    public static void oldDrive(String[] args, int settingsFrameX, int settingsFrameY) {
 ////  	  ObjectEditor.setDefaultAttribute(AttributeNames.SHOW_SYSTEM_MENUS, false);
