@@ -1,13 +1,19 @@
 package gradingTools.sakai.gradebook;
 
-import java.io.File;
+import static gradingTools.sakai.gradebook.GradebookUtils.gradebookToMap;
+import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookHeader;
+import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookRow;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import util.misc.Common;
 
-public class GradebookConverter {
+
+
+
+public class GradebookGradescopeConverter {
 	public static void gradebookToGradescope(String aSakaiFileName,
 			String aGradescopeFileName, String[] aSubstitutions) {
 		// File aSakaiFile = new File(aSakaiFileName);
@@ -56,34 +62,34 @@ public class GradebookConverter {
 
 	}
 	
-	public static Map<String, GradebookEntry> gradebookToMap(StringBuffer aSakaiString) {
-		String aInputLinesWithoutQuotes = aSakaiString.toString().replaceAll(
-				"\"", "");
-		Map<String, GradebookEntry> retVal = new HashMap<String, GradebookEntry>();
-		String[] anInputLines = aInputLinesWithoutQuotes.toString().split("\n");
-		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
-			GradebookEntry aGradebookEntry = toGradebookEntry(anInputLines[aRowNum]);
-			if (aGradebookEntry == null) {
-				continue;
-			}
-			retVal.put(aGradebookEntry.getStudentID(), aGradebookEntry);			
-		}
-		return retVal;
-		
-	}
-	public static Map<String, GradebookEntry> gradebookToMap(File aFile) {
-		try {
-			StringBuffer aGradebookString = Common.toStringBuffer(aFile);
-			return gradebookToMap(aGradebookString);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-		
-		
-	}
+//	public static Map<String, GradebookEntry> gradebookToMap(StringBuffer aSakaiString) {
+//		String aInputLinesWithoutQuotes = aSakaiString.toString().replaceAll(
+//				"\"", "");
+//		Map<String, GradebookEntry> retVal = new HashMap<String, GradebookEntry>();
+//		String[] anInputLines = aInputLinesWithoutQuotes.toString().split("\n");
+//		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
+//			GradebookEntry aGradebookEntry = toGradebookEntry(anInputLines[aRowNum]);
+//			if (aGradebookEntry == null) {
+//				continue;
+//			}
+//			retVal.put(aGradebookEntry.getStudentID(), aGradebookEntry);			
+//		}
+//		return retVal;
+//		
+//	}
+//	public static Map<String, GradebookEntry> gradebookToMap(File aFile) {
+//		try {
+//			StringBuffer aGradebookString = Common.toStringBuffer(aFile);
+//			return gradebookToMap(aGradebookString);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return null;
+//		}
+//		
+//		
+//		
+//	}
 
 	public static String gradebookToGradescope(StringBuffer aSakaiString,
 			String[] aSubstitutions) {
@@ -151,7 +157,7 @@ public class GradebookConverter {
 	
 	
 	
-
+   
 	public static String gradescopeToGradebook(StringBuffer aGradescopeString,
 			String[] aSubstitutions) {
 		Map<String, String> anOnyenToEmail = new HashMap();
@@ -163,10 +169,11 @@ public class GradebookConverter {
 				.replaceAll("\"", "");
 		String[] anInputLines = aInputLinesWithoutQuotes.toString().split("\n");
 		StringBuilder aGradebookString = new StringBuilder(anInputLines.length);
-		aGradebookString.append("Student ID,");
-		aGradebookString.append("Student Name,");
-		aGradebookString.append("PID,");
-		aGradebookString.append("Grade\n");
+//		aGradebookString.append("Student ID,");
+//		aGradebookString.append("Student Name,");
+//		aGradebookString.append("PID,");
+//		aGradebookString.append("Grade\n");
+		aGradebookString.append(toGradebookHeader());
 
 		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
 			String[] aRow = anInputLines[aRowNum].split(",");
@@ -234,8 +241,12 @@ public class GradebookConverter {
 				continue;
 			}
 			
+			
 //			String anEmail = aRow[2];
 			String aGrade = aRow[3];
+			String aGradebookRow = toGradebookRow(aGradebookEntry, aGrade);
+			aGradebookString.append(aGradebookRow);
+			
 //			String aPID = "";
 			// if (aRow.length > 4) {
 			// aPID = aRow[3];
@@ -243,59 +254,61 @@ public class GradebookConverter {
 //			String[] aNames = aFullName.split(" ");
 //			String aFirstName = aNames[0];
 //			String aLastName = aNames[1];
-			String aGradebookFullName = 
-					"\"" + aGradebookEntry.getLastName() + "," + 
-			aGradebookEntry.getFirstName()
-					+ "\"";
-
-			aGradebookString.append(anOnyen);
-			aGradebookString.append(",");
-			aGradebookString.append(aGradebookFullName);
-			aGradebookString.append(",");
-			aGradebookString.append(aGradebookEntry.getPid());
-			aGradebookString.append(",");
-			aGradebookString.append(aGrade);
-			aGradebookString.append("\n");
+			
+//			String aGradebookFullName = 
+//					"\"" + aGradebookEntry.getLastName() + "," + 
+//			aGradebookEntry.getFirstName()
+//					+ "\"";
+//
+//			aGradebookString.append(anOnyen);
+//			aGradebookString.append(",");
+//			aGradebookString.append(aGradebookFullName);
+//			aGradebookString.append(",");
+//			aGradebookString.append(aGradebookEntry.getPid());
+//			aGradebookString.append(",");
+//			aGradebookString.append(aGrade);
+//			aGradebookString.append("\n");
+//			aGradebookString.append(aGradebookRow);
 
 		}
 
 		return aGradebookString.toString();
 
 	}
-	public static String toGradebookRow(GradebookEntry aGradebookEntry, String aGrade) {
-		StringBuffer aGradebookString = new StringBuffer();
-		String aGradebookFullName = "\"" + aGradebookEntry.getLastName() + "," + aGradebookEntry.getFirstName()
-				+ "\"";
-		aGradebookString.append(aGradebookEntry.getStudentID());
-		aGradebookString.append(",");
-		aGradebookString.append(aGradebookFullName);
-		aGradebookString.append(",");
-		aGradebookString.append(aGradebookEntry.getPid());
-		aGradebookString.append(",");
-		aGradebookString.append(aGrade);
-		aGradebookString.append("\n");
-		return aGradebookString.toString();
-	}
-	public static GradebookEntry toGradebookEntry(String aRowString) {
-		String[] aRow = aRowString.split(",");
-		if (aRow.length < 4) {
-			System.out.println("Ignoring row " + aRow);
-			return null;
-		}
-		String anOnyen = aRow[0];
-		String aLastName = aRow[1];
-		String aFirstName = aRow[2];
-		String aPID = aRow[3];
-		return new AGradebookEntry(anOnyen, aFirstName, aLastName, aPID);
-		
-	}
-	public static String toGradebookHeader() {
-		StringBuffer aGradebookString = new StringBuffer();
-
-		aGradebookString.append("Student ID,");
-		aGradebookString.append("Student Name,");
-		aGradebookString.append("PID,");
-		aGradebookString.append("Grade\n");
-		return aGradebookString.toString();
-	}
+//	public static String toGradebookRow(GradebookEntry aGradebookEntry, String aGrade) {
+//		StringBuffer aGradebookString = new StringBuffer();
+//		String aGradebookFullName = "\"" + aGradebookEntry.getLastName() + "," + aGradebookEntry.getFirstName()
+//				+ "\"";
+//		aGradebookString.append(aGradebookEntry.getStudentID());
+//		aGradebookString.append(",");
+//		aGradebookString.append(aGradebookFullName);
+//		aGradebookString.append(",");
+//		aGradebookString.append(aGradebookEntry.getPid());
+//		aGradebookString.append(",");
+//		aGradebookString.append(aGrade);
+//		aGradebookString.append("\n");
+//		return aGradebookString.toString();
+//	}
+//	public static GradebookEntry toGradebookEntry(String aRowString) {
+//		String[] aRow = aRowString.split(",");
+//		if (aRow.length < 4) {
+//			System.out.println("Ignoring row " + aRow);
+//			return null;
+//		}
+//		String anOnyen = aRow[0];
+//		String aLastName = aRow[1];
+//		String aFirstName = aRow[2];
+//		String aPID = aRow[3];
+//		return new AGradebookEntry(anOnyen, aFirstName, aLastName, aPID);
+//		
+//	}
+//	public static String toGradebookHeader() {
+//		StringBuffer aGradeboookHeader = new StringBuffer();
+//
+//		aGradeboookHeader.append("Student ID,");
+//		aGradeboookHeader.append("Student Name,");
+//		aGradeboookHeader.append("PID,");
+//		aGradeboookHeader.append("Grade\n");
+//		return aGradeboookHeader.toString();
+//	}
 }

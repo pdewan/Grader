@@ -1,5 +1,5 @@
 package gradingTools.sakai.gradebook;
-
+import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookRow;
 public class AGradebookEntry implements GradebookEntry {
 	String studentID;
 	String firstName;
@@ -49,7 +49,7 @@ public class AGradebookEntry implements GradebookEntry {
 	}
 	
 	public String toString() {
-		return GradebookConverter.toGradebookRow(this, "");
+		return toGradebookRow(this, "");
 	}
 
 	
