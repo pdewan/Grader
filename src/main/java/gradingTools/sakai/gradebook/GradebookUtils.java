@@ -52,10 +52,10 @@ public class GradebookUtils {
 			System.out.println("Ignoring row " + aRow);
 			return null;
 		}
-		String anOnyen = aRow[0];
-		String aLastName = aRow[1];
-		String aFirstName = aRow[2];
-		String aPID = aRow[3];
+		String anOnyen = aRow[0].trim();
+		String aLastName = aRow[1].trim();
+		String aFirstName = aRow[2].trim();
+		String aPID = aRow[3].trim();
 		return new AGradebookEntry(anOnyen, aFirstName, aLastName, aPID);
 		
 	}

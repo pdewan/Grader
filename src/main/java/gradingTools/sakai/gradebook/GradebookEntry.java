@@ -10,4 +10,8 @@ public interface GradebookEntry {
 
 	public abstract String getPid();
 
+	String getGrade();
+
+	void setGrade(String grade);
+
 }

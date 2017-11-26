@@ -5,6 +5,9 @@ public class AGradebookEntry implements GradebookEntry {
 	String firstName;
 	String lastName;
 	String pid;
+	String grade;
+	
+
 	public AGradebookEntry(String studentID, String firstName, String lastName,
 			String pid) {
 		super();
@@ -51,7 +54,14 @@ public class AGradebookEntry implements GradebookEntry {
 	public String toString() {
 		return toGradebookRow(this, "");
 	}
-
+	@Override
+	public String getGrade() {
+		return grade;
+	}
+	@Override
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 	
 	/* (non-Javadoc)
 	 * @see gradingTools.sakai.gradebook.GradebookEntry#toGradebookRow(java.lang.String)

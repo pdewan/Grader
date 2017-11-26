@@ -1,19 +1,29 @@
 package gradingTools.sakai.gradebook;
 
+import org.joda.time.DateTime;
+
 public interface DiaryEntry {
 
-	public String getDate();
+	public DateTime getDate();
 
 	public String getEmail();
 
 	public String getFullName();
 
-	public String getDiaryPoints();
+	public int getDiaryPoints();
 
-	public String getQuestionPoint();
+	public int getQuestionPoints();
 
 	public String getGrader();
 
 	public String getComment();
+
+	void incrementQuestionPoints(int anIncrement);
+
+	void incrementDiaryPoints(int anIncrement);
+
+	GradebookEntry getGradebookEntry();
+
+	void setGradebookEntry(GradebookEntry gradebookEntry);
 
 }
