@@ -24,15 +24,16 @@ public class DiaryManagement {
 	public static final int QA_GRADE_COLUMN = 3;
 	public static final int GRADER_NAME_COLUMN = 4;
 	public static final int GRADER_EMAIL_COLUMN = 5;
-	public static final int GRADER_COMMENTS_COLUMN = 6;
-	public static final int DATE_COLUMN = 7;
+	public static final int GRADER_COMMENTS_COLUMN = 7;
+	public static final int DATE_COLUMN = 6;
 
 	public static void diaryToGradebook(String aDate, String aDiaryFileName,
 			boolean isDiaryPoints,
 			String aSakaiInputFile, String[] aSubstitutions) {
 		try {
+			String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
 			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
-			String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDate.replace("/", "_") + ".csv";
+			String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
 			 diaryToGradebook(aDate, aDiaryFileName, isDiaryPoints, aSakaiInputFile, aSubstitutions, aSakaiFileName);		 
 		} catch (Exception e) {
 			
@@ -61,7 +62,7 @@ public class DiaryManagement {
 	static DateTime now = DateTime.now();
 	public static long GRADING_DAY_PERIOD_MS = 7*FrameworkProjectRequirements.MILLI_SECONDS_IN_DAY;
 	static DateTime toDateTime(String aDateString) {
-		if (aDateString == null) {
+		if (aDateString == null || aDateString.isEmpty()) {
 			return null;
 		}
 		String[] aDateComponents = aDateString.split("/");
@@ -88,6 +89,9 @@ public class DiaryManagement {
 		
 	}
 	public static boolean withinGradingDays(DateTime anExpectedDateTime, DateTime anActualDateTime) {
+		if (anExpectedDateTime == null) {
+			return true;
+		}
 		DateTime anEarliestDateTime = anExpectedDateTime.minus(GRADING_DAY_PERIOD_MS);
 		DateTime aLatestDateTime = anExpectedDateTime.plus(GRADING_DAY_PERIOD_MS );
 		
@@ -138,21 +142,25 @@ public class DiaryManagement {
 			
 			String[] aRow = anInputLines[aRowNum].split(",");
 			if (aRow.length < 8) {
-				System.out.println("Ignoring row " + aRow);
+				System.out.println("Ignoring row with < 8 elements " + Arrays.toString(aRow));
 				continue;
 			}
 			try {
+			String anEmail = aRow[EMAIL_COLUMN];
+			String anOnyen = anEmailToOnyen.get(anEmail);
+			if (anOnyen == null) {
+				String[] aNameAndDomain = anEmail.split("@");
+				if (aNameAndDomain.length != 2) {
+					System.out.println("Ignoring row with no email in first column " + Arrays.toString(aRow));
+				}
+				anOnyen = aNameAndDomain[0];				
+			}	
 			String anActualDate = aRow[DATE_COLUMN];
 			DateTime anActualDateTime = toDateTime(anActualDate);
 			if (!withinGradingDays(anExpectedDateTime, anActualDateTime)) {
 				continue;
 			}			
-			String anEmail = aRow[EMAIL_COLUMN];
-			String anOnyen = anEmailToOnyen.get(anEmail);
-			if (anOnyen == null) {
-				String[] aNameAndDomain = anEmail.split("@");
-				anOnyen = aNameAndDomain[0];				
-			}				
+						
 			GradebookEntry aGradebookEntry = anOnyenToGradebook.get(anOnyen);
 			if (aGradebookEntry == null) {
 				String[] aNameComponents = aRow[FULL_NAME_COLUMN].trim().split(" ");

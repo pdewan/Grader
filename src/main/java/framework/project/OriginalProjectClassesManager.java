@@ -414,7 +414,7 @@ public class OriginalProjectClassesManager implements ClassesManager {
     	if (aTag != null)
     		result = findByTag(aTag); 
     	if (aTag != null && result.isEmpty())
-    		result = finByPattern(aTag); 
+    		result = findByPattern(aTag); 
     	if (!result.isEmpty())
     		return result;
     	if (aName != null)
@@ -466,7 +466,7 @@ public class OriginalProjectClassesManager implements ClassesManager {
     }
     
     @Override
-    public Set<ClassDescription> finByPattern(String tag) {
+    public Set<ClassDescription> findByPattern(String tag) {
         Set<ClassDescription> classes = new HashSet<>();
         for (ClassDescription description : classDescriptions) {
 //        	if (description.getJavaClass().isInterface())

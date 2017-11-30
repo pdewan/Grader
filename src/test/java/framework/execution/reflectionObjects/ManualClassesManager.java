@@ -78,7 +78,7 @@ public class ManualClassesManager implements ClassesManager {
 	}
 
 	@Override
-	public Set<ClassDescription> finByPattern(String tag) {
+	public Set<ClassDescription> findByPattern(String tag) {
 		// TODO Auto-generated method stub
 		return null;
 	}
