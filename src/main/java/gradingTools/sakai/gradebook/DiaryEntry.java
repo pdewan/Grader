@@ -25,5 +25,7 @@ public interface DiaryEntry {
 	GradebookEntry getGradebookEntry();
 
 	void setGradebookEntry(GradebookEntry gradebookEntry);
+	void setDiaryText(StringBuffer aText);
+	StringBuffer getDiaryText();
 
 }

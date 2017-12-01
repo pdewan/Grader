@@ -11,6 +11,8 @@ public class ADiaryEntry implements DiaryEntry {
 	String grader;
 	String comment;
 	GradebookEntry gradebookEntry;
+	StringBuffer diaryText = new StringBuffer();
+	
 	
 	public ADiaryEntry(DateTime date, String email, String fullName,
 			int diaryPoints, int questionPoint, String grader,
@@ -68,5 +70,12 @@ public class ADiaryEntry implements DiaryEntry {
 	public void setGradebookEntry(GradebookEntry gradebookEntry) {
 		this.gradebookEntry = gradebookEntry;
 	}	
-
+	@Override
+	public StringBuffer getDiaryText() {
+		return diaryText;
+	}
+	@Override
+	public void setDiaryText(StringBuffer diaryText) {
+		this.diaryText = diaryText;
+	}
 }

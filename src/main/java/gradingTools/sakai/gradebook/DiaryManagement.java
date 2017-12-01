@@ -25,6 +25,7 @@ public class DiaryManagement {
 	public static final int GRADER_NAME_COLUMN = 4;
 	public static final int GRADER_EMAIL_COLUMN = 5;
 	public static final int GRADER_COMMENTS_COLUMN = 7;
+	public static final int DIARY_TEXT_COLUMN = 8;
 	public static final int DATE_COLUMN = 6;
 
 	public static void diaryToGradebook(String aDate, String aDiaryFileName,
@@ -41,6 +42,28 @@ public class DiaryManagement {
 			e.printStackTrace();
 		}
 	}	
+	public static void diaryToGradebook(String[] aDates, String aDiaryFileName,
+//			boolean isDiaryPoints,
+			String aSakaiInputFile, String[] aSubstitutions) {
+		try {
+			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
+			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
+			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
+			for (String aDate:aDates) {
+			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
+			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
+
+			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
+			  String aGradebookString = diaryToGradebook(aDate, aDiaryString, isDiaryPoints, aGradebookInputString, aSubstitutions);		
+			  Common.writeText(aSakaiFileName, aGradebookString);
+			}
+
+		} catch (Exception e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void diaryToGradebook(String aDate, String aDiaryFileName,
 			boolean isDiaryPoints,
 			String aSakaiInputFile, String[] aSubstitutions, String aSakaiFileName) {
@@ -118,6 +141,13 @@ public class DiaryManagement {
 		return aGradebookString.toString();
 		
 	}
+	static StringBuffer toText (String[] aStrings) {
+		StringBuffer retVal = new StringBuffer();
+		for (String aString:aStrings) {
+			retVal.append(aString);
+		}
+		return retVal;
+	}
 	public static Map<String, DiaryEntry> diaryToMap(String anExpectedDate, StringBuffer aDiaryString,
 			StringBuffer aGradebookTemplate,
 			String[] aSubstitutions) {
@@ -137,12 +167,17 @@ public class DiaryManagement {
 //		aGradebookString.append(toGradebookHeader());
 		Map<String, GradebookEntry> anOnyenToGradebook = gradebookToMap(aGradebookTemplate);
 		Map<String, DiaryEntry> anOnyenToDiaryEntry = new HashMap<>();
-
+		DiaryEntry aLastDiaryEntry = null;
 		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
 			
 			String[] aRow = anInputLines[aRowNum].split(",");
 			if (aRow.length < 8) {
-				System.out.println("Ignoring row with < 8 elements " + Arrays.toString(aRow));
+				if (aLastDiaryEntry == null) {
+					System.out.println("Ignoring row with < 8 elements and no previous student row " + Arrays.toString(aRow));
+				} else {
+					aLastDiaryEntry.getDiaryText().append(toText(aRow));
+				}
+//				System.out.println("Ignoring row with < 8 elements " + Arrays.toString(aRow));
 				continue;
 			}
 			try {
@@ -181,24 +216,25 @@ public class DiaryManagement {
 				}
 			}
 			
-			DiaryEntry aDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
-			if (aDiaryEntry == null) {
-				aDiaryEntry = new ADiaryEntry(anActualDateTime,
+//			DiaryEntry 
+			aLastDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
+			if (aLastDiaryEntry == null) {
+				aLastDiaryEntry = new ADiaryEntry(anActualDateTime,
 						anEmail, 
 						aRow[FULL_NAME_COLUMN].trim(), 
 						0, 
 						0, 
 						aRow[GRADER_NAME_COLUMN].trim(), 
 						aRow[GRADER_COMMENTS_COLUMN].trim());
-				aDiaryEntry.setGradebookEntry(aGradebookEntry);
-				anOnyenToDiaryEntry.put(anOnyen, aDiaryEntry);
+				aLastDiaryEntry.setGradebookEntry(aGradebookEntry);
+				anOnyenToDiaryEntry.put(anOnyen, aLastDiaryEntry);
 			}
 			
 //			String anEmail = aRow[2];
 			int aDiaryGrade = Integer.parseInt(aRow[DIARY_GRADE_COLUMN].trim());
 			int aQAGrade = Integer.parseInt(aRow[QA_GRADE_COLUMN].trim());
-			aDiaryEntry.incrementDiaryPoints(aDiaryGrade);
-			aDiaryEntry.incrementQuestionPoints(aQAGrade);
+			aLastDiaryEntry.incrementDiaryPoints(aDiaryGrade);
+			aLastDiaryEntry.incrementQuestionPoints(aQAGrade);
 			
 //			String aGradebookRow = toGradebookRow(aGradebookEntry, aDiaryGrade);
 //			aGradebookString.append(aGradebookRow);
