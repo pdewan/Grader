@@ -48,13 +48,15 @@ public class DiaryManagement {
 		try {
 			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
 			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
+			String aInputLinesWithoutQuotes = aDiaryString.toString()
+					.replaceAll("\"", "");
 			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
 			for (String aDate:aDates) {
 			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
 			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
 
 			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
-			  String aGradebookString = diaryToGradebook(aDate, aDiaryString, isDiaryPoints, aGradebookInputString, aSubstitutions);		
+			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString, aSubstitutions);		
 			  Common.writeText(aSakaiFileName, aGradebookString);
 			}
 
@@ -71,8 +73,10 @@ public class DiaryManagement {
 		try {
 
 			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
+			String aInputLinesWithoutQuotes = aDiaryString.toString()
+					.replaceAll("\"", "");
 			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
-			String aGradebookString = diaryToGradebook(aDate, aDiaryString, isDiaryPoints, aGradebookInputString,
+			String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString,
 					aSubstitutions);
 		 
 			Common.writeText(aSakaiFileName, aGradebookString);
@@ -91,6 +95,21 @@ public class DiaryManagement {
 		String[] aDateComponents = aDateString.split("/");
 		int aMonth = Integer.parseInt(aDateComponents[0].trim());
 		int aDay = Integer.parseInt(aDateComponents[1].trim());
+		DateTime aDateTime = new DateTime(now.getYear(), aMonth, aDay, 0, 0);		
+//		String aNormalizedDateString = 
+//				aDateComponents[0] + "/" + 
+//				aDateComponents[1] + "/" +
+//						now.getYear();
+//		return new DateTime(aNormalizedDateString);		
+		return aDateTime;
+	}
+	static DateTime normalizedDateToDateTime(String aDateString) {
+		if (aDateString == null || aDateString.isEmpty()) {
+			return null;
+		}
+		String[] aDateComponents = aDateString.split("-");
+		int aMonth = Integer.parseInt(aDateComponents[1].trim());
+		int aDay = Integer.parseInt(aDateComponents[2].trim());
 		DateTime aDateTime = new DateTime(now.getYear(), aMonth, aDay, 0, 0);		
 //		String aNormalizedDateString = 
 //				aDateComponents[0] + "/" + 
@@ -122,7 +141,7 @@ public class DiaryManagement {
 		
 		
 	}
-	public static String diaryToGradebook(String anExpectedDate, StringBuffer aDiaryString, boolean isDiaryPoints,
+	public static String diaryToGradebook(String anExpectedDate, String aDiaryString, boolean isDiaryPoints,
 			StringBuffer aGradebookTemplate,
 			String[] aSubstitutions) {
 		Map<String, DiaryEntry> anOnyenToDiaryEntry = diaryToMap(anExpectedDate, aDiaryString, aGradebookTemplate, aSubstitutions);
@@ -148,7 +167,7 @@ public class DiaryManagement {
 		}
 		return retVal;
 	}
-	public static Map<String, DiaryEntry> diaryToMap(String anExpectedDate, StringBuffer aDiaryString,
+	public static Map<String, DiaryEntry> diaryToMap(String anExpectedDate, String aInputLinesWithoutQuotes,
 			StringBuffer aGradebookTemplate,
 			String[] aSubstitutions) {
 		DateTime anExpectedDateTime = toDateTime(anExpectedDate);
@@ -159,8 +178,8 @@ public class DiaryManagement {
 			String[] anOnyenAndEmail = aSubstitution.split(":");
 			anEmailToOnyen.put(anOnyenAndEmail[1], anOnyenAndEmail[0]);
 		}
-		String aInputLinesWithoutQuotes = aDiaryString.toString()
-				.replaceAll("\"", "");
+//		String aInputLinesWithoutQuotes = aDiaryString.toString()
+//				.replaceAll("\"", "");
 		String[] anInputLines = aInputLinesWithoutQuotes.toString().split("\n");
 //		StringBuilder aGradebookString = new StringBuilder(anInputLines.length);
 
@@ -168,7 +187,7 @@ public class DiaryManagement {
 		Map<String, GradebookEntry> anOnyenToGradebook = gradebookToMap(aGradebookTemplate);
 		Map<String, DiaryEntry> anOnyenToDiaryEntry = new HashMap<>();
 		DiaryEntry aLastDiaryEntry = null;
-		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
+		for (int aRowNum = 0; aRowNum < anInputLines.length; aRowNum++) {
 			
 			String[] aRow = anInputLines[aRowNum].split(",");
 			if (aRow.length < 8) {
@@ -187,11 +206,12 @@ public class DiaryManagement {
 				String[] aNameAndDomain = anEmail.split("@");
 				if (aNameAndDomain.length != 2) {
 					System.out.println("Ignoring row with no email in first column " + Arrays.toString(aRow));
+					continue;
 				}
 				anOnyen = aNameAndDomain[0];				
 			}	
 			String anActualDate = aRow[DATE_COLUMN];
-			DateTime anActualDateTime = toDateTime(anActualDate);
+			DateTime anActualDateTime = normalizedDateToDateTime(anActualDate);
 			if (!withinGradingDays(anExpectedDateTime, anActualDateTime)) {
 				continue;
 			}			
