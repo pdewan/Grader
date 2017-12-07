@@ -28,35 +28,45 @@ public class DiaryManagement {
 	public static final int DIARY_TEXT_COLUMN = 8;
 	public static final int DATE_COLUMN = 6;
 
-	public static void diaryToGradebook(String aDate, String aDiaryFileName,
-			boolean isDiaryPoints,
-			String aSakaiInputFile, String[] aSubstitutions) {
-		try {
-			String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
-			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
-			String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
-			 diaryToGradebook(aDate, aDiaryFileName, isDiaryPoints, aSakaiInputFile, aSubstitutions, aSakaiFileName);		 
-		} catch (Exception e) {
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}	
+//	public static void diaryToGradebook(String aDate, String aDiaryFileName,
+//			boolean isDiaryPoints,
+//			String aSakaiInputFile, String[] aSubstitutions) {
+//		try {
+//			String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
+//			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
+//			String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
+//			 diaryToGradebook(aDate, aDiaryFileName, isDiaryPoints, aSakaiInputFile, aSubstitutions, aSakaiFileName);		 
+//		} catch (Exception e) {
+//			
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}	
 	public static void diaryToGradebook(String[] aDates, String aDiaryFileName,
 //			boolean isDiaryPoints,
-			String aSakaiInputFile, String[] aSubstitutions) {
+			Boolean[] isDiaryPoints,
+			String aSakaiInputFile, String[] aSubstitutions, Integer[] aMaxLimits) {
 		try {
 			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
 			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
 			String aInputLinesWithoutQuotes = aDiaryString.toString()
 					.replaceAll("\"", "");
 			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
-			for (String aDate:aDates) {
-			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
-			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
+			for (int i = 0; i < aDates.length && i < aMaxLimits.length && i < isDiaryPoints.length; i++) {
+			  String aDate = aDates[i];
+//			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
+//			  boolean isDiaryPoints = isDiaryPointsArr[i];
+			  String aGradeColumnName = isDiaryPoints[i]?"Diary":"QA";
+//			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
+			  String aFileSuffix = aGradeColumnName;
 
-			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
-			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString, aSubstitutions);		
+
+//			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
+			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aFileSuffix+ aDate.replace("/", "_") + ".csv";
+
+//			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString, aSubstitutions);		
+			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints[i], aGradebookInputString, aSubstitutions, aGradeColumnName, aMaxLimits[i]);		
+
 			  Common.writeText(aSakaiFileName, aGradebookString);
 			}
 
@@ -68,7 +78,7 @@ public class DiaryManagement {
 	}
 	public static void diaryToGradebook(String aDate, String aDiaryFileName,
 			boolean isDiaryPoints,
-			String aSakaiInputFile, String[] aSubstitutions, String aSakaiFileName) {
+			String aSakaiInputFile, String[] aSubstitutions, String aSakaiFileName, String aGradeColumn, int aMaxLimit) {
 		// File aSakaiFile = new File(aSakaiFileName);
 		try {
 
@@ -77,7 +87,7 @@ public class DiaryManagement {
 					.replaceAll("\"", "");
 			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
 			String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString,
-					aSubstitutions);
+					aSubstitutions, aGradeColumn, aMaxLimit);
 		 
 			Common.writeText(aSakaiFileName, aGradebookString);
 		} catch (IOException e) {
@@ -143,14 +153,22 @@ public class DiaryManagement {
 	}
 	public static String diaryToGradebook(String anExpectedDate, String aDiaryString, boolean isDiaryPoints,
 			StringBuffer aGradebookTemplate,
-			String[] aSubstitutions) {
+			String[] aSubstitutions,
+			String aGradeColumnName, 
+			Integer aMaxLimit) {
 		Map<String, DiaryEntry> anOnyenToDiaryEntry = diaryToMap(anExpectedDate, aDiaryString, aGradebookTemplate, aSubstitutions);
 		StringBuilder aGradebookString = new StringBuilder();
-		aGradebookString.append(toGradebookHeader());
+		aGradebookString.append(toGradebookHeader(aGradeColumnName));
 		for (String anOnyen:anOnyenToDiaryEntry.keySet()) {
 			DiaryEntry aDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
+			int anIntGrade = isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints();
+			if (aMaxLimit != null && aMaxLimit >= 0) {
+				anIntGrade = Math.min(anIntGrade, aMaxLimit);
+			}
+//			String aGrade = Integer.toString(
+//					isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints());
 			String aGrade = Integer.toString(
-					isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints());
+					anIntGrade);
 			String aGradebookRow = toGradebookRow(aDiaryEntry.getGradebookEntry(), aGrade);
 			aGradebookString.append(aGradebookRow);
 		}

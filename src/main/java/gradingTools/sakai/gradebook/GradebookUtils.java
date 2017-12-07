@@ -59,13 +59,18 @@ public class GradebookUtils {
 		return new AGradebookEntry(anOnyen, aFirstName, aLastName, aPID);
 		
 	}
-	public static String toGradebookHeader() {
+	public static String toGradebookHeader(String aGradeColumnTitle) {
 		StringBuffer aGradeboookHeader = new StringBuffer();
 
 		aGradeboookHeader.append("Student ID,");
 		aGradeboookHeader.append("Student Name,");
 		aGradeboookHeader.append("PID,");
-		aGradeboookHeader.append("Grade\n");
+		if (aGradeColumnTitle == null || aGradeColumnTitle.isEmpty()){
+//		     aGradeboookHeader.append("Grade\n");
+		     aGradeColumnTitle = "Grade";
+		}
+		aGradeboookHeader.append(aGradeColumnTitle + "\n");
+
 		return aGradeboookHeader.toString();
 	}
 }

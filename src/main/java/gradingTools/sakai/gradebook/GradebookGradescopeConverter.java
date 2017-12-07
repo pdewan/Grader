@@ -59,13 +59,13 @@ public class GradebookGradescopeConverter {
 	}
 
 	public static void gradescopeToGradebook(String aGradescopeFileName,
-			String aSakaiFileName, String[] aSubstitutions) {
+			String aSakaiFileName, String[] aSubstitutions, String aGradeColumnName) {
 		// File aSakaiFile = new File(aSakaiFileName);
 		try {
 
 			StringBuffer aGradeScopeString = Common.toText(aGradescopeFileName);
 			String aGradebookString = gradescopeToGradebook(aGradeScopeString,
-					aSubstitutions);
+					aSubstitutions, aGradeColumnName);
 			Common.writeText(aSakaiFileName, aGradebookString);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -74,14 +74,14 @@ public class GradebookGradescopeConverter {
 
 	}
 	public static void gradescopeToGradebook(String aGradescopeFileName,
-			String aSakaiFileName, String aSakaiInputFile, String[] aSubstitutions) {
+			String aSakaiFileName, String aSakaiInputFile, String[] aSubstitutions, String aGradeColumnName) {
 		// File aSakaiFile = new File(aSakaiFileName);
 		try {
 
 			StringBuffer aGradeScopeString = Common.toText(aGradescopeFileName);
 			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
 			String aGradebookString = gradescopeToGradebook(aGradeScopeString, aGradebookInputString,
-					aSubstitutions);
+					aSubstitutions, aGradeColumnName);
 			Common.writeText(aSakaiFileName, aGradebookString);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -90,7 +90,7 @@ public class GradebookGradescopeConverter {
 	}
    
 	public static String gradescopeToGradebook(StringBuffer aGradescopeString,
-			String[] aSubstitutions) {
+			String[] aSubstitutions, String aGradeColumnName) {
 		Map<String, String> anOnyenToEmail = new HashMap();
 		for (String aSubstitution : aSubstitutions) {
 			String[] anOnyenAndEmail = aSubstitution.split(":");
@@ -101,7 +101,7 @@ public class GradebookGradescopeConverter {
 		String[] anInputLines = aInputLinesWithoutQuotes.toString().split("\n");
 		StringBuilder aGradebookString = new StringBuilder(anInputLines.length);
 
-		aGradebookString.append(toGradebookHeader());
+		aGradebookString.append(toGradebookHeader(aGradeColumnName));
 
 		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
 			String[] aRow = anInputLines[aRowNum].split(",");
@@ -137,7 +137,8 @@ public class GradebookGradescopeConverter {
 	}
 	public static String gradescopeToGradebook(StringBuffer aGradescopeString,
 			StringBuffer aGradebookTemplate,
-			String[] aSubstitutions) {
+			String[] aSubstitutions,
+			String aGradeColumnName) {
 		Map<String, String> anOnyenToEmail = new HashMap();
 		for (String aSubstitution : aSubstitutions) {
 			String[] anOnyenAndEmail = aSubstitution.split(":");
@@ -151,7 +152,7 @@ public class GradebookGradescopeConverter {
 //		aGradebookString.append("Student Name,");
 //		aGradebookString.append("PID,");
 //		aGradebookString.append("Grade\n");
-		aGradebookString.append(toGradebookHeader());
+		aGradebookString.append(toGradebookHeader(aGradeColumnName));
 		Map<String, GradebookEntry> anOnyenToGradebook = gradebookToMap(aGradebookTemplate);
 
 		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
