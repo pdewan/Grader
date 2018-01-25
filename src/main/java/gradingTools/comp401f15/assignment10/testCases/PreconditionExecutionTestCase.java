@@ -15,8 +15,8 @@ import util.trace.TraceableBus;
 import util.trace.TraceableListener;
 import bus.uigen.ObjectEditor;
 import bus.uigen.oadapters.ObjectAdapter;
-import bus.uigen.trace.ObjectAdapterReceivedPropertyChangeEvent;
-import bus.uigen.trace.PropertyChangeEventInfo;
+import util.trace.uigen.ObjectAdapterReceivedPropertyChangeEvent;
+import util.trace.uigen.ObjectAdapterPropertyChangeEventInfo;
 import framework.execution.ARunningProject;
 import framework.grading.testing.BasicTestCase;
 import grader.basics.execution.BasicProjectExecution;
@@ -391,7 +391,7 @@ public class PreconditionExecutionTestCase extends BasicTestCase implements Trac
     public synchronized void newEvent(Exception aTraceable) {
 		if (aTraceable instanceof ObjectAdapterReceivedPropertyChangeEvent) { // multiple PropertyChangeeventInfo will be sent
 			
-			PropertyChangeEventInfo aPropertyChange = (PropertyChangeEventInfo) aTraceable;
+			ObjectAdapterPropertyChangeEventInfo aPropertyChange = (ObjectAdapterPropertyChangeEventInfo) aTraceable;
 			getPre(aPropertyChange.getPropertyChangeEvent());
 //			System.out.println("Property change:" + aPropertyChange.getPropertyChangeEvent() );
 			if (!isParentThread(Thread.currentThread())) {

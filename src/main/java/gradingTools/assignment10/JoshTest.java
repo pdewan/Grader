@@ -3,6 +3,7 @@ package gradingTools.assignment10;
 import util.trace.TraceableLog;
 import util.trace.TraceableLogFactory;
 import bus.uigen.ObjectEditor;
+import util.trace.uigen.IllegalComponentAddPosition;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,7 +20,7 @@ public class JoshTest {
 
         String obj = "Hello world";
         ObjectEditor.edit(obj);
-        bus.uigen.trace.IllegalComponentAddPosition.newExample(123, null);
+        IllegalComponentAddPosition.newExample(123, null);
 //        Tracer.warning("Holy moley this is a warning!!!");
 
         // Look for warnings

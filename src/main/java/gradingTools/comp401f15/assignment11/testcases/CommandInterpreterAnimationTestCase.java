@@ -7,7 +7,7 @@ import util.trace.TraceableBus;
 import util.trace.TraceableListener;
 import bus.uigen.ObjectEditor;
 import bus.uigen.oadapters.ObjectAdapter;
-import bus.uigen.trace.ObjectAdapterReceivedPropertyChangeEvent;
+import util.trace.uigen.ObjectAdapterReceivedPropertyChangeEvent;
 
 public  class CommandInterpreterAnimationTestCase extends CommandIntrepreterMethodCallTestCase  implements TraceableListener{
 	public CommandInterpreterAnimationTestCase(String methodTag) {

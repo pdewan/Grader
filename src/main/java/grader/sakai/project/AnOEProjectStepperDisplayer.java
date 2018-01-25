@@ -6,8 +6,8 @@ import util.trace.TraceableWarning;
 import bus.uigen.CompleteOEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.uiFrame;
-import bus.uigen.trace.IllegalSourceOfPropertyNotification;
-import bus.uigen.trace.UnknownPropertyNotification;
+import util.trace.uigen.IllegalSourceOfPropertyNotification;
+import util.trace.uigen.UnknownPropertyNotification;
 
 public class AnOEProjectStepperDisplayer implements ProjectStepperDisplayer<CompleteOEFrame> {
 	public CompleteOEFrame display(ProjectStepper aProjectStepper) {
