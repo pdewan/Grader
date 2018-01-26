@@ -170,6 +170,9 @@ public class GradebookGradescopeConverter {
 			}			
 //			String anEmail = aRow[2];
 			String aGrade = aRow[3];
+			if (aGrade.isEmpty()) {
+				aGrade = "0";
+			}
 			String aGradebookRow = toGradebookRow(aGradebookEntry, aGrade);
 			aGradebookString.append(aGradebookRow);
 		}
