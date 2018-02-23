@@ -1,6 +1,7 @@
 package grader.execution;
 
 import grader.config.StaticConfigurationUtils;
+import util.trace.Tracer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,15 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 public class AnExecutionSpecification implements ExecutionSpecification {
-	List<String> processTeams = new ArrayList();
-	Map<String, List<String>> processTeamToProcesses = new HashMap();
-	Map<String, List<String>> processTeamToTerminatingProcesses = new HashMap();
-	Map<String, Integer> processToSleepTime = new HashMap();
-	Map<String, String> processToEntryTag = new HashMap();
-	Map<String, List<String>> processToEntryTags = new HashMap();
-	Map<String, String> processToEntryPoint = new HashMap();
-	Map<String, List<String>> processToArgs = new HashMap();
-	Map<String, List<String>> processToStartTags = new HashMap();
+	List<String> processTeams = new ArrayList<>();
+	Map<String, List<String>> processTeamToProcesses = new HashMap<>();
+	Map<String, List<String>> processTeamToTerminatingProcesses = new HashMap<>();
+	Map<String, Integer> processToSleepTime = new HashMap<>();
+	Map<String, String> processToEntryTag = new HashMap<>();
+	Map<String, List<String>> processToEntryTags = new HashMap<>();
+	Map<String, String> processToEntryPoint = new HashMap<>();
+	Map<String, List<String>> processToArgs = new HashMap<>();
+	Map<String, List<String>> processToStartTags = new HashMap<>();
 	
 	public AnExecutionSpecification() {
 		
@@ -106,6 +107,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 	 */
 	@Override
 	public void setProcessTeams(List<String> aProcessTeamNames) {
+		Tracer.info(this, "Setting process team: " + aProcessTeamNames);
 		processTeams = aProcessTeamNames;
 	}
 	
@@ -122,7 +124,8 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 	 */
 	@Override
 	public void setProcesses(String aProcessTeam, List<String> aProcesses) {
-		 processTeamToProcesses.put(aProcessTeam, aProcesses);
+		Tracer.info(this, "Setting processes: " + aProcessTeam + " = " + aProcesses);
+		processTeamToProcesses.put(aProcessTeam, aProcesses);
 	}
 	
 	@Override
@@ -135,6 +138,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 	 */
 	@Override
 	public void setTerminatingProcesses(String aProcessTeam, List<String> aProcesses) {
+		Tracer.info(this, "Setting terminating processes: " + aProcessTeam + " - " + aProcesses);
 		processTeamToTerminatingProcesses.put(aProcessTeam, aProcesses);
 	}
 	/* (non-Javadoc)
@@ -150,6 +154,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 	 */
 	@Override
 	public void setSleepTime(String aProcess, int aSleepTime) {
+		Tracer.info(this, "Setting sleep time: " + aSleepTime);
 		 processToSleepTime.put(aProcess, aSleepTime);
 	}
 	
@@ -165,6 +170,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 	 */
 	@Override
 	public void setEntryTag(String aProcess, String anEntryTag) {
+		Tracer.info(this, "Setting entry tag processes: " + aProcess + " - " + anEntryTag);
 		 processToEntryTag.put(aProcess, anEntryTag);
 	}
 	/* (non-Javadoc)
@@ -179,6 +185,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 	 */
 	@Override
 	public void setArgs(String aProcess, List<String> anEntryArgs) {
+		Tracer.info(this, "Setting processes args: " + aProcess + " - " + anEntryArgs);
 		 processToArgs.put(aProcess, anEntryArgs);
 	}
 	
@@ -191,6 +198,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 	 */
 	@Override
 	public void setStartTags(String aProcess, List<String> aStartTags) {
+		Tracer.info(this, "Setting start tag processes: " + aProcess + " - " + aStartTags);
 		processToStartTags.put(aProcess, aStartTags);
 	}
 
@@ -201,6 +209,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 
 	@Override
 	public void setEntryPoint(String aProcess, String anEntryPoint) {
+		Tracer.info(this, "Setting entry point processes: " + aProcess + " - " + anEntryPoint);
 		processToEntryPoint.put(aProcess, anEntryPoint);
 	}
 
@@ -211,6 +220,7 @@ public class AnExecutionSpecification implements ExecutionSpecification {
 
 	@Override
 	public void setEntryTags(String aProcess, List<String> anEntryTags) {
+		Tracer.info(this, "Setting entry tags processes: " + aProcess + " - " + anEntryTags);
 		processToEntryTags.put(aProcess, anEntryTags);
 		
 	}

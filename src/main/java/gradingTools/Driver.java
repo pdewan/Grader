@@ -14,6 +14,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 import util.trace.Traceable;
 import util.trace.TraceableBus;
+import util.trace.TraceableLogFactory;
 import util.trace.Tracer;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
@@ -735,10 +736,13 @@ public class Driver {
     }
    
     public static void setTracing() {
+    	TraceableLogFactory.setEnableTraceableLog(false);
     	if (isHeadless()) {
     		Traceable.setLogMesssages(false);
     	}
-//		Tracer.showInfo(true);
+    	Traceable.setPrintTime(true);
+//    	Tracer.showInfo(false);
+		Tracer.showInfo(true);
 //		Tracer.setKeywordPrintStatus(OverallNotesChanged.class, true);
 //		Tracer.setKeywordPrintStatus(Tracer.ALL_KEYWORDS, true);
     }
@@ -806,7 +810,7 @@ public class Driver {
 	}
 
 	public static void setHeadlessExitOnComplete(boolean headlessExitOnComplete) {
-		Tracer.showInfo(true);
+//		Tracer.showInfo(true);
 		Tracer.setKeywordPrintStatus(AZippedRootFolderProxy.class, true);
 		Driver.headlessExitOnComplete = headlessExitOnComplete;
 	}

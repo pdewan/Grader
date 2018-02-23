@@ -1,8 +1,11 @@
 package framework.grading.testing;
 
+import grader.basics.junit.BasicJUnitUtils;
 import grader.basics.junit.TestCaseResult;
+import grader.basics.project.CurrentProjectHolder;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.junit.Test;
 
 
 /**
@@ -115,5 +118,22 @@ public abstract class BasicTestCase implements TestCase {
 	}
 	public void setPointWeight(double pointWeight) {
 		this.pointWeight = pointWeight;
+	}
+	
+	@Test
+	public void defaultTest() {
+		TestCaseResult result = null;
+        try {
+        	result = test(CurrentProjectHolder.getOrCreateCurrentProject(), true);  
+        	
+    		BasicJUnitUtils.assertTrue(result.getNotes(), result.getPercentage(), result.isPass());
+        } catch (Throwable e) {
+        	e.printStackTrace();
+        	if (result != null) {
+        		BasicJUnitUtils.assertTrue(e, result.getPercentage());
+        	} else {
+        		BasicJUnitUtils.assertTrue(e, 0);
+        	}
+        }
 	}
 }
