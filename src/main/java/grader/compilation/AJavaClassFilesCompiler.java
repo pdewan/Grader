@@ -1,7 +1,9 @@
 package grader.compilation;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +53,12 @@ public class AJavaClassFilesCompiler implements ClassFilesCompiler{
 
 			Iterable<? extends JavaFileObject> compilationUnits = fileManager
 					.getJavaFileObjectsFromFiles(sourceFiles);
-			compiler.getTask(null, fileManager, null, optionList, null, compilationUnits).call();
+			StringWriter outputWriter = new StringWriter();
+			compiler.getTask(new BufferedWriter(outputWriter), fileManager, null, optionList, null, compilationUnits).call();
+			String output = outputWriter.toString();
+			if (!output.isEmpty()) {
+				System.err.println(output);
+			}
 			for (File javaFile:sourceFiles) {
 				SourceFileCompiled.newCase(javaFile.getAbsolutePath(), this);
 				
