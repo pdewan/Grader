@@ -205,8 +205,13 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	}
 	
 	public void recordResult (String[] aRow, int aColumn, String aResult) {
+		try {
 		String aGradeCell = aRow[aColumn];
+		
 		aRow[aColumn] = aResult;
+		} catch (Exception e) {
+			e.printStackTrace(); //get array index bound exception sometimes
+		}
 		
 	}
 	

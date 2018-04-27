@@ -118,6 +118,23 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 			table.set (i, extendedRow(table.get(i)));
 		}
 	}
+	void extendTable(int newSize) {
+		for (int i = 0; i < table.size(); i++) {
+			table.set (i, extendedRow(table.get(i), newSize));
+		}
+	}
+	String[] extendedRow(String[] anExistinRow, int newSize) {
+		String[] retVal = new String[newSize];
+
+		for (int index = 0; index < anExistinRow.length; index++) {
+			retVal[index] = anExistinRow[index];
+		}
+		for (int index = anExistinRow.length; index < retVal.length; index++) {
+//			retVal[index] = "0";
+			retVal[index] = DEFAULT_CHAR;
+		}
+		return retVal;
+	}
 
 	String[] extendedRow(String[] anExistinRow) {
 		// adding late penalty column also and results column
