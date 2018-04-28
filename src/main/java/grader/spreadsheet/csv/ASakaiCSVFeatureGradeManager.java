@@ -135,6 +135,29 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 		}
 		return retVal;
 	}
+	
+	protected String[] extendRow(String[] anExistingRow, int newSize) {
+		int aRowIndex = table.indexOf(anExistingRow);
+		if (aRowIndex < 0) {
+			throw new RuntimeException("Row not found");
+		}
+		String[] aNewRow = extendedRow(anExistingRow,  newSize);
+		table.set(aRowIndex, aNewRow);
+		return aNewRow;
+	}
+	public static final int ROW_EXTENSION_INCREMENT = 5;
+	public void recordResult (String[] aRow, int aColumn, String aResult) {
+		try {
+			String[] aResultRow = aRow;
+			if (aColumn >= aRow.length) {
+				aResultRow = extendRow(aRow, aColumn+ROW_EXTENSION_INCREMENT); // add extra columns just in case
+			}
+		   super.recordResult(aResultRow, aColumn, aResult);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	String[] extendedRow(String[] anExistinRow) {
 		// adding late penalty column also and results column

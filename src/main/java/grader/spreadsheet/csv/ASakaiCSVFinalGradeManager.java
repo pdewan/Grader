@@ -203,14 +203,34 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		}
 		
 	}
-	
+//	String[] extendedRow(String[] anExistinRow, int newSize) {
+//		String[] retVal = new String[newSize];
+//
+//		for (int index = 0; index < anExistinRow.length; index++) {
+//			retVal[index] = anExistinRow[index];
+//		}
+//		for (int index = anExistinRow.length; index < retVal.length; index++) {
+////			retVal[index] = "0";
+//			retVal[index] = DEFAULT_CHAR;
+//		}
+//		return retVal;
+//	}
+//	protected void extendRow(String[] anExistingRow, int newSize) {
+//		int aRowIndex = table.indexOf(anExistingRow);
+//		if (aRowIndex < 0) {
+//			throw new RuntimeException("Row not found");
+//		}
+//		String[] aNewRow = extendedRow(anExistingRow,  newSize);
+//		table.set(aRowIndex, aNewRow);
+//	}
 	public void recordResult (String[] aRow, int aColumn, String aResult) {
 		try {
+			
 		String aGradeCell = aRow[aColumn];
 		
 		aRow[aColumn] = aResult;
 		} catch (Exception e) {
-			e.printStackTrace(); //get array index bound exception sometimes
+			e.printStackTrace();
 		}
 		
 	}
