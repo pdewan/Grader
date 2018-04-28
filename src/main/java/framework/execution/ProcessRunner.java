@@ -206,13 +206,25 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 		}
 		return aClassWithEntryTag;
 	}
-
+	public static final String[] EMPTY_STRING_ARGS = {};
 	protected String[] getArgs(String aProcess) {
-		return executionSpecification.getArgs(aProcess).toArray(new String[0]);
+		List<String> aListArgs = executionSpecification.getArgs(aProcess);
+		if (aListArgs == null) {
+			return EMPTY_STRING_ARGS;
+		}
+		else {
+			return aListArgs.toArray(EMPTY_STRING_ARGS);
+		}
+//		return executionSpecification.getArgs(aProcess).toArray(new String[0]);
 	}
 
 	protected int getSleepTime(String aProcess) {
-		return executionSpecification.getSleepTime(aProcess);
+		Integer aRetVal = executionSpecification.getSleepTime(aProcess);
+		if (aRetVal == null) {
+			return 0;
+		}
+		return aRetVal;
+//		return executionSpecification.getSleepTime(aProcess);
 	}
 
 	protected String[] getCommand(String aProcess, String anEntryPoint, String anEntryTag, String[] anArgs) {
