@@ -1,10 +1,12 @@
 package framework.grading.testing;
 
+import grader.basics.execution.RunningProject;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 import grader.permissions.Permissible;
+import gradingTools.shared.testcases.utils.ABufferingTestInputGenerator;
 
 /**
  * Like AnAbstractFeatureChecker
@@ -33,4 +35,12 @@ public interface TestCase extends Permissible{
 	Checkable getCheckable();
 	 public double getPointWeight() ;
 	public void setPointWeight(double pointWeight) ;
+
+	TestCaseResult getLastResult();
+
+	void setLastResult(TestCaseResult lastResult);
+
+	ABufferingTestInputGenerator getOutputBasedInputGenerator();
+
+	RunningProject getInteractiveInputProject();
 }

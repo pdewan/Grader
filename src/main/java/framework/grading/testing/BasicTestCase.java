@@ -1,8 +1,10 @@
 package framework.grading.testing;
 
+import grader.basics.execution.RunningProject;
 import grader.basics.junit.BasicJUnitUtils;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.CurrentProjectHolder;
+import gradingTools.shared.testcases.utils.ABufferingTestInputGenerator;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.junit.Test;
@@ -12,21 +14,7 @@ import org.junit.Test;
  * All test cases should extend this class.
  * Subclasses will implement the {@link TestCase#test(framework.project.Project, boolean)} method.
  * This method should call and return one of the following helper functions:
- * <ul>
-<<<<<<< HEAD
- *     <li>{@link framework.grading.testing.BasicTestCase#pass(boolean)}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#pass(String, boolean)}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#partialPass(double, boolean)}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#partialPass(double, String, boolean)}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#fail(String, boolean)}</li>
-=======
- *     <li>{@link framework.grading.testing.BasicTestCase#pass()}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#pass(String)}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#partialPass(double)}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#partialPass(double, String)}</li>
- *     <li>{@link framework.grading.testing.BasicTestCase#fail(String)}</li>
->>>>>>> working
- * </ul>
+ 
  *
  * An example:
  * <pre>
@@ -42,8 +30,16 @@ public abstract class BasicTestCase implements TestCase {
 	protected String name;
 	
 	protected double pointWeight = -1;
+	
+//	protected boolean lastRunSucceeded = false;
 
-   
+	protected TestCaseResult lastResult; // last run, for depndent tests
+	
+	protected ABufferingTestInputGenerator outputBasedInputGenerator ;
+	protected RunningProject interactiveInputProject;
+
+	
+	
 	public BasicTestCase(String name) {
         this.name = name;
     }
@@ -119,21 +115,38 @@ public abstract class BasicTestCase implements TestCase {
 	public void setPointWeight(double pointWeight) {
 		this.pointWeight = pointWeight;
 	}
-	
 	@Test
 	public void defaultTest() {
-		TestCaseResult result = null;
+//		TestCaseResult result = null;
+		lastResult = null;
+		
         try {
-        	result = test(CurrentProjectHolder.getOrCreateCurrentProject(), true);  
+        	lastResult = test(CurrentProjectHolder.getOrCreateCurrentProject(), true);  
         	
-    		BasicJUnitUtils.assertTrue(result.getNotes(), result.getPercentage(), result.isPass());
+    		BasicJUnitUtils.assertTrue(lastResult.getNotes(), lastResult.getPercentage(), lastResult.isPass());
         } catch (Throwable e) {
         	e.printStackTrace();
-        	if (result != null) {
-        		BasicJUnitUtils.assertTrue(e, result.getPercentage());
+        	if (lastResult != null) {
+        		BasicJUnitUtils.assertTrue(e, lastResult.getPercentage());
         	} else {
         		BasicJUnitUtils.assertTrue(e, 0);
         	}
         }
+	}
+	@Override
+	public void setLastResult(TestCaseResult lastResult) {
+		this.lastResult = lastResult;
+	}
+	@Override
+	public TestCaseResult getLastResult() {
+		return lastResult;
+	}
+	@Override
+	public ABufferingTestInputGenerator getOutputBasedInputGenerator() {
+		return outputBasedInputGenerator;
+	}
+	@Override
+	public RunningProject getInteractiveInputProject() {
+		return interactiveInputProject;
 	}
 }

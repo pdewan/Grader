@@ -131,6 +131,7 @@ public abstract class Checkable implements Gradable {
             	}
             	try {
                 TestCaseResult testResult = testCase.test(project, autoMode);
+                testCase.setLastResult(testResult);
             	
                 if (isManual()) {
                 	testResult.setAutoGraded(false);
