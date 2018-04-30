@@ -125,6 +125,12 @@ public abstract class Checkable implements Gradable {
             for (TestCase testCase : testCases) {
             	if (testCase == null)
             		continue;
+            	if (testCase.getName() == null) {
+            		testCase.setName(getName());// so we do not have to repeat the names
+            	}
+            	if (testCase.getName() == null) {
+            		testCase.setName("");
+            	}
 //            	CurrentProjectHolder.setProject(project); // in case some test reset the project
             	if (project instanceof ProjectWrapper) {
             		((ProjectWrapper) project).getProject().setCurrentTestCase(testCase);
