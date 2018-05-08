@@ -172,6 +172,7 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         			 if (anOutput != null && !anOutput.isEmpty()) {
                      	ARunningProject.appendToTranscriptFile(project, feature.getName(), anOutput);
                      }
+        			 Tracer.resetNumTraces();
         			
         		
             }
