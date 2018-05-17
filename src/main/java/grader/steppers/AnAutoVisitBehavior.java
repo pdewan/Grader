@@ -193,6 +193,7 @@ public class AnAutoVisitBehavior implements
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return false; // go to next project
         }
 
         if (isAutoRun() && 

@@ -273,7 +273,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     		aStartOnyen.equals(savedStartOnyen) &&
     		anEndOnyen.equals(savedEndOnyen) &&
     		aGoToOnyen.equals(savedGoToOnyens) &&
-    		aDirectory.getName().equals(savedDirectoryName)) {
+    		aDirectory.getName().equals(savedDirectoryName) && !savedOnyens.isEmpty()) {
     		return savedOnyens;
     	}
 //    	savedStartOnyen = aStartOnyen;

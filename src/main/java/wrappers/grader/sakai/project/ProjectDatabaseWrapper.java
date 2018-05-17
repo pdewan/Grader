@@ -27,7 +27,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
     private static final String GraderPath = BasicGradingEnvironment.get().getDefaultAssignmentsDataFolderName() + "/";	
 
     private ProjectRequirements projectRequirements;
-    private boolean projectsMade = false;
+//    private boolean projectsMade = false;
     private static boolean graderDataMade = false;
     private ASakaiStudentCodingAssignmentsDatabase studentAssignmentDatabase;
 
