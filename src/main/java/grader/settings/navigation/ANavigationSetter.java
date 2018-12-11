@@ -1,6 +1,7 @@
 package grader.settings.navigation;
 
 import grader.navigation.NavigationKind;
+import grader.sakai.project.ASakaiProjectDatabase;
 import grader.settings.GraderSettingsModel;
 import grader.trace.settings.NavigationKindChange;
 
@@ -52,7 +53,11 @@ public class ANavigationSetter implements NavigationSetter {
 		NavigationKind oldVal = navigationKind;
 		this.navigationKind = newVal;
 		if (graderSettings.isSettingsLoaded()) {
-			propertyChangeSupport.firePropertyChange("navigationKind", oldVal, newVal);	
+			ASakaiProjectDatabase.executor().submit((() -> {
+				propertyChangeSupport.firePropertyChange("navigationKind", oldVal, newVal);	
+			    return null;
+			}));
+//			propertyChangeSupport.firePropertyChange("navigationKind", oldVal, newVal);	
 
 			NavigationKindChange.newCase(newVal, graderSettings, this);
 		}

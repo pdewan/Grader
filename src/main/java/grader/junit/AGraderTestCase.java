@@ -298,6 +298,9 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 		// TODO Auto-generated method stub
 		return graderProperties.getDisplayedScore();
 	}
+	public String toString() {
+		return getName() + "(" + super.toString() + ")";
+	}
 
 //	@Override
 //	public void setTopLevelSuite(GradableJUnitSuite newVal) {

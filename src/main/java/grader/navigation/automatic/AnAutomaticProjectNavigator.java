@@ -87,7 +87,13 @@ public class AnAutomaticProjectNavigator implements AutomaticProjectNavigator {
         if (frame != null) {
             ASakaiProjectDatabase.dispose(frame);
         } else if (settingsFrame != null) {
-            settingsFrame.dispose(); // visual indication things are complete
+        	// this can hang also
+        	ASakaiProjectDatabase.executor().submit(() -> {
+        		settingsFrame.setVisible(false);
+        		settingsFrame.dispose(); // this hangs if another dispose before hangs
+			    return null;
+			});
+//            settingsFrame.dispose(); // visual indication things are complete
         }
         AutomaticNavigationEnded.newCase(settingsModel, database, this);
 

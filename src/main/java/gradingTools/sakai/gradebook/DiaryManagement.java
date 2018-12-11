@@ -27,6 +27,9 @@ public class DiaryManagement {
 	public static final int GRADER_COMMENTS_COLUMN = 7;
 	public static final int DIARY_TEXT_COLUMN = 8;
 	public static final int DATE_COLUMN = 6;
+	
+	public static final String CLASS_QA_COLUMN = "Class Q&A";
+	public static final String MY_QA_COLUMN = "My Q&A";
 
 //	public static void diaryToGradebook(String aDate, String aDiaryFileName,
 //			boolean isDiaryPoints,
@@ -56,7 +59,9 @@ public class DiaryManagement {
 			  String aDate = aDates[i];
 //			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
 //			  boolean isDiaryPoints = isDiaryPointsArr[i];
-			  String aGradeColumnName = isDiaryPoints[i]?"Diary":"QA";
+//			  String aGradeColumnName = isDiaryPoints[i]?"Diary":"QA";
+			  String aGradeColumnName = isDiaryPoints[i]?CLASS_QA_COLUMN:MY_QA_COLUMN;
+
 //			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
 			  String aFileSuffix = aGradeColumnName;
 

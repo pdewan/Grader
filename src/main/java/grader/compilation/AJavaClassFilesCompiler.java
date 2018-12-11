@@ -15,6 +15,7 @@ import javax.tools.ToolProvider;
 
 import util.trace.javac.CompilerNotFound;
 import framework.execution.ARunningProject;
+import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.StaticConfigurationUtils;
 import grader.trace.compilation.SourceFileCompiled;
 
@@ -43,8 +44,12 @@ public class AJavaClassFilesCompiler implements ClassFilesCompiler{
 			String myClassPath = StaticConfigurationUtils.getExecutionCommandRawClassPath(); // no quotes on PC!
 //			String myClassPath = graderClassPath; // classpath can inclide spaces and should not be in quotes
 //			myClassPath = myClassPath.replaceAll("\"", "");
+			String runtimeClasspath = System.getProperty("java.class.path");
+			String aCompleteClasspath = myClassPath + BasicGradingEnvironment.get().getClassPathSeparator() + runtimeClasspath;
 			if (myClassPath != null) {
-				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-cp", myClassPath, "-Xlint:unchecked"));
+//				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-cp", myClassPath, "-Xlint:unchecked"));
+				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-cp", aCompleteClasspath, "-Xlint:unchecked"));
+
 			} else {
 				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-Xlint:unchecked"));
 

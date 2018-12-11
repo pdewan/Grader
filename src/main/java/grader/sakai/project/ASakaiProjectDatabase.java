@@ -90,6 +90,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.Icon;
 import javax.swing.JFrame;
@@ -946,8 +952,21 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 				projectStepper.getProject(), this);
 
 	}
+	protected static ThreadPoolExecutor executor;
+	public static void maybeCreateThreadPoolExecutor() {
+		if (executor == null) {
+			executor = 
+					  (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+		}
+		
+	}
+	public static ThreadPoolExecutor executor() {
+		maybeCreateThreadPoolExecutor();
+		return executor;
+	}
+	public static int DISPOSE_TIMEOUT = 2000;
 	@Override
-	public void clearWindows() {
+	public  void clearWindows() {
 		if (oldWindows != null && oldList != null) {// somebody went before me,
 													// get rid of their windows
 		// System.out.println("dispoing old windows");
@@ -967,7 +986,24 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 				if (Common.containsReference(oldWindows, frame)) {
 					continue;
 				}
-				frame.dispose();
+				Future aFuture =
+			     executor().submit(() -> {
+					frame.setVisible(false);
+					frame.dispose(); // this hangs
+				    return null;
+				});
+				try {
+					Object aRetVal = aFuture.get(DISPOSE_TIMEOUT, TimeUnit.MILLISECONDS);
+				} catch (TimeoutException | InterruptedException | ExecutionException e) {
+					System.err.println("Cannot dispose: " + frame);
+					System.err.println("Exiting, Please remove from grading, onyen:" + getProjectStepper().getOnyen());
+
+					e.printStackTrace();
+					System.exit(-1);
+					
+				}
+//				frame.setVisible(false);
+//				frame.dispose(); // this hangs
 			}
 		}
 

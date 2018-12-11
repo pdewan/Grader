@@ -1,5 +1,6 @@
 package grader.navigation.manual;
 
+import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.GraderSettingsModel;
 import grader.trace.settings.InvalidOnyenRangeException;
@@ -89,8 +90,12 @@ public class AManualProjectNavigator implements ManualProjectNavigator {
 //	// ASakaiProjectDatabase.setVisible(database.getProjectStepper().getFrame(),
 //	// true);
 	}
-	if (settingsFrame != null)
-		settingsFrame.dispose();
+	if (settingsFrame != null){
+		ASakaiProjectDatabase.executor().submit(() -> {
+			settingsFrame.dispose();
+		});
+//		settingsFrame.dispose();
+	}
 	ManualNavigationEnded.newCase(settingsModel, database, this);
 
 	database.displayProjectStepper(database.getProjectStepper());
