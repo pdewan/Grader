@@ -88,6 +88,21 @@ public class GradebookGradescopeConverter {
 			e.printStackTrace();
 		}
 	}
+	public static void gradescopeToGradebook(String aGradescopeFileName,
+			String aSakaiFileName, String aSakaiInputFile, String[] aSubstitutions, String aGradeColumnName, boolean isAssignment) {
+		// File aSakaiFile = new File(aSakaiFileName);
+		try {
+
+			StringBuffer aGradeScopeString = Common.toText(aGradescopeFileName);
+			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
+			String aGradebookString = gradescopeToGradebook(aGradeScopeString, aGradebookInputString,
+					aSubstitutions, aGradeColumnName, isAssignment);
+			Common.writeText(aSakaiFileName, aGradebookString);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
    
 	public static String gradescopeToGradebook(StringBuffer aGradescopeString,
 			String[] aSubstitutions, String aGradeColumnName) {
@@ -174,6 +189,65 @@ public class GradebookGradescopeConverter {
 				aGrade = "0";
 			}
 			String aGradebookRow = toGradebookRow(aGradebookEntry, aGrade);
+			aGradebookString.append(aGradebookRow);
+		}
+		return aGradebookString.toString();
+	}
+	public static String gradescopeToGradebook(StringBuffer aGradescopeString,
+			StringBuffer aGradebookTemplate,
+			String[] aSubstitutions,
+			String aGradeColumnName,
+			boolean isAssignment) {
+		Map<String, String> anOnyenToEmail = new HashMap();
+		for (String aSubstitution : aSubstitutions) {
+			String[] anOnyenAndEmail = aSubstitution.split(":");
+			anOnyenToEmail.put(anOnyenAndEmail[1], anOnyenAndEmail[0]);
+		}
+		String aInputLinesWithoutQuotes = aGradescopeString.toString()
+				.replaceAll("\"", "");
+		String[] anInputLines = aInputLinesWithoutQuotes.toString().split("\n");
+		StringBuilder aGradebookString = new StringBuilder(anInputLines.length);
+//		aGradebookString.append("Student ID,");
+//		aGradebookString.append("Student Name,");
+//		aGradebookString.append("PID,");
+//		aGradebookString.append("Grade\n");
+		if (isAssignment) {
+			aGradebookString.append(GradebookUtils.toGradebookAssignmentHeader(aGradeColumnName));
+
+		} else {
+		aGradebookString.append(toGradebookHeader(aGradeColumnName));
+		}
+		Map<String, GradebookEntry> anOnyenToGradebook = gradebookToMap(aGradebookTemplate);
+
+		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
+			String[] aRow = anInputLines[aRowNum].split(",");
+			if (aRow.length < 4) {
+				System.out.println("Ignoring row " + aRow);
+				continue;
+			}
+//			String aFullName = aRow[0];
+			String anOnyen = aRow[1];
+			GradebookEntry aGradebookEntry = anOnyenToGradebook.get(anOnyen);
+			if (aGradebookEntry == null) {
+				System.out.println("did not find in Gradebook:" + anOnyen);
+				continue;
+			}			
+//			String anEmail = aRow[2];
+			String aGrade = aRow[3];
+			if (aGrade.isEmpty()) {
+				aGrade = "0";
+			}
+			// do not override existing grade in sakai and can always zero it
+			if (aGrade.equals("0")) 
+				break;
+			
+			String aGradebookRow = null;
+			if (isAssignment) {
+				aGradebookRow =		GradebookUtils.toGradebookAssignmentRow(aGradebookEntry, aGrade);
+			} else {
+			
+				aGradebookRow =		toGradebookRow(aGradebookEntry, aGrade);
+			}
 			aGradebookString.append(aGradebookRow);
 		}
 		return aGradebookString.toString();

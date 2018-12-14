@@ -46,6 +46,22 @@ public class GradebookUtils {
 		aGradebookString.append("\n");
 		return aGradebookString.toString();
 	}
+	public static String toGradebookAssignmentRow(GradebookEntry aGradebookEntry, String aGrade) {
+		StringBuffer aGradebookString = new StringBuffer();
+//		String aGradebookFullName = "\"" + aGradebookEntry.getLastName() + "," + aGradebookEntry.getFirstName()
+//				+ "\"";
+		aGradebookString.append(aGradebookEntry.getStudentID());
+		aGradebookString.append(",");
+		aGradebookString.append(aGradebookEntry.getStudentID());
+		aGradebookString.append(",");
+		aGradebookString.append(aGradebookEntry.getLastName());
+		aGradebookString.append(",");
+		aGradebookString.append(aGradebookEntry.getFirstName());
+		aGradebookString.append(",");
+		aGradebookString.append(aGrade);
+		aGradebookString.append("\n");
+		return aGradebookString.toString();
+	}
 	public static GradebookEntry toGradebookEntry(String aRowString) {
 		String[] aRow = aRowString.split(",");
 		if (aRow.length < 4) {
@@ -65,6 +81,22 @@ public class GradebookUtils {
 		aGradeboookHeader.append("Student ID,");
 		aGradeboookHeader.append("Student Name,");
 		aGradeboookHeader.append("PID,");
+		if (aGradeColumnTitle == null || aGradeColumnTitle.isEmpty()){
+//		     aGradeboookHeader.append("Grade\n");
+		     aGradeColumnTitle = "Grade";
+		}
+		aGradeboookHeader.append(aGradeColumnTitle + "\n");
+
+		return aGradeboookHeader.toString();
+	}
+	public static String toGradebookAssignmentHeader(String aGradeColumnTitle) {
+		StringBuffer aGradeboookHeader = new StringBuffer();
+		aGradeboookHeader.append (aGradeColumnTitle + ", Points,,,\n,,,,\n");
+		aGradeboookHeader.append("Display ID,");
+		aGradeboookHeader.append("ID,");
+		aGradeboookHeader.append("Last Name,");
+		aGradeboookHeader.append("Fist Name,");
+
 		if (aGradeColumnTitle == null || aGradeColumnTitle.isEmpty()){
 //		     aGradeboookHeader.append("Grade\n");
 		     aGradeColumnTitle = "Grade";
