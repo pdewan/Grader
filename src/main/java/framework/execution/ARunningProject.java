@@ -75,6 +75,7 @@ public class ARunningProject extends BasicRunningProject implements ProcessInput
 		// String anInput = project.getCurrentInput(); // this changes with process
 		// team, there can be multiple inputs and they can be given incrementally
 		String anInput = input.toString();
+//		System.out.println("Input in transcript:" + input);
 		if (!anInput.isEmpty()) {
 			transcript.append("INPUT(" + featureName + ")\n");
 			transcript.append(anInput + "\n");
@@ -93,6 +94,8 @@ public class ARunningProject extends BasicRunningProject implements ProcessInput
 			transcript.append("[");
 
 		}
+//		System.out.println("Output in transcript:" + output);
+
 		if (output == null) {
 			// Tracer.error("Null output!");
 			output = "No output from program";
