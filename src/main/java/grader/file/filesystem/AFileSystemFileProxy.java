@@ -17,7 +17,9 @@ import util.misc.Common;
 // file system translated to common interface for zip file and file system
 public class AFileSystemFileProxy extends AnAbstractFileProxy implements FileProxy {
     File file;
-    String localName;
+    
+
+	String localName;
     String absoluteName;
     String mixedCaseLocalName;
     String mixedCaseAbsoluteName;
@@ -109,6 +111,9 @@ public class AFileSystemFileProxy extends AnAbstractFileProxy implements FilePro
     public boolean exists() {
         return file.exists();
     }
-  
+    @Override
+    public File getFile() {
+		return file;
+	}
 	
 }

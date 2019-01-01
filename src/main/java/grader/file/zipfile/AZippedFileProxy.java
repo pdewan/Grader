@@ -5,6 +5,7 @@ import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 import grader.util.GraderFileUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -106,5 +107,11 @@ public class AZippedFileProxy extends AnAbstractFileProxy implements FileProxy {
 //			}
 //    	}
     }
+
+	@Override
+	public File getFile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }

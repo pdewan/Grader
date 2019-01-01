@@ -54,7 +54,7 @@ public class AnOutputBasedMixedArithmeticInputGenerator extends AnAbstractInputG
 	public void newOutputLine(String aProcessName, String anOutputLine) {
 		if (isTerminatedSuccessfully(aProcessName))
 			return; //ignore additional input
-		System.out.println("Got output" + anOutputLine );
+		System.out.println(aProcessName + " output:" + anOutputLine );
 		setFoundOutput(aProcessName, true);
 		if (IncrementalInputPromptTestCase.hasIntegerPrompt(anOutputLine)) {
 //			foundIntPrompt = true;

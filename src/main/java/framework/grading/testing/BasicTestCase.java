@@ -1,9 +1,11 @@
 package framework.grading.testing;
 
 import grader.basics.execution.RunningProject;
+//import grader.basics.execution.RunningProject;
 import grader.basics.junit.BasicJUnitUtils;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.CurrentProjectHolder;
+import grader.basics.testcase.PassFailJUnitTestCase;
 import gradingTools.shared.testcases.utils.ABufferingTestInputGenerator;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -23,11 +25,11 @@ import org.junit.Test;
  * }
  * </pre>
  */
-public abstract class BasicTestCase implements TestCase {
+public abstract class BasicTestCase extends PassFailJUnitTestCase implements TestCase {
 	@JsonIgnore
     protected Checkable checkable;
     
-	protected String name;
+//	protected String name;
 	
 	protected double pointWeight = -1;
 	
@@ -70,40 +72,40 @@ public abstract class BasicTestCase implements TestCase {
     	name = aName;
     }
 
-    protected TestCaseResult partialPass(double percentage, boolean autograded) {
-        return new TestCaseResult(percentage, name, autograded);
-    }
-
-    protected TestCaseResult partialPass(double percentage, String notes, boolean autograded) {
-        return new TestCaseResult(percentage, notes, name, autograded);
-    }
-    protected TestCaseResult partialPass(double percentage, String notes) {
-        return partialPass(percentage, notes, true);
-    }
-
-    protected TestCaseResult pass() {
-        return new TestCaseResult(true, name, true);
-    }
-
-    protected TestCaseResult pass(boolean autograded) {
-        return new TestCaseResult(true, name, autograded);
-    }
-
-    protected TestCaseResult pass(String notes) {
-        return new TestCaseResult(true, notes, name, true);
-    }
-    protected TestCaseResult pass(String notes, boolean autograded) {
-        return new TestCaseResult(true, notes, name, autograded);
-    }
-
-    protected TestCaseResult fail(String notes) {
-        return new TestCaseResult(false, notes, name, true);
-    }
-
-    protected TestCaseResult fail(String notes, boolean autograded) {
-        return new TestCaseResult(false, notes, name, autograded);
-
-    }
+//    protected TestCaseResult partialPass(double percentage, boolean autograded) {
+//        return new TestCaseResult(percentage, name, autograded);
+//    }
+//
+//    protected TestCaseResult partialPass(double percentage, String notes, boolean autograded) {
+//        return new TestCaseResult(percentage, notes, name, autograded);
+//    }
+//    protected TestCaseResult partialPass(double percentage, String notes) {
+//        return partialPass(percentage, notes, true);
+//    }
+//
+//    protected TestCaseResult pass() {
+//        return new TestCaseResult(true, name, true);
+//    }
+//
+//    protected TestCaseResult pass(boolean autograded) {
+//        return new TestCaseResult(true, name, autograded);
+//    }
+//
+//    protected TestCaseResult pass(String notes) {
+//        return new TestCaseResult(true, notes, name, true);
+//    }
+//    protected TestCaseResult pass(String notes, boolean autograded) {
+//        return new TestCaseResult(true, notes, name, autograded);
+//    }
+//
+//    protected TestCaseResult fail(String notes) {
+//        return new TestCaseResult(false, notes, name, true);
+//    }
+//
+//    protected TestCaseResult fail(String notes, boolean autograded) {
+//        return new TestCaseResult(false, notes, name, autograded);
+//
+//    }
     @Override
     @JsonIgnore
 	public Object[] getPermissions() {

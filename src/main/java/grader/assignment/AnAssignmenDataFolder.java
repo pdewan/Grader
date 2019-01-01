@@ -155,7 +155,7 @@ public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements
     		
         }
         if (!aFile.exists()) {
-        	Tracer.warning("Could not find checkstyle file:" + checkStyleConfigurationFileName);
+        	System.err.println("Could not find checkstyle file:" + checkStyleConfigurationFileName);
         	checkStyleConfigurationFileName = AConfigurationManager.CONFIG_DIR + "/"  + DEFAULT_CONFIGURATION_FILE;
         	Tracer.warning("Using default checkstyle file:" + checkStyleConfigurationFileName );
         } else {

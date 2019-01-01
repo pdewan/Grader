@@ -2,6 +2,7 @@ package grader.sakai;
 
 import grader.file.FileProxy;
 import grader.file.FileProxyUtils;
+import grader.file.filesystem.AFileSystemFileProxy;
 import grader.trace.sakai_bulk_folder.CommentsFileLoaded;
 import grader.trace.sakai_bulk_folder.DocumentFileLoaded;
 import grader.trace.sakai_bulk_folder.FeedbackFolderLoaded;
@@ -12,6 +13,7 @@ import grader.util.GraderCommon;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,8 +67,16 @@ public class ASakaiStudentAssignment implements StudentAssignment {
 			if (feedbackFolder != null)
 
 				FeedbackFolderLoaded.newCase(feedbackFolder.getAbsoluteName(), this);
-			else
+			else {
 				System.err.println("No feedback folder for: " + onyen);
+				if (aFileProxy instanceof AFileSystemFileProxy) {
+					File aFile = Paths.get(aFileProxy.getAbsoluteName(),FEEDBACK_LOCAL_NAME ).toFile();
+					aFile.mkdir();
+					System.err.println("Created feedback folder for: " + onyen + " but you may have to restart grader");
+					feedbackFolder = aFileProxy.getFileEntryFromLocalName(FEEDBACK_LOCAL_NAME);
+
+				}
+			}
 
 			commentsFile = aFileProxy.getFileEntryFromLocalName(COMMENTS_LOCAL_NAME);
 			if (commentsFile != null) {

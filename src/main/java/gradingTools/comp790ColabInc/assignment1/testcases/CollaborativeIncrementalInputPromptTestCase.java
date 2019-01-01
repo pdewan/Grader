@@ -52,9 +52,13 @@ public class CollaborativeIncrementalInputPromptTestCase extends CollaborativeIn
 	protected void runProjectAndGatherOutputStats(Project project) {
 		// Get the output when we have no input from the user
 		CollaborativeOutputBasedMixedArithmeticInputGenerator anOutputBasedInputGenerator = new ACollaborativeOutputBasedMixedArithmeticInputGenerator(null, null);
-		noInputRunningProject = RunningProjectUtils.runProject(project, 1,
+		 System.out.println("Starting  project at time:" + System.currentTimeMillis());
+
+		noInputRunningProject = RunningProjectUtils.runProject(project, 5,
 				anOutputBasedInputGenerator);
 		noInputPrompt = noInputRunningProject.await();
+		 System.out.println("finished awaiting running project at time:" + System.currentTimeMillis());
+
 //		if (anOutputBasedInputGenerator.foundDoublePrompt() && anOutputBasedInputGenerator.foundIntPrompt())
 //			return pass();
 //		else
@@ -71,7 +75,7 @@ public class CollaborativeIncrementalInputPromptTestCase extends CollaborativeIn
 		client2HasInitialDoublePrompt = anOutputBasedInputGenerator.foundDoublePrompt(DistributedTags.CLIENT_2);
 		client1HasInitialDoublePrompt = anOutputBasedInputGenerator.foundDoublePrompt(DistributedTags.CLIENT_1);
 		client2HasInitialIntPrompt = anOutputBasedInputGenerator.foundIntPrompt(DistributedTags.CLIENT_2);
-		
+		System.out.println("Gathered output stats");
 //		client1HasInitialIntPrompt = testForIntegerPrompt(client1NoInputOutput).getPercentage() > 0;
 //		client2HasInitialDoublePrompt = testForDoublePrompt(client2NoInputOutput).getPercentage() > 0;
 //		client1HasInitialDoublePrompt = testForDoublePrompt(client1NoInputOutput).getPercentage() > 0;

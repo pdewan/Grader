@@ -149,7 +149,9 @@ public class AnAutoVisitBehavior implements
     }
 
     boolean isNotRunnable() {
-        return LanguageDependencyManager.isJava() && (project.getClassLoader() == null || project.getClassesManager() == null);
+//        return LanguageDependencyManager.isJava() && (project.getClassLoader() == null || project.getClassesManager() == null);
+        return LanguageDependencyManager.isJava() && (project.getClassLoader() == null) ; // let us not evaluate classes manager
+
 
     }
 
@@ -595,7 +597,7 @@ public class AnAutoVisitBehavior implements
 
 //		if (!isNotRunnable()) {
             ProjectRequirements aProjectRequirements = projectDatabase.getProjectRequirements();
-            System.out.println ("Projeect requirements:" + aProjectRequirements);
+            System.out.println ("Project requirements:" + aProjectRequirements);
 //            System.out.println("SLEEPING");
 //            try {
 //				Thread.sleep(2000);

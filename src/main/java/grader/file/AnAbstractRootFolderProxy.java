@@ -17,13 +17,46 @@ public abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implemen
     protected List<FileProxy> entries = new ArrayList();
     
     protected  String subFolderName; // only children of this folder will be viisted and put in nameToFileProxy;
+    protected String[] lazilyFetchSubFoldersOf; //  descendents of this folder will not be visited immediately and put in nameToFileProxy;
+    protected String[] ignoreFiles; //  descendents of this folder will not be visited immediately and put in nameToFileProxy;
+
     protected  String subFolderNameLowerCase;
+    
     
     public AnAbstractRootFolderProxy(String aSubFolderName) {
     	subFolderName = aSubFolderName;
     	if (subFolderName != null)
     		subFolderNameLowerCase = subFolderName.toLowerCase();
     	
+    }
+    public AnAbstractRootFolderProxy(String[] aLazilyFetchSubfoldersOf, String[] anIgnoreFiles) {
+    	lazilyFetchSubFoldersOf = aLazilyFetchSubfoldersOf;
+    	ignoreFiles = anIgnoreFiles;
+//    	if (subFolderName != null)
+//    		subFolderNameLowerCase = subFolderName.toLowerCase();
+    	
+    }
+    protected boolean lazilyFetchDescendentsOf(String aFileName) {
+    	if (lazilyFetchSubFoldersOf == null) {
+    		return false;
+    	}
+    	for (String anExcludedSubfolder:lazilyFetchSubFoldersOf) {
+    		if (aFileName.equals(anExcludedSubfolder)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    protected boolean ignoreFile(String aFileName) {
+    	if (ignoreFiles == null) {
+    		return false;
+    	}
+    	for (String aFile:ignoreFiles) {
+    		if (aFileName.equals(aFile)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     @Override
     public void clear() {
@@ -40,6 +73,8 @@ public abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implemen
     }
 
     protected void add(FileProxy aFileProxy) {
+    	
+//    	System.out.println("Adding entry:" + aFileProxy);
         entries.add(aFileProxy);
         nameToFileProxy.put(aFileProxy.getAbsoluteName().toLowerCase(), aFileProxy);
         nameToFileProxy.put(aFileProxy.getAbsoluteName(), aFileProxy); // added this for Unix systems
@@ -70,6 +105,7 @@ public abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implemen
                 retVal.add(entry);
             }
         }
+        System.out.println("Children of " + aParentName + " =" + retVal);
         return retVal;
 
     }
@@ -80,8 +116,11 @@ public abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implemen
         Set<String> allChildren = getEntryNames();
         Set<String> retVal = new HashSet();
         for (String name : allChildren) {
-            if (name.startsWith(parentName))
+            if (name.startsWith(parentName) && !name.equals(parentName))
                 retVal.add(name);
+//            if (name.endsWith("src") || name.endsWith("src/") || name.contains("acorrect")) {
+//            System.out.println("Name:" + name);
+//            }
         }
         return retVal;
     }
@@ -96,16 +135,28 @@ public abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implemen
 
     protected void initChildrenRootData() {
         for (FileProxy entry : entries) {
-            entry.initRootData();
-            String entryName = entry.getLocalName();
-            if (entryName == null) continue;
-            int index1 = entryName.indexOf('/');
-            int index2 = entryName.indexOf('\\');// use file separator
-            int index3 = entryName.indexOf(File.separator);
-            if (index1 == -1 && index2 == -1 && index3 == -1)
-                childrenNames.add(entry.getAbsoluteName());
+        	initChildrenRootData(entry);
+//            entry.initRootData();
+//            String entryName = entry.getLocalName();
+//            if (entryName == null) continue;
+//            int index1 = entryName.indexOf('/');
+//            int index2 = entryName.indexOf('\\');// use file separator
+//            int index3 = entryName.indexOf(File.separator);
+//            if (index1 == -1 && index2 == -1 && index3 == -1)
+//                childrenNames.add(entry.getAbsoluteName());
         }
         RootFolderProxyLoaded.newCase(getAbsoluteName(), this);
+    }
+    @Override
+    public void initChildrenRootData(FileProxy anEntry) {
+    	anEntry.initRootData();
+        String entryName = anEntry.getLocalName();
+        if (entryName == null) return;
+        int index1 = entryName.indexOf('/');
+        int index2 = entryName.indexOf('\\');// use file separator
+        int index3 = entryName.indexOf(File.separator);
+        if (index1 == -1 && index2 == -1 && index3 == -1)
+            childrenNames.add(anEntry.getAbsoluteName());
     }
     boolean debug;
 

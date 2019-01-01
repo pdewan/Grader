@@ -46,6 +46,7 @@ import grader.config.StaticConfigurationUtils;
 import grader.driver.GradingManagerFactory;
 import grader.driver.GradingManagerType;
 import grader.execution.AFlexibleMainClassFinder;
+import grader.execution.GradingModeConfigurer;
 import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.interaction_logger.InteractionLogWriter;
 import grader.interaction_logger.InteractionLogWriterSelector;
@@ -158,8 +159,10 @@ public class Driver {
 		// BasicGradingEnvironment.set(new GradingEnvironment());
 
 		setTracing();
-		GradingMode.setGraderRun(true);
-		BasicProjectExecution.setReRunInfiniteProcesses(false);
+//		GradingMode.setGraderRun(true);
+//		GradingModeConfigurer.configureGradingMode();
+//		BasicProjectExecution.setReRunInfiniteProcesses(false);
+		
 		// ObjectEditor.setDefaultAttribute(AttributeNames.SHOW_DEBUG_INFO_WITH_TOOL_TIP,
 		// false);
 
@@ -187,10 +190,13 @@ public class Driver {
 		// want static confoguration utils to be set by this time, so this
 		// should not happen prematurely
 		// this should actuall happen after settings model is initialized
+		GradingModeConfigurer.configureGradingMode();
+
 		BasicGradingEnvironment.set(new GradingEnvironment());
-		RunnerSelector.setFactory(new ProcessRunnerFactory());
-		JavaMainClassFinderSelector
-				.setMainClassFinder(new AFlexibleMainClassFinder());
+		// moved to configurer
+//		RunnerSelector.setFactory(new ProcessRunnerFactory());
+//		JavaMainClassFinderSelector
+//				.setMainClassFinder(new AFlexibleMainClassFinder());
 		if (isHeadless()) {
 			ObjectEditor.setShowStartView(false);
 		} else {

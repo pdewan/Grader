@@ -11,11 +11,15 @@ import util.misc.Common;
 
 public abstract class AnAbstractFileProxy extends AnAbstractProxy implements FileProxy {
     protected RootFolderProxy rootFolderProxy;
-    List<FileProxy> fileEntries;
-    Set<FileProxy> childrenProxies;
-    boolean isFolder;
+   
 
-    public AnAbstractFileProxy(RootFolderProxy aRootFolderProxy) {
+	List<FileProxy> fileEntries;
+    List<FileProxy> childrenProxies;
+    boolean isFolder;
+    boolean isDescendentsInitialized;
+
+  
+	public AnAbstractFileProxy(RootFolderProxy aRootFolderProxy) {
         rootFolderProxy = aRootFolderProxy;
     }
 
@@ -105,7 +109,12 @@ public abstract class AnAbstractFileProxy extends AnAbstractProxy implements Fil
    	}
     @Override
     public List<FileProxy> getChildren() {
-    	return getChildrenOf(getAbsoluteName());
+    	if (childrenProxies == null) {
+    		childrenProxies = getChildrenOf(getAbsoluteName());
+    	}
+//    	return getChildrenOf(getAbsoluteName());
+    	return childrenProxies;
+
     }
     
     @Override
@@ -129,4 +138,21 @@ public abstract class AnAbstractFileProxy extends AnAbstractProxy implements Fil
 
     	return retVal;
     }
+    public boolean isDescendentsInitialized() {
+  		return isDescendentsInitialized;
+  	}
+
+  	public void setDescendentsInitialized(boolean isDescendentsInitialized) {
+  		this.isDescendentsInitialized = isDescendentsInitialized;
+  	}
+  	@Override
+  	 public RootFolderProxy getRootFolderProxy() {
+ 		return rootFolderProxy;
+ 	}
+  	@Override
+
+ 	public void setRootFolderProxy(RootFolderProxy rootFolderProxy) {
+ 		this.rootFolderProxy = rootFolderProxy;
+ 	}
+
 }

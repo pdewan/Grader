@@ -1,5 +1,7 @@
 package grader.execution;
 
+import grader.basics.execution.BasicExecutionSpecificationSelector;
+
 public class ExecutionSpecificationSelector {
 	public static ExecutionSpecification executionSpecification;
 
@@ -13,7 +15,7 @@ public class ExecutionSpecificationSelector {
 
 	public static void setExecutionSpecification(
 			ExecutionSpecification executionSpecification) {
-		ExecutionSpecificationSelector.executionSpecification = executionSpecification;
+		BasicExecutionSpecificationSelector.executionSpecification = executionSpecification;
 	}
 
 	

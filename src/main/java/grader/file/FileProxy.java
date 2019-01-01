@@ -1,5 +1,6 @@
 package grader.file;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
@@ -33,5 +34,14 @@ public interface FileProxy extends RootFolderProxy {
 	String getParentFolderName();
 
 	String getParentRelativeMixedCaseName();
+
+	boolean isDescendentsInitialized();
+	void setDescendentsInitialized(boolean newValue);
+
+	RootFolderProxy getRootFolderProxy();
+
+	void setRootFolderProxy(RootFolderProxy rootFolderProxy);
+
+	File getFile();
 
 }

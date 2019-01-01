@@ -5,6 +5,7 @@ import grader.execution.ProxyBasedClassesManager;
 import grader.execution.ProxyClassLoader;
 import grader.file.FileProxy;
 import grader.language.LanguageDependencyManager;
+import grader.project.folder.RootCodeFolder;
 import grader.util.GraderFileUtils;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public class AProxyBasedClassesManager extends AFlexibleClassesManager implement
     }
 
     public void makeClassDescriptions(FlexibleProject aProject) {
+//    	RootCodeFolder aRootCodeFolder = aProject.getRootCodeFolder();
+    	
         List<FileProxy> entries = aProject.getRootCodeFolder().getFileEntries();
         String projectPath = aProject.getRootCodeFolder().getAbsoluteName();
         ProxyClassLoader classLoader = null;

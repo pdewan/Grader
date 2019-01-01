@@ -89,17 +89,27 @@ public class ARootCodeFolder implements RootCodeFolder {
         // should we not be doing this only if there is a separate source and binary?
         sourceFolderName = getFolderWithName(aRoot, Project.SOURCE);
 //        sourceFolderName = getEntryWithSuffixAndrew(aRoot, SOURCE);
-        binaryFolderName = getFolderWithName(aRoot, Project.BINARY);
-//        binaryFolderName = getEntryWithSuffixAndrew(aRoot, BINARY);
-        // allow a set here
-        if (binaryFolderName == null) {
-            binaryFolderName = getFolderWithName(aRoot, Project.BINARY_2);
-//            binaryFolderName = getEntryWithSuffixAndrew(aRoot, BINARY_2);
+        for (String aBinary:Project.BINARIES) {
+        	binaryFolderName = getFolderWithName(aRoot, aBinary);
+        	if (binaryFolderName != null) {
+        		break;
+        	}
         }
-        if (binaryFolderName == null) {
-            binaryFolderName = getFolderWithName(aRoot, Project.BINARY_3);
-//            binaryFolderName = getEntryWithSuffixAndrew(aRoot, BINARY_3);
-        }
+//        binaryFolderName = getFolderWithName(aRoot, Project.BINARY);
+////        binaryFolderName = getEntryWithSuffixAndrew(aRoot, BINARY);
+//        // allow a set here
+//        if (binaryFolderName == null) {
+//            binaryFolderName = getFolderWithName(aRoot, Project.BINARY_2);
+////            binaryFolderName = getEntryWithSuffixAndrew(aRoot, BINARY_2);
+//        }
+//        if (binaryFolderName == null) {
+//            binaryFolderName = getFolderWithName(aRoot, Project.BINARY_3);
+////            binaryFolderName = getEntryWithSuffixAndrew(aRoot, BINARY_3);
+//        }
+//        if (binaryFolderName == null) {
+//            binaryFolderName = getFolderWithName(aRoot, Project.BINARY_4);
+////            binaryFolderName = getEntryWithSuffixAndrew(aRoot, BINARY_3);
+//        }
 //		if (sourceFolderName == null || binaryFolderName == null) {
         if (sourceFolderName == null && binaryFolderName == null) {
             System.out.println(SourceFolderNotFound.newCase(root.getLocalName(), this).getMessage());
@@ -165,7 +175,8 @@ public class ARootCodeFolder implements RootCodeFolder {
         }
 
         SourceFolderIdentified.newCase(sourceFolderName, this);
-        if (hasBinaryFile) {
+        if (hasValidBinaryFolder()) {
+//        if (hasBinaryFile) {
             BinaryFolderIdentified.newCase(binaryFolderName, this);
         } else {
             BinaryFolderNotFound.newCase(root.getAbsoluteName(), this);
@@ -176,18 +187,27 @@ public class ARootCodeFolder implements RootCodeFolder {
     }
 
     public boolean hasValidBinaryFolder() {
-        return hasBinaryFile;
+//        return hasBinaryFile;
+        return true; // we are not recursing to file level now
     }
 
     void setSeparateSourceBinary() {
         Set<String> names = root.getEntryNames();
-        String srcPattern = Project.SOURCE + "/";
-        String binPattern = Project.BINARY + "/";
+//        String srcPattern = Project.SOURCE + "/";
+        String srcPattern = "/" + Project.SOURCE;
+
+        String binPattern = "/" + Project.BINARY;
+//        String binPattern = Project.BINARY + "/";
+
         for (String name : names) {
-            if (!hasSource && name.indexOf(srcPattern) != -1) {
+//            if (!hasSource && name.indexOf(srcPattern) != -1) {
+            if (!hasSource && name.endsWith(srcPattern)) {
+	
                 hasSource = true;
             }
-            if (!hasBinary && name.indexOf(binPattern) != -1) {
+//            if (!hasBinary && name.indexOf(binPattern) != -1) {
+            if (!hasBinary && name.endsWith(binPattern)) {
+
                 hasBinary = true;
             }
 //			if (!hasSourceFile && name.indexOf(SOURCE_FILE_SUFFIX) != -1) {
@@ -394,11 +414,65 @@ public class ARootCodeFolder implements RootCodeFolder {
         // TODO Auto-generated method stub
         return root.getAbsoluteName();
     }
+    
+    protected boolean maybeInitializeDescendents(FileProxy aFileProxy) {
+		System.out.println("maybe initializing children of " + aFileProxy);
+
+    	if (!aFileProxy.getFile().isDirectory()) {
+    		return false;
+    	}
+		if (!aFileProxy.isDescendentsInitialized()) {
+			System.out.println(" initializing children of " + aFileProxy);
+
+			RootFolderProxy aRoot = aFileProxy.getRootFolderProxy();
+			aRoot.initEntries(aFileProxy.getFile());
+			aRoot.initChildrenRootData(aFileProxy);
+			return true;
+		} else {
+	    	boolean retVal = false;
+
+			for (FileProxy aChildProxy: aFileProxy.getChildren()) {
+				retVal = retVal || maybeInitializeDescendents(aChildProxy);
+			}
+			return retVal;
+		}
+    }
+    protected boolean maybeInitializeDescendents(List<FileProxy> aFileProxies) {
+		
+	    	boolean retVal = false;
+
+			for (FileProxy aChildProxy: aFileProxies) {
+				if (!aChildProxy.isDescendentsInitialized()) {
+					System.out.println(" initializing children of " + aChildProxy);
+
+					RootFolderProxy aRoot = aChildProxy.getRootFolderProxy();
+					aRoot.initEntries(aChildProxy.getFile());
+					aRoot.initChildrenRootData(aChildProxy);
+					retVal = true;
+				}
+			}
+			return retVal;
+		}
+    
+    protected boolean initializedDescendents = false;
 
     @Override
     public List<FileProxy> getFileEntries() {
+    	List<FileProxy> aFileEntries = root.getFileEntries();
+    	List<FileProxy> retVal = aFileEntries;
+    	if (!initializedDescendents && root instanceof FileProxy) {	    	
+    			if (maybeInitializeDescendents(aFileEntries)) {
+    				FileProxy aFileProxy = (FileProxy) root;    			    
+    				aFileProxy.getRootFolderProxy().initChildrenRootData(aFileProxy); 
+    				retVal = root.getFileEntries();
+    			};
+    		
+    	}
+    	initializedDescendents = true;
         // TODO Auto-generated method stub
-        return root.getFileEntries();
+//        return root.getFileEntries();
+        return retVal;
+
     }
 
     @Override

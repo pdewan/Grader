@@ -1,5 +1,6 @@
 package framework.grading.testing;
 
+import grader.basics.execution.BasicRunningProject;
 import grader.basics.execution.RunningProject;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;

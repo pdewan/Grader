@@ -112,7 +112,7 @@ public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements
     	if (zipFile != null) {
     		try {
 				zipFile.close();
-				System.out.println ("Closing zip file:" + zipFile);
+				System.out.println ("Closing zip file:" + zipFile.getName());
 				zipFile = null;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -124,7 +124,7 @@ public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements
     public void clear() {
     	
     	super.clear();
-    	System.out.println ("Clearing zipped root folder");
+//    	System.out.println ("Clearing zipped root folder " );
     	closeZipFile();
 //    	if (zipFile != null) {
 //    		try {

@@ -8,7 +8,7 @@ import demoAndTest.multiparadigm.distributed.ADistributedMixedArithmeticGraderDe
  * 
 
  */
-public class ADistributedMixedArithmeticColabIncrementalInputGraderDemoerAndTester extends ADistributedMixedArithmeticGraderDemoerAndTester {
+public class ACollaborativeMixedArithmeticIncrementalInputGraderDemoerAndTester extends ADistributedMixedArithmeticGraderDemoerAndTester {
 	
 	//	 String[] args ;
 	public static final  String COLAB_INC_TEST_DIR = "Test Data/Test 790ColabInc";
@@ -18,7 +18,7 @@ public class ADistributedMixedArithmeticColabIncrementalInputGraderDemoerAndTest
 
 
 
-	public ADistributedMixedArithmeticColabIncrementalInputGraderDemoerAndTester(String[] anArgs) {
+	public ACollaborativeMixedArithmeticIncrementalInputGraderDemoerAndTester(String[] anArgs) {
 		super(anArgs);
 	}
 	@Override
@@ -40,9 +40,9 @@ public class ADistributedMixedArithmeticColabIncrementalInputGraderDemoerAndTest
 //		ObjectEditor.setDefaultAttribute(AttributeNames.SHOW_SYSTEM_MENUS, false);
 //		Tracer.showInfo(true);
 //		Tracer.setKeywordPrintStatus(DirectoryUtils.class, true);
-		GraderDemoerAndTester aDemoerAndTester = new ADistributedMixedArithmeticColabIncrementalInputGraderDemoerAndTester(anArgs);
+		GraderDemoerAndTester aDemoerAndTester = new ACollaborativeMixedArithmeticIncrementalInputGraderDemoerAndTester(anArgs);
 //		args = anArgs;
-		Tracer.info(ADistributedMixedArithmeticColabIncrementalInputGraderDemoerAndTester.class, "test");
+		Tracer.info(ACollaborativeMixedArithmeticIncrementalInputGraderDemoerAndTester.class, "test");
 		aDemoerAndTester.demoAndTest();
 		
 //		aDemoerAndTester.demoAndTest();

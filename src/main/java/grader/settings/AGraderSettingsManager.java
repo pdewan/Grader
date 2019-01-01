@@ -3,6 +3,7 @@ package grader.settings;
 import framework.utils.GraderSettings;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ConfigurationManagerSelector;
+import grader.execution.ExecutionSpecificationSelector;
 import grader.modules.ModuleProblemManager;
 import grader.modules.ModuleProblemManagerSelector;
 import grader.navigation.NavigationKind;
@@ -390,6 +391,7 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     public void save() {
         try {
             dynamicConfiguration.save();
+            ExecutionSpecificationSelector.getExecutionSpecification().loadFromConfiguration();
         } catch (ConfigurationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

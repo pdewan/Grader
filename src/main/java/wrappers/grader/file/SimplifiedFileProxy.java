@@ -2,6 +2,7 @@ package wrappers.grader.file;
 
 import grader.basics.util.DirectoryUtils;
 import grader.file.FileProxy;
+import grader.file.RootFolderProxy;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -27,6 +28,7 @@ import util.misc.Common;
 public class SimplifiedFileProxy implements FileProxy {
 
     private File file;
+	private boolean isDescendentsInitialized;
 
     public SimplifiedFileProxy(File file) {
         this.file = file;
@@ -212,4 +214,35 @@ public class SimplifiedFileProxy implements FileProxy {
 		// TODO Auto-generated method stub
 		
 	}
+	 public boolean isDescendentsInitialized() {
+	  		return isDescendentsInitialized;
+	  	}
+
+	  	public void setDescendentsInitialized(boolean isDescendentsInitialized) {
+	  		this.isDescendentsInitialized = isDescendentsInitialized;
+	  	}
+
+		@Override
+		public void initChildrenRootData(FileProxy anEntry) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void initEntries(File aFolder) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public RootFolderProxy getRootFolderProxy() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setRootFolderProxy(RootFolderProxy rootFolderProxy) {
+			// TODO Auto-generated method stub
+			
+		}
 }

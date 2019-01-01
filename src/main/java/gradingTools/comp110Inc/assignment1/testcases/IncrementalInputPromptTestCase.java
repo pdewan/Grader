@@ -59,7 +59,7 @@ public class IncrementalInputPromptTestCase extends PromptTestCase {
 			// Get the output when we have no input from the user
 //			RunningProject noInputRunningProject = RunningProjectUtils.runProject(project, 1);
 			OutputBasedMixedArithmeticInputGenerator anOutputBasedInputGenerator = new AnOutputBasedMixedArithmeticInputGenerator(1, 1.4);
-			RunningProject interactiveInputProject = RunningProjectUtils.runProject(project, 1,
+			RunningProject interactiveInputProject = RunningProjectUtils.runProject(project, 3,
 					anOutputBasedInputGenerator);
 			String incOutput = interactiveInputProject.await();
 			if (anOutputBasedInputGenerator.foundDoublePrompt() && anOutputBasedInputGenerator.foundIntPrompt())

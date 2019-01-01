@@ -142,7 +142,7 @@ public class AConfigurationManager implements ConfigurationManager {
 //            	anExecutor = getStaticConfiguration().getString(StaticConfigurationUtils.EXECEUTOR);
 //            ExecutorSelector.getExecutor().setExecutorDirectory(anExecutor);
             ExecutorSelector.getExecutor().setExecutorDirectory(
-            		StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.EXECEUTOR, null));
+            		StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.EXECUTOR, null));
 
 //	         GraderSettings.get().convertToDynamicConfiguration();
         } catch (ConfigurationException e) {

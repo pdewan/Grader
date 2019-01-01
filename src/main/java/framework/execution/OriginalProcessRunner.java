@@ -2,7 +2,10 @@ package framework.execution;
 
 import grader.basics.execution.ARunnerErrorStreamProcessor;
 import grader.basics.execution.ARunnerInputStreamProcessor;
+import grader.basics.execution.BasicExecutionSpecification;
+import grader.basics.execution.BasicExecutionSpecificationSelector;
 import grader.basics.execution.BasicProcessRunner;
+import grader.basics.execution.EntryPointNotFound;
 import grader.basics.execution.NoTerminatingProcessSpecified;
 import grader.basics.execution.NotRunnableException;
 import grader.basics.execution.Runner;
@@ -16,9 +19,7 @@ import grader.basics.trace.UserProcessExecutionStarted;
 import grader.basics.trace.UserProcessExecutionTimedOut;
 import grader.basics.util.TimedProcess;
 import grader.config.StaticConfigurationUtils;
-import grader.execution.EntryPointNotFound;
 import grader.execution.ExecutionSpecification;
-import grader.execution.ExecutionSpecificationSelector;
 import grader.execution.TagNotFound;
 import grader.executor.ExecutorSelector;
 import grader.language.LanguageDependencyManager;
@@ -60,7 +61,7 @@ public class OriginalProcessRunner implements Runner {
 	List<String> pendingProcesses = new ArrayList();
 	List<String> receivedTags = new ArrayList();
 	int timeout = 0;
-	ExecutionSpecification executionSpecification;
+	BasicExecutionSpecification executionSpecification;
 	Map<String, String> processToInput;
 	String processTeam;
 	List<String> processes;
@@ -69,7 +70,7 @@ public class OriginalProcessRunner implements Runner {
 
 	public OriginalProcessRunner(Project aProject) throws NotRunnableException {
 		try {
-			executionSpecification = ExecutionSpecificationSelector.getExecutionSpecification();
+			executionSpecification = BasicExecutionSpecificationSelector.getBasicExecutionSpecification();
 			// entryPoint = getEntryPoint(aProject);
 			// entryPoint =
 			// JavaMainClassFinderSelector.getMainClassFinder().getEntryPoint(aProject);

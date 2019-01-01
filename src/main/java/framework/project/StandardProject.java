@@ -245,6 +245,10 @@ public class StandardProject extends BasicProject implements FatProject {
     	return retVal;
 //        return new InteractiveConsoleProcessRunner(this).run("");
     }
+    
+    
+    
+ // vestigal stuff   
 //
 //    @Override
 //    public Option<ClassesManager> getClassesManager() {

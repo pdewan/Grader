@@ -2,7 +2,10 @@ package framework.execution;
 
 import grader.basics.execution.ARunnerErrorStreamProcessor;
 import grader.basics.execution.ARunnerInputStreamProcessor;
+import grader.basics.execution.BasicExecutionSpecification;
+import grader.basics.execution.BasicExecutionSpecificationSelector;
 import grader.basics.execution.BasicProcessRunner;
+import grader.basics.execution.EntryPointNotFound;
 import grader.basics.execution.NotRunnableException;
 import grader.basics.execution.Runner;
 import grader.basics.execution.RunnerErrorOrOutStreamProcessor;
@@ -12,7 +15,6 @@ import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.StaticConfigurationUtils;
-import grader.execution.EntryPointNotFound;
 import grader.execution.ExecutionSpecification;
 import grader.execution.ExecutionSpecificationSelector;
 import grader.execution.TagNotFound;
@@ -27,6 +29,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
+import framework.project.StandardProject;
 import util.pipe.InputGenerator;
 import wrappers.framework.project.ProjectWrapper;
 
@@ -34,25 +37,37 @@ import wrappers.framework.project.ProjectWrapper;
  * This runs the program in a new process.
  */
 public class ProcessRunner extends BasicProcessRunner implements Runner {
-	ExecutionSpecification executionSpecification;
-
+//	BasicExecutionSpecification executionSpecification;
+	public ProcessRunner(Project aProject, String aSpecifiedProxyMainClass) throws NotRunnableException {
+		super(aProject, aSpecifiedProxyMainClass);
+//		try {
+//		specifiedMainClass = aSpecifiedProxyMainClass;
+//		project = aProject;
+//		initializeExecutionState();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			throw new NotRunnableException();
+//		}
+		
+	}
 	protected void initializeExecutionState() {
 		executionSpecification = ExecutionSpecificationSelector.getExecutionSpecification();
 	}
-
-	public ProcessRunner(Project aProject, String aSpecifiedMainClass) throws NotRunnableException {
-		super(aProject, aSpecifiedMainClass);
-	}
-
+	
+//
+//	public ProcessRunner(Project aProject, String aSpecifiedMainClass) throws NotRunnableException {
+//		super(aProject, aSpecifiedMainClass);
+//	}
+//
 	public ProcessRunner(Project aProject) throws NotRunnableException {
 		super(aProject);
 	}
-
-	// use it without project
-	public ProcessRunner() throws NotRunnableException {
-
-	}
-
+//
+//	// use it without project
+//	public ProcessRunner() throws NotRunnableException {
+//
+//	}
+	// This overrides by calling LanguageDependencyManager instead of BasicLanguageDepdendencyManager
 	public Map<String, String> getEntryPoints() {
 		if (entryPoints == null) {
 			entryPoints = LanguageDependencyManager.getMainClassFinder().getEntryPoints(project, specifiedMainClass);
@@ -61,9 +76,9 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 		return entryPoints;
 	}
 
-	public File getFolder() {
-		return getFolder(getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT));
-	}
+//	public File getFolder() {
+//		return getFolder(getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT));
+//	}
 
 	// use it without project
 	public ProcessRunner(File aFolder) throws NotRunnableException {
@@ -94,37 +109,41 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 	 * @throws NotRunnableException
 	 */
 
-	/**
-	 * This figures out what class is the "entry point", or, what class has
-	 * main(args)
-	 *
-	 * @param project
-	 *            The project to run
-	 * @return The class canonical name. i.e. "foo.bar.SomeClass"
-	 * @throws NotRunnableException
-	 */
-	protected String getMainEntryPoint() {
-		return getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT);
-	}
-
-	protected List<String> getProcessTeams() {
-		return executionSpecification.getProcessTeams();
-	}
-
-	protected List<String> getProcesses(String firstTeam) {
-		return executionSpecification.getProcesses(firstTeam);
-	}
-
-	protected List<String> getTerminatingProcesses(String firstTeam) {
-		return executionSpecification.getTerminatingProcesses(firstTeam);
-	}
+//	/**
+//	 * This figures out what class is the "entry point", or, what class has
+//	 * main(args)
+//	 *
+//	 * @param project
+//	 *            The project to run
+//	 * @return The class canonical name. i.e. "foo.bar.SomeClass"
+//	 * @throws NotRunnableException
+//	 */
+//	protected String getMainEntryPoint() {
+//		return getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT);
+//	}
+//
+//	protected List<String> getProcessTeams() {
+//		return executionSpecification.getProcessTeams();
+//	}
+//
+//	protected List<String> getProcesses(String firstTeam) {
+//		return executionSpecification.getProcesses(firstTeam);
+//	}
+//
+//	protected List<String> getTerminatingProcesses(String firstTeam) {
+//		return executionSpecification.getTerminatingProcesses(firstTeam);
+//	}
 
 	public String classWithEntryTagTarget(String anEntryTag) {
-		if (anEntryTag == null)
-			return "";
-		Class aClass = BasicProjectIntrospection.findUniqueClassByTag(project, anEntryTag);
-		if (aClass != null) {
-			String aRetVal = aClass.getName();
+//		if (anEntryTag == null)
+//			return "";
+//		Class aClass = BasicProjectIntrospection.findUniqueClassByTag(project, anEntryTag);
+//		if (aClass != null) {
+//			String aRetVal = aClass.getName();
+//		}
+		String aRetVal = super.classWithEntryTagTarget(anEntryTag);
+		if (aRetVal != null) {
+			return aRetVal;
 		}
 		if (project instanceof ProjectWrapper) {
 			grader.project.flexible.FlexibleProject graderProject = ((ProjectWrapper) project).getProject();
@@ -136,12 +155,16 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 	}
 
 	public String classWithEntryTagsTarget(List<String> anEntryTags) {
-		if (anEntryTags == null)
-			return "";
-		Class aClass = BasicProjectIntrospection.findClassByTags(project, anEntryTags.toArray(emptyStringArray));
-		if (aClass != null) {
-			String aRetVal = aClass.getName();
-			return aRetVal; // added this
+//		if (anEntryTags == null)
+//			return "";
+//		Class aClass = BasicProjectIntrospection.findClassByTags(project, anEntryTags.toArray(emptyStringArray));
+//		if (aClass != null) {
+//			String aRetVal = aClass.getName();
+//			return aRetVal; // added this
+//		}
+		String retVal = super.classWithEntryTagsTarget(anEntryTags);
+		if (retVal != null) {
+			return retVal;
 		}
 		// we should not have to do what is below
 		if (project instanceof ProjectWrapper) {
@@ -153,11 +176,11 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 		return null; // this should never be executed
 	}
 
-	protected List<String> getStartTags(String aProcess) {
-		return executionSpecification.getStartTags(aProcess);
-	}
-
-	// need an equivalent of this for basicprocessrunner
+//	protected List<String> getStartTags(String aProcess) {
+//		return executionSpecification.getStartTags(aProcess);
+//	}
+//
+//	// need an equivalent of this for basicprocessrunner
 	protected String searchForEntryPoint(String aProcess) {
 		List<String> basicCommand = StaticConfigurationUtils.getBasicCommand(aProcess);
 		String anEntryPoint = null;
@@ -191,11 +214,12 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 		// getFolder(anEntryTag);
 		// }
 		String aClassWithEntryTag = null;
-		if (anEntryTag != null) {
+
+		if (anEntryTag != null ) {
 			aClassWithEntryTag = classWithEntryTagTarget(anEntryTag);
 			if (aClassWithEntryTag == null)
 				throw TagNotFound.newCase(anEntryTag, this);
-		} else if (anEntryTags != null) {
+		} else if (anEntryTags != null ) {
 			aClassWithEntryTag = classWithEntryTagsTarget(anEntryTags);
 			if (aClassWithEntryTag == null)
 				throw TagNotFound.newCase(anEntryTags, this);

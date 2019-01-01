@@ -1,5 +1,6 @@
 package grader.file;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +32,13 @@ public interface RootFolderProxy {
     public List<FileProxy> getChildrenOf(String aParentName);
 
 	void clear();
-   
+
+	void initChildrenRootData(FileProxy anEntry);
+
+	void initEntries(File aFolder);
+
+//	boolean isDescendentsInitialized();
+//	void setDescendentsInitialized(boolean newValue);
 
 
 

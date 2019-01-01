@@ -220,6 +220,10 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 			LanguageDependencyManager.getCheckStyleInvoker().checkStyle(aSourceFolder.getAbsolutePath());
 		String aCheckStyleOutputFile = aProject.getCheckStyleFileName();
 		String aCheckStyleOutput = aRunner.getOutput();
+		if (aCheckStyleOutput == null) {
+			System.err.println("Not checking style" );
+			return;
+		}
 		String[] aLines = aCheckStyleOutput.split("\n");
 		Set<String> anOutputLines = new HashSet<String>();
 		BasicProjectExecution.setWaitForMethodConstructorsAndProcesses(aSavedValue);

@@ -2,6 +2,7 @@ package grader.file.filesystem;
 
 import edu.emory.mathcs.backport.java.util.Collections;
 import grader.file.AnAbstractRootFolderProxy;
+import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 import grader.trace.file.load.RootFileSystemFolderLoaded;
 
@@ -20,30 +21,82 @@ public class AFileSystemRootFolderProxy extends AnAbstractRootFolderProxy
 
     public AFileSystemRootFolderProxy(String aRootFolderName, String aSubFolderName) {
         super(aSubFolderName);
-        rootFolder = new File(aRootFolderName);
-        if (!rootFolder.exists()) {
-            System.out.println("File:" + aRootFolderName + "  does not exist");
-            rootFolder = null;
-            System.exit(-1);
-            return;
-        }
+        init (aRootFolderName);
+//        rootFolder = new File(aRootFolderName);
+//        if (!rootFolder.exists()) {
+//            System.out.println("File:" + aRootFolderName + "  does not exist");
+//            rootFolder = null;
+//            System.exit(-1);
+//            return;
+//        }
+//
+////        rootName = aRootFolderName;
+////        try {
+//			rootName = Common.toCanonicalFileName(rootFolder.getAbsolutePath());
+////		} catch (IOException e) {
+////			rootName = aRootFolderName;
+////		}
+//
+//        localName = Common.toCanonicalFileName(rootFolder.getName());
+//        // let us see what happens if we do not do this
+//        initEntries(rootFolder);
+////        System.out.println("Inefficiently initializing children root data");
+//        initChildrenRootData(); // I moved this out of init entries because it only needs to be called once and significantly reduces the loading time. --Josh
+//        RootFileSystemFolderLoaded.newCase(getAbsoluteName(), this);
 
-//        rootName = aRootFolderName;
-//        try {
-			rootName = Common.toCanonicalFileName(rootFolder.getAbsolutePath());
-//		} catch (IOException e) {
-//			rootName = aRootFolderName;
-//		}
+    }
+    public AFileSystemRootFolderProxy(String aRootFolderName, String[] aLazilyFetchSubFolderNames, String[] anIgnoreFiles) {
+        super(aLazilyFetchSubFolderNames, anIgnoreFiles);
+        init (aRootFolderName);
+//        rootFolder = new File(aRootFolderName);
+//        if (!rootFolder.exists()) {
+//            System.out.println("File:" + aRootFolderName + "  does not exist");
+//            rootFolder = null;
+//            System.exit(-1);
+//            return;
+//        }
+//
+////        rootName = aRootFolderName;
+////        try {
+//			rootName = Common.toCanonicalFileName(rootFolder.getAbsolutePath());
+////		} catch (IOException e) {
+////			rootName = aRootFolderName;
+////		}
+//
+//        localName = Common.toCanonicalFileName(rootFolder.getName());
+//        // let us see what happens if we do not do this
+//        initEntries(rootFolder);
+////        System.out.println("Inefficiently initializing children root data");
+//        initChildrenRootData(); // I moved this out of init entries because it only needs to be called once and significantly reduces the loading time. --Josh
+//        RootFileSystemFolderLoaded.newCase(getAbsoluteName(), this);
 
-        localName = Common.toCanonicalFileName(rootFolder.getName());
-        initEntries(rootFolder);
-        initChildrenRootData(); // I moved this out of init entries because it only needs to be called once and significantly reduces the loading time. --Josh
-        RootFileSystemFolderLoaded.newCase(getAbsoluteName(), this);
+    }
+    protected void init(String aRootFolderName) {
+    	 rootFolder = new File(aRootFolderName);
+         if (!rootFolder.exists()) {
+             System.out.println("File:" + aRootFolderName + "  does not exist");
+             rootFolder = null;
+             System.exit(-1);
+             return;
+         }
 
+//         rootName = aRootFolderName;
+//         try {
+ 			rootName = Common.toCanonicalFileName(rootFolder.getAbsolutePath());
+// 		} catch (IOException e) {
+// 			rootName = aRootFolderName;
+// 		}
+
+         localName = Common.toCanonicalFileName(rootFolder.getName());
+         // let us see what happens if we do not do this
+         initEntries(rootFolder);
+//         System.out.println("Inefficiently initializing children root data");
+         initChildrenRootData(); // I moved this out of init entries because it only needs to be called once and significantly reduces the loading time. --Josh
+         RootFileSystemFolderLoaded.newCase(getAbsoluteName(), this);
     }
 
     public AFileSystemRootFolderProxy(String aRootFolderName) {
-        this(aRootFolderName, null);
+        this(aRootFolderName, (String) null);
     }
     
     private boolean containsOnyen(File file ){
@@ -80,9 +133,14 @@ public class AFileSystemRootFolderProxy extends AnAbstractRootFolderProxy
     	return otherFiles.toArray(new File[0]);
     	
     }
-
-    void initEntries(File aFolder) {
+    
+    
+   @Override
+   public  void initEntries(File aFolder) {
         File[] files = aFolder.listFiles();
+        if (files == null) {
+        	return;
+        }
         
 		if (aFolder.equals(rootFolder)) {
 			files = sortFiles(files);
@@ -111,10 +169,36 @@ public class AFileSystemRootFolderProxy extends AnAbstractRootFolderProxy
         for (File aFile : files) {
         	if (aFolder.equals(rootFolder) &&  !inTreeOfSubFolder(aFile.getName()))
         		continue;
-            add(new AFileSystemFileProxy(this, aFile, rootName));
-            if (aFile.isDirectory()) {
+        	if (ignoreFile(aFile.getName())) {
+        		continue;
+        	}
+        	FileProxy aFileProxy
+        	= new AFileSystemFileProxy(this, aFile, rootName);
+//            add(new AFileSystemFileProxy(this, aFile, rootName));
+            add(aFileProxy);
+            
+
+//            if (aFile.isDirectory() ) {
+            if (aFile.isDirectory() )
+            		//&& !excludeDescendentsOf(aFile.getName()))
+//            		!aFile.getName().contains("src") &&
+//            		!aFile.getName().contains("bin")) 
+            {
+            
+            	if (lazilyFetchDescendentsOf(aFile.getName())) {
+                	aFileProxy.setDescendentsInitialized(false);
+
+            	} else {
+//                System.out.println("Recursively and inefficiently loading child of bulk folder:" + aFile + " bad things may happen");
+
                 initEntries(aFile);
+                aFileProxy.setDescendentsInitialized(true);
+            	}
+            } else {
+            	aFileProxy.setDescendentsInitialized(true);
             }
+            
+            
             if (subFolderName != null && aFolder.equals(rootFolder)) // we are done, we found our subfolder
             	break;
         }
@@ -147,7 +231,10 @@ public class AFileSystemRootFolderProxy extends AnAbstractRootFolderProxy
     @Override
     public void clear() {
     	super.clear();
-    	System.out.println ("Clearing file system folder");
+//    	System.out.println ("Clearing file system folder");
 
+    }
+    public String toString() {
+    	return rootName;
     }
 }

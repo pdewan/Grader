@@ -1,31 +1,75 @@
 *****************************(Prompts for inputs)*****************************
+OUTPUT(Prompts for inputs)
+Please input an integer
+
+*****************************(Prompts for inputs)*****************************
+OUTPUT(Prompts for inputs)
+Please input an integer
+
+ERRORS(Prompts for inputs)
+java.util.NoSuchElementException
+	at java.util.Scanner.throwFor(Scanner.java:862)
+	at java.util.Scanner.next(Scanner.java:1485)
+	at java.util.Scanner.nextInt(Scanner.java:2117)
+	at java.util.Scanner.nextInt(Scanner.java:2076)
+	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:16)
+
+*****************************(Prompts for inputs)*****************************
 INPUT(Prompts for inputs)
 1
-1.4
-1
-
 OUTPUT(Prompts for inputs)
 Please input an integer
 Please input a decimal
-The int addition:2
-The int addition:2
-The double addition:2.4
-The double addition:2.4
-The int multiplication:1
-The int multiplication:1
-The double multiplication:1.4
-The double multiplication:1.4
+
+ERRORS(Prompts for inputs)
+java.util.NoSuchElementException
+	at java.util.Scanner.throwFor(Scanner.java:862)
+	at java.util.Scanner.next(Scanner.java:1485)
+	at java.util.Scanner.nextDouble(Scanner.java:2413)
+	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:18)
 
 *****************************(Prompts for inputs)*****************************
-Got outputPlease input an integer
+INPUT(Prompts for inputs)
+1.4
+OUTPUT(Prompts for inputs)
+Please input an integer
+
+ERRORS(Prompts for inputs)
+java.util.InputMismatchException
+	at java.util.Scanner.throwFor(Scanner.java:864)
+	at java.util.Scanner.next(Scanner.java:1485)
+	at java.util.Scanner.nextInt(Scanner.java:2117)
+	at java.util.Scanner.nextInt(Scanner.java:2076)
+	at examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher.main(AMixedTypeAirthmeticClientLauncher.java:16)
+
+*****************************(Prompts for inputs)*****************************
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Client output:Please input an integer
 
 Found int prompt true
-Got outputPlease input a decimal
-
-Found double prompt true
-Got outputThe int addition:2
-
-Found int prompt true
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
 *****************************(Takes in Double and Integer)*****************************
 OUTPUT(Takes in Double and Integer)
 Please input an integer
@@ -68,6 +112,25 @@ The int multiplication:2
 The double multiplication:2.5
 The double multiplication:2.5
 
+*****************************(Takes in Double and Integer)*****************************
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
 *****************************(Adds and multiplies the numbers)*****************************
 INPUT(Adds and multiplies the numbers)
 4
@@ -98,6 +161,19 @@ The int multiplication:20
 The double multiplication:20.8521
 The double multiplication:20.8521
 
+*****************************(Adds and multiplies the numbers)*****************************
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
 *****************************(Displays results of addition and multiplication)*****************************
 INPUT(Displays results of addition and multiplication)
 4
@@ -128,3 +204,16 @@ The int multiplication:20
 The double multiplication:20.8521
 The double multiplication:20.8521
 
+*****************************(Displays results of addition and multiplication)*****************************
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.DistributedRMIRegistryStarter]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeArithmeticServerLauncher]
+Basic Command:[java, -cp, .{:}..{:}{classPath}{:}{oePath}{:}{junitPath}, {entryTag}, {args}]
+Execution Command:[java, -cp, ".;..;D:\dewan_backup\Java\lib\oeall22.jar;C:\Users\dewan\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar", examples.rmi.arithmetic.AMixedTypeAirthmeticClientLauncher]

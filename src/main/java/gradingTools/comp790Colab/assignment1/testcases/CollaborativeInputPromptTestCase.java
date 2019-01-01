@@ -29,15 +29,32 @@ public class CollaborativeInputPromptTestCase extends BasicTestCase {
 
 	private TestCaseResult testForIntegerPrompt(StringBuffer output) {
 		
-		if (output != null && output.toString().trim().toLowerCase().contains("int"))
+		if (output != null && 
+				output.toString().trim().toLowerCase().contains("int"))
 			return pass();
 		else
 			return fail("Program does not contain prompt for integer");
 	}
+	private boolean hasIntegerPrompt(StringBuffer output) {
+		boolean retVal = output != null && 
+				output.toString().trim().toLowerCase().contains("int");
+		if (!retVal) {
+			System.out.println(output + " does not have int");
+		}
+		return retVal;
+	}
+	private boolean hasDoublePrompt(StringBuffer output) {
+		// converting twice to lower case!
+		return (output != null && 
+				(output.toString().toLowerCase().contains("decimal") || output.toString().toLowerCase().contains("double")));
+			
+	}	
+			
 
 	private TestCaseResult testForDoublePrompt(StringBuffer output) {
 		// converting twice to lower case!
-		if (output != null && output.toString().toLowerCase().contains("decimal") || output.toString().toLowerCase().contains("double"))
+		if (output != null && 
+				(output.toString().toLowerCase().contains("decimal") || output.toString().toLowerCase().contains("double")))
 			return pass();
 		else
 			return fail("Program does not contain prompt for double");
@@ -67,15 +84,32 @@ public class CollaborativeInputPromptTestCase extends BasicTestCase {
 	
 	protected void runProjectAndGatherOutputStats(Project project) {
 		// Get the output when we have no input from the user
-		 noInputRunningProject = runAliceBobProject(project, 1);
+		 System.out.println("Starting  project at time:" + System.currentTimeMillis());
+
+//		 noInputRunningProject = runAliceBobProject(project, 5);
+		 noInputRunningProject = runAliceBobProject(project, 5); // dummy Input
+
 		 noInputPrompt = noInputRunningProject.await();
+	        System.out.println(("Current thread:" + Thread.currentThread()));
+
+		 System.out.println("finished awaiting running project at time:" + System.currentTimeMillis() + " with output " + noInputPrompt);
 		Map<String, StringBuffer> aProcessToOutput = noInputRunningProject.getProcessOutput();
+		 System.out.println("aProcessToOutput=" + aProcessToOutput);
+
 		 client1NoInputOutput = aProcessToOutput.get(DistributedTags.CLIENT_1);
 		client2NoInputOutput = aProcessToOutput.get(DistributedTags.CLIENT_2);
-		client1HasInitialIntPrompt = testForIntegerPrompt(client1NoInputOutput).getPercentage() > 0;
-		client2HasInitialDoublePrompt = testForDoublePrompt(client2NoInputOutput).getPercentage() > 0;
-		client1HasInitialDoublePrompt = testForDoublePrompt(client1NoInputOutput).getPercentage() > 0;
-		client2HasInitialIntPrompt = testForIntegerPrompt(client2NoInputOutput).getPercentage() > 0;
+//		client1HasInitialIntPrompt = testForIntegerPrompt(client1NoInputOutput).getPercentage() > 0;
+		client1HasInitialIntPrompt = hasIntegerPrompt(client1NoInputOutput);
+
+//		client2HasInitialDoublePrompt = testForDoublePrompt(client2NoInputOutput).getPercentage() > 0;
+		client2HasInitialDoublePrompt = hasDoublePrompt(client2NoInputOutput);
+
+//		client1HasInitialDoublePrompt = testForDoublePrompt(client1NoInputOutput).getPercentage() > 0;
+		client1HasInitialDoublePrompt = hasDoublePrompt(client1NoInputOutput);
+
+//		client2HasInitialIntPrompt = testForIntegerPrompt(client2NoInputOutput).getPercentage() > 0;
+		client2HasInitialIntPrompt = hasIntegerPrompt(client2NoInputOutput);
+
 	}
 
 	@Override
@@ -104,6 +138,7 @@ public class CollaborativeInputPromptTestCase extends BasicTestCase {
 			if (!client1HasInitialIntPrompt && !client2HasInitialDoublePrompt && !client1HasInitialDoublePrompt && !client2HasInitialIntPrompt) {
 				
 			}
+			System.out.println("Initialized booleans");
 			
 //
 //			// Get the output when we have integer input from the user

@@ -1,5 +1,7 @@
 package grader.sakai;
 
+import grader.basics.project.Project;
+import grader.basics.settings.BasicGradingEnvironment;
 import grader.file.FileProxy;
 import grader.file.RootFolderCreatorFactory;
 import grader.file.RootFolderProxy;
@@ -46,7 +48,7 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
         assignmentName = anAssignmentName;
         isAssignmentRoot = true;
         fileNameComparator = aFileNameComparator;
-        initializeBullkDownloadChidren();
+        initializeBulkDownloadChidren();
     }
 
 //    public ASakaiBulkAssignmentFolder(String aBulkDownloadFolder) {
@@ -60,15 +62,31 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
     	isAssignmentRoot = assignmentRoot;
         bulkDownloadDirectory = aBulkDownloadFolder;
         fileNameComparator = aFileNameComparator;
-        initializeBullkDownloadChidren();
+        initializeBulkDownloadChidren();
         assignmentName = assignmentFolder.getLocalName();
         mixedCaseAssignmentName = assignmentFolder.getMixedCaseLocalName();
     }
-
-    void initializeBullkDownloadChidren() {
+   public  static final String[] CODE_FOLDERS = {
+    		Project.SOURCE, 
+    		Project.BINARY, 
+    		Project.BINARY_0,
+    		Project.BINARY_2,
+    		Project.BINARY_3};
+   public  static final String[] IGNORE_FILES = {
+   		".settings", 
+   		"desktop.ini", 
+   		".classpath",
+   		//".project"//let us keep .project
+   	} ; 
+    
+    void initializeBulkDownloadChidren() {
 //        rootBulkDownloadFolder = ARootFolderCreator.createRootFolder(bulkDownloadDirectory);
         Tracer.info (this, " Initializing root folder" + bulkDownloadDirectory);
-    	rootBulkDownloadFolder = RootFolderCreatorFactory.getSingleton().createRootFolder(bulkDownloadDirectory);
+        String[] anExcludeSubFolders = null;
+        if (BasicGradingEnvironment.get().isUnzipFiles()) {
+        	anExcludeSubFolders = CODE_FOLDERS;
+        }
+    	rootBulkDownloadFolder = RootFolderCreatorFactory.getSingleton().createRootFolder(bulkDownloadDirectory, CODE_FOLDERS, IGNORE_FILES);
 
         isZippedRootFolder = rootBulkDownloadFolder instanceof AZippedRootFolderProxy;
         bulkDownloadDirectory = rootBulkDownloadFolder.getAbsoluteName(); // normalize name

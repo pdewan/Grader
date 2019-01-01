@@ -147,7 +147,12 @@ public class OriginalStandardProject implements FatProject {
         if (bin.isEmpty())
 //        Option<File> bin = DirectoryUtils.locateFolder(directory,  Project.BINARY);
         	bin = DirectoryUtils.locateFolder(directory,  Project.BINARY);
-
+        if (bin.isEmpty())
+//          Option<File> bin = DirectoryUtils.locateFolder(directory,  Project.BINARY);
+          	bin = DirectoryUtils.locateFolder(directory,  Project.BINARY_3);
+        if (bin.isEmpty())
+//          Option<File> bin = DirectoryUtils.locateFolder(directory,  Project.BINARY);
+          	bin = DirectoryUtils.locateFolder(directory,  Project.BINARY_2);
 
 
 
