@@ -187,8 +187,9 @@ public class ARootCodeFolder implements RootCodeFolder {
     }
 
     public boolean hasValidBinaryFolder() {
+    	return binaryFolderName != null;
 //        return hasBinaryFile;
-        return true; // we are not recursing to file level now
+//        return true; // we are not recursing to file level now
     }
 
     void setSeparateSourceBinary() {

@@ -1,5 +1,6 @@
 package framework.execution;
 
+import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.ARunnerErrorStreamProcessor;
 import grader.basics.execution.ARunnerInputStreamProcessor;
 import grader.basics.execution.BasicExecutionSpecification;
@@ -11,13 +12,13 @@ import grader.basics.execution.Runner;
 import grader.basics.execution.RunnerErrorOrOutStreamProcessor;
 import grader.basics.execution.RunnerInputStreamProcessor;
 import grader.basics.execution.RunningProject;
+import grader.basics.execution.TagNotFound;
 import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.StaticConfigurationUtils;
 import grader.execution.ExecutionSpecification;
 import grader.execution.ExecutionSpecificationSelector;
-import grader.execution.TagNotFound;
 import grader.executor.ExecutorSelector;
 import grader.language.LanguageDependencyManager;
 import grader.permissions.java.JavaProjectToPermissionFile;
@@ -50,9 +51,11 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 //		}
 		
 	}
-	protected void initializeExecutionState() {
-		executionSpecification = ExecutionSpecificationSelector.getExecutionSpecification();
-	}
+//	protected void initializeExecutionState() {
+////		executionSpecification = ExecutionSpecificationSelector.getExecutionSpecification();
+//		executionSpecification = BasicExecutionSpecificationSelector.getBasicExecutionSpecification();
+//
+//	}
 	
 //
 //	public ProcessRunner(Project aProject, String aSpecifiedMainClass) throws NotRunnableException {
@@ -196,51 +199,55 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 		}
 		return anEntryPoint;
 	}
-
 	protected String searchForEntryTag(String aProcess) {
-		List<String> basicCommand = StaticConfigurationUtils.getBasicCommand(aProcess);
-
-		// if (anEntryPoint != null && !anEntryPoint.isEmpty()) {
-		// getFolder(anEntryPoint);
-		// }
-		String anEntryTag = null;
-		List<String> anEntryTags = null;
-		if (StaticConfigurationUtils.hasEntryTags(basicCommand))
-			anEntryTags = executionSpecification.getEntryTags(aProcess);
-		else if (StaticConfigurationUtils.hasEntryTag(basicCommand))
-			anEntryTag = executionSpecification.getEntryTag(aProcess); // this will match entryTag also, fix at some pt
-
-		// if (anEntryTag != null ) {
-		// getFolder(anEntryTag);
-		// }
-		String aClassWithEntryTag = null;
-
-		if (anEntryTag != null ) {
-			aClassWithEntryTag = classWithEntryTagTarget(anEntryTag);
-			if (aClassWithEntryTag == null)
-				throw TagNotFound.newCase(anEntryTag, this);
-		} else if (anEntryTags != null ) {
-			aClassWithEntryTag = classWithEntryTagsTarget(anEntryTags);
-			if (aClassWithEntryTag == null)
-				throw TagNotFound.newCase(anEntryTags, this);
-		}
-		if (aClassWithEntryTag != null && folder == null) {
-
-			getFolder(aClassWithEntryTag);
-		}
-		return aClassWithEntryTag;
+		return searchForEntryTag(aProcess, StaticConfigurationUtils.getBasicCommand());
+		
 	}
-	public static final String[] EMPTY_STRING_ARGS = {};
-	protected String[] getArgs(String aProcess) {
-		List<String> aListArgs = executionSpecification.getArgs(aProcess);
-		if (aListArgs == null) {
-			return EMPTY_STRING_ARGS;
-		}
-		else {
-			return aListArgs.toArray(EMPTY_STRING_ARGS);
-		}
-//		return executionSpecification.getArgs(aProcess).toArray(new String[0]);
-	}
+
+//	protected String searchForEntryTag(String aProcess) {
+//		List<String> basicCommand = StaticConfigurationUtils.getBasicCommand(aProcess);
+//
+//		// if (anEntryPoint != null && !anEntryPoint.isEmpty()) {
+//		// getFolder(anEntryPoint);
+//		// }
+//		String anEntryTag = null;
+//		List<String> anEntryTags = null;
+//		if (StaticConfigurationUtils.hasEntryTags(basicCommand))
+//			anEntryTags = executionSpecification.getEntryTags(aProcess);
+//		else if (StaticConfigurationUtils.hasEntryTag(basicCommand))
+//			anEntryTag = executionSpecification.getEntryTag(aProcess); // this will match entryTag also, fix at some pt
+//
+//		// if (anEntryTag != null ) {
+//		// getFolder(anEntryTag);
+//		// }
+//		String aClassWithEntryTag = null;
+//
+//		if (anEntryTag != null ) {
+//			aClassWithEntryTag = classWithEntryTagTarget(anEntryTag);
+//			if (aClassWithEntryTag == null)
+//				throw TagNotFound.newCase(anEntryTag, this);
+//		} else if (anEntryTags != null ) {
+//			aClassWithEntryTag = classWithEntryTagsTarget(anEntryTags);
+//			if (aClassWithEntryTag == null)
+//				throw TagNotFound.newCase(anEntryTags, this);
+//		}
+//		if (aClassWithEntryTag != null && folder == null) {
+//
+//			getFolder(aClassWithEntryTag);
+//		}
+//		return aClassWithEntryTag;
+//	}
+//	public static final String[] EMPTY_STRING_ARGS = {};
+//	protected String[] getArgs(String aProcess) {
+//		List<String> aListArgs = executionSpecification.getArgs(aProcess);
+//		if (aListArgs == null) {
+//			return EMPTY_STRING_ARGS;
+//		}
+//		else {
+//			return aListArgs.toArray(EMPTY_STRING_ARGS);
+//		}
+////		return executionSpecification.getArgs(aProcess).toArray(new String[0]);
+//	}
 
 	protected int getSleepTime(String aProcess) {
 		Integer aRetVal = executionSpecification.getSleepTime(aProcess);
