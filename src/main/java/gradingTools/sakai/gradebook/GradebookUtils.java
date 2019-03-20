@@ -8,6 +8,10 @@ import java.util.Map;
 import util.misc.Common;
 
 public class GradebookUtils {	
+	public static final short ONYEN_COLUMN = 0;
+	public static final short LAST_NAME_COLUMN = 2;
+	public static final short FIRST_NAME_COLUMN = 3;
+	public static final short PID_COLUMN = 1;
 	public static Map<String, GradebookEntry> gradebookToMap(StringBuffer aSakaiString) {
 		String aInputLinesWithoutQuotes = aSakaiString.toString().replaceAll(
 				"\"", "");
@@ -62,16 +66,18 @@ public class GradebookUtils {
 		aGradebookString.append("\n");
 		return aGradebookString.toString();
 	}
+	
+	
 	public static GradebookEntry toGradebookEntry(String aRowString) {
 		String[] aRow = aRowString.split(",");
 		if (aRow.length < 4) {
 			System.out.println("Ignoring row " + aRow);
 			return null;
 		}
-		String anOnyen = aRow[0].trim();
-		String aLastName = aRow[1].trim();
-		String aFirstName = aRow[2].trim();
-		String aPID = aRow[3].trim();
+		String anOnyen = aRow[ONYEN_COLUMN].trim();
+		String aLastName = aRow[LAST_NAME_COLUMN].trim();
+		String aFirstName = aRow[FIRST_NAME_COLUMN].trim();
+		String aPID = aRow[PID_COLUMN].trim();
 		return new AGradebookEntry(anOnyen, aFirstName, aLastName, aPID);
 		
 	}

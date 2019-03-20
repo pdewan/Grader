@@ -4,9 +4,11 @@ import static gradingTools.sakai.gradebook.GradebookUtils.gradebookToMap;
 import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookHeader;
 import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookRow;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import util.misc.Common;
 public class GradebookGradescopeConverter {
 	public static void gradebookToGradescope(String aSakaiFileName,
@@ -17,6 +19,10 @@ public class GradebookGradescopeConverter {
 			StringBuffer aSakaiString = Common.toText(aSakaiFileName);
 			String aGradescopeString = gradebookToGradescope(aSakaiString,
 					aSubstitutions);
+			File aFile = new File(aGradescopeFileName);
+			
+//				aFile.createNewFile();
+			
 			Common.writeText(aGradescopeFileName, aGradescopeString);
 		} catch (IOException e) {
 			e.printStackTrace();
