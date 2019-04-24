@@ -35,10 +35,10 @@ public abstract class BasicTestCase extends PassFailJUnitTestCase implements Tes
 	
 //	protected boolean lastRunSucceeded = false;
 
-	protected TestCaseResult lastResult; // last run, for depndent tests
-	
-	protected ABufferingTestInputGenerator outputBasedInputGenerator ;
-	protected RunningProject interactiveInputProject;
+//	protected TestCaseResult lastResult; // last run, for depndent tests
+//	
+//	protected ABufferingTestInputGenerator outputBasedInputGenerator ;
+//	protected RunningProject interactiveInputProject;
 
 	
 	
@@ -62,15 +62,15 @@ public abstract class BasicTestCase extends PassFailJUnitTestCase implements Tes
         this.checkable = checkable;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-    
-    @Override
-    public void setName (String aName) {
-    	name = aName;
-    }
+//    @Override
+//    public String getName() {
+//        return name;
+//    }
+//    
+//    @Override
+//    public void setName (String aName) {
+//    	name = aName;
+//    }
 
 //    protected TestCaseResult partialPass(double percentage, boolean autograded) {
 //        return new TestCaseResult(percentage, name, autograded);
@@ -135,20 +135,20 @@ public abstract class BasicTestCase extends PassFailJUnitTestCase implements Tes
         	}
         }
 	}
-	@Override
-	public void setLastResult(TestCaseResult lastResult) {
-		this.lastResult = lastResult;
-	}
-	@Override
-	public TestCaseResult getLastResult() {
-		return lastResult;
-	}
-	@Override
-	public ABufferingTestInputGenerator getOutputBasedInputGenerator() {
-		return outputBasedInputGenerator;
-	}
-	@Override
-	public RunningProject getInteractiveInputProject() {
-		return interactiveInputProject;
-	}
+//	@Override
+//	public void setLastResult(TestCaseResult lastResult) {
+//		this.lastResult = lastResult;
+//	}
+//	@Override
+//	public TestCaseResult getLastResult() {
+//		return lastResult;
+//	}
+//	@Override
+//	public ABufferingTestInputGenerator getOutputBasedInputGenerator() {
+//		return outputBasedInputGenerator;
+//	}
+//	@Override
+//	public RunningProject getInteractiveInputProject() {
+//		return interactiveInputProject;
+//	}
 }

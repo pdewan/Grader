@@ -22,6 +22,7 @@ import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 //import grader.junit.test.directreference.ACartesianPointJUnitTester;
+import grader.basics.testcase.JUnitTestCase;
 
 public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implements GraderTestCase{
 	public static int DEFAULT_SCORE = 10;	
@@ -314,6 +315,12 @@ public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implement
 	public double getDisplayedScore() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public JUnitTestCase getJUnitTestCase() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 //	@Override

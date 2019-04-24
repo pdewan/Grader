@@ -14,6 +14,7 @@ import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 //import grader.junit.test.directreference.ACartesianPointJUnitTester;
+import grader.basics.testcase.JUnitTestCase;
 
 public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 //	public static int DEFAULT_SCORE = 10;	
@@ -300,6 +301,11 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 	}
 	public String toString() {
 		return getName() + "(" + super.toString() + ")";
+	}
+
+	@Override
+	public JUnitTestCase getJUnitTestCase() {
+		return graderProperties.getJUnitTestCase();
 	}
 
 //	@Override
