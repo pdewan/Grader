@@ -736,7 +736,7 @@ public class OriginalProcessRunner implements Runner {
 
 			Process processObj = process.start();
 			if (folder != null)
-				UserProcessExecutionStarted.newCase(folder.getAbsolutePath(),
+				UserProcessExecutionStarted.newCase(null, folder.getAbsolutePath(),
 						(entryPoints != null) ? entryPoints.get(BasicProcessRunner.MAIN_ENTRY_POINT) : null, classPath,
 						this);
 
