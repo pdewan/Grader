@@ -183,4 +183,16 @@ public class ReflectionRunner implements Runner {
 		
 	}
 
+	@Override
+	public String getSpecifiedMainClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSpecifiedMainClass(String specifiedMainClass) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
