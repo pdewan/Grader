@@ -2,7 +2,9 @@ package grader.config;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-public interface ConfigurationManager {
+import grader.basics.config.BasicConfigurationManager;
+
+public interface ConfigurationManager extends BasicConfigurationManager{
 	public  PropertiesConfiguration getStaticConfiguration() ;
 	public  void setStaticConfiguration(
 			PropertiesConfiguration staticConfiguration) ;

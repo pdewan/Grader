@@ -1,6 +1,7 @@
 package grader.config;
 
 import framework.utils.UserPropertyWriter;
+import grader.basics.config.ABasicConfigurationManager;
 import grader.executor.ExecutorSelector;
 import grader.language.LanguageDependencyManager;
 import grader.trace.config.DynamicConfigurationFileCreated;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-public class AConfigurationManager implements ConfigurationManager {
+public class AConfigurationManager extends ABasicConfigurationManager implements ConfigurationManager {
 
     public static final String CONFIG_DIR = "config";
     public static final String CONFIG_FILE = "config.properties";
