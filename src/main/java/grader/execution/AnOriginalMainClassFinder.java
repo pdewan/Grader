@@ -170,4 +170,16 @@ public class AnOriginalMainClassFinder implements MainClassFinder {
 		return null;
 	}
 
+	@Override
+	public List<String> getDefaultCommand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setDefaultCommand(List<String> aCommand) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

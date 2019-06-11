@@ -126,6 +126,9 @@ public class Driver {
 		boolean loadClasses = StaticConfigurationUtils.getLoadClasses(
 				configuration, graderSettingsManager);
 		BasicGradingEnvironment.get().setLoadClasses(loadClasses);
+		/*
+		 * Should be using AnExecutionSpecification
+		 */
 		String language = StaticConfigurationUtils.getLanguage();
 		LanguageDependencyManager.setLanguage(language);
 		BasicGradingEnvironment.get().setCompileMissingObjectCode(

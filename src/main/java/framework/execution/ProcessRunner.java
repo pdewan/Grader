@@ -200,7 +200,7 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 		return anEntryPoint;
 	}
 	protected String searchForEntryTag(String aProcess) {
-		return searchForEntryTag(aProcess, StaticConfigurationUtils.getBasicCommand());
+		return searchForEntryTag(aProcess, StaticConfigurationUtils.getExecutionCommand());
 		
 	}
 
@@ -259,6 +259,9 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 	}
 
 	protected String[] getCommand(String aProcess, String anEntryPoint, String anEntryTag, String[] anArgs) {
+		/*
+		 * Should return this from AnExecutionSpecification
+		 */
 		return StaticConfigurationUtils.getExecutionCommand(project, aProcess, folder, anEntryPoint, anEntryTag,
 				anArgs);
 	}

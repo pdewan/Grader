@@ -1,5 +1,7 @@
 package grader.execution;
 
+import grader.basics.config.BasicConfigurationManagerSelector;
+import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.ABasicExecutionSpecification;
 import grader.config.StaticConfigurationUtils;
 import util.trace.Tracer;
@@ -99,6 +101,50 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 		}
 		
 	}
+//	@Override
+//    public String getStringProperty(String aProperty, String aDefault) {
+//    	String retVal = super.getStringProperty(aProperty, null);
+//    	if (retVal != null) {
+//    		return retVal;
+//    	}
+//    	retVal = StaticConfigurationUtils.getInheritedStringModuleProblemProperty(aProperty, null);
+//    	if (retVal != null)
+//    		return retVal;
+//    	return aDefault;
+//    	
+//    }
+	 public  String getInheritedStringModuleProblemProperty(
+				
+				String aProperty, String defaultValue) {
+		 String retVal = super.getInheritedStringModuleProblemProperty(aProperty, null);
+		 if (retVal != null) {
+			 return retVal;
+		 }
+		 return StaticConfigurationUtils.getInheritedStringModuleProblemProperty(aProperty, defaultValue);
+
+//	    	if (!BasicStaticConfigurationUtils.isUseProjectConfiguration()) {
+//	    		return defaultValue;
+//	    	}
+//			return BasicStaticConfigurationUtils.getInheritedStringModuleProblemProperty(BasicConfigurationManagerSelector.getConfigurationManager().getOrCreateProjectConfiguration(), BasicStaticConfigurationUtils.getModule(), BasicStaticConfigurationUtils.getProblem(), aProperty, defaultValue);
+
+			
+		}
+	 public  List<String> getInheritedListModuleProblemProperty(
+				
+				String aProperty, List<String> defaultValue) {
+		 List<String> retVal = super.getInheritedListModuleProblemProperty(aProperty, null);
+		 if (retVal != null && !retVal.isEmpty()) {
+			 return retVal;
+		 }
+		 return StaticConfigurationUtils.getInheritedListModuleProblemProperty(aProperty, defaultValue);
+
+//	    	if (!BasicStaticConfigurationUtils.isUseProjectConfiguration()) {
+//	    		return defaultValue;
+//	    	}
+//			return BasicStaticConfigurationUtils.getInheritedStringModuleProblemProperty(BasicConfigurationManagerSelector.getConfigurationManager().getOrCreateProjectConfiguration(), BasicStaticConfigurationUtils.getModule(), BasicStaticConfigurationUtils.getProblem(), aProperty, defaultValue);
+
+			
+		}
 	
 //	/* (non-Javadoc)
 //	 * @see grader.execution.ExecutionSpecification#getProcessTeams()

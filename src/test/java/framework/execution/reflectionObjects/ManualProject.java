@@ -123,4 +123,10 @@ public class ManualProject implements FatProject {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public File getBuildFolder() throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

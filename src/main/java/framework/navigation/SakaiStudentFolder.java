@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 
 import util.misc.Common;
 import framework.project.StandardProject;
+import grader.basics.project.CurrentProjectHolder;
 import grader.basics.util.DirectoryUtils;
 import grader.basics.util.Option;
 import grader.project.flexible.AFlexibleProject;
@@ -87,7 +88,11 @@ public class SakaiStudentFolder implements StudentFolder<StandardProject> {
         });
         if (projectFolder.isDefined())
             try {
-                return Option.apply(new StandardProject(null, projectFolder.get(), name, null));
+            	File aProjectLocation = projectFolder.get();
+            	CurrentProjectHolder.setProjectLocation(aProjectLocation);
+//                return Option.apply(new StandardProject(null, projectFolder.get(), name, null));
+                return Option.apply(new StandardProject(null, aProjectLocation, name, null));
+
             } catch (Exception e) {
                 return Option.empty();
             }

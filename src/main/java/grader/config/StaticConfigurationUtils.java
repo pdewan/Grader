@@ -2,6 +2,8 @@ package grader.config;
 
 import framework.grading.ProjectRequirements;
 import grader.assignment.AnAssignmenDataFolder;
+import grader.basics.BasicLanguageDependencyManager;
+import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
@@ -23,7 +25,12 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.experimental.theories.PotentialAssignment;
 
 import util.trace.Tracer;
-/*
+/**
+ * The class is used by AnExecutionSpecification
+ * It acceses course and general confguration and define inheritance relationship
+ * between them.
+ * 
+ * 
  * Do not cache any previously looked up values, as dynamic configuration may
  * change.
  * 
@@ -36,7 +43,6 @@ import util.trace.Tracer;
  */
 public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 
-	public static final String DEFAULT = "default";
 	public static final String VISIT_ACTIONS = "visitActions";
 	public static final String AUTO_GRADE = "autoGrade";
 	public static final String AUTO_RUN = "autoRun";
@@ -140,7 +146,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			retVal = configuration.getList(module + "." + VISIT_ACTIONS, null);
 		}
 		if (retVal == null || retVal.isEmpty()) {
-			retVal = configuration.getList(DEFAULT + "." + VISIT_ACTIONS, null);
+			retVal = configuration.getList(BasicStaticConfigurationUtils.DEFAULT + "." + VISIT_ACTIONS, null);
 		}
 
 		return retVal;
@@ -251,7 +257,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		// MAKE_CLASS_DESCRIPTION, false);
 		//
 		// return retVal;
-		return getInheritedBooleanModuleProblemProperty(configuration, aModule,
+		return BasicStaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(configuration, aModule,
 				aProblem, PRIVACY, false);
 
 	}
@@ -263,7 +269,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		String module = graderSettingsManager.getModule();
 		String problem = graderSettingsManager.getNormalizedProblem(module);
 
-		return getInheritedBooleanModuleProblemProperty(configuration, module,
+		return BasicStaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(configuration, module,
 				problem, property, defaultValue);
 		// Boolean retVal = configuration.getBoolean(module+"." + problem + "."
 		// + property, null);
@@ -279,24 +285,6 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	}
 
 	public static Boolean getInheritedBooleanModuleProblemProperty(
-			PropertiesConfiguration configuration, String module,
-			String problem, String property, Boolean defaultValue) {
-
-		Boolean retVal = configuration.getBoolean(module + "." + problem + "."
-				+ property, null);
-
-		if (retVal == null) {
-			retVal = configuration.getBoolean(module + "." + property, null);
-		}
-		if (retVal == null) {
-			retVal = configuration.getBoolean(DEFAULT + "." + property,
-					defaultValue);
-		}
-
-		return retVal;
-
-	}
-	public static Boolean getInheritedBooleanModuleProblemProperty(
 			String module,
 			String problem, String property, Boolean aDefaultValue) {
 
@@ -307,7 +295,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			retVal = getCourseOrStaticBoolean(module + "." + property, null);
 		}
 		if (retVal == null) {
-			retVal = getCourseOrStaticBoolean(DEFAULT + "." + property,
+			retVal = getCourseOrStaticBoolean(BasicStaticConfigurationUtils.DEFAULT + "." + property,
 					aDefaultValue);
 		}
 
@@ -325,51 +313,13 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			retVal = getCourseOrStaticInteger(module + "." + property, null);
 		}
 		if (retVal == null) {
-			retVal = getCourseOrStaticInteger(DEFAULT + "." + property,
+			retVal = getCourseOrStaticInteger(BasicStaticConfigurationUtils.DEFAULT + "." + property,
 					aDefaultValue);
 		}
 
 		return retVal;
 
 	}
-	public static String getInheritedStringModuleProblemProperty(
-			String module,
-			String problem, String property, String aDefaultValue) {
-
-		String retVal = getCourseOrStaticString(module + "." + problem + "."
-				+ property, null);
-
-		if (retVal == null) {
-			retVal = getCourseOrStaticString(module + "." + property, null);
-		}
-		if (retVal == null) {
-			retVal = getCourseOrStaticString(DEFAULT + "." + property,
-					aDefaultValue);
-		}
-
-		return retVal;
-
-	}
-
-	public static Integer getInheritedIntegerModuleProblemProperty(
-			PropertiesConfiguration configuration, String module,
-			String problem, String property, Integer defaultValue) {
-
-		Integer retVal = configuration.getInteger(module + "." + problem + "."
-				+ property, null);
-
-		if (retVal == null) {
-			retVal = configuration.getInteger(module + "." + property, null);
-		}
-		if (retVal == null) {
-			retVal = configuration.getInteger(DEFAULT + "." + property,
-					defaultValue);
-		}
-
-		return retVal;
-
-	}
-
 	public static String[] getExecutionCommand(Project aProject,
 			File aBuildFolder) {
 		String anEntryPoint = getInheritedStringModuleProblemProperty(
@@ -392,9 +342,10 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				"", anArgs);
 
 	}
-
-	public static List<String> getBasicCommand() {
-		return getInheritedListModuleProblemProperty(EXECUTION_COMMAND);
+	// renamed from getBasicCommand to getExecutionCommand to not confuse with superclass
+	// getBasicCommand
+	public static List<String> getExecutionCommand() {
+		return getInheritedListModuleProblemProperty(EXECUTION_COMMAND, emptyList);
 //		if (basicCommand == null) {
 //			basicCommand = getInheritedListModuleProblemProperty(EXECUTION_COMMAND);
 //		}
@@ -410,7 +361,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //	}
 	public static boolean hasClassPath() {
 //		getBasicCommand();
-		return hasClassPath(getBasicCommand());
+		return hasClassPath(getExecutionCommand());
 //		if (basicCommand == null) {
 //			return false;
 //		}
@@ -434,7 +385,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //		return false;	
 //	}
 	public static boolean hasOEClassPath() {
-		return hasOEClassPath(getBasicCommand());
+		return hasOEClassPath(getExecutionCommand());
 //		getBasicCommand();
 //		if (basicCommand == null) {
 //			return false;
@@ -461,7 +412,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //		return false;	
 //	}
 	public static boolean hasOEOrClassPath() {
-		return hasClassPath(getBasicCommand()) || hasOEClassPath(getBasicCommand());
+		return hasClassPath(getExecutionCommand()) || hasOEClassPath(getExecutionCommand());
 	}
 //	
 //	public static boolean hasOEOrClassPath() {
@@ -524,9 +475,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //			return retVal;
 //		}
 		List<String> retVal = getInheritedListModuleProblemProperty(aProcessName
-				+ "." + EXECUTION_COMMAND);
+				+ "." + EXECUTION_COMMAND, null);
 		if (retVal.isEmpty()) {
-			return getBasicCommand();
+			return getExecutionCommand();
 		} else {
 			return retVal;
 		}
@@ -602,7 +553,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //	}
 //	
 	public static String getExecutionCommandRawClassPath() {
-		return getExecutionCommandRawClassPath(getBasicCommand());
+		return getExecutionCommandRawClassPath(getExecutionCommand());
 //		List<String> aBasicCommand = getBasicCommand();
 //		int aCpIndex = getClassPathFlagIndex(aBasicCommand);
 //		if (aCpIndex < 0)
@@ -794,7 +745,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //
 //		}
 //	}
-
+	/*
+	 * Should be called only by AnExecutionSpecification
+	 */
 	public static String[] getExecutionCommand(Project aProject,
 			String aProcessName, File aBuildFolder, String anEntryPoint,
 			String anEntryTagTarget, String[] anArgs) {
@@ -803,7 +756,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			List<String> basicCommand = null;
 			if (aProcessName == null || aProcessName.isEmpty()) {
 			
-				basicCommand = getBasicCommand();
+				basicCommand = getExecutionCommand();
 			} else {
 			
 				basicCommand = getBasicCommand(aProcessName);
@@ -1021,7 +974,24 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
          	aRetVal = staticConfiguration.getInteger(aProperty, aDefault);
          return aRetVal;		
 	}
-
+	public static String getInheritedStringModuleProblemProperty(
+			String module,
+			String problem, String property, String aDefaultValue) {
+	
+		String retVal = StaticConfigurationUtils.getCourseOrStaticString(module + "." + problem + "."
+				+ property, null);
+	
+		if (retVal == null) {
+			retVal = StaticConfigurationUtils.getCourseOrStaticString(module + "." + property, null);
+		}
+		if (retVal == null) {
+			retVal = StaticConfigurationUtils.getCourseOrStaticString(DEFAULT + "." + property,
+					aDefaultValue);
+		}
+	
+		return retVal;
+	
+	}
 	public static String getInheritedStringModuleProblemProperty(
 			String property, String defaultValue) {
 //		PropertiesConfiguration configuration = ConfigurationManagerSelector
@@ -1073,14 +1043,23 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		aProblem, property, defaultValue);
 
 	}
-
+	/*
+	 * This should not b c alled directly
+	 */
 	public static String getLanguage() {
-		return getInheritedStringModuleProblemProperty(LANGUAGE, JAVA);
-
+		String retVal = null;
+		if (isUseProjectConfiguration()) {
+			 retVal = getInheritedStringModuleProblemProperty(BasicConfigurationManagerSelector.getConfigurationManager().getOrCreateProjectConfiguration(), getModule(), getProblem(), LANGUAGE, null);
+			 
+		}
+		if (retVal == null) {
+			retVal = getInheritedStringModuleProblemProperty(LANGUAGE, BasicLanguageDependencyManager.JAVA_LANGUAGE);
+		}
+		return retVal;
 	}
 
 	public static List<String> getInheritedListModuleProblemProperty(
-			String property) {
+			String property, List<String> aDefaultValue) {
 		PropertiesConfiguration configuration = ConfigurationManagerSelector
 				.getConfigurationManager().getStaticConfiguration();
 		PropertiesConfiguration courseConfiguration = ConfigurationManagerSelector
@@ -1089,11 +1068,13 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				.getGraderSettingsManager();
 		String aModule = graderSettingsManager.getModule();
 		String aProblem = graderSettingsManager.getNormalizedProblem(aModule);
-		List<String> retVal = getInheritedListModuleProblemProperty(courseConfiguration, aModule,
-				aProblem, property);
-		if (retVal.isEmpty())
-			retVal =  getInheritedListModuleProblemProperty(configuration, aModule,
-					aProblem, property);
+		List<String> retVal = BasicStaticConfigurationUtils.getInheritedListModuleProblemProperty(courseConfiguration, aModule,
+				aProblem, property, null);
+		if (retVal == null || retVal.isEmpty())
+			retVal =  BasicStaticConfigurationUtils.getInheritedListModuleProblemProperty(configuration, aModule,
+					aProblem, property, null);
+		if (retVal == null | retVal.isEmpty())
+			retVal = aDefaultValue;
 		return retVal;
 
 	}
@@ -1121,7 +1102,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			retVal = configuration.getString(module + "." + property, null);
 		}
 		if (retVal == null) {
-			retVal = configuration.getString(DEFAULT + "." + property,
+			retVal = configuration.getString(BasicStaticConfigurationUtils.DEFAULT + "." + property,
 					defaultValue);
 		}
 
@@ -1129,23 +1110,6 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 
 	}
 
-	public static List<String> getInheritedListModuleProblemProperty(
-			PropertiesConfiguration configuration, String module,
-			String problem, String property) {
-
-		List retVal = configuration.getList(module + "." + problem + "."
-				+ property);
-
-		if (retVal.isEmpty()) {
-			retVal = configuration.getList(module + "." + property);
-		}
-		if (retVal.isEmpty()) {
-			retVal = configuration.getList(DEFAULT + "." + property);
-		}
-
-		return retVal;
-
-	}
 	public static List<String> getInheritedListModuleProblemProperty(
 			String module,
 			String problem, String property) {
@@ -1157,7 +1121,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			retVal = getCourseOrStaticList(module + "." + property, null);
 		}
 		if (retVal.isEmpty()) {
-			retVal = getCourseOrStaticList(DEFAULT + "." + property, null);
+			retVal = getCourseOrStaticList(BasicStaticConfigurationUtils.DEFAULT + "." + property, null);
 		}
 
 		return retVal;
@@ -1250,16 +1214,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //		if (processTeams != null) {
 //			return processTeams;
 //		}
-		return getInheritedListModuleProblemProperty(PROCESS_TEAMS);
+		return getInheritedListModuleProblemProperty(PROCESS_TEAMS, emptyList);
 	}
 
 	public static List<String> getProcessArgs(String aProcess) {
-		return getInheritedListModuleProblemProperty(aProcess + "." + ARGS);
+		return getInheritedListModuleProblemProperty(aProcess + "." + ARGS, emptyList);
 	}
 
 	public static List<String> getProcessStartTags(String aProcess) {
 		return getInheritedListModuleProblemProperty(aProcess + "."
-				+ START_TAGS);
+				+ START_TAGS, emptyList);
 	}
 
 	public static Boolean getTrace() {
@@ -1281,7 +1245,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 
 	public static List<String> getEntryTags(String aProcess) {
 		return getInheritedListModuleProblemProperty(aProcess + "."
-				+ ENTRY_TAGS);
+				+ ENTRY_TAGS, emptyList);
 	}
 
 	public static String getEntryPoint(String aProcess) {
@@ -1290,12 +1254,12 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	}
 
 	public static List<String> getProcesses(String aProcessTeam) {
-		return getInheritedListModuleProblemProperty(aProcessTeam);
+		return getInheritedListModuleProblemProperty(aProcessTeam, emptyList);
 	}
 
 	public static List<String> getTerminatingProcesses(String aProcessTeam) {
 		return getInheritedListModuleProblemProperty(aProcessTeam + "."
-				+ TERMINATING);
+				+ TERMINATING, emptyList);
 	}
 
 }
