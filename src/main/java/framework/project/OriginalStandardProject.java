@@ -293,4 +293,10 @@ public class OriginalStandardProject implements FatProject {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public File getObjectFolder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
