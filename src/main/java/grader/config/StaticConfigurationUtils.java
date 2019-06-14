@@ -258,7 +258,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		//
 		// return retVal;
 		return BasicStaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(configuration, aModule,
-				aProblem, PRIVACY, false);
+				aProblem, test, PRIVACY, false);
 
 	}
 
@@ -270,7 +270,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		String problem = graderSettingsManager.getNormalizedProblem(module);
 
 		return BasicStaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(configuration, module,
-				problem, property, defaultValue);
+				problem, test, property, defaultValue);
 		// Boolean retVal = configuration.getBoolean(module+"." + problem + "."
 		// + property, null);
 		//
@@ -1068,11 +1068,12 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				.getGraderSettingsManager();
 		String aModule = graderSettingsManager.getModule();
 		String aProblem = graderSettingsManager.getNormalizedProblem(aModule);
+		String aTest = test;
 		List<String> retVal = BasicStaticConfigurationUtils.getInheritedListModuleProblemProperty(courseConfiguration, aModule,
-				aProblem, property, null);
+				aProblem, test, property, null);
 		if (retVal == null || retVal.isEmpty())
 			retVal =  BasicStaticConfigurationUtils.getInheritedListModuleProblemProperty(configuration, aModule,
-					aProblem, property, null);
+					aProblem, test, property, null);
 		if (retVal == null | retVal.isEmpty())
 			retVal = aDefaultValue;
 		return retVal;
@@ -1231,7 +1232,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				false);
 	}
 
-	public static final int DEFAULT_SLEEP_TIME = 2000;
+//	public static final int DEFAULT_SLEEP_TIME = 2000;
 
 	public static Integer getSleepTime(String aProcess) {
 		return getInheritedIntegerModuleProblemProperty(aProcess + "."

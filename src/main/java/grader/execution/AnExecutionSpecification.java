@@ -26,79 +26,82 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 		
 	}
 	
-	protected void loadEntryTag(String aProcess) {
-		String entryTag = StaticConfigurationUtils.getEntryTag(aProcess);
-		if (entryTag != null)
-			processToEntryTag.put(aProcess, StaticConfigurationUtils.getEntryTag(aProcess));
-	}
-	
-	protected void loadStartTags(String aProcess) {
-		List<String> startTags = StaticConfigurationUtils.getProcessStartTags(aProcess);
-		if (startTags != null)
-			processToStartTags.put(aProcess, startTags);
-	}
-	
-	protected void loadEntryTags(String aProcess) {
-		List<String> entryTags = StaticConfigurationUtils.getEntryTags(aProcess);
-		if (entryTags  != null)
-			processToEntryTags.put(aProcess, entryTags);
-	}
-	protected void loadEntryPoint(String aProcess) {
-		String anEntryPoint = StaticConfigurationUtils.getEntryPoint(aProcess);
-		if (anEntryPoint  != null)
-			processToEntryPoint.put(aProcess, anEntryPoint);
-	}
-	protected void loadSleepTime(String aProcess) {
-		Integer sleepTime = StaticConfigurationUtils.getSleepTime(aProcess);
-		if (sleepTime != null)
-			processToSleepTime.put(aProcess, sleepTime);
-	}
-	
-	protected void loadArgs(String aProcess) {
-		List<String> args = StaticConfigurationUtils.getProcessArgs(aProcess);
-		if (args != null)
-			processToArgs.put(aProcess, args);
-	}
-	
-	/* (non-Javadoc)
-	 * @see grader.execution.ExecutionSpecification#loadFromConfiguration()
-	 */
+//	protected void loadEntryTag(String aProcess) {
+//		String entryTag = StaticConfigurationUtils.getEntryTag(aProcess);
+//		if (entryTag != null)
+//			graderProcessToEntryTag.put(aProcess, StaticConfigurationUtils.getEntryTag(aProcess));
+//	}
+//	
+//	protected void loadStartTags(String aProcess) {
+//		List<String> startTags = StaticConfigurationUtils.getProcessStartTags(aProcess);
+//		if (startTags != null)
+//			graderProcessToStartTags.put(aProcess, startTags);
+//	}
+//	
+//	protected void loadEntryTags(String aProcess) {
+//		List<String> entryTags = StaticConfigurationUtils.getEntryTags(aProcess);
+//		if (entryTags  != null)
+//			graderProcessToEntryTags.put(aProcess, entryTags);
+//	}
+//	protected void loadEntryPoint(String aProcess) {
+//		String anEntryPoint = StaticConfigurationUtils.getEntryPoint(aProcess);
+//		if (anEntryPoint  != null)
+//			graderProcessToEntryPoint.put(aProcess, anEntryPoint);
+//	}
+//	protected void loadSleepTime(String aProcess) {
+//		Integer sleepTime = StaticConfigurationUtils.getSleepTime(aProcess);
+//		if (sleepTime != null)
+//			graderProcessToSleepTime.put(aProcess, sleepTime);
+//	}
+//	
+//	protected void loadArgs(String aProcess) {
+//		List<String> args = StaticConfigurationUtils.getProcessArgs(aProcess);
+//		if (args != null)
+//			graderProcessToArgs.put(aProcess, args);
+//	}
+//	
+//	/* (non-Javadoc)
+//	 * @see grader.execution.ExecutionSpecification#loadFromConfiguration()
+//	 */
 	@Override
+	/**
+	 * Not sure we need this method but let us keep it for now
+	 */
 	public void loadFromConfiguration() {
-		processTeams = StaticConfigurationUtils.getProcessTeams();
-
-		for (String aProcessTeam:processTeams) {
-			List<String> aProcesses =  StaticConfigurationUtils.getProcesses(aProcessTeam);
-			processTeamToProcesses.put(aProcessTeam, aProcesses);
-			List<String> aTerminatingProcesses =  StaticConfigurationUtils.getTerminatingProcesses(aProcessTeam);
-			processTeamToTerminatingProcesses.put(aProcessTeam, aTerminatingProcesses);
-
-			for (String aProcess:aProcesses) {
-				loadSleepTime(aProcess);
-				loadEntryTag(aProcess);
-				loadEntryTags(aProcess);
-				loadEntryPoint(aProcessTeam);
-				loadStartTags(aProcess);
-				loadArgs(aProcess);
-//				Integer sleepTime = StaticConfigurationUtils.getSleepTime(aProcess);
-//				if (sleepTime != null)
-//					processToSleepTime.put(aProcess, sleepTime);
-				
-				
+//		processTeams = StaticConfigurationUtils.getProcessTeams();
+//
+//		for (String aProcessTeam:processTeams) {
+//			List<String> aProcesses =  StaticConfigurationUtils.getProcesses(aProcessTeam);
+//			graderProcessTeamToProcesses.put(aProcessTeam, aProcesses);
+//			List<String> aTerminatingProcesses =  StaticConfigurationUtils.getTerminatingProcesses(aProcessTeam);
+//			graderProcessTeamToTerminatingProcesses.put(aProcessTeam, aTerminatingProcesses);
+//
+//			for (String aProcess:aProcesses) {
+//				loadSleepTime(aProcess);
+//				loadEntryTag(aProcess);
+//				loadEntryTags(aProcess);
+//				loadEntryPoint(aProcessTeam);
+//				loadStartTags(aProcess);
+//				loadArgs(aProcess);
+////				Integer sleepTime = StaticConfigurationUtils.getSleepTime(aProcess);
+////				if (sleepTime != null)
+////					processToSleepTime.put(aProcess, sleepTime);
 //				
-//				String entryTag = StaticConfigurationUtils.getEntryTag(aProcess);
-//				if (entryTag != null)
-//					processToEntryTag.put(aProcess, StaticConfigurationUtils.getEntryTag(aProcess));
-				
-//				List<String> args = StaticConfigurationUtils.getProcessArgs(aProcess);
-//				if (args != null)
-//					processToArgs.put(aProcess, args);
-//				List<String> startTags = StaticConfigurationUtils.getProcessStartTags(aProcess);
-//				if (startTags != null)
-//					processToStartTags.put(aProcess, args);
-				
-			}
-		}
+//				
+////				
+////				String entryTag = StaticConfigurationUtils.getEntryTag(aProcess);
+////				if (entryTag != null)
+////					processToEntryTag.put(aProcess, StaticConfigurationUtils.getEntryTag(aProcess));
+//				
+////				List<String> args = StaticConfigurationUtils.getProcessArgs(aProcess);
+////				if (args != null)
+////					processToArgs.put(aProcess, args);
+////				List<String> startTags = StaticConfigurationUtils.getProcessStartTags(aProcess);
+////				if (startTags != null)
+////					processToStartTags.put(aProcess, args);
+//				
+//			}
+//		}
 		
 	}
 //	@Override

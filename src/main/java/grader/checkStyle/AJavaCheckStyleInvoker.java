@@ -1,6 +1,7 @@
 package grader.checkStyle;
 
 import framework.execution.ProcessRunner;
+import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.Runner;
 import grader.basics.execution.RunningProject;
@@ -27,7 +28,7 @@ public class AJavaCheckStyleInvoker  implements CheckStyleInvoker{
         String[] args = {};
         Runner processRunner = new ProcessRunner(new File("."));
 //        RunningProject aReturnValue = processRunner.run(null, command, "", args, 2000);
-        RunningProject aReturnValue = processRunner.run(null, command, "", args, BasicProjectExecution.PROCESS_TIME_OUT*10);
+        RunningProject aReturnValue = processRunner.run(null, command, "", args, BasicStaticConfigurationUtils.DEFAULT_PROCESS_TIME_OUT*10);
 
         return aReturnValue;
 
