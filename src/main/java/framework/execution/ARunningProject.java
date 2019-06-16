@@ -59,6 +59,27 @@ public class ARunningProject extends BasicRunningProject implements ProcessInput
 	public ARunningProject(Project aProject, InputGenerator anOutputBasedInputGenerator, String anInput) {
 		super(aProject, anOutputBasedInputGenerator, anInput);
 	}
+	
+	protected void appendOutputAndErrorsToTranscript(String featureName) {
+		if (allProcessedOutput.length() == 0) {
+			// Tracer.error("Null output!");
+			transcript.append("No output from program");
+//			output = "No output from program";
+			// return "";
+			// return transcript.toString() + ;
+		} else {
+			transcript.append("OUTPUT(" + featureName + ")\n");
+			transcript.append(allProcessedOutput + "\n");
+		}
+//		if (!output.isEmpty()) {
+//			transcript.append("OUTPUT(" + featureName + ")\n");
+//			transcript.append(output + "\n");
+//		}
+		if (allReceivedErros.length() > 0) {
+			transcript.append("ERRORS(" + featureName + ")\n");
+			transcript.append(allReceivedErros + "\n");
+		}
+	}
 
 	public String createFeatureTranscript() {
 		transcript.setLength(0);
@@ -95,21 +116,21 @@ public class ARunningProject extends BasicRunningProject implements ProcessInput
 
 		}
 //		System.out.println("Output in transcript:" + output);
-
-		if (output == null) {
-			// Tracer.error("Null output!");
-			output = "No output from program";
-			// return "";
-			// return transcript.toString() + ;
-		}
-		if (!output.isEmpty()) {
-			transcript.append("OUTPUT(" + featureName + ")\n");
-			transcript.append(output + "\n");
-		}
-		if (!errorOutput.isEmpty()) {
-			transcript.append("ERRORS(" + featureName + ")\n");
-			transcript.append(errorOutput + "\n");
-		}
+		appendOutputAndErrorsToTranscript(featureName);
+//		if (output == null) {
+//			// Tracer.error("Null output!");
+//			output = "No output from program";
+//			// return "";
+//			// return transcript.toString() + ;
+//		}
+//		if (!output.isEmpty()) {
+//			transcript.append("OUTPUT(" + featureName + ")\n");
+//			transcript.append(output + "\n");
+//		}
+//		if (!errorOutput.isEmpty()) {
+//			transcript.append("ERRORS(" + featureName + ")\n");
+//			transcript.append(errorOutput + "\n");
+//		}
 		return transcript.toString();
 
 	}
@@ -144,7 +165,8 @@ public class ARunningProject extends BasicRunningProject implements ProcessInput
 	//
 	protected void maybeSetCurrentProjectIO() {
 		if (project != null) {
-			project.setCurrentOutput(new StringBuffer(output));
+//			project.setCurrentOutput(new StringBuffer(output));
+			project.setCurrentOutput(allProcessedOutput); // any need to create a copy?
 			project.setCurrentInput(input.toString());
 		}
 	}
