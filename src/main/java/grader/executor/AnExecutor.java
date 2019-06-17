@@ -1,5 +1,7 @@
 package grader.executor;
 
+import grader.basics.execution.BasicExecutionSpecification;
+import grader.basics.execution.BasicExecutionSpecificationSelector;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.compilation.c.CFilesCompilerSelector;
 import grader.config.StaticConfigurationUtils;
@@ -47,7 +49,9 @@ public class AnExecutor implements Executor {
 	 */
 	@Override
 	public String[] maybeToExecutorCommand(String[] aCommand) {
-		if (!StaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(StaticConfigurationUtils.USE_EXECEUTOR, false))
+//		if (!StaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(StaticConfigurationUtils.USE_EXECEUTOR, false))
+//			return aCommand;
+		if (!BasicExecutionSpecificationSelector.getBasicExecutionSpecification().isUseExecutor())
 			return aCommand;
 		String[] retVal = new String[aCommand.length+1];
 		retVal[0] = executorDirectory + "/bin/" + EXECUTOR_FILE;

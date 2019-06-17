@@ -7,6 +7,9 @@ import grader.basics.execution.BasicExecutionSpecification;
 public interface ExecutionSpecification extends BasicExecutionSpecification {
 
 	public abstract void loadFromConfiguration();
+	String getDynamicExecutionFileName();
+//	String getCObjSuffix();
+//	String getExecutorDirectory();
 //
 //	public abstract List<String> getProcessTeams();
 //

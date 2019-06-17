@@ -2,12 +2,14 @@ package grader.config;
 
 import framework.utils.UserPropertyWriter;
 import grader.basics.config.ABasicConfigurationManager;
+import grader.execution.ExecutionSpecificationSelector;
 import grader.executor.ExecutorSelector;
 import grader.language.LanguageDependencyManager;
 import grader.trace.config.DynamicConfigurationFileCreated;
 import grader.trace.config.DynamicConfigurationFileRead;
 import grader.trace.config.StaticConfigurationFileNotRead;
 import grader.trace.config.StaticConfigurationFileRead;
+import util.trace.Tracer;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +59,9 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
 //        }
 //
 //    }
-
+    /**
+     * These methods should be in StaticConfigurationUtils
+     */
     public PropertiesConfiguration getDynamicConfiguration() {
         return dynamicConfiguration;
     }
@@ -99,11 +103,13 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
 //			 PropertiesConfiguration configuration = new PropertiesConfiguration("./config/config.properties");
 //			 PropertiesConfiguration configuration = new PropertiesConfiguration(STATIC_CONFIGURATION_FILE_NAME);
             PropertiesConfiguration configuration = createStaticConfiguration(args);
-
+            if (configuration != null) {
             StaticConfigurationFileRead.newCase(STATIC_CONFIGURATION_FILE_NAME, this);
             setStaticConfiguration(configuration);
-//            String dynamicConfigurationName = configuration.getString("grader.dynamicConfiguration", "dynamicconfig.properties");
-            String dynamicConfigurationName = configuration.getString(DYNAMIC_CONFIG_PROPERTY, DYNAMIC_CONFIGURATION_FILE_NAME);
+            }
+//            String dynamicConfigurationName = configuration.getString(DYNAMIC_CONFIG_PROPERTY, DYNAMIC_CONFIGURATION_FILE_NAME);
+            // allowing for no configuration
+            String dynamicConfigurationName = ExecutionSpecificationSelector.getExecutionSpecification().getDynamicExecutionFileName();
 
             File dynamicConfigurationFile = new File(dynamicConfigurationName);
             if (!dynamicConfigurationFile.exists()) {
@@ -133,17 +139,24 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
 //	         	convertToDynamicConfiguration();
            }
             
-            setDynamicModuleConfiguration(new PropertiesConfiguration(dynamicModuleFile.getAbsolutePath()));        
-            LanguageDependencyManager.setCOBj(
-            		StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.C_OBJ, null));
+            setDynamicModuleConfiguration(new PropertiesConfiguration(dynamicModuleFile.getAbsolutePath()));  
+//            LanguageDependencyManager.setCOBj(
+//            		StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.C_OBJ, null));
+            /*
+             * Why are these values being pushed eagerly rather than pulled when needed lazily
+             */
+            String cObj = ExecutionSpecificationSelector.getExecutionSpecification().getCObjSuffix();
 
-//            LanguageDependencyManager.setCOBj(this);
-//            String anExecutor = getCourseConfiguration().getString(StaticConfigurationUtils.EXECEUTOR);
-//            if (anExecutor == null)
-//            	anExecutor = getStaticConfiguration().getString(StaticConfigurationUtils.EXECEUTOR);
-//            ExecutorSelector.getExecutor().setExecutorDirectory(anExecutor);
+            LanguageDependencyManager.setCOBj(
+            		cObj);
+
+//            ExecutorSelector.getExecutor().setExecutorDirectory(
+//            		StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.EXECUTOR, null));
+            
             ExecutorSelector.getExecutor().setExecutorDirectory(
-            		StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.EXECUTOR, null));
+            		
+            		ExecutionSpecificationSelector.getExecutionSpecification().getExecutorDirectory()
+            		);
 
 //	         GraderSettings.get().convertToDynamicConfiguration();
         } catch (ConfigurationException e) {
@@ -161,6 +174,11 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
     PropertiesConfiguration createCourseConfiguration(String[] args) {
        
                 try {
+                	File aFile = new File(COURSE_CONFIGURATION_FILE_NAME);
+                	if (!aFile.exists()) {
+                		Tracer.warning (COURSE_CONFIGURATION_FILE_NAME + " does not exist, using defaults");
+                		return null;
+                	}
 					return new PropertiesConfiguration(COURSE_CONFIGURATION_FILE_NAME);
 				} catch (ConfigurationException e) {
 					e.printStackTrace();
@@ -178,6 +196,11 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
         	// Best is to use course configuration and use overwrite or set property to overrwrite it
         	// will not change until I have tried out andrew's server
             if (args.length == 0) { 
+            	File aConfigFile = new File(STATIC_CONFIGURATION_FILE_NAME);
+            	if (!aConfigFile.exists()) {
+            		Tracer.warning(STATIC_CONFIGURATION_FILE_NAME + " not found, using defaults" );
+            		return null;
+            	}
                 return new PropertiesConfiguration(STATIC_CONFIGURATION_FILE_NAME);
             }
 //		           UserPropertyWriter userProperties = new UserPropertyWriter(Paths.get("config", "config.properties").toString());

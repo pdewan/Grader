@@ -192,21 +192,31 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 //		 ModuleUserChange.newCase(currentModule, this, this);
 
     }
-
+    String  noDownloadPathMessage () {
+    	return "No stored download path. When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.";
+    }
+    boolean showMessageDialog = false;
     void noDownloadPath() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            JOptionPane.showMessageDialog(null, "No stored download path. When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
+        if (!GraphicsEnvironment.isHeadless() && showMessageDialog) {
+//            JOptionPane.showMessageDialog(null, "No stored download path. When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
+            JOptionPane.showMessageDialog(null, noDownloadPathMessage());
+
         } else {
-            Tracer.error("No stored download path.");
+            Tracer.error(noDownloadPathMessage());
         }
 
     }
-
+    String  noValidDownloadPathMessage () {
+    	return "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.";
+    }
+//    boolean showMessageDialog = false;
     void noValidDownloadPath(String aPath) {
-        if (!GraphicsEnvironment.isHeadless()) {
-            JOptionPane.showMessageDialog(null, "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
+        if (!GraphicsEnvironment.isHeadless() && showMessageDialog) {
+//            JOptionPane.showMessageDialog(null, "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
+            JOptionPane.showMessageDialog(null, noValidDownloadPathMessage ());
+
         } else {
-            Tracer.error("No valid download path.");
+            Tracer.error(noValidDownloadPathMessage());
         }
     }
 

@@ -21,15 +21,18 @@ public class GraderSettings {
 
     private GraderSettings() {
         settings = new HashMap<String, String>();
+        String aSettingsFileName = ".gradersettings";
         try {
-            List<String> lines = FileUtils.readLines(new File(".gradersettings"));
+//            List<String> lines = FileUtils.readLines(new File(".gradersettings"));
+            List<String> lines = FileUtils.readLines(new File(aSettingsFileName));
+
             for (String line : lines) {
                 String[] parts = line.split("=");
                 if (parts.length == 2 && !parts[1].isEmpty())
                     settings.put(parts[0], parts[1]);
             }
         } catch (Exception e) {
-            System.out.println("No settings file found.");
+            System.out.println("W*** No settings file:" + aSettingsFileName + ". Using dynamic configuration");
         }
     }
     

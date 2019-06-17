@@ -1,6 +1,9 @@
 package grader.modules;
 
+import grader.basics.config.BasicStaticConfigurationUtils;
+import grader.basics.execution.BasicExecutionSpecificationSelector;
 import grader.config.ConfigurationManagerSelector;
+import grader.execution.ExecutionSpecificationSelector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +12,8 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class AModuleProblemManager implements ModuleProblemManager{
-	public static final String MODULES = "modules";
-	public static final String GENERIC_COURSE = "GenericCourse";
+//	public static final String MODULES = "modules";
+//	public static final String GENERIC_COURSE = "GenericCourse";
 	PropertiesConfiguration configuration, dynamicConfiguration;
 	PropertiesConfiguration courseConfiguration, dynamicModuleConfiguration;
 //	GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector.getGraderSettingsManager();
@@ -45,7 +48,7 @@ public class AModuleProblemManager implements ModuleProblemManager{
 				System.err.println("null dynamic module config");
 				return;
 			}
-			dynamicModuleConfiguration.setProperty(MODULES, getModules());
+			dynamicModuleConfiguration.setProperty(BasicStaticConfigurationUtils.MODULES, getModules());
 			dynamicModuleConfiguration.save();
         } catch (ConfigurationException e) {
             // TODO Auto-generated catch block
@@ -53,47 +56,98 @@ public class AModuleProblemManager implements ModuleProblemManager{
         }
 		
 	}
+//	// side effect, reading modules will save them
+//	public List<String> getModules() {
+//		if (modules != null) return modules;
+//		List objectModules = null;
+//		if (courseConfiguration != null) {
+//			 objectModules = courseConfiguration.getList(MODULES);
+//		 }
+//		
+//		if (objectModules != null && objectModules.isEmpty()) {
+//			System.err.println("No modules found in modules.properties, using the ones in config");
+//		}
+//		
+//		if (objectModules == null || objectModules.isEmpty()) {
+//		
+////		 List objectModules = configuration.getList("modules");
+////		 List objectModules = configuration.getList(MODULES);
+//			if (configuration != null) {
+//		objectModules = configuration.getList(MODULES);
+//			} else {
+//				System.err.println("Null configuration");
+//				return new ArrayList(); // when we are rnning code without the grader running such as a C compiler of checkstyle
+//			}
+//		}
+//		
+//
+////		 List<String> 	modules = objectModules;
+//		modules = objectModules;
+//
+//			if (modules == null || objectModules.size() == 0) {
+//				modules = new ArrayList();
+////				Tracer.error("No modules specified in configuration file!");
+////				modules.add("GenericCourse");
+//				modules.add(GENERIC_COURSE);
+////				Tracer.error("No modules specified in configuration file!");
+////				System.exit(-1);
+//			}
+//			saveModules();
+//			
+//		return modules;
+//		
+//	}
 	// side effect, reading modules will save them
 	public List<String> getModules() {
 		if (modules != null) return modules;
 		List objectModules = null;
-		if (courseConfiguration != null) {
-			 objectModules = courseConfiguration.getList(MODULES);
-		 }
-		
-		if (objectModules != null && objectModules.isEmpty()) {
-			System.err.println("No modules found in modules.properties, using the ones in config");
+		objectModules = BasicExecutionSpecificationSelector.getBasicExecutionSpecification().getModules();
+		if (objectModules == null) {
+			objectModules = new ArrayList();
 		}
-		
-		if (objectModules == null || objectModules.isEmpty()) {
-		
-//		 List objectModules = configuration.getList("modules");
-//		 List objectModules = configuration.getList(MODULES);
-			if (configuration != null) {
-		objectModules = configuration.getList(MODULES);
-			} else {
-				System.err.println("Null configuration");
-				return new ArrayList(); // when we are rnning code without the grader running such as a C compiler of checkstyle
-			}
+		if (objectModules.isEmpty()) {
+			objectModules.add(BasicStaticConfigurationUtils.DEFAULT_MODULE);
 		}
-		
-
-//		 List<String> 	modules = objectModules;
 		modules = objectModules;
+		return objectModules;
+//		if (courseConfiguration != null) {
+//			 objectModules = courseConfiguration.getList(MODULES);
+//		 }
+//		
+//		if (objectModules != null && objectModules.isEmpty()) {
+//			System.err.println("No modules found in modules.properties, using the ones in config");
+//		}
+//		
+//		if (objectModules == null || objectModules.isEmpty()) {
+//		
+////		 List objectModules = configuration.getList("modules");
+////		 List objectModules = configuration.getList(MODULES);
+//			if (configuration != null) {
+//		objectModules = configuration.getList(MODULES);
+//			} else {
+//				System.err.println("Null configuration");
+//				return new ArrayList(); // when we are rnning code without the grader running such as a C compiler of checkstyle
+//			}
+//		}
+		
 
-			if (modules == null || objectModules.size() == 0) {
-				modules = new ArrayList();
-//				Tracer.error("No modules specified in configuration file!");
-//				modules.add("GenericCourse");
-				modules.add(GENERIC_COURSE);
-//				Tracer.error("No modules specified in configuration file!");
-//				System.exit(-1);
-			}
-			saveModules();
-			
-		return modules;
+////		 List<String> 	modules = objectModules;
+//		modules = objectModules;
+//
+//			if (modules == null || objectModules.size() == 0) {
+//				modules = new ArrayList();
+////				Tracer.error("No modules specified in configuration file!");
+////				modules.add("GenericCourse");
+//				modules.add(GENERIC_COURSE);
+////				Tracer.error("No modules specified in configuration file!");
+////				System.exit(-1);
+//			}
+//			saveModules();
+//			
+//		return modules;
 		
 	}
+	
 //	@Override
 //	public String replaceModuleProblemVars(String  original) {
 //		String moduleName = graderSettingsManager.getModule();

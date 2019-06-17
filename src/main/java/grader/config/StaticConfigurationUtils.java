@@ -14,6 +14,7 @@ import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.GraderSettingsManager;
 import grader.settings.GraderSettingsManagerSelector;
+import gradingTools.Driver;
 
 import java.io.File;
 import java.io.IOException;
@@ -936,9 +937,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				.getConfigurationManager().getStaticConfiguration();
 		PropertiesConfiguration courseConfiguration = ConfigurationManagerSelector
 				.getConfigurationManager().getCourseConfiguration();
-		 List aRetVal = courseConfiguration.getList(aProperty, aDefault);
-         if (aRetVal == null)
+		 List aRetVal = null;
+		 if (courseConfiguration != null) {
+		 aRetVal = courseConfiguration.getList(aProperty, aDefault);
+		 }
+         if (aRetVal == null) {
+        	 if (staticConfiguration == null) {
+        		 return aDefault;
+        	 }
          	aRetVal = staticConfiguration.getList(aProperty, aDefault);
+         }
          return aRetVal;		
 	}
 	
@@ -947,9 +955,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				.getConfigurationManager().getStaticConfiguration();
 		PropertiesConfiguration courseConfiguration = ConfigurationManagerSelector
 				.getConfigurationManager().getCourseConfiguration();
-		 String aRetVal = courseConfiguration.getString(aProperty, aDefault);
-         if (aRetVal == null)
+		 String aRetVal = null;
+		 if (courseConfiguration != null) {
+		 aRetVal = courseConfiguration.getString(aProperty, aDefault);
+		 }
+         if (aRetVal == null) {
+        	 if (staticConfiguration == null) {
+        		 return aDefault;
+        	 }
          	aRetVal = staticConfiguration.getString(aProperty, aDefault);
+         }
          return aRetVal;		
 	}
 	
@@ -958,9 +973,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				.getConfigurationManager().getStaticConfiguration();
 		PropertiesConfiguration courseConfiguration = ConfigurationManagerSelector
 				.getConfigurationManager().getCourseConfiguration();
-		 Boolean aRetVal = courseConfiguration.getBoolean(aProperty, aDefault);
-         if (aRetVal == null)
+		 Boolean aRetVal = null;
+		 	if (courseConfiguration != null) {
+		 		aRetVal = courseConfiguration.getBoolean(aProperty, aDefault);
+		 	}
+         if (aRetVal == null) {
+        	 if (staticConfiguration == null) {
+        		 return aDefault;
+        	 }
          	aRetVal = staticConfiguration.getBoolean(aProperty, aDefault);
+         }
          return aRetVal;		
 	}
 	
@@ -969,9 +991,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				.getConfigurationManager().getStaticConfiguration();
 		PropertiesConfiguration courseConfiguration = ConfigurationManagerSelector
 				.getConfigurationManager().getCourseConfiguration();
-		 Integer aRetVal = courseConfiguration.getInteger(aProperty, aDefault);
-         if (aRetVal == null)
+		 Integer aRetVal = null;
+		 if (courseConfiguration != null) {
+		 aRetVal = courseConfiguration.getInteger(aProperty, aDefault);
+		 }
+         if (aRetVal == null) {
+        	 if (staticConfiguration == null) {
+        		 return aDefault;
+        	 }
          	aRetVal = staticConfiguration.getInteger(aProperty, aDefault);
+         }
          return aRetVal;		
 	}
 	public static String getInheritedStringModuleProblemProperty(
@@ -1111,7 +1140,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 
 	}
 
-	public static List<String> getInheritedListModuleProblemProperty(
+	public static List getInheritedListModuleProblemProperty(
 			String module,
 			String problem, String property) {
 
@@ -1261,6 +1290,17 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static List<String> getTerminatingProcesses(String aProcessTeam) {
 		return getInheritedListModuleProblemProperty(aProcessTeam + "."
 				+ TERMINATING, emptyList);
+	}
+	
+	
+	
+	public static String getDynamicExecutionFileName() {
+		if (Driver.getConfiguration() != null) {
+            return  Driver.getConfiguration().getString(AConfigurationManager.DYNAMIC_CONFIG_PROPERTY, AConfigurationManager.DYNAMIC_CONFIGURATION_FILE_NAME);
+
+		}
+		
+		return AConfigurationManager.DYNAMIC_CONFIGURATION_FILE_NAME;
 	}
 
 }

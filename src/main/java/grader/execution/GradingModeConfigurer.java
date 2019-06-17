@@ -15,6 +15,11 @@ public class GradingModeConfigurer {
 		BasicExecutionSpecificationSelector.setBasicExecutionSpecification(
 				ExecutionSpecificationSelector.getExecutionSpecification());
 		RunnerSelector.setFactory(new ProcessRunnerFactory());
+		/*
+		 * Should this be set like this? Can someone override the finder later?
+		 * This is being done to override the basic main class finder. I suppose
+		 * after the system is up, one can change the class finder
+		 */
 		JavaMainClassFinderSelector
 				.setMainClassFinder(new AFlexibleMainClassFinder());
 	}

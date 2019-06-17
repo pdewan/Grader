@@ -3,6 +3,7 @@ package grader.execution;
 import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.ABasicExecutionSpecification;
+import grader.config.AConfigurationManager;
 import grader.config.StaticConfigurationUtils;
 import util.trace.Tracer;
 
@@ -148,6 +149,37 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 
 			
 		}
+	 protected String getConfigurationDirectString(String aProperty, String aDefault) {
+		    String retVal = super.getConfigurationDirectString(aProperty, null);
+		    if (retVal != null) {
+		    	return retVal;
+		    }
+	    	return StaticConfigurationUtils.getCourseOrStaticString(aProperty, aDefault);
+	  }
+	 protected List getConfigurationDirectList(String aProperty, List aDefault) {
+		    List retVal = super.getConfigurationDirectList(aProperty, null);
+		    if (retVal != null) {
+		    	return retVal;
+		    }
+	    	return StaticConfigurationUtils.getCourseOrStaticList(aProperty, aDefault);
+	  }
+	@Override
+	public String getDynamicExecutionFileName() {
+//		return StaticConfigurationUtils.getInheritedStringModuleProblemProperty(AConfigurationManager.DYNAMIC_CONFIG_PROPERTY, AConfigurationManager.DYNAMIC_CONFIGURATION_FILE_NAME);
+		return StaticConfigurationUtils.getDynamicExecutionFileName();
+	}
+//	 
+//
+	@Override
+	public String getCObjSuffix() {
+		return StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.C_OBJ, StaticConfigurationUtils.DEFAULT_C_OBJ);
+//		return  StaticConfigurationUtils.getInheritedStringModuleProblemProperty(StaticConfigurationUtils.C_OBJ, StaticConfigurationUtils.DEFAULT_C_OBJ);
+	}
+//
+//	@Override
+//	public String getExecutorDirectory() {
+//		return StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.EXECUTOR, StaticConfigurationUtils.DEFAULT_EXECUTOR);
+//	}
 	
 //	/* (non-Javadoc)
 //	 * @see grader.execution.ExecutionSpecification#getProcessTeams()
