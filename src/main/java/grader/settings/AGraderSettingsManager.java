@@ -3,6 +3,7 @@ package grader.settings;
 import framework.utils.GraderSettings;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ConfigurationManagerSelector;
+import grader.config.StaticConfigurationUtils;
 import grader.execution.ExecutionSpecificationSelector;
 import grader.modules.ModuleProblemManager;
 import grader.modules.ModuleProblemManagerSelector;
@@ -18,17 +19,6 @@ import util.misc.Common;
 import util.trace.Tracer;
 
 public class AGraderSettingsManager implements GraderSettingsManager {
-
-    public static final String EDITOR = "editor";
-    public static final String DIFF = "diff";
-    public static final String MODULE = "currentModule";
-    public static final String PROBLEM_PATH = "path";
-    public static final String PROBLEM_NAME = "problem";
-    public static final String START_ONYEN = "start";
-    public static final String END_ONYEN = "end";
-    public static final String WORD_PATH = "Word.path";
-    public static final String C_COMPILER_PATH = "CCompiler.path";
-    public static final String PYTHON_INTERPRETER_PATH = "PythonInterpreter.path";
 
     PropertiesConfiguration dynamicConfiguration
             = ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
@@ -68,31 +58,33 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public String getStartingOnyen(String aModule) {
-        String startingOnyen = dynamicConfiguration.getString(aModule + "." + START_ONYEN,
-                dynamicConfiguration.getString(START_ONYEN));
+//        String startingOnyen = dynamicConfiguration.getString(aModule + "." + StaticConfigurationUtils.START_ONYEN,
+//                dynamicConfiguration.getString(StaticConfigurationUtils.START_ONYEN));
+    	String startingOnyen = ExecutionSpecificationSelector.getExecutionSpecification().getStartOnyen();
         return startingOnyen;
     }
 
     @Override
     public void setStartingOnyen(String aModule,
             String aStartOnyen) {
-        dynamicConfiguration.setProperty(aModule + "." + START_ONYEN, aStartOnyen);
-        dynamicConfiguration.setProperty(START_ONYEN, aStartOnyen);
+        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.START_ONYEN, aStartOnyen);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.START_ONYEN, aStartOnyen);
 
     }
 
     @Override
     public String getEndingOnyen(String aModule) {
-        String endingOnyen = dynamicConfiguration.getString(aModule + "." + END_ONYEN,
-                dynamicConfiguration.getString(END_ONYEN));
+//        String endingOnyen = dynamicConfiguration.getString(aModule + "." + StaticConfigurationUtils.END_ONYEN,
+//                dynamicConfiguration.getString(StaticConfigurationUtils.END_ONYEN));
+        String endingOnyen = ExecutionSpecificationSelector.getExecutionSpecification().getEndOnyen();
         return endingOnyen;
     }
 
     @Override
     public void setEndingOnyen(String aModule,
             String anEndOnyen) {
-        dynamicConfiguration.setProperty(aModule + "." + END_ONYEN, anEndOnyen);
-        dynamicConfiguration.setProperty(END_ONYEN, anEndOnyen);
+        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.END_ONYEN, anEndOnyen);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.END_ONYEN, anEndOnyen);
 
     }
     public static final String NAVIGATION_KIND = "navigationKind";
@@ -214,7 +206,7 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public String getEditor() {
-        String editor = dynamicConfiguration.getString(EDITOR);
+        String editor = dynamicConfiguration.getString(StaticConfigurationUtils.EDITOR);
         if (editor != null) {
 //				editor = GraderSettings.get().get("editor");
             BasicGradingEnvironment.get().setEditor(editor); // why not for path also, perhaps its not used later?
@@ -226,13 +218,13 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public void setEditor(String newValue) {
-        dynamicConfiguration.setProperty(EDITOR, newValue);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.EDITOR, newValue);
 
     }
     
     @Override
     public String getDiff() {
-        String diff = dynamicConfiguration.getString(DIFF);
+        String diff = dynamicConfiguration.getString(StaticConfigurationUtils.DIFF);
         if (diff != null) {
 //				editor = GraderSettings.get().get("editor");
             BasicGradingEnvironment.get().setDiff(diff); // why not for path also, perhaps its not used later?
@@ -244,7 +236,7 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public void setDiff(String newValue) {
-        dynamicConfiguration.setProperty(DIFF, newValue);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.DIFF, newValue);
 
     }
 
@@ -260,44 +252,46 @@ public class AGraderSettingsManager implements GraderSettingsManager {
         	return "";
         }
 
-        String aModule = dynamicConfiguration.getString(MODULE, modules.get(0));
+        String aModule = dynamicConfiguration.getString(StaticConfigurationUtils.MODULE, modules.get(0));
 //        System.out.println ("Returning module:" + aModule);
         return aModule;
     }
 
     @Override
     public void setModule(String newValue) {
-        dynamicConfiguration.setProperty(MODULE, newValue);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.MODULE, newValue);
 
     }
 
     @Override
     public String getDownloadPath(String aModule) {
-        String problemDownloadPath = dynamicConfiguration.getString(aModule + "." + PROBLEM_PATH,
+//        String problemDownloadPath = dynamicConfiguration.getString(aModule + "." + StaticConfigurationUtils.PROBLEM_PATH,
 //                dynamicConfiguration.getString(PROBLEM_PATH, "Browse to a valid download path"));
-        dynamicConfiguration.getString(PROBLEM_PATH, ""));
+//        dynamicConfiguration.getString(StaticConfigurationUtils.PROBLEM_PATH, ""));
+        String problemDownloadPath = ExecutionSpecificationSelector.getExecutionSpecification().getProblemDownloadPath();
+
 
         return problemDownloadPath;
     }
 
     @Override
     public void setDownloadPath(String aModule, String aNewValue) {
-        dynamicConfiguration.setProperty(aModule + "." + PROBLEM_PATH, aNewValue);
+        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
 
     }
 
     @Override
     public String getWordPath() {
-        String wordPath = dynamicConfiguration.getString(WORD_PATH);
+        String wordPath = dynamicConfiguration.getString(StaticConfigurationUtils.WORD_PATH);
         if (wordPath == null || wordPath.isEmpty()) {
-            wordPath = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(WORD_PATH, "C:/Program Files/Microsoft Office/Office" + 14 + "/WINWORD");
+            wordPath = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(StaticConfigurationUtils.WORD_PATH, "C:/Program Files/Microsoft Office/Office" + 14 + "/WINWORD");
         }
         return wordPath;
     }
 
     @Override
     public void setWordPath(String aNewValue) {
-        dynamicConfiguration.setProperty(WORD_PATH, aNewValue);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.WORD_PATH, aNewValue);
 
     }
 
@@ -305,11 +299,11 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     public String getCCompilerPath() {
     	String defaultPath = ConfigurationManagerSelector.
     			getConfigurationManager().
-    				getStaticConfiguration().getString(C_COMPILER_PATH, "cl");
+    				getStaticConfiguration().getString(StaticConfigurationUtils.C_COMPILER_PATH, "cl");
     	if (dynamicConfiguration == null) {
     		return defaultPath;
     	}
-        String path = dynamicConfiguration.getString(C_COMPILER_PATH);
+        String path = dynamicConfiguration.getString(StaticConfigurationUtils.C_COMPILER_PATH);
         if (path == null) {
         	return defaultPath;
 //            path = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(C_COMPILER_PATH, "C:/Program Files (x86)/Microsoft Visual Studio 11.0/VC/bin/cl.exe");
@@ -321,16 +315,16 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public void setCCompilerPath(String aNewValue) {
-        dynamicConfiguration.setProperty(C_COMPILER_PATH, aNewValue);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.C_COMPILER_PATH, aNewValue);
 
     }
     
     @Override
     public String getPythonInterpreterPath() {
-        String path = dynamicConfiguration.getString(PYTHON_INTERPRETER_PATH);
+        String path = dynamicConfiguration.getString(StaticConfigurationUtils.PYTHON_INTERPRETER_PATH);
         if (path == null) {
 //            path = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(C_COMPILER_PATH, "C:/Program Files (x86)/Microsoft Visual Studio 11.0/VC/bin/cl.exe");
-            path = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(PYTHON_INTERPRETER_PATH, "python");
+            path = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(StaticConfigurationUtils.PYTHON_INTERPRETER_PATH, "python");
 
         }
         return path;
@@ -338,19 +332,19 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public void setPythonInterpreterPath(String aNewValue) {
-        dynamicConfiguration.setProperty(PYTHON_INTERPRETER_PATH, aNewValue);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.PYTHON_INTERPRETER_PATH, aNewValue);
 
     }
 
     @Override
     public String getProblem(String aModule) {
         if (dynamicConfiguration == null
-                || dynamicConfiguration.getString(aModule + "." + PROBLEM_NAME,
-                        dynamicConfiguration.getString(PROBLEM_NAME)) == null) {
+                || dynamicConfiguration.getString(aModule + "." + StaticConfigurationUtils.PROBLEM_NAME,
+                        dynamicConfiguration.getString(StaticConfigurationUtils.PROBLEM_NAME)) == null) {
             return "";
         }
-        String problemDownloadPath = dynamicConfiguration.getString(aModule + "." + PROBLEM_NAME,
-                dynamicConfiguration.getString(PROBLEM_NAME));
+        String problemDownloadPath = dynamicConfiguration.getString(aModule + "." + StaticConfigurationUtils.PROBLEM_NAME,
+                dynamicConfiguration.getString(StaticConfigurationUtils.PROBLEM_NAME));
         if (problemDownloadPath == null) {
             return "";
         }
@@ -360,7 +354,7 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     @Override
     public void setProblem(String aModule, String aNewValue) {
 //		dynamicConfiguration.setProperty(aModule + "." + PROBLEM_NAME, aNewValue.replaceAll("\\s+", ""));		
-        dynamicConfiguration.setProperty(aModule + "." + PROBLEM_NAME, aNewValue);
+        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_NAME, aNewValue);
 
     }
 

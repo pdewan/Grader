@@ -3,6 +3,7 @@ package grader.interaction_logger;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.trace.CSVSerializable;
 import grader.config.ConfigurationManagerSelector;
+import grader.execution.ExecutionSpecificationSelector;
 import grader.interaction_logger.manual_grading_stats.GradingHistoryManagerSelector;
 import grader.trace.interaction_logger.InteractionLogEntryAdded;
 import grader.trace.interaction_logger.InteractionLogFileCreatedOrLoaded;
@@ -81,11 +82,13 @@ public class AnInteractionLogWriter implements InteractionLogWriter {
     }
 
     public static String getOrCreateInteractionFolder() {
-        String interactionLogFolder
-                = ConfigurationManagerSelector.getConfigurationManager().
-                getStaticConfiguration().getString("grader.logger.interactionLogDirectory"); // + "/" + GradingEnvironment.get().getUserName();
+//        String interactionLogFolder
+//                = ConfigurationManagerSelector.getConfigurationManager().
+//                getStaticConfiguration().getString("grader.logger.interactionLogDirectory"); // + "/" + GradingEnvironment.get().getUserName();
+        String interactionLogFolder = ExecutionSpecificationSelector.getExecutionSpecification().getInteractionLogDirectory();
+        
         if (interactionLogFolder == null) {
-            System.err.println("Null interaction log folder");
+            System.err.println("Null interaction log folder, should not happen");
             return null;
         }
         File folder = new File(interactionLogFolder);

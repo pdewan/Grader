@@ -36,52 +36,32 @@ import wrappers.framework.project.ProjectWrapper;
 
 /**
  * This runs the program in a new process.
+ * we should really not have any code here as BasicProcessRunner should do everything
  */
 public class ProcessRunner extends BasicProcessRunner implements Runner {
 //	BasicExecutionSpecification executionSpecification;
 	public ProcessRunner(Project aProject, String aSpecifiedProxyMainClass) throws NotRunnableException {
 		super(aProject, aSpecifiedProxyMainClass);
-//		try {
-//		specifiedMainClass = aSpecifiedProxyMainClass;
-//		project = aProject;
-//		initializeExecutionState();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			throw new NotRunnableException();
-//		}
+
 		
 	}
-//	protected void initializeExecutionState() {
-////		executionSpecification = ExecutionSpecificationSelector.getExecutionSpecification();
-//		executionSpecification = BasicExecutionSpecificationSelector.getBasicExecutionSpecification();
-//
-//	}
-	
-//
-//	public ProcessRunner(Project aProject, String aSpecifiedMainClass) throws NotRunnableException {
-//		super(aProject, aSpecifiedMainClass);
-//	}
-//
+
 	public ProcessRunner(Project aProject) throws NotRunnableException {
 		super(aProject);
 	}
-//
-//	// use it without project
-//	public ProcessRunner() throws NotRunnableException {
-//
-//	}
+
 	// This overrides by calling LanguageDependencyManager instead of BasicLanguageDepdendencyManager
-	public Map<String, String> getEntryPoints() {
-		if (entryPoints == null) {
-			entryPoints = LanguageDependencyManager.getMainClassFinder().getEntryPoints(project, specifiedMainClass);
-
-		}
-		return entryPoints;
-	}
-
-//	public File getFolder() {
-//		return getFolder(getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT));
+	//LanguageDependencyManager calls the method in BasicLanguageDepenencyManager
+	//Let us not make them different
+//	public Map<String, String> getEntryPoints() {
+//		if (entryPoints == null) {
+//			entryPoints = LanguageDependencyManager.getMainClassFinder().getEntryPoints(project, specifiedMainClass);
+//
+//		}
+//		return entryPoints;
 //	}
+
+
 
 	// use it without project
 	public ProcessRunner(File aFolder) throws NotRunnableException {
@@ -112,42 +92,15 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 	 * @throws NotRunnableException
 	 */
 
-//	/**
-//	 * This figures out what class is the "entry point", or, what class has
-//	 * main(args)
-//	 *
-//	 * @param project
-//	 *            The project to run
-//	 * @return The class canonical name. i.e. "foo.bar.SomeClass"
-//	 * @throws NotRunnableException
-//	 */
-//	protected String getMainEntryPoint() {
-//		return getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT);
-//	}
-//
-//	protected List<String> getProcessTeams() {
-//		return executionSpecification.getProcessTeams();
-//	}
-//
-//	protected List<String> getProcesses(String firstTeam) {
-//		return executionSpecification.getProcesses(firstTeam);
-//	}
-//
-//	protected List<String> getTerminatingProcesses(String firstTeam) {
-//		return executionSpecification.getTerminatingProcesses(firstTeam);
-//	}
+
 
 	public String classWithEntryTagTarget(String anEntryTag) {
-//		if (anEntryTag == null)
-//			return "";
-//		Class aClass = BasicProjectIntrospection.findUniqueClassByTag(project, anEntryTag);
-//		if (aClass != null) {
-//			String aRetVal = aClass.getName();
-//		}
+
 		String aRetVal = super.classWithEntryTagTarget(anEntryTag);
 		if (aRetVal != null) {
 			return aRetVal;
 		}
+		// should the following code really be executed?
 		if (project instanceof ProjectWrapper) {
 			grader.project.flexible.FlexibleProject graderProject = ((ProjectWrapper) project).getProject();
 			grader.project.flexible.FlexibleClassDescription aClassDescription = graderProject.getClassesManager()
@@ -158,13 +111,7 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 	}
 
 	public String classWithEntryTagsTarget(List<String> anEntryTags) {
-//		if (anEntryTags == null)
-//			return "";
-//		Class aClass = BasicProjectIntrospection.findClassByTags(project, anEntryTags.toArray(emptyStringArray));
-//		if (aClass != null) {
-//			String aRetVal = aClass.getName();
-//			return aRetVal; // added this
-//		}
+
 		String retVal = super.classWithEntryTagsTarget(anEntryTags);
 		if (retVal != null) {
 			return retVal;
@@ -179,78 +126,34 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 		return null; // this should never be executed
 	}
 
-//	protected List<String> getStartTags(String aProcess) {
-//		return executionSpecification.getStartTags(aProcess);
-//	}
-//
+
 //	// need an equivalent of this for basicprocessrunner
-	protected String searchForEntryPoint(String aProcess) {
-		List<String> basicCommand = StaticConfigurationUtils.getBasicCommand(aProcess);
-		String anEntryPoint = null;
-		if (StaticConfigurationUtils.hasEntryPoint(basicCommand))
-
-		{
-			anEntryPoint = executionSpecification.getEntryPoint(aProcess);
-			if (anEntryPoint == null)
-				throw EntryPointNotFound.newCase(this);
-		}
-		if (anEntryPoint != null && !anEntryPoint.isEmpty()) {
-			getFolder(anEntryPoint);
-		}
-		return anEntryPoint;
-	}
-	protected String searchForEntryTag(String aProcess) {
-		return searchForEntryTag(aProcess, StaticConfigurationUtils.getExecutionCommand());
-		
-	}
-
-//	protected String searchForEntryTag(String aProcess) {
+	// we have it so get rid of it
+//	protected String searchForEntryPoint(String aProcess) {
 //		List<String> basicCommand = StaticConfigurationUtils.getBasicCommand(aProcess);
+//		String anEntryPoint = null;
+//		if (StaticConfigurationUtils.hasEntryPoint(basicCommand))
 //
-//		// if (anEntryPoint != null && !anEntryPoint.isEmpty()) {
-//		// getFolder(anEntryPoint);
-//		// }
-//		String anEntryTag = null;
-//		List<String> anEntryTags = null;
-//		if (StaticConfigurationUtils.hasEntryTags(basicCommand))
-//			anEntryTags = executionSpecification.getEntryTags(aProcess);
-//		else if (StaticConfigurationUtils.hasEntryTag(basicCommand))
-//			anEntryTag = executionSpecification.getEntryTag(aProcess); // this will match entryTag also, fix at some pt
-//
-//		// if (anEntryTag != null ) {
-//		// getFolder(anEntryTag);
-//		// }
-//		String aClassWithEntryTag = null;
-//
-//		if (anEntryTag != null ) {
-//			aClassWithEntryTag = classWithEntryTagTarget(anEntryTag);
-//			if (aClassWithEntryTag == null)
-//				throw TagNotFound.newCase(anEntryTag, this);
-//		} else if (anEntryTags != null ) {
-//			aClassWithEntryTag = classWithEntryTagsTarget(anEntryTags);
-//			if (aClassWithEntryTag == null)
-//				throw TagNotFound.newCase(anEntryTags, this);
+//		{
+//			anEntryPoint = executionSpecification.getEntryPoint(aProcess);
+//			if (anEntryPoint == null)
+//				throw EntryPointNotFound.newCase(this);
 //		}
-//		if (aClassWithEntryTag != null && folder == null) {
-//
-//			getFolder(aClassWithEntryTag);
+//		if (anEntryPoint != null && !anEntryPoint.isEmpty()) {
+//			getFolder(anEntryPoint);
 //		}
-//		return aClassWithEntryTag;
+//		return anEntryPoint;
 //	}
-//	public static final String[] EMPTY_STRING_ARGS = {};
-//	protected String[] getArgs(String aProcess) {
-//		List<String> aListArgs = executionSpecification.getArgs(aProcess);
-//		if (aListArgs == null) {
-//			return EMPTY_STRING_ARGS;
-//		}
-//		else {
-//			return aListArgs.toArray(EMPTY_STRING_ARGS);
-//		}
-////		return executionSpecification.getArgs(aProcess).toArray(new String[0]);
+	// Basic and non basic should not differ
+//	protected String searchForEntryTag(String aProcess) {
+//		return searchForEntryTag(aProcess, StaticConfigurationUtils.getExecutionCommand());
+//		
 //	}
 
-	protected int getSleepTime(String aProcess) {
-		Integer aRetVal = executionSpecification.getSleepTime(aProcess);
+
+
+	protected int getResourceReleaseTime(String aProcess) {
+		Integer aRetVal = executionSpecification.getResourceReleaseTime(aProcess);
 		if (aRetVal == null) {
 			return 0;
 		}

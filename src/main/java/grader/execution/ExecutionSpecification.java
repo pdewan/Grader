@@ -14,6 +14,15 @@ public interface ExecutionSpecification extends BasicExecutionSpecification {
 //	public abstract List<String> getProcessTeams();
 //
 //	public abstract void setProcessTeams(List<String> aProcessTeamNames);
+	String getStartOnyen();
+	String getEndOnyen();
+	String getProblemDownloadPath();
+	void setGraderProblemDownloadPath(String newVal);
+	void setGraderStartOnyen(String newVal);
+	void setGraderEndOnyen(String newVal);
+	String getAssignmentsDataFolder();
+	String getInteractionLogDirectory();
+
 
 //	public abstract List<String> getProcesses(String aProcessTeam);
 //

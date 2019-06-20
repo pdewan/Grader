@@ -1,6 +1,7 @@
 package grader.settings;
 
 import framework.utils.GraderSettings;
+import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ConfigurationManagerSelector;
 import grader.config.StaticConfigurationUtils;
@@ -178,6 +179,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     	Tracer.info(this, "Setting Current module to:" + newValue);
         ModuleUserChange.newCase(currentModule, this, this);
         currentModule = newValue;
+        BasicStaticConfigurationUtils.setModule(currentModule);
 //        refreshAll();
 //		 ModuleUserChange.newCase(currentModule, this, this);
 
@@ -202,7 +204,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
             JOptionPane.showMessageDialog(null, noDownloadPathMessage());
 
         } else {
-            Tracer.error(noDownloadPathMessage());
+            System.err.println("E***" + noDownloadPathMessage());
         }
 
     }
@@ -216,7 +218,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
             JOptionPane.showMessageDialog(null, noValidDownloadPathMessage ());
 
         } else {
-            Tracer.error(noValidDownloadPathMessage());
+            System.err.println("E***" + noValidDownloadPathMessage());
         }
     }
 
@@ -230,7 +232,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         problems.clear();
         problemDownloadPath = graderSettingsManager.getDownloadPath(currentModule);
 //		problemDownloadPath = moduleDownloadPath + "\\" +  currentProblem;
-        if (problemDownloadPath != null) {
+        if (problemDownloadPath != null) { // may have the message, please browse to a valid location
             File folder = new File(problemDownloadPath);
 //                        System.out.println("~~~ " + folder.getAbsolutePath() + " ~~~");
             if (!folder.exists()) {
@@ -315,7 +317,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         	Tracer.info (this, "Refreshing problem download path:" + problemDownloadPath);
             fileBrowsing.getDownloadFolder().setText(problemDownloadPath);
         } else {
-        	Tracer.error("Null problem download path");
+        	System.err.println("Null problem download path");
         }
         GraderSettings.get().set("path", problemDownloadPath);
 
@@ -405,6 +407,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 //            String downloadPath = GraderSettings.get().get("path");
             fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);
         } else {
+        	fileBrowsing.getDownloadFolder().getLabel().setText("Browse to a valid assignment download path");
             noDownloadPath();
         }
 //		maybeConvertToDynamicConfiguration();
@@ -712,6 +715,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         ProblemUserChange.newCase(currentProblem, this, this);
     	Tracer.info(this, "Setting current problem to:" + aProblem);
         currentProblem = aProblem;
+        BasicStaticConfigurationUtils.setProblem(aProblem);
     }
 
     void setCurrentProblem(String aProblem) {

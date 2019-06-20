@@ -488,7 +488,7 @@ public class OriginalProcessRunner implements Runner {
 		{
 			anEntryPoint = executionSpecification.getEntryPoint(aProcess);
 			if (anEntryPoint == null)
-				throw EntryPointNotFound.newCase(this);
+				throw EntryPointNotFound.newCase(this, basicCommand);
 		}
 		if (anEntryPoint != null && !anEntryPoint.isEmpty()) {
 			getFolder(anEntryPoint);
@@ -518,7 +518,7 @@ public class OriginalProcessRunner implements Runner {
 			getFolder(aClassWithEntryTag);
 		}
 		String[] anArgs = executionSpecification.getArgs(aProcess).toArray(new String[0]);
-		int aSleepTime = executionSpecification.getSleepTime(aProcess);
+		int aSleepTime = executionSpecification.getResourceReleaseTime(aProcess);
 		String[] command = StaticConfigurationUtils.getExecutionCommand(project, aProcess, folder, anEntryPoint,
 				aClassWithEntryTag, anArgs);
 		TimedProcess aTimedProcess = run(runner, anOutputBasedInputGenerator, command, processToInput.get(aProcess),
@@ -555,6 +555,7 @@ public class OriginalProcessRunner implements Runner {
 		try {
 			for (String aTerminatingProcess : executionSpecification.getTerminatingProcesses(processTeam)) {
 				TimedProcess aTimedProcess = nameToProcess.get(aTerminatingProcess);
+            	Tracer.info(this, "Waiting for terminating process "  + aTerminatingProcess + " to finish within seconds:" + timeout);
 
 				aTimedProcess.waitFor();
 

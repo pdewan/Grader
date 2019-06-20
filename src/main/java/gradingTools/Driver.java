@@ -46,6 +46,7 @@ import grader.config.StaticConfigurationUtils;
 import grader.driver.GradingManagerFactory;
 import grader.driver.GradingManagerType;
 import grader.execution.AFlexibleMainClassFinder;
+import grader.execution.ExecutionSpecificationSelector;
 import grader.execution.GradingModeConfigurer;
 import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.interaction_logger.InteractionLogWriter;
@@ -818,8 +819,9 @@ public class Driver {
 	}
 
 	public static void initAssignmentDataFolder() {
-		String defaultAssignmentsDataFolderName = configuration
-				.getString("grader.defaultAssignmentsDataFolderName");
+//		String defaultAssignmentsDataFolderName = configuration
+//				.getString("grader.defaultAssignmentsDataFolderName");
+		String defaultAssignmentsDataFolderName = ExecutionSpecificationSelector.getExecutionSpecification().getAssignmentsDataFolder();
 		defaultAssignmentsDataFolderName = graderSettingsManager
 				.replaceModuleProblemVars(defaultAssignmentsDataFolderName);
 		BasicGradingEnvironment.get().setDefaultAssignmentsDataFolderName(

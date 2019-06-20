@@ -83,6 +83,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 
 	@Override
 	// this is called only once so let us not do caching
+	// we will be calling it more than once to display onyens
     public List<String> getRawOnyenNavigationList() {
 		
 		
@@ -102,8 +103,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 			gradesFile = new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiBulkAssignmentFolder.GRADES_SPREADSHEET_NAME);
 		}
 
-//        String aStartOnyen = GraderSettings.get().get("start");
-//    	String anEndOnyen = GraderSettings.get().get("end");
+
     	String aStartOnyen = GraderSettings.get().get(AGraderSettingsModel.START_ONYEN);
     	String anEndOnyen = GraderSettings.get().get(AGraderSettingsModel.END_ONYEN);
     	
@@ -131,9 +131,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     	}
     	List<String> aGoToOnyensList = maybeGetGoToOnyenList();
     	
-//    	savedRawStartOnyen = aStartOnyen;
-//    	savedRawEndOnyen = anEndOnyen;
-//    	savedRawDirectoryName = aDirectory.getName();    		
+   		
         List<String> anOnyens = new ArrayList<String>();
         if (aGoToOnyensList != null) {
     		anOnyens = aGoToOnyensList;
@@ -141,35 +139,13 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 	
         boolean include = false;
         File[] files = aDirectory.listFiles();
-//		Arrays.sort(files, new Comparator<Object>() {
-//
-//			@Override
-//			public int compare(Object o1, Object o2) {
-//				if (!(o1 instanceof File && o2 instanceof File)) {
-//					throw new RuntimeException("Invalid Type.  Must be of type File.");
-//				}
-//				File f1 = (File) o1;
-//				File f2 = (File) o2;
-//				if (!f1.isDirectory() || !f2.isDirectory()) {
-//					return f1.getName().compareTo(f2.getName());
-//				}
-//				String onyen1 = f1.getName().substring(f1.getName().lastIndexOf('(') + 1,
-//						f1.getName().lastIndexOf(')'));
-//				String onyen2 = f2.getName().substring(f2.getName().lastIndexOf('(') + 1,
-//						f2.getName().lastIndexOf(')'));
-//				return onyen1.compareTo(onyen2);
-//			}
-//		});
-//		Arrays.sort(files, new AFileObjectSorter(aSakaiProjectDatabase.getFileNameSorter())) ;
+
 		Arrays.sort(files, new AFileObjectSorter(FileNameSorterSelector.getSorter())) ;
 
 		StudentFolderNamesSorted.newCase(Common.arrayToArrayList(files), this);
 		
 		
-//    	String aStartOnyen = GraderSettings.get().get("start");
-//    	String anEndOnyen = GraderSettings.get().get("end");
-//    	String aStartFilePart = "(" + aStartOnyen + ")";
-//    	String anEndFilePart = "(" + anEndOnyen + ")";
+
     	String aStartFilePart = ".*\\(" + aStartOnyen.trim() + "\\)$";
     	String anEndFilePart = ".*\\(" + anEndOnyen.trim()  + "\\)$";
     	boolean goToEnd = anEndOnyen.equals(END_ONYEN_POSITIVE_INFINITY);
@@ -179,30 +155,20 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 
         for (File file : files) {
             if (file.isDirectory()) {
-//                if (file.getName().contains("(" + GraderSettings.get().get("start") + ")"))
-//                if (file.getName().contains(aStartFilePart)) {
+
                 if (file.getName().matches(aStartFilePart)) {
                     include = true;
                 	System.out.println ("Found start onyen:" + file.getName());
                 	foundStart = true;
                 }
                 if (include) {
-//                	foundStart = true;
                 	String anOnyen = file.getName().substring(file.getName().indexOf("(") + 1, file.getName().indexOf(")"));
-//                	SakaiProject aProject = aSakaiProjectDatabase.getProject(anOnyen);
-//                	if (aProject == null || aProject.isNoProjectFolder()) {
-////                		System.out.println("Onyen:" + anOnyen + " ignored because of missing project");
-//                		;
-//                	} else {
-//                    onyens.add(file.getName().substring(file.getName().indexOf("(") + 1, file.getName().indexOf(")")));
-                	
-//                	}
+
                 	if (includeOnyen(anOnyen)) {
                 		anOnyens.add(anOnyen);
                 	}
                 }
-//                if (file.getName().contains("(" + GraderSettings.get().get("end") + ")")) {
-//                if (file.getName().matches("(" + GraderSettings.get().get("end") + ")")) {
+
                 if (file.getName().matches(anEndFilePart)) {
                 	System.out.println ("Found end onyen:" + file.getName());
                     include = false;
@@ -217,15 +183,10 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
         }
         if (include && !goToEnd) { // did not find ending onyen
         	System.out.println ("Did not find end onyen:" + anEndOnyen + " in:" + Arrays.toString(files));
-        	//Attempting to handle not matching end onyen
-//        	int res = JOptionPane.showConfirmDialog(null, "End Onyen "+anEndOnyen+" Not Found. Continue?","End Onyen Not Found",JOptionPane.YES_NO_OPTION);
-//        	if(res == JOptionPane.NO_OPTION) {
-//        		anOnyens.clear();
-//        	}
+
         	anOnyens.clear(); // maybe should throw OnyenRangeError rather than let caller throw it
         }
-//        if (aSakaiProjectDatabase.getProjectStepper() != null)
-//		NavigationListCreated.newCase(aSakaiProjectDatabase, (OverviewProjectStepper) aSakaiProjectDatabase.getProjectStepper(), aSakaiProjectDatabase.getProjectStepper().getProject(), anOnyens, this);
+
     	}
         savedRawOnyens = anOnyens;
 		savedRawStartOnyen = aStartOnyen;
@@ -261,14 +222,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     	String anEndOnyen = GraderSettings.get().get("end");
     	String aGoToOnyen = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens().getGoToOnyens();
 
-//    	if (aStartOnyen == null ||
-//    			aStartOnyen.isEmpty() ||
-//    			anEndOnyen == null ||
-//    			anEndOnyen.isEmpty() ||
-//    			aDirectory.getName().isEmpty()) {
-//    		System.out.println("Returning empty onyen list");
-//    		return emptyOnyenList;
-//    	}
+
     	if (
     		aStartOnyen.equals(savedStartOnyen) &&
     		anEndOnyen.equals(savedEndOnyen) &&
@@ -276,9 +230,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     		aDirectory.getName().equals(savedDirectoryName) && !savedOnyens.isEmpty()) {
     		return savedOnyens;
     	}
-//    	savedStartOnyen = aStartOnyen;
-//    	savedEndOnyen = anEndOnyen;
-//    	savedDirectoryName = aDirectory.getName();    		
+  		
 		List<String> anOnyens = getRawOnyenNavigationList();
 		List<String> retVal = new ArrayList();
 		for (String anOnyen : anOnyens) {

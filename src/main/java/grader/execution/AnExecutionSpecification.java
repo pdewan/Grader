@@ -4,6 +4,7 @@ import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.ABasicExecutionSpecification;
 import grader.config.AConfigurationManager;
+import grader.config.ConfigurationManagerSelector;
 import grader.config.StaticConfigurationUtils;
 import util.trace.Tracer;
 
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class AnExecutionSpecification extends ABasicExecutionSpecification implements ExecutionSpecification {
 //	protected List<String> processTeams = new ArrayList<>();
@@ -117,10 +120,24 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 //    	return aDefault;
 //    	
 //    }
+	 PropertiesConfiguration dynamicConfiguration;
+	 PropertiesConfiguration dynamicConfiguration() {
+		 if (dynamicConfiguration == null) {
+			 dynamicConfiguration = ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
+		 }
+		 return dynamicConfiguration;
+	 }
+	 @Override
 	 public  String getInheritedStringModuleProblemProperty(
 				
 				String aProperty, String defaultValue) {
-		 String retVal = super.getInheritedStringModuleProblemProperty(aProperty, null);
+//		 String retVal = dynamicConfiguration().getString(aProperty, null);
+		 String retVal = StaticConfigurationUtils.getDynamicInheritedStringModuleProblemProperty(aProperty, null);
+
+		 if (retVal != null) {
+			 return retVal;
+		 }
+		  retVal = super.getInheritedStringModuleProblemProperty(aProperty, null);
 		 if (retVal != null) {
 			 return retVal;
 		 }
@@ -133,10 +150,57 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 
 			
 		}
-	 public  List<String> getInheritedListModuleProblemProperty(
+	 @Override
+	 public  Integer getInheritedIntegerModuleProblemProperty(
+				
+				String aProperty, Integer defaultValue) {
+		 Integer retVal = StaticConfigurationUtils.getDynamicInheritedIntegerModuleProblemProperty(aProperty, null);
+		 if (retVal != null) {
+			 return retVal;
+		 }
+		 retVal = super.getInheritedIntegerModuleProblemProperty(aProperty, null);
+		 if (retVal != null) {
+			 return retVal;
+		 }
+		 return StaticConfigurationUtils.getInheritedIntegerModuleProblemProperty(aProperty, defaultValue);
+
+//	    	if (!BasicStaticConfigurationUtils.isUseProjectConfiguration()) {
+//	    		return defaultValue;
+//	    	}
+//			return BasicStaticConfigurationUtils.getInheritedStringModuleProblemProperty(BasicConfigurationManagerSelector.getConfigurationManager().getOrCreateProjectConfiguration(), BasicStaticConfigurationUtils.getModule(), BasicStaticConfigurationUtils.getProblem(), aProperty, defaultValue);
+
+			
+		}
+	 @Override
+	 public  Boolean getInheritedBooleanModuleProblemProperty(
+				
+				String aProperty, Boolean defaultValue) {
+		 Boolean retVal = StaticConfigurationUtils.getDynamicInheritedIBooleanModuleProblemProperty(aProperty, null);
+		 if (retVal != null) {
+			 return retVal;
+		 }
+		 retVal = super.getInheritedBooleanModuleProblemProperty(aProperty, null);
+		 if (retVal != null) {
+			 return retVal;
+		 }
+		 return StaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(aProperty, defaultValue);
+
+//	    	if (!BasicStaticConfigurationUtils.isUseProjectConfiguration()) {
+//	    		return defaultValue;
+//	    	}
+//			return BasicStaticConfigurationUtils.getInheritedStringModuleProblemProperty(BasicConfigurationManagerSelector.getConfigurationManager().getOrCreateProjectConfiguration(), BasicStaticConfigurationUtils.getModule(), BasicStaticConfigurationUtils.getProblem(), aProperty, defaultValue);
+
+			
+		}
+	 @Override
+	 public  List getInheritedListModuleProblemProperty(
 				
 				String aProperty, List<String> defaultValue) {
-		 List<String> retVal = super.getInheritedListModuleProblemProperty(aProperty, null);
+//		 List retVal = dynamicConfiguration().getList(aProperty, null);
+//		 if (retVal != null) {
+//			 return retVal;
+//		 }
+		 List retVal = super.getInheritedListModuleProblemProperty(aProperty, null);
 		 if (retVal != null && !retVal.isEmpty()) {
 			 return retVal;
 		 }
@@ -150,14 +214,22 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 			
 		}
 	 protected String getConfigurationDirectString(String aProperty, String aDefault) {
-		    String retVal = super.getConfigurationDirectString(aProperty, null);
+		 String retVal = dynamicConfiguration().getString(aProperty, null);
+		 if (retVal != null) {
+			 return retVal;
+		 }
+		   retVal = super.getConfigurationDirectString(aProperty, null);
 		    if (retVal != null) {
 		    	return retVal;
 		    }
 	    	return StaticConfigurationUtils.getCourseOrStaticString(aProperty, aDefault);
 	  }
 	 protected List getConfigurationDirectList(String aProperty, List aDefault) {
-		    List retVal = super.getConfigurationDirectList(aProperty, null);
+//		 List retVal = dynamicConfiguration().getList(aProperty, null);
+//		 if (retVal != null) {
+//			 return retVal;
+//		 }
+		   List  retVal = super.getConfigurationDirectList(aProperty, null);
 		    if (retVal != null) {
 		    	return retVal;
 		    }
@@ -168,13 +240,48 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 //		return StaticConfigurationUtils.getInheritedStringModuleProblemProperty(AConfigurationManager.DYNAMIC_CONFIG_PROPERTY, AConfigurationManager.DYNAMIC_CONFIGURATION_FILE_NAME);
 		return StaticConfigurationUtils.getDynamicExecutionFileName();
 	}
+	@Override
+    public String getStartOnyen() {
+    	return getStringProperty(StaticConfigurationUtils.START_ONYEN, "");
+    }
+	@Override
+    public String getEndOnyen() {
+    	return getStringProperty(StaticConfigurationUtils.END_ONYEN, "");
+    }
+	@Override
+	public void setGraderStartOnyen(String newVal) {
+		setGraderStringProperty(StaticConfigurationUtils.START_ONYEN, newVal);
+	}
+	
+	@Override
+	public void setGraderEndOnyen(String newVal) {
+		setGraderStringProperty(StaticConfigurationUtils.END_ONYEN, newVal);
+	}
+	@Override
+    public String getProblemDownloadPath() {
+    	return getStringProperty(StaticConfigurationUtils.PROBLEM_PATH, null);
+    }
+	@Override
+	public void setGraderProblemDownloadPath(String newVal) {
+		setGraderStringProperty(StaticConfigurationUtils.PROBLEM_PATH, newVal);
+	}
+	@Override
+	public String getAssignmentsDataFolder() {
+		return getDirectStringProperty(StaticConfigurationUtils.ASSIGNMENTS_DATA_FOLDER, StaticConfigurationUtils.DEFAULT_ASSIGNMENTS_DATA_FOLDER);
+	}
+	@Override
+	public String getInteractionLogDirectory() {
+		return getDirectStringProperty(StaticConfigurationUtils.INTERACTION_LOG_DIRECTORY, StaticConfigurationUtils.INTERACTION_LOG_DIRECTORY);
+	}
+	
+	
 //	 
 //
-	@Override
-	public String getCObjSuffix() {
-		return StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.C_OBJ, StaticConfigurationUtils.DEFAULT_C_OBJ);
-//		return  StaticConfigurationUtils.getInheritedStringModuleProblemProperty(StaticConfigurationUtils.C_OBJ, StaticConfigurationUtils.DEFAULT_C_OBJ);
-	}
+//	@Override
+//	public String getCObjSuffix() {
+//		return StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.C_OBJ, StaticConfigurationUtils.DEFAULT_C_OBJ);
+////		return  StaticConfigurationUtils.getInheritedStringModuleProblemProperty(StaticConfigurationUtils.C_OBJ, StaticConfigurationUtils.DEFAULT_C_OBJ);
+//	}
 //
 //	@Override
 //	public String getExecutorDirectory() {

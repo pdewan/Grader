@@ -57,6 +57,26 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static final String CHECK_STYLE = "checkStyle";
 	
 	public static final String CHECK_STYLE_FILE = "checkStyleFile";
+	
+	public static final String EDITOR = "editor";
+	public static final String DIFF = "diff";
+	public static final String MODULE = "currentModule";
+	public static final String PROBLEM_PATH = "path";
+	public static final String PROBLEM_NAME = "problem";
+	public static final String START_ONYEN = "start";
+	public static final String END_ONYEN = "end";
+	public static final String WORD_PATH = "Word.path";
+	public static final String C_COMPILER_PATH = "CCompiler.path";
+	public static final String PYTHON_INTERPRETER_PATH = "PythonInterpreter.path";
+	public static final String ASSIGNMENTS_DATA_FOLDER = "grader.defaultAssignmentsDataFolderName";
+	public static final String INTERACTION_LOG_DIRECTORY= "grader.logger.interactionLogDirectory";
+	public static final String DEFAULT_INTERACTION_LOG_DIRECTORY = "./log/AssignmentsData/interactionLogs";
+	public static final String DEFAULT_ASSIGNMENTS_DATA_FOLDER = "./log/AssignmentsData/{moduleName}";
+	public static final String SPREADSHEET_LOG_FILE = "grader.logger.spreadsheetFilename";
+	public static final String DEFAULT_SPREADSHEET_LOG_FILE = "./log/{moduleName}/{problemName}/grades.xlsx";
+	public static final String LOGGERS = "grader.logger";
+	public static final String DEFAULT_LOGGERS = "csv + feedback";			
+	
 	protected static boolean doPermissions = true;
 
 
@@ -950,14 +970,49 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
          return aRetVal;		
 	}
 	
+	public static String getDynamicInheritedStringModuleProblemProperty(String aProperty, String aDefault) {
+		PropertiesConfiguration aDynamicConfiguration =  ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
+
+		return getInheritedStringModuleProblemProperty(
+				aDynamicConfiguration, module, problem, test, aProperty, aDefault);
+		
+	}
+	public static Integer getDynamicInheritedIntegerModuleProblemProperty(String aProperty, Integer aDefault) {
+		PropertiesConfiguration aDynamicConfiguration =  ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
+
+		return getInheritedIntegerModuleProblemProperty(
+				aDynamicConfiguration, module, problem, test, aProperty, aDefault);
+		
+	}
+	public static Boolean getDynamicInheritedIBooleanModuleProblemProperty(String aProperty, Boolean aDefault) {
+		PropertiesConfiguration aDynamicConfiguration =  ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
+
+		return getInheritedBooleanModuleProblemProperty(
+				aDynamicConfiguration, module, problem, test, aProperty, aDefault);
+		
+	}
+	public static List getDynamicInheritedListModuleProblemProperty(String aProperty, List aDefault) {
+		PropertiesConfiguration aDynamicConfiguration =  ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
+
+		return getInheritedListModuleProblemProperty(
+				aDynamicConfiguration, module, problem, test, aProperty, aDefault);
+		
+	}
+	
 	public static String getCourseOrStaticString(String aProperty, String aDefault) {
+//		PropertiesConfiguration aDynamicConfiguration =  ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
 		PropertiesConfiguration staticConfiguration = ConfigurationManagerSelector
 				.getConfigurationManager().getStaticConfiguration();
 		PropertiesConfiguration courseConfiguration = ConfigurationManagerSelector
 				.getConfigurationManager().getCourseConfiguration();
 		 String aRetVal = null;
+//		 if (aDynamicConfiguration != null) {// should never be null
+//			 aRetVal = aDynamicConfiguration.getString(aProperty, null);
+//		 }
+//		 if (aRetVal != null)
+//			 return aRetVal;
 		 if (courseConfiguration != null) {
-		 aRetVal = courseConfiguration.getString(aProperty, aDefault);
+		 aRetVal = courseConfiguration.getString(aProperty, null);
 		 }
          if (aRetVal == null) {
         	 if (staticConfiguration == null) {
@@ -1263,9 +1318,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 
 //	public static final int DEFAULT_SLEEP_TIME = 2000;
 
-	public static Integer getSleepTime(String aProcess) {
+	public static Integer getResourceReleaseTime(String aProcess) {
 		return getInheritedIntegerModuleProblemProperty(aProcess + "."
-				+ SLEEP_TIME, DEFAULT_SLEEP_TIME);
+				+ RESOURCE_RELEASE_TIME, DEFAULT_RESOURCE_RELEASE_TIME);
 	}
 
 	public static String getEntryTag(String aProcess) {
@@ -1302,5 +1357,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		
 		return AConfigurationManager.DYNAMIC_CONFIGURATION_FILE_NAME;
 	}
+	
+
+
+	
 
 }

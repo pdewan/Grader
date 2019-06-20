@@ -34,25 +34,26 @@ public class LanguageDependencyManager extends BasicLanguageDependencyManager {
 	public static PermissionsGenerator getPermissionGenerator() {
 		return languageToPermissionGenerator.get(getLanguage());
 	}
-	public static void setCOBj(ConfigurationManager aConfigurationManager) {
-	String cObj = aConfigurationManager.getCourseConfiguration().getString(StaticConfigurationUtils.C_OBJ);
-	if (cObj == null)
-		cObj = aConfigurationManager.getStaticConfiguration().getString(StaticConfigurationUtils.C_OBJ);
-	if (cObj != null)
-		languageToBinaryFileSuffix.put(C_LANGUAGE, "." + cObj);
-
-	
-}
+	// not called t all
+//	public static void setCOBj(ConfigurationManager aConfigurationManager) {
+//	String cObj = aConfigurationManager.getCourseConfiguration().getString(StaticConfigurationUtils.C_OBJ);
+//	if (cObj == null)
+//		cObj = aConfigurationManager.getStaticConfiguration().getString(StaticConfigurationUtils.C_OBJ);
+//	if (cObj != null)
+//		languageToBinaryFileSuffix.put(C_LANGUAGE, "." + cObj);
+//
+//	
+//}
 	public static ClassFilesCompiler getSourceFilesCompiler() {
 	return languageToCompiler.get(getLanguage());
 }
-public static void setCOBj(String aCObj) {
-		if (aCObj != null)
-	
-		languageToBinaryFileSuffix.put(C_LANGUAGE, "." + aCObj);
-
-	
-}
+//public static void setCOBj(String aCObj) {
+//		if (aCObj != null)
+//	
+//		languageToBinaryFileSuffix.put(C_LANGUAGE, "." + aCObj);
+//
+//	
+//}
 static {
 //	languageToSourceFileSuffix.put(JAVA_LANGUAGE, ".java");
 //	languageToBinaryFileSuffix.put(JAVA_LANGUAGE, ".class");
@@ -61,8 +62,8 @@ static {
 //	languageToSourceFileSuffix.put(PYTHON_LANGUAGE, ".py");
 //	languageToBinaryFileSuffix.put(PYTHON_LANGUAGE, ".py"); // does it have a compiled class
 	
-	languageToMainClassFinder.put(JAVA_LANGUAGE, JavaMainClassFinderSelector.getMainClassFinder());
-	languageToMainClassFinder.put(C_LANGUAGE, ExecutableFinderSelector.getMainClassFinder());
+//	languageToMainClassFinder.put(JAVA_LANGUAGE, JavaMainClassFinderSelector.getMainClassFinder());
+//	languageToMainClassFinder.put(C_LANGUAGE, ExecutableFinderSelector.getMainClassFinder());
 	
 	languageToCompiler.put(JAVA_LANGUAGE, JavaClassFilesCompilerSelector.getClassFilesCompiler() );
 	languageToCompiler.put(C_LANGUAGE, CFilesCompilerSelector.getClassFilesCompiler());
