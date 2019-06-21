@@ -107,6 +107,9 @@ public class Driver {
 	}
 
 	static void setPostSettingsModelParameters() {
+		
+		// we reall no longer need a BasicGradingEnvironment  given the
+		// the execution specifications
 		BasicGradingEnvironment.get().setClasspaths();
 
 		BasicGradingEnvironment.get().setPrecompileMissingObjectCode(
@@ -142,7 +145,10 @@ public class Driver {
 		// graderSettingsManager));
 		BasicGradingEnvironment.get().setCheckStyle(
 				StaticConfigurationUtils.getCheckStyle());
-		BasicProjectExecution.setUseMethodAndConstructorTimeOut(true);
+		// this is not needed
+//		BasicProjectExecution.setUseMethodAndConstructorTimeOut(true);
+//		BasicProjectExecution.setUseMethodAndConstructorTimeOut(ExecutionSpecificationSelector.getExecutionSpecification().isUseMethodAndConstructorTimeOut());
+
 	}
 
 	public static void drive(String[] args, int settingsFrameX,
@@ -445,15 +451,12 @@ public class Driver {
 			database.setProjectStepperDisplayer(new ProjectStepperDisplayerWrapper());
 		}
 
-		// Feedback
-		// database.setAutoFeedback(ConglomerateRecorder.getInstance());
+		
 		database.setManualFeedback(ConglomerateRecorder.getInstance());
 
-		// List<String> visitActions =
-		// StaticConfigurationUtils.autoVisitActions(configuration,
-		// graderSettingsManager);
-		List<String> visitActions = StaticConfigurationUtils
-				.autoVisitActions(graderSettingsManager);
+//		List<String> visitActions = StaticConfigurationUtils
+//				.autoVisitActions(graderSettingsManager);
+		List<String> visitActions = ExecutionSpecificationSelector.getExecutionSpecification().getAutoVisitActions();
 
 		ProjectStepper projectStepper = database.getOrCreateProjectStepper();
 		// need to create project stepper before allstudenthistory manager so it

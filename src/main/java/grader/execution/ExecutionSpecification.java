@@ -22,6 +22,20 @@ public interface ExecutionSpecification extends BasicExecutionSpecification {
 	void setGraderEndOnyen(String newVal);
 	String getAssignmentsDataFolder();
 	String getInteractionLogDirectory();
+	boolean isForceCompile();
+	void setGraderForceCompile(boolean newVal);
+	boolean isUnzipFiles();
+	void setGraderUnzipFiles(boolean newVal);
+	boolean isPreCompileMissingClasses();
+	void setGraderPreCompileMissingClasses(boolean newVal);
+	boolean isLoadClasses();
+	void setGraderLoadClasses(boolean newVal);
+	boolean isCompileMissingClasses();
+	void setGraderCompileMissingClasses(boolean newVal);
+	boolean isCheckStyle();
+	void setCheckStyle(boolean newVal);
+	String getRequirementsFormat();
+	List<String> getAutoVisitActions();
 
 
 //	public abstract List<String> getProcesses(String aProcessTeam);

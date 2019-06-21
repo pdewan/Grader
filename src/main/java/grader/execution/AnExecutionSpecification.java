@@ -273,6 +273,63 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 	public String getInteractionLogDirectory() {
 		return getDirectStringProperty(StaticConfigurationUtils.INTERACTION_LOG_DIRECTORY, StaticConfigurationUtils.INTERACTION_LOG_DIRECTORY);
 	}
+	@Override
+	public String getRequirementsFormat() {
+		return getStringProperty(StaticConfigurationUtils.REQUIREMENTS, StaticConfigurationUtils.DEFAULT_REQUIREMENTS);
+	}
+	@Override
+	public List<String> getAutoVisitActions() {
+		return getListProperty(StaticConfigurationUtils.VISIT_ACTIONS, StaticConfigurationUtils.DEFAULT_VISIT_ACTIONS);
+	}
+	
+	@Override
+	public boolean isForceCompile() {
+		return getBooleanProperty(StaticConfigurationUtils.FORCE_COMPILE_CLASSES, StaticConfigurationUtils.DEFAULT_FORCE_COMPILE_CLASSES);
+	}
+	@Override
+	public void setGraderForceCompile(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.FORCE_COMPILE_CLASSES, newVal);
+	}
+	@Override
+	public boolean isPreCompileMissingClasses() {
+		return getBooleanProperty(StaticConfigurationUtils.PRE_COMPILE_MISSING_CLASSES, StaticConfigurationUtils.DEFAULT_PRE_COMPILE_CLASSES);
+	}
+	@Override
+	public void setGraderPreCompileMissingClasses(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.PRE_COMPILE_MISSING_CLASSES, newVal);
+	}
+	@Override
+	public boolean isCompileMissingClasses() {
+		return getBooleanProperty(StaticConfigurationUtils.COMPILE_MISSING_CLASSES, StaticConfigurationUtils.DEFAULT_COMPILE_MISSING_CLASSES);
+	}
+	@Override
+	public void setGraderCompileMissingClasses(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.COMPILE_MISSING_CLASSES, newVal);
+	}
+	@Override
+	public boolean isLoadClasses() {
+		return getBooleanProperty(StaticConfigurationUtils.LOAD_CLASSES, StaticConfigurationUtils.DEFAULT_LOAD_CLASSES);
+	}
+	@Override
+	public void setGraderLoadClasses(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.LOAD_CLASSES, StaticConfigurationUtils.DEFAULT_LOAD_CLASSES);
+	}
+	@Override
+	public boolean isUnzipFiles() {
+		return getBooleanProperty(StaticConfigurationUtils.UNZIP_FILES, StaticConfigurationUtils.DEFAULT_UNZIP_FILES);
+	}
+	@Override
+	public void setGraderUnzipFiles(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.UNZIP_FILES, newVal);
+	}
+	@Override
+	public boolean isCheckStyle() {
+		return getBooleanProperty(StaticConfigurationUtils.CHECK_STYLE, StaticConfigurationUtils.DEFAULT_CHECK_STYLE);
+	}
+	@Override
+	public void setCheckStyle(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.CHECK_STYLE, newVal);
+	}
 	
 	
 //	 

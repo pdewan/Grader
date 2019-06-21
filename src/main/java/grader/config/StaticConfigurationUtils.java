@@ -7,6 +7,7 @@ import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
+import grader.execution.ExecutionSpecificationSelector;
 import grader.permissions.java.JavaProjectToPermissionFile;
 import grader.requirements.interpreter.AnInterpretedRequirements;
 import grader.requirements.interpreter.specification.CSVRequirementsSpecification;
@@ -47,14 +48,28 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static final String VISIT_ACTIONS = "visitActions";
 	public static final String AUTO_GRADE = "autoGrade";
 	public static final String AUTO_RUN = "autoRun";
+//	public static final String[] DEFAULT_VISIT_ACTIONS_ARRAY = {AUTO_GRADE};
+
+	public static final List<String> DEFAULT_VISIT_ACTIONS = new ArrayList(Arrays.asList(new String[]{AUTO_GRADE}));
 	public static final String LOAD_CLASSES = "loadClasses";
-	public static final String ALLOW_COMPILE_CLASSES = "compileMissingObjectCode";
-	public static final String PRE_COMPILE_CLASSES = "precompileMissingObjectCode";
+	public static final boolean DEFAULT_LOAD_CLASSES = false;
+
+	public static final String COMPILE_MISSING_CLASSES = "compileMissingObjectCode";
+	public static final boolean DEFAULT_COMPILE_MISSING_CLASSES = true;;
+
+	public static final String PRE_COMPILE_MISSING_CLASSES = "precompileMissingObjectCode";
+	public static final boolean DEFAULT_PRE_COMPILE_CLASSES = false;
 
 	public static final String FORCE_COMPILE_CLASSES = "forceCompile";
+	public static final boolean DEFAULT_FORCE_COMPILE_CLASSES = false;
+
 	public static final String UNZIP_FILES = "unzipFiles";
+	public static final boolean DEFAULT_UNZIP_FILES = true;
+
 	
 	public static final String CHECK_STYLE = "checkStyle";
+	public static final boolean DEFAULT_CHECK_STYLE = false;
+
 	
 	public static final String CHECK_STYLE_FILE = "checkStyleFile";
 	
@@ -75,7 +90,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static final String SPREADSHEET_LOG_FILE = "grader.logger.spreadsheetFilename";
 	public static final String DEFAULT_SPREADSHEET_LOG_FILE = "./log/{moduleName}/{problemName}/grades.xlsx";
 	public static final String LOGGERS = "grader.logger";
-	public static final String DEFAULT_LOGGERS = "csv + feedback";			
+	public static final String DEFAULT_LOGGERS = "csv + feedback";	
+	public static final String REQUIREMENTS = "requirements";
+	public static final String DEFAULT_REQUIREMENTS = "gradingTools.{modulename}.{problemname}.{problemName}Requirements";
 	
 	protected static boolean doPermissions = true;
 
@@ -137,6 +154,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		return configuration.getString(IMPLICIT_REQUIRMENTS_ROOT,
 				DEFAULT_IMPLICIT_REQUIRMENTS_ROOT);
 	}
+	@Deprecated
 	public static List<String> autoVisitActions(
 			
 			GraderSettingsManager graderSettingsManager) {
@@ -177,8 +195,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static boolean getLoadClasses(PropertiesConfiguration configuration,
 			GraderSettingsManager graderSettingsManager) {
 
-		return getInheritedBooleanModuleProblemProperty(configuration,
-				graderSettingsManager, LOAD_CLASSES, false);
+//		return getInheritedBooleanModuleProblemProperty(configuration,
+//				graderSettingsManager, LOAD_CLASSES, false);
+		return ExecutionSpecificationSelector.getExecutionSpecification().isLoadClasses();
 
 	}
 
@@ -186,8 +205,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			PropertiesConfiguration configuration,
 			GraderSettingsManager graderSettingsManager) {
 
-		return getInheritedBooleanModuleProblemProperty(configuration,
-				graderSettingsManager, ALLOW_COMPILE_CLASSES, false);
+//		return getInheritedBooleanModuleProblemProperty(configuration,
+//				graderSettingsManager, COMPILE_MISSING_CLASSES, false);
+		return ExecutionSpecificationSelector.getExecutionSpecification().isCompileMissingClasses();
 
 	}
 
@@ -195,16 +215,18 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			PropertiesConfiguration configuration,
 			GraderSettingsManager graderSettingsManager) {
 
-		return getInheritedBooleanModuleProblemProperty(configuration,
-				graderSettingsManager, PRE_COMPILE_CLASSES, false);
+//		return getInheritedBooleanModuleProblemProperty(configuration,
+//				graderSettingsManager, PRE_COMPILE_CLASSES, false);
+		return ExecutionSpecificationSelector.getExecutionSpecification().isPreCompileMissingClasses();
 
 	}
 
 	public static boolean getUnzipFiles(PropertiesConfiguration configuration,
 			GraderSettingsManager graderSettingsManager) {
 
-		return getInheritedBooleanModuleProblemProperty(configuration,
-				graderSettingsManager, UNZIP_FILES, true); // unzip by default
+//		return getInheritedBooleanModuleProblemProperty(configuration,
+//				graderSettingsManager, UNZIP_FILES, true); // unzip by default
+		return ExecutionSpecificationSelector.getExecutionSpecification().isUnzipFiles();
 
 	}
 	
@@ -217,14 +239,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	}
 	public static boolean getCheckStyle() {
 
-		return getInheritedBooleanModuleProblemProperty(
-				 CHECK_STYLE, false);
+//		return getInheritedBooleanModuleProblemProperty(
+//				 CHECK_STYLE, false);
+		return ExecutionSpecificationSelector.getExecutionSpecification().isCheckStyle();
 
 	}
 	
 	public static boolean isForkMainProcess (){
-		return getInheritedBooleanModuleProblemProperty(
-				 FORK_MAIN, true);
+//		return getInheritedBooleanModuleProblemProperty(
+//				 FORK_MAIN, true);
+		return ExecutionSpecificationSelector.getExecutionSpecification().isForkMain();
 	}
 	
 	public static String getCheckStyleFile() {
@@ -238,8 +262,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 			PropertiesConfiguration configuration,
 			GraderSettingsManager graderSettingsManager) {
 
-		return getInheritedBooleanModuleProblemProperty(configuration,
-				graderSettingsManager, FORCE_COMPILE_CLASSES, false);
+//		return getInheritedBooleanModuleProblemProperty(configuration,
+//				graderSettingsManager, FORCE_COMPILE_CLASSES, false);
+		return ExecutionSpecificationSelector.getExecutionSpecification().isForceCompile();
 
 	}
 
@@ -365,16 +390,11 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	}
 	// renamed from getBasicCommand to getExecutionCommand to not confuse with superclass
 	// getBasicCommand
+	// but it seems to be returning basic command
 	public static List<String> getExecutionCommand() {
-		return getInheritedListModuleProblemProperty(EXECUTION_COMMAND, emptyList);
-//		if (basicCommand == null) {
-//			basicCommand = getInheritedListModuleProblemProperty(EXECUTION_COMMAND);
-//		}
-//		if (basicCommand == null) {
-//			basicCommand = StaticConfigurationUtils.getBasicCommand();
-//		}
-////		return getInheritedListModuleProblemProperty(EXECUTION_COMMAND);
-//		return basicCommand;
+//		return getInheritedListModuleProblemProperty(EXECUTION_COMMAND, emptyList);
+//		return ExecutionSpecificationSelector.getExecutionSpecification().getBasicCommand();
+		return BasicStaticConfigurationUtils.getBasicCommand();
 
 	}
 //	public static void setBasicCommand(List<String> newVal) {
@@ -1092,7 +1112,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	}
 
 	public static Boolean getInheritedBooleanModuleProblemProperty(
-			String property, boolean defaultValue) {
+			String property, Boolean defaultValue) {
 //		PropertiesConfiguration configuration = ConfigurationManagerSelector
 //				.getConfigurationManager().getStaticConfiguration();
 		GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector
@@ -1158,7 +1178,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		if (retVal == null || retVal.isEmpty())
 			retVal =  BasicStaticConfigurationUtils.getInheritedListModuleProblemProperty(configuration, aModule,
 					aProblem, test, property, null);
-		if (retVal == null | retVal.isEmpty())
+		if (retVal == null || retVal.isEmpty())
 			retVal = aDefaultValue;
 		return retVal;
 
@@ -1223,33 +1243,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		String normalizedRequirementsSpec = "";
 
 		try {
-			requirementsSpec = getInheritedStringModuleProblemProperty(
-					REQUIREMENTS,
-					configuration.getString("project.requirements"));
+//			requirementsSpec = getInheritedStringModuleProblemProperty(
+//					REQUIREMENTS,
+//					configuration.getString("project.requirements"));
+			requirementsSpec = ExecutionSpecificationSelector.getExecutionSpecification().getRequirementsFormat();
 
-			// compatibility with Josh's spec
-			// String module = graderSettingsManager.getModule();
-			// requirementsSpec = configuration.getString(module +
-			// ".requirements");
-			// if (requirementsSpec == null) {
-			// requirementsSpec = configuration.getString(module.toLowerCase() +
-			// ".requirements");
-			// if (requirementsSpec == null) {
-			// requirementsSpec =
-			// configuration.getString("default.requirements");
-			// if (requirementsSpec == null) {
-			// requirementsSpec =
-			// configuration.getString("project.requirements"); // upward
-			// compatibilty
-			// }
-			// }
-			// }
+			
 			 normalizedRequirementsSpec = graderSettingsManager
 					.replaceModuleProblemVars(requirementsSpec);
 
-			// }
-			// Class<?> _class =
-			// Class.forName(configuration.getString("project.requirements"));
+			
 			Class<?> _class = Class.forName(normalizedRequirementsSpec);
 
 			requirements = (ProjectRequirements) _class.newInstance();

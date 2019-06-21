@@ -56,19 +56,9 @@ public class AJUnitProjectRequirements extends FrameworkProjectRequirements impl
 //	}
 	@Override
 	public void addJUnitTestSuite (Class<?> aJUnitSuiteClass) {
-//		List<Class> aJUnitOrSuiteClasses = JUnitUtils.getTopLevelJUnitTestsAndSuites(aJUnitSuiteClass);
-//		List<Class> aSuiteClasses = JUnitUtils.selectJUnitSuites(aJUnitOrSuiteClasses);
-//		List<Class> aTestCases = new ArrayList(aJUnitOrSuiteClasses);
-//		aTestCases.removeAll(aSuiteClasses);
-//		Map<String, List<GradableJUnitTest>>  aGroupedTopLevelGradables = JUnitUtils.toTopLevelGradables(aTestCases);
-//		Map<String, List<GradableJUnitTest>>  aGroupedSuiteGradables = JUnitUtils.toSuiteGradables(aSuiteClasses);
-//		Map<String,List<GradableJUnitTest>> aGroupedGradables = new HashMap();
-//		aGroupedGradables.putAll(aGroupedTopLevelGradables);
-//		aGroupedGradables.putAll(aGroupedSuiteGradables);
-//		List<GradableJUnitTest> aGradableTree = JUnitUtils.toGradableTree(aGroupedGradables);
+		// This step is also called in localchecks mode
 		Map<String,List<GradableJUnitTest>> aGroupedGradables = BasicJUnitUtils.toGroupedGradables(aJUnitSuiteClass);
-//		List<GradableJUnitTest> aGradableTree = JUnitUtils.toGradableTree(aGroupedGradables);
-//		ObjectEditor.treeEdit(aGradableTree);
+		//  these steps seem to be done only in grader mode
 		Map<String, List<GraderTestCase>> aGroupedTestCases = JUnitUtils.toGraderTestCaseMap(aGroupedGradables);		
 		addGroupedTwoLevelTestCases(aGroupedTestCases);		
 	}

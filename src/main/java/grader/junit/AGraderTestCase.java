@@ -15,27 +15,23 @@ import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 //import grader.junit.test.directreference.ACartesianPointJUnitTester;
 import grader.basics.testcase.JUnitTestCase;
-
+/**
+ * This is a transformation of a JUnit test case into a grader test ccase/
+ * It keeps references to both the JUnit case and the tree node created by localchecks
+ * It is not created in localchecks mode, as it has moee info I suppose.
+ * However, teh test cases we have been creating are subclasses of grader test
+ * cases, so things get confusing
+ *
+ */
 public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
-//	public static int DEFAULT_SCORE = 10;	
-//	int defaultScore = DEFAULT_SCORE;
-//	Class jUnitClass;
-//	boolean isExtra;
-//	boolean isRestriction;
-//	long maxScore;
-//	String explanation;
-//	String group = "";
-//	RunNotifier runNotifier = new RunNotifier();
 	GradableJUnitTest graderProperties;
 	AJUnitTestResult runListener = new AJUnitTestResult();
 	
 	public AGraderTestCase (GradableJUnitTest aGraderProperties) {
 	
-//		init();
-		graderProperties = aGraderProperties;
-//		jUnitClass = aJUnitClass;
 
-//		setJUnitClass(aJUnitClass);	
+		graderProperties = aGraderProperties;
+
 	}
 	
 //	public AJUnitTestToGraderTestCase () {

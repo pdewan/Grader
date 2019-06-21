@@ -132,14 +132,16 @@ public class GradingEnvironment extends BasicGradingEnvironment {
 	}
 	// this one uses static configuration utils
     // this is overriding the superclass
+	// why does superclass have this method, do we not rely on the programming environment
+	// for the class path?
+	// does forked process need some of this?
 	@Override
     protected  String findSystemClasspathAndSetAssociatedClasspaths(String separator) {
     	String systemClassPath = System.getenv("CLASSPATH");
     	if(systemClassPath==null) {
     		systemClassPath="";
     	}
-//    	String myClassPath = System.getProperty("java.class.path");
-//    	String originalClassPath = systemClassPath;
+
     	
     	
     	//should we not call the parent class methods here?
@@ -150,6 +152,9 @@ public class GradingEnvironment extends BasicGradingEnvironment {
 
 // added this stuff below to replace the commented code below
     	String[] paths = null;
+    	/*
+    	 * This makes sense only for Java
+    	 */
     	if (StaticConfigurationUtils.hasClassPath() ) {
     		canonicalClassPath = systemClassPath;    		
     	}
