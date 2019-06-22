@@ -191,7 +191,9 @@ public class ARootCodeFolder implements RootCodeFolder {
 //        return hasBinaryFile;
 //        return true; // we are not recursing to file level now
     }
-
+    /**
+     * Assumes that language is constant for all projects
+     */
     void setSeparateSourceBinary() {
         Set<String> names = root.getEntryNames();
 //        String srcPattern = Project.SOURCE + "/";

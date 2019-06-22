@@ -199,7 +199,7 @@ public class Driver {
 		// if (!controller.equals("AHeadlessGradingManager")) {
 		// want static confoguration utils to be set by this time, so this
 		// should not happen prematurely
-		// this should actuall happen after settings model is initialized
+		// this should actually happen after settings model is initialized
 		GradingModeConfigurer.configureGradingMode();
 
 		BasicGradingEnvironment.set(new GradingEnvironment());

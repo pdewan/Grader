@@ -8,6 +8,7 @@ import grader.basics.execution.NotRunnableException;
 import grader.basics.execution.RunningProject;
 import grader.basics.project.BasicProject;
 import grader.basics.project.ClassesManager;
+import grader.basics.project.CurrentProjectHolder;
 import grader.basics.util.Option;
 import grader.sakai.project.SakaiProject;
 
@@ -38,7 +39,9 @@ public class StandardProject extends BasicProject implements FatProject {
     }
     protected Option<ClassesManager> createClassesManager(File buildFolder) throws ClassNotFoundException, IOException {
 //      classesManager = Option.apply((ClassesManager) new ProjectClassesManager(project, buildFolder, sourceFolder));
-
+     CurrentProjectHolder.setProject(this);
+     CurrentProjectHolder.setProjectLocation(this.projectFolder);
+     // so that classes manager can find it
      return Option.apply((ClassesManager) new ProjectClassesManager(project, buildFolder, sourceFolder, sourceFilePattern));
 
   }
@@ -83,51 +86,9 @@ public class StandardProject extends BasicProject implements FatProject {
     public StandardProject(SakaiProject aProject, File aDirectory, String name, String aFilePattern) throws FileNotFoundException {
         super(aProject, aDirectory, name, aFilePattern);
         project = aProject; 
-//    	// Find the folder. We could be there or it could be in a different folder
-//    	if (aDirectory == null) {
-//            throw new FileNotFoundException("No directory given");
-//        }
-//    	project = aProject;
-//    	directory = aDirectory;
-////        Option<File> src = DirectoryUtils.locateFolder(aDirectory, "src");
-//        Option<File> src = DirectoryUtils.locateFolder(aDirectory, Project.SOURCE);
-//
-//        if (src.isEmpty()) {
-//        	System.out.println(SourceFolderNotFound.newCase(aDirectory.getAbsolutePath(), this).getMessage());
-//
-//        	Set<File> sourceFiles = DirectoryUtils.getSourceFiles(aDirectory);
-//        	if (!sourceFiles.isEmpty()) {
-//                    File aSourceFile = sourceFiles.iterator().next();
-//                    sourceFolder = aSourceFile.getParentFile(); // assuming no packages!
-//                    this.directory = sourceFolder.getParentFile();
-//                    SourceFolderAssumed.newCase(sourceFolder.getAbsolutePath(), this);
-//        	} else {
-//                    System.out.println(ProjectFolderNotFound.newCase(aDirectory.getAbsolutePath(), this).getMessage());
-//                    throw new FileNotFoundException("No source files found");
-//        	}
-//        	noSrc = true;
-////                throw new FileNotFoundException("No src folder");
-////        	sourceFolder = aDirectory;
-////        	this.directory = sourceFolder;
-//        } else {
-//            sourceFolder = src.get();
-//            this.directory = src.get().getParentFile();
-//        }
-//        
-//
-//        try {
-////            File sourceFolder = new File(this.directory, "src");
-//            File buildFolder = getBuildFolder("main." + name);
-////            if (AProject.isMakeClassDescriptions())
-//            classesManager = Option.apply((ClassesManager) new ProjectClassesManager(project, buildFolder, sourceFolder));
-//        } catch (Exception e) {
-//        	e.printStackTrace();
-//            classesManager = Option.empty();
-//        }
-//
-//        // Create the traceable log
-//        traceableLog = TraceableLogFactory.getTraceableLog();
+
     }
+    
 
 //    /**
 //     * This figures out where the build folder is, taking into account variations due to IDE

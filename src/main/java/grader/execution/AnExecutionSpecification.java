@@ -3,10 +3,15 @@ package grader.execution;
 import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.ABasicExecutionSpecification;
+import grader.basics.execution.GradingMode;
+import grader.basics.project.CurrentProjectHolder;
 import grader.config.AConfigurationManager;
 import grader.config.ConfigurationManagerSelector;
 import grader.config.StaticConfigurationUtils;
 import util.trace.Tracer;
+
+import static grader.basics.config.BasicStaticConfigurationUtils.DEFAULT_USE_PROJECT_CONFIGURATION;
+import static grader.basics.config.BasicStaticConfigurationUtils.USE_PROJECT_CONFIGURATION;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -329,6 +334,13 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 	@Override
 	public void setCheckStyle(boolean newVal) {
 		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.CHECK_STYLE, newVal);
+	}
+	public  boolean isUseProjectConfiguration() {
+		if (GradingMode.getGraderRun() // acctually will definitely be true as this class is being used
+			&& CurrentProjectHolder.getCurrentProject() == null) {
+			return false;
+		}
+		return super.isUseProjectConfiguration();
 	}
 	
 	
