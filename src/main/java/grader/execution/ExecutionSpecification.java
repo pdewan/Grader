@@ -36,6 +36,7 @@ public interface ExecutionSpecification extends BasicExecutionSpecification {
 	void setCheckStyle(boolean newVal);
 	String getRequirementsFormat();
 	List<String> getAutoVisitActions();
+	String getCCompiler();
 
 
 //	public abstract List<String> getProcesses(String aProcessTeam);

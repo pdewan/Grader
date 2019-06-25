@@ -133,7 +133,7 @@ public class OriginalProjectClassesManager implements ClassesManager {
                 	
     //				compile(aFilesToCompile);
                     //				JavaClassFilesCompilerSelector.getClassFilesCompiler().compile(buildFolder, aFilesToCompile);
-                    RunningProject runningProject = LanguageDependencyManager.getSourceFilesCompiler().compile(sourceFolder, buildFolder, aFilesToCompile);
+                    RunningProject runningProject = LanguageDependencyManager.getSourceFilesCompiler().compile(null, sourceFolder, buildFolder, null,  aFilesToCompile);
                     if (runningProject != null) {
                         //					String outputAndErrors = runningProject.getOutputAndErrors();
                         ((ARunningProject) runningProject).appendOutputAndErrorsToTranscriptFile(project);
@@ -196,8 +196,8 @@ public class OriginalProjectClassesManager implements ClassesManager {
 //					recompiledFileList.add(file);
 					System.out.println("Recompiling files:" + recompiledFileList);
 					RunningProject runningProject = LanguageDependencyManager
-							.getSourceFilesCompiler().compile(sourceFolder,
-									buildFolder, recompiledFileList);
+							.getSourceFilesCompiler().compile(null, sourceFolder,
+									buildFolder, null, recompiledFileList);
 					project.setCanBeCompiled(true);
 					// may have to unload class so am doing this reset
 					project.setNewClassLoader();

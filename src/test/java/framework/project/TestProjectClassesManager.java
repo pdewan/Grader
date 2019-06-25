@@ -61,7 +61,7 @@ public class TestProjectClassesManager {
     public void testFailedCreation() {
         try {
             String invalidLocation = "/";
-            new ProjectClassesManager(null, new File(invalidLocation), new File(invalidLocation), null);
+            new ProjectClassesManager(null, null, new File(invalidLocation), new File(invalidLocation), null);
             assertTrue("Creation should fail", false);
         } catch (Exception e) {
             assertTrue(true);

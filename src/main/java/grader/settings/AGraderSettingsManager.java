@@ -297,20 +297,19 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public String getCCompilerPath() {
-    	String defaultPath = ConfigurationManagerSelector.
-    			getConfigurationManager().
-    				getStaticConfiguration().getString(StaticConfigurationUtils.C_COMPILER_PATH, "cl");
-    	if (dynamicConfiguration == null) {
-    		return defaultPath;
-    	}
-        String path = dynamicConfiguration.getString(StaticConfigurationUtils.C_COMPILER_PATH);
-        if (path == null) {
-        	return defaultPath;
-//            path = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(C_COMPILER_PATH, "C:/Program Files (x86)/Microsoft Visual Studio 11.0/VC/bin/cl.exe");
-//            path = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration().getString(C_COMPILER_PATH, "cl");
-
-        }
-        return path;
+    	return ExecutionSpecificationSelector.getExecutionSpecification().getCCompiler();
+//    			ConfigurationManagerSelector.
+//    			getConfigurationManager().
+//    				getStaticConfiguration().getString(StaticConfigurationUtils.C_COMPILER_PATH, "cl");
+//    	if (dynamicConfiguration == null) {
+//    		return defaultPath;
+//    	}
+//        String path = dynamicConfiguration.getString(StaticConfigurationUtils.C_COMPILER_PATH);
+//        if (path == null) {
+//        	return defaultPath;
+//
+//        }
+//        return path;
     }
 
     @Override

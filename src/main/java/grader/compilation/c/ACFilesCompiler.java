@@ -4,7 +4,9 @@ import framework.execution.ProcessRunner;
 import grader.basics.BasicLanguageDependencyManager;
 import grader.basics.execution.Runner;
 import grader.basics.execution.RunningProject;
+import grader.basics.project.Project;
 import grader.compilation.ClassFilesCompiler;
+import grader.execution.ExecutionSpecificationSelector;
 import grader.settings.GraderSettingsManagerSelector;
 
 import java.io.File;
@@ -18,7 +20,6 @@ public class ACFilesCompiler implements ClassFilesCompiler {
 	
 	public static final String OBJECT_SUFFIX = ".obj";
 	public static final String EXECUTABLE_SUFFIX = ".exe";
-	public static final String COMPILER_COMMAND = "cl";
 	public static final String OBJECT_OPTION = "-o";
 	public static final String EXECUTABLE_OPTION = "/link/out:";
 
@@ -31,7 +32,8 @@ public class ACFilesCompiler implements ClassFilesCompiler {
 	
 	void setCompilerPath() {
             try {
-		 compilerPath = GraderSettingsManagerSelector.getGraderSettingsManager().getCCompilerPath();
+            	compilerPath =  	ExecutionSpecificationSelector.getExecutionSpecification().getCCompiler();
+//		 compilerPath = GraderSettingsManagerSelector.getGraderSettingsManager().getCCompilerPath();
 //		compilerPath = COMPILER_COMMAND;
             } catch (ExceptionInInitializerError | NoSuchMethodError e) {
                 e.printStackTrace();
@@ -96,7 +98,7 @@ public class ACFilesCompiler implements ClassFilesCompiler {
     }
 
 	@Override
-	public RunningProject compile(File sourceFolder, File buildFolder, List<File> sourceFiles)
+	public RunningProject compile(Project aBasicProject, File sourceFolder, File buildFolder, File anObjectFolder, List<File> sourceFiles)
 			throws IOException, IllegalStateException {
 		List<String> commandList= new ArrayList(sourceFiles.size() + 1);
 		commandList.add(compilerPath);

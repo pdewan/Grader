@@ -2,6 +2,7 @@ package grader.config;
 
 import framework.utils.UserPropertyWriter;
 import grader.basics.config.ABasicConfigurationManager;
+import grader.basics.project.CurrentProjectHolder;
 import grader.execution.ExecutionSpecificationSelector;
 import grader.executor.ExecutorSelector;
 import grader.language.LanguageDependencyManager;
@@ -152,7 +153,7 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
 
 //            ExecutorSelector.getExecutor().setExecutorDirectory(
 //            		StaticConfigurationUtils.getCourseOrStaticString(StaticConfigurationUtils.EXECUTOR, null));
-            
+            // really do not understand what an executor is.
             ExecutorSelector.getExecutor().setExecutorDirectory(
             		
             		ExecutionSpecificationSelector.getExecutionSpecification().getExecutorDirectory()

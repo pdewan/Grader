@@ -50,29 +50,11 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 		project = (SakaiProject) aProject;
 	}
 
-	public ProjectClassesManager(SakaiProject aProject, File buildFolder, File sourceFolder, String aSourceFilePattern)
+	public ProjectClassesManager(FatProject aFatProject, SakaiProject aProject, File buildFolder, File sourceFolder, String aSourceFilePattern)
 		throws IOException,
 		ClassNotFoundException {
-		super(aProject, buildFolder, sourceFolder, aSourceFilePattern);
-		// project = aProject;
-		// Set the build and source folders for the project
-		// this.buildFolder = buildFolder;
-		// this.sourceFolder = sourceFolder;
-		//
-		// // Create the Class Loader and load the classes
-		// if (AProject.isLoadClasses() ) {
-		//// classLoader = project.getClassLoader();
-		//// if (classLoader == null)
-		// if (project != null) {
-		// proxyClassLoader = project.getClassLoader();
-		// }
-		// classLoader = new URLClassLoader(new
-		// URL[]{buildFolder.toURI().toURL()});
-		// }
-		// classDescriptions = new HashSet<ClassDescription>();
-		//
-		// loadClasses(sourceFolder);
-		// checkStyle(project, sourceFolder);
+		super(aFatProject, aProject, buildFolder, sourceFolder, aSourceFilePattern);
+		
 	}
 
 	protected void initializeClassLoaders() throws IOException {
@@ -129,7 +111,11 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 	}
 
 	protected void setBinaryFileSystemFolderName() {
-		project.getClassLoader().setBinaryFileSystemFolderName(buildFolder.getAbsolutePath());
+		ProxyClassLoader aClassLoader = project.getClassLoader();
+		if (aClassLoader == null)
+			return;
+		aClassLoader.setBinaryFileSystemFolderName(buildFolder.getAbsolutePath());
+//		project.getClassLoader().setBinaryFileSystemFolderName(buildFolder.getAbsolutePath());
 	}
 
 	protected void setCanBeLoaded(boolean newValue) {
@@ -305,7 +291,7 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 					boolean aSavedValue = BasicProjectExecution.isWaitForMethodConstructorsAndProcesses();
 					BasicProjectExecution.setWaitForMethodConstructorsAndProcesses(true);
 					RunningProject runningProject = LanguageDependencyManager.getSourceFilesCompiler()
-						.compile(sourceFolder, buildFolder, aFilesToCompile);
+						.compile(basicProject, sourceFolder, buildFolder, basicProject.getObjectFolder(), aFilesToCompile);
 					if (runningProject != null) {
 						String anErrors = runningProject.getErrorOutput();
 						 String outputAndErrors =
@@ -358,8 +344,8 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 			// recompiledFileList.add(file);
 			System.out.println("Recompiling files:" + recompiledFileList);
 			RunningProject runningProject = LanguageDependencyManager
-				.getSourceFilesCompiler().compile(sourceFolder,
-					buildFolder, recompiledFileList);
+				.getSourceFilesCompiler().compile(basicProject, sourceFolder,
+					buildFolder, basicProject.getObjectFolder(), recompiledFileList);
 			// project.setCanBeCompiled(true);
 			maybeSetCanBeCompiled(true);
 			// may have to unload class so am doing this reset

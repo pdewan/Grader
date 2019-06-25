@@ -117,7 +117,7 @@ public class OriginalStandardProject implements FatProject {
 //            File sourceFolder = new File(this.directory, "src");
             File buildFolder = getBuildFolder("main." + name);
 //            if (AProject.isMakeClassDescriptions())
-            classesManager = Option.apply((ClassesManager) new ProjectClassesManager(project, buildFolder, sourceFolder, null));
+            classesManager = Option.apply((ClassesManager) new ProjectClassesManager(this, project, buildFolder, sourceFolder, null));
         } catch (Exception e) {
         	e.printStackTrace();
             classesManager = Option.empty();

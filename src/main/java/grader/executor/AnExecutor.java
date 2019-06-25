@@ -2,6 +2,7 @@ package grader.executor;
 
 import grader.basics.execution.BasicExecutionSpecification;
 import grader.basics.execution.BasicExecutionSpecificationSelector;
+import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.compilation.c.CFilesCompilerSelector;
 import grader.config.StaticConfigurationUtils;
@@ -10,12 +11,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This is something that itself needs to be compiled, I guess
+ * So it is really not dependent on a project
+ * @author dewan
+ *
+ */
 public class AnExecutor implements Executor {
 	String executorDirectory;
+//	Project basicProject;
 	public static final String EXECUTOR_FILE = "executor";
 	public  final List<File> sourceFiles;
 	public AnExecutor() {
+//		basicProject = aBasicProject;
 		sourceFiles = new ArrayList();
 		sourceFiles.add(new File(EXECUTOR_FILE + ".c"));
 		
@@ -28,8 +36,8 @@ public class AnExecutor implements Executor {
 	public void compile() {
 		
 		try {
-			CFilesCompilerSelector.getClassFilesCompiler().compile(new File(executorDirectory + "/src") , 
-					new File (executorDirectory + "/bin"), sourceFiles);
+			CFilesCompilerSelector.getClassFilesCompiler().compile(null, new File(executorDirectory + "/src") , 
+					new File (executorDirectory + "/bin"), new File (executorDirectory + "/obj"),sourceFiles);
 			if (BasicGradingEnvironment.get().isNotWindows()) {
 				String fileNames = executorDirectory + "/bin/" + EXECUTOR_FILE + "*";
 				Runtime.getRuntime().exec("setuid nobody " + fileNames);

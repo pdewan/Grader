@@ -82,6 +82,8 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static final String END_ONYEN = "end";
 	public static final String WORD_PATH = "Word.path";
 	public static final String C_COMPILER_PATH = "CCompiler.path";
+	public static final String DEFAULT_C_COMPILER_PATH = "gcc";
+
 	public static final String PYTHON_INTERPRETER_PATH = "PythonInterpreter.path";
 	public static final String ASSIGNMENTS_DATA_FOLDER = "grader.defaultAssignmentsDataFolderName";
 	public static final String INTERACTION_LOG_DIRECTORY= "grader.logger.interactionLogDirectory";

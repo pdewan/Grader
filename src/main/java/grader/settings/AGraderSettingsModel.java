@@ -2,6 +2,7 @@ package grader.settings;
 
 import framework.utils.GraderSettings;
 import grader.basics.config.BasicStaticConfigurationUtils;
+import grader.basics.project.CurrentProjectHolder;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ConfigurationManagerSelector;
 import grader.config.StaticConfigurationUtils;

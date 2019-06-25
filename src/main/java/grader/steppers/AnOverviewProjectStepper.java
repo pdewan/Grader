@@ -473,7 +473,7 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 			featureGradeRecorder.newSession(null, null);
 			return false;
 		} 
-		if (!autoVisitBehavior.setProject(newVal)) {
+		if (!autoVisitBehavior.setProject(newVal)) { // this is where grading occurs
 			featureGradeRecorder.newSession(null, null); // this is the one that matters
 
 			return false;

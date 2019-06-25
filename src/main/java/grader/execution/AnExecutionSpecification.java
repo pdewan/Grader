@@ -342,6 +342,14 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 		}
 		return super.isUseProjectConfiguration();
 	}
+	@Override
+	public String getCCompiler() {
+		return getStringProperty(
+				StaticConfigurationUtils.C_COMPILER_PATH, StaticConfigurationUtils.DEFAULT_C_COMPILER_PATH );
+		
+//		return graderProcessToEntryTag.get(aProcess);
+		
+	}
 	
 	
 //	 
