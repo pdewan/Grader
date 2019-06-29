@@ -9,6 +9,7 @@ import grader.basics.junit.AGradableJUnitTest;
 import grader.basics.junit.AJUnitTestResult;
 import grader.basics.junit.GradableJUnitSuite;
 import grader.basics.junit.GradableJUnitTest;
+import grader.basics.junit.MaxScoreAssignmentResult;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
@@ -18,19 +19,19 @@ import grader.basics.testcase.JUnitTestCase;
 /**
  * This is a transformation of a JUnit test case into a grader test ccase/
  * It keeps references to both the JUnit case and the tree node created by localchecks
- * It is not created in localchecks mode, as it has moee info I suppose.
- * However, teh test cases we have been creating are subclasses of grader test
+ * It is not created in localchecks mode, as it has more info I suppose.
+ * However, the test cases we have been creating are subclasses of grader test
  * cases, so things get confusing
  *
  */
 public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
-	GradableJUnitTest graderProperties;
+	GradableJUnitTest delegateGradableJUnitTestCase;
 	AJUnitTestResult runListener = new AJUnitTestResult();
 	
 	public AGraderTestCase (GradableJUnitTest aGraderProperties) {
 	
 
-		graderProperties = aGraderProperties;
+		delegateGradableJUnitTestCase = aGraderProperties;
 
 	}
 	
@@ -38,19 +39,19 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 //		init();
 //	}
 	public void init() {
-		graderProperties.init();
+		delegateGradableJUnitTestCase.init();
 	}
 	
 	public Class getJUnitClass() {
-		return graderProperties.getJUnitClass();
+		return delegateGradableJUnitTestCase.getJUnitClass();
 	}
 	
 	public void setDefaultScore(int aDefaultScore) {
-		graderProperties.setDefaultScore(aDefaultScore);
+		delegateGradableJUnitTestCase.setDefaultScore(aDefaultScore);
 	}
 	
 	public int getDefaultScore() {
-		return graderProperties.getDefaultScore();
+		return delegateGradableJUnitTestCase.getDefaultScore();
 	}
 	
 	public void setMaxScore (Class aJUnitClass) {
@@ -60,7 +61,7 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 //		} else {
 //			maxScore = defaultScore;
 //		}
-		graderProperties.setMaxScore(aJUnitClass);
+		delegateGradableJUnitTestCase.setMaxScore(aJUnitClass);
 	}
 	public void setIsRestriction (Class aJUnitClass) {
 //		if (aJUnitClass.isAnnotationPresent(IsRestriction.class)) {
@@ -69,7 +70,7 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 //		} else {
 //			isRestriction = false;
 //		}
-		graderProperties.setIsRestriction(aJUnitClass);
+		delegateGradableJUnitTestCase.setIsRestriction(aJUnitClass);
 	}
 	public void setIsExtra (Class aJUnitClass) {
 //		if (aJUnitClass.isAnnotationPresent(IsExtra.class)) {
@@ -78,7 +79,7 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 //		} else {
 //			isExtra = false;
 //		}
-		graderProperties.setIsExtra(aJUnitClass);
+		delegateGradableJUnitTestCase.setIsExtra(aJUnitClass);
 	}
 	
 	public void setExplanation (Class aJUnitClass) {
@@ -89,7 +90,7 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 //			explanation = aJUnitClass.getSimpleName();
 //		}
 //		setName(explanation);
-		graderProperties.setExplanation(aJUnitClass);
+		delegateGradableJUnitTestCase.setExplanation(aJUnitClass);
 	}	
 
 	public void setGroup (Class aJUnitClass) {
@@ -99,27 +100,27 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 //		} else {
 //			group = explanation;
 //		}
-		graderProperties.setGroup(aJUnitClass);
+		delegateGradableJUnitTestCase.setGroup(aJUnitClass);
 	}
 	@Override
 	public String getGroup() {
 //		return group;
-		return graderProperties.getGroup();
+		return delegateGradableJUnitTestCase.getGroup();
 	}
 	public void setJUnitClass(Class aJUnitClass) {
-		graderProperties.setJUnitClass(aJUnitClass);		
+		delegateGradableJUnitTestCase.setJUnitClass(aJUnitClass);		
 	}
 	public boolean isRestriction() {
-		return graderProperties.isRestriction();
+		return delegateGradableJUnitTestCase.isRestriction();
 	}
 	public boolean isExtra() {
-		return graderProperties.isExtra();
+		return delegateGradableJUnitTestCase.isExtra();
 	}
 	public Double getMaxScore() {
-		return graderProperties.getMaxScore();
+		return delegateGradableJUnitTestCase.getMaxScore();
 	}	
 	public String getExplanation() {
-		return graderProperties.getExplanation();
+		return delegateGradableJUnitTestCase.getExplanation();
 	}	
 	@Override
 	public TestCaseResult test(Project project, boolean autoGrade)
@@ -150,150 +151,150 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 
 	@Override
 	public void setMaxScore(double aMaxScore) {
-		graderProperties.setMaxScore(aMaxScore);
+		delegateGradableJUnitTestCase.setMaxScore(aMaxScore);
 		
 	}
 
 	@Override
 	public void setGroup(String newVal) {
-		graderProperties.setGroup(newVal);
+		delegateGradableJUnitTestCase.setGroup(newVal);
 		
 	}
 
 	@Override
 	public void setRestriction(boolean newVal) {
-		graderProperties.setRestriction(newVal);
+		delegateGradableJUnitTestCase.setRestriction(newVal);
 		
 	}
 
 	@Override
 	public void setExtra(boolean newVal) {
-		graderProperties.setExtra(newVal);
+		delegateGradableJUnitTestCase.setExtra(newVal);
 		
 	}
 
 	@Override
 	public TestCaseResult test() {
-		return graderProperties.test();
+		return delegateGradableJUnitTestCase.test();
 	}
 
 	@Override
 	public void setExplanation(String newVal) {
-		graderProperties.setExplanation(newVal);
+		delegateGradableJUnitTestCase.setExplanation(newVal);
 	}
 
 	@Override
 	public String getMessage() {
 		// TODO Auto-generated method stub
-		return graderProperties.getMessage();
+		return delegateGradableJUnitTestCase.getMessage();
 	}
 
 	@Override
 	public String getStatus() {
-		return graderProperties.getStatus();
+		return delegateGradableJUnitTestCase.getStatus();
 	}
 
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener arg0) {
-		graderProperties.addPropertyChangeListener(arg0);		
+		delegateGradableJUnitTestCase.addPropertyChangeListener(arg0);		
 	}
 
 	@Override
 	public int numExecutions() {
-		return graderProperties.numExecutions();
+		return delegateGradableJUnitTestCase.numExecutions();
 	}
 
 	@Override
 	public void addPropertyChangeListenerRecursive(PropertyChangeListener arg0) {
-		graderProperties.addPropertyChangeListener(arg0);		
+		delegateGradableJUnitTestCase.addPropertyChangeListener(arg0);		
 	}
 
 	@Override
 	public double getFractionComplete() {
-		return graderProperties.getFractionComplete();
+		return delegateGradableJUnitTestCase.getFractionComplete();
 	}
 
 	@Override
 	public List<Double> getPercentages() {
 		// TODO Auto-generated method stub
-		return graderProperties.getPercentages();
+		return delegateGradableJUnitTestCase.getPercentages();
 	}
 
 	@Override
 	public List<String> getMessages() {
 		// TODO Auto-generated method stub
-		return graderProperties.getMessages();
+		return delegateGradableJUnitTestCase.getMessages();
 	}
 
 	@Override
 	public List<TestCaseResult> getTestCaseResults() {
 		// TODO Auto-generated method stub
-		return graderProperties.getTestCaseResults();
+		return delegateGradableJUnitTestCase.getTestCaseResults();
 	}
 
 	@Override
 	public double getUnroundedScore() {
 		// TODO Auto-generated method stub
-		return graderProperties.getUnroundedScore();
+		return delegateGradableJUnitTestCase.getUnroundedScore();
 	}
 
 	@Override
 	public String getText() {
 		// TODO Auto-generated method stub
-		return graderProperties.getText();
+		return delegateGradableJUnitTestCase.getText();
 	}
 
 	@Override
 	public double getComputedMaxScore() {
 		// TODO Auto-generated method stub
-		return graderProperties.getComputedMaxScore();
+		return delegateGradableJUnitTestCase.getComputedMaxScore();
 	}
 
 	@Override
 	public int numLeafNodeDescendents() {
-		return graderProperties.numLeafNodeDescendents();
+		return delegateGradableJUnitTestCase.numLeafNodeDescendents();
 	}
 
 	@Override
 	public int numInternalNodeDescendents() {
 		// TODO Auto-generated method stub
-		return graderProperties.numInternalNodeDescendents();
+		return delegateGradableJUnitTestCase.numInternalNodeDescendents();
 	}
 
 	@Override
 	public Set<Class> getLeafClasses() {
 		// TODO Auto-generated method stub
-		return graderProperties.getLeafClasses();
+		return delegateGradableJUnitTestCase.getLeafClasses();
 	}
 
 	@Override
 	public Set<Class>  getPassClasses() {
 		// TODO Auto-generated method stub
-		return graderProperties.getLeafClasses();
+		return delegateGradableJUnitTestCase.getLeafClasses();
 	}
 
 	@Override
 	public Set<Class> getPartialPassClasses() {
 		// TODO Auto-generated method stub
-		return graderProperties.getPartialPassClasses();
+		return delegateGradableJUnitTestCase.getPartialPassClasses();
 	}
 
 	@Override
 	public Set<Class> getFailClasses() {
 		// TODO Auto-generated method stub
-		return graderProperties.getFailClasses();
+		return delegateGradableJUnitTestCase.getFailClasses();
 	}
 
 	@Override
 	public Set<Class> getUntestedClasses() {
 		// TODO Auto-generated method stub
-		return graderProperties.getUntestedClasses();
+		return delegateGradableJUnitTestCase.getUntestedClasses();
 	}
 
 	@Override
 	public double getDisplayedScore() {
 		// TODO Auto-generated method stub
-		return graderProperties.getDisplayedScore();
+		return delegateGradableJUnitTestCase.getDisplayedScore();
 	}
 	public String toString() {
 		return getName() + "(" + super.toString() + ")";
@@ -301,61 +302,30 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 
 	@Override
 	public JUnitTestCase getJUnitTestCase() {
-		return graderProperties.getJUnitTestCase();
+		return delegateGradableJUnitTestCase.getJUnitTestCase();
 	}
 
-//	@Override
-//	public void setTopLevelSuite(GradableJUnitSuite newVal) {
-//		graderProperties.setTopLevelSuite(newVal);
-//		
-//	}
-//
-//	@Override
-//	public GradableJUnitSuite getTopLevelSuite() {
-//		return graderProperties.getTopLevelSuite();
-//	}
+	@Override
+	public boolean isDefinesMaxScore() {
+		return delegateGradableJUnitTestCase.isDefinesMaxScore();
+	}
 
-//	@Override
-//	public Class[] getFailedClasses() {
-//		// TODO Auto-generated method stub
-//		return graderProperties.getFailedClasses();
-//	}
+	@Override
+	public void setDefinesMaxScore(boolean definesMaxScore) {
+		delegateGradableJUnitTestCase.setDefinesMaxScore(definesMaxScore);
+	}
 
-//	@Override
-//	public Class[] getUntestedClasses() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public void fillLeafNodeDescendents(List<GradableJUnitTest> retVal) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	
+	@Override
+	public MaxScoreAssignmentResult assignMaxScores() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-//	@Override
-//	public boolean isWriteToConsole() {
-//		// TODO Auto-generated method stub
-//		return graderProperties.isWriteToConsole();
-//	}
-//
-//	@Override
-//	public void setWriteToConsole(boolean newVal) {
-//		graderProperties.setWriteToConsole(newVal);
-//		
-//	}
-//
-//	@Override
-//	public boolean isWriteToFile() {
-//		// TODO Auto-generated method stub
-//		return graderProperties.isWriteToFile();
-//	}
-//
-//	@Override
-//	public void setWriteToFile(boolean writeToFile) {
-//		graderProperties.setWriteToFile(writeToFile);
-//		
-//	}
-//
-//	@Override
-//	public boolean isWriteToServer() {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
+
 }

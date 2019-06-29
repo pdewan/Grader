@@ -36,8 +36,8 @@ public class AScoreColorer implements Colorer<Double>{
 		maxValue = aMaxValue;
 	}
 	@Override
-	public Color color(Double aNum) {
-		LetterGrade grade = mapper.toCoarseLetterGrade(aNum, maxValue);
+	public Color color(Double aFraction) {
+		LetterGrade grade = mapper.toCoarseLetterGrade(aFraction, maxValue);
 		switch (grade) {
 		case A: return Color.GREEN;
 		case B: return MY_HYBRID_GREEN;

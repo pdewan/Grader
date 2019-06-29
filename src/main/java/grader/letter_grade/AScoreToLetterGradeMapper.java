@@ -5,16 +5,18 @@ public class AScoreToLetterGradeMapper implements ScoreToLetterGradeMapper {
 	public static double B_THRESHOLD = 0.8;
 	public static double C_THRESHOLD = 0.7;
 	public static double D_THRESHOLD = 0.6;
-	
-	public LetterGrade toCoarseLetterGrade (double aScore, double aMaxValue) {
-		double percent = aScore/aMaxValue;
-		if (percent >= A_THRESHOLD)
+	/*
+	 * aMaxValue is not used here
+	 */
+	public LetterGrade toCoarseLetterGrade (double aFraction, double aMaxValue) {
+//		double percent = aFraction/aMaxValue;
+		if (aFraction >= A_THRESHOLD)
 			return LetterGrade.A;
-		if (percent >= B_THRESHOLD)
+		if (aFraction >= B_THRESHOLD)
 			return LetterGrade.B;
-		if (percent >= C_THRESHOLD)
+		if (aFraction >= C_THRESHOLD)
 			return LetterGrade.C;
-		if (percent >= D_THRESHOLD)
+		if (aFraction >= D_THRESHOLD)
 			return LetterGrade.D;
 		return LetterGrade.F;
 			

@@ -257,7 +257,10 @@ public class AGradedProjectTextOverview  implements
 	@Override
 	public void setScoreColor() {
 		if (projectStepper.isSettingUpProject()) return;
-		nextScoreColor = projectDatabase.getScoreColorer().color(score/maxFeatureScore);
+		double aPercentage = maxFeatureScore == 0?1:score/maxFeatureScore;
+		nextScoreColor = projectDatabase.getScoreColorer().color(aPercentage);
+
+//		nextScoreColor = projectDatabase.getScoreColorer().color(score/maxFeatureScore);
 		if (currentScoreColor == nextScoreColor ) return;
 		setColor("Score",  nextScoreColor);
 		currentScoreColor = nextScoreColor;

@@ -17,6 +17,8 @@ import util.annotations.MaxValue;
 import framework.grading.testing.BasicTestCase;
 import grader.basics.junit.AJUnitTestResult;
 import grader.basics.junit.GradableJUnitSuite;
+import grader.basics.junit.GradableJUnitTest;
+import grader.basics.junit.MaxScoreAssignmentResult;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
@@ -319,6 +321,30 @@ public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implement
 
 	@Override
 	public JUnitTestCase getJUnitTestCase() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isDefinesMaxScore() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setDefinesMaxScore(boolean definesMaxScore) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fillLeafNodeDescendents(List<GradableJUnitTest> retVal) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public MaxScoreAssignmentResult assignMaxScores() {
 		// TODO Auto-generated method stub
 		return null;
 	}
