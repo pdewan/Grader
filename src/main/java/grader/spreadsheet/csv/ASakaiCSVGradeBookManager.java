@@ -5,6 +5,7 @@ import grader.file.filesystem.AFileSystemFileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FinalGradeRecorder;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 //import bus.uigen.Message;
 // This is the class that manages the grades.csv file. Josh's stuff might interfere with this
+// Not clear it is ever instantiated
 public class ASakaiCSVGradeBookManager implements SakaiCSVFinalGradeRecorder {
 	public static final int ONYEN_COLUMN = 0;
 	public static final int LAST_NAME_COLUMN = 2;
@@ -350,6 +352,11 @@ public class ASakaiCSVGradeBookManager implements SakaiCSVFinalGradeRecorder {
 		// TODO Auto-generated method stub
 		throw new RuntimeException("Not implemented");
 //		return null;
+	}
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener aListener) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

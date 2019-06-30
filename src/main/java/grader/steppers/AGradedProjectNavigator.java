@@ -520,9 +520,9 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 //			if (GraphicsEnvironment.isHeadless() || Driver.isHeadless()) {
 //				JOptionPane.showMessageDialog(null, "No entries matchin filter, exiting");
 //			}
-			Driver.maybeShowMessage("No entries matchin filter, exiting");
-//			move(false); // go back one
-			notifyPreconditionChanged();
+			Driver.maybeShowMessage("No entries matching filter, exiting");
+			quit();
+//			notifyPreconditionChanged();
 		} else {
 			Driver.maybeShowMessage("Reached the end of items matching filter");
 		}

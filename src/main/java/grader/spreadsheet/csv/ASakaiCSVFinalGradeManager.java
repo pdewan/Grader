@@ -5,6 +5,8 @@ import grader.file.filesystem.AFileSystemFileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FinalGradeRecorder;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,8 +30,8 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	public static final int ROW_SIZE = GRADE_COLUMN + 1;
 	public static final int TITLE_ROW = 2;
 	public static final int FIRST_STUDENT_ROW = TITLE_ROW + 1;
-	 public static final String DEFAULT_CHAR = "";
-	 public static final double  DEFAULT_VALUE = -1;
+	
+	 
 
 //	InputStream input; // this may have to be reinitialized each time
 //	OutputStream output; // may have to reinitialized and closed each time
@@ -68,6 +70,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	public String getLastName(int aRowIndex) {
 		return table.get(toActualRow(aRowIndex))[LAST_NAME_COLUMN];
 	}
+	
 	public String getFullName(int aRowIndex) {
 		return getFirstName(aRowIndex) + " " + getLastName(aRowIndex);
 	}
@@ -353,7 +356,9 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		    if (getClass().equals(ASakaiCSVFinalGradeManager.class)) {
 		    	System.out.println("Recording final grade:" + aScore + " in file " + gradeSpreadsheet.getAbsoluteName());
 		    }
+		    double oldScore = getGrade(aStudentName, anOnyen);
 		    recordGrade(row, aScore);
+		    propertyChangeSupport.firePropertyChange(GRADE_PROPERTY, oldScore, aScore);
 		    writeTable();
 
 //		OutputStream output = gradeSpreadsheet.getOutputStream();
@@ -442,6 +447,11 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 
 	public String getFileName() {
 		return gradeSpreadsheet.getAbsoluteName();
+	}
+	protected PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener aListener) {
+		propertyChangeSupport.addPropertyChangeListener(aListener);
 	}
 	
 

@@ -23,6 +23,8 @@ import grader.settings.folders.OnyenRangeModel;
 import grader.settings.navigation.ANavigationSetter;
 import grader.settings.navigation.NavigationSetter;
 import grader.spreadsheet.FeatureGradeRecorder;
+import grader.spreadsheet.display.SpreadsheetDisplay;
+import grader.spreadsheet.display.SpreadsheetDisplayerFactory;
 import grader.trace.settings.DownloadPathUserChange;
 import grader.trace.settings.GraderSettingsEnded;
 import grader.trace.settings.GraderSettingsStarted;
@@ -57,6 +59,7 @@ import util.annotations.Visible;
 import util.misc.Common;
 import util.trace.Tracer;
 import wrappers.framework.project.ProjectWrapper;
+import wrappers.grader.sakai.project.ProjectDatabaseFactory;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
@@ -751,7 +754,9 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         }
         saveSettings();
         Driver.initAssignmentDataFolder();
-        projectDatabase = new ProjectDatabaseWrapper();
+//        projectDatabase = new ProjectDatabaseWrapper();
+        projectDatabase = ProjectDatabaseFactory.createProjectDatabase();
+
         projectDatabase.setGraderSettings(this);
     }
 
@@ -971,6 +976,14 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     	}
     	
     }
+    @Position(9)
+    public  void displayStudentSpreadsheet() {
+    	maybeCreateProjectDatabase();
+    	 SpreadsheetDisplayerFactory.displaySpreadsheet();
+    	
+    }
+    
+   
 
     @Override
     @Visible(false)

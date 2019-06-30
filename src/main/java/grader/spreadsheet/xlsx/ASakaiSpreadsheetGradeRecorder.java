@@ -3,6 +3,7 @@ package grader.spreadsheet.xlsx;
 import grader.file.FileProxy;
 import grader.spreadsheet.FinalGradeRecorder;
 
+import java.beans.PropertyChangeListener;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -197,5 +198,19 @@ public class ASakaiSpreadsheetGradeRecorder implements FinalGradeRecorder {
 	public String getFullName(String anOnyen) {
 		throw new RuntimeException("Not implemented");
 	}
+
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+//	@Override
+//	public String getFullName(int aRowIndex) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	
 
 }

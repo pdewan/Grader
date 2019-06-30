@@ -1,5 +1,7 @@
 package grader.spreadsheet.csv;
 
+import java.beans.PropertyChangeListener;
+
 import grader.file.FileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FinalGradeRecorder;
@@ -31,6 +33,13 @@ public class AFeatureAndFinalGradeRecorder implements FinalGradeRecorder {
 	public String getFullName(String anOnyen) {
 		// TODO Auto-generated method stub
 		return finalGradeRecorder.getFullName(anOnyen);
+	}
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener aListener) {
+		// TODO Auto-generated method stub
+		featureGradeRecorder.addPropertyChangeListener(aListener);
+		finalGradeRecorder.addPropertyChangeListener(aListener);
+		
 	}
 	
 

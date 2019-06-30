@@ -17,6 +17,7 @@ import util.trace.Traceable;
 import util.trace.TraceableBus;
 import util.trace.TraceableLogFactory;
 import util.trace.Tracer;
+import wrappers.grader.sakai.project.ProjectDatabaseFactory;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 import bus.uigen.OEFrame;
@@ -102,8 +103,8 @@ public class Driver {
 
 	public static void maybeShowMessage(String aMessage) {
 		System.out.println(aMessage);
-		if (!GraphicsEnvironment.isHeadless() && !Driver.isHeadless())
-			JOptionPane.showMessageDialog(null, aMessage);
+//		if (!GraphicsEnvironment.isHeadless() && !Driver.isHeadless())
+//			JOptionPane.showMessageDialog(null, aMessage);
 	}
 
 	static void setPostSettingsModelParameters() {
@@ -414,7 +415,8 @@ public class Driver {
 		settingsModel.maybePreCompile();
 		settingsModel.maybePreUnzip();
 
-		database = new ProjectDatabaseWrapper();
+//		database = new ProjectDatabaseWrapper();
+		database = ProjectDatabaseFactory.createProjectDatabase();
 		database.setGraderSettings(settingsModel);
 		database.setScoreFeedback(null); // we will be writing to feedback file
 											// which is more complete

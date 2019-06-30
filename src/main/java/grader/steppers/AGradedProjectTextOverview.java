@@ -185,6 +185,9 @@ public class AGradedProjectTextOverview  implements
 	
 	@Override
 	@Visible(false)
+	/**
+	 * This name is retrieved from created project
+	 */
 	public void setName(String newVal) {
 		name = newVal;
 		// System.out.println("name changed to" + newVal);

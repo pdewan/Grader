@@ -21,6 +21,7 @@ import grader.spreadsheet.csv.AllStudentsHistoryManager;
 import grader.spreadsheet.csv.AllStudentsHistoryManagerFactory;
 import grader.spreadsheet.csv.AnAllStudentsHistoryManager;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -441,5 +442,23 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 	@Override
 	public String getFullName(String anOnyen) {
 		return basicFeatureGradeRecorder.getFullName(anOnyen);
+	}
+
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getManuallyGraded(String aStudentName, String anOnyen) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setManuallyGraded(String aStudentName, String anOnyen, double aScore) {
+		// TODO Auto-generated method stub
+		
 	}
 }

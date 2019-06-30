@@ -441,20 +441,14 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 //			featureGradeRecorder.setGrade(gradedProjectOverview.getName(), gradedProjectOverview.getOnyen(), savedScore);
 		}
 		
-//		double savedSourcePoints = featureGradeRecorder.getSourcePoints(gradedProjectOverview.getName(), gradedProjectOverview.getOnyen());
-//		if (savedSourcePoints != ASakaiCSVFinalGradeManager.DEFAULT_VALUE) {
-//			gradedProjectOverview.internalSetSourcePoints(savedSourcePoints);
-//			SourcePointsLoaded.newCase(projectDatabase, this, project, featureGradeRecorder.getFileName(), savedSourcePoints, this);
-//		}
+
 		// the multiplier is not being loaded here, so cannot be used for filtering
 		
 
 		if (!gradedProjectNavigator.shouldVisit()) {
 			return false;
 		}
-//		sourceHasBeenOpened = false;
-		// setInternalScore(gradeRecorder.getGrade(project.getStudentAssignment().getStudentName(),
-		// project.getStudentAssignment().getOnyen()));
+
 
 		// Josh: Added event
 		propertyChangeSupport.firePropertyChange("Project", AttributeNames.IGNORE_NOTIFICATION, project);

@@ -33,10 +33,16 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 	 public static final int SOURCE_POINTS_COLUMN = GRADE_COLUMN + 1;
 	 public static final int EARLY_LATE_COLUMN = SOURCE_POINTS_COLUMN + 1;
 	 public static final String SOURCE_POINTS_TITLE = "Source Points";
-	 public static final int TOTAL_COLUMN = EARLY_LATE_COLUMN+ 1;
+	 // the next two entries are new
+	 public static final int MANUALLY_GRADED_COLUMN = EARLY_LATE_COLUMN+ 1;
+	 public static final int TOTAL_COLUMN = MANUALLY_GRADED_COLUMN+ 1;
+
+//	 public static final int TOTAL_COLUMN = EARLY_LATE_COLUMN+ 1;
 	 public static final String LATE_TITLE = "Early/Late";
 	 public static final String TOTAL_TITLE = "Weighted Grade";
 	 public static final int PRE_FEATURE_COLUMN = TOTAL_COLUMN ;
+	 
+	 
 
 	public ASakaiCSVFeatureGradeManager(FileProxy aGradeSpreadsheet, List<GradingFeature> aGradingFeatures) {
 		super(aGradeSpreadsheet);
@@ -431,6 +437,34 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 
 		
 	}
+	
+	@Override
+	public double getManuallyGraded(String aStudentName, String anOnyen) {
+		 String[] row = getStudentRow(table, aStudentName, anOnyen);
+		    if (row == null) {
+				System.out.println("Cannot find row for:" + aStudentName + " " + anOnyen);
+				return -1;
+		    }
+		   return getGrade(row, MANUALLY_GRADED_COLUMN);
+
+	}
+	@Override
+	public void setManuallyGraded(String aStudentName, String anOnyen, double aScore) {
+        maybeCreateTable();
+		
+	    String[] row = getStudentRow(table, aStudentName, anOnyen);
+	    if (row == null) {
+			System.out.println("Cannot find row for:" + aStudentName + " " + anOnyen);
+			return;
+	    }
+	    
+	    recordGrade(row, MANUALLY_GRADED_COLUMN, aScore);
+//	    refreshTotalGrade(row, aStudentName, anOnyen);
+	   
+	    writeTable();
+		
+	}
+	
 
 	@Override
 	public void setNotes(String aStudentName, String anOnyen, String aFeature,
@@ -526,6 +560,7 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	
 	

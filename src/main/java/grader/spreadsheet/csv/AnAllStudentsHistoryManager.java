@@ -295,4 +295,22 @@ public class AnAllStudentsHistoryManager implements AllStudentsHistoryManager, F
 		 throw new RuntimeException("Not implemented");
 	}
 
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getManuallyGraded(String aStudentName, String anOnyen) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setManuallyGraded(String aStudentName, String anOnyen, double aScore) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
