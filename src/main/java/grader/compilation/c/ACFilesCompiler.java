@@ -6,7 +6,7 @@ import grader.basics.execution.Runner;
 import grader.basics.execution.RunningProject;
 import grader.basics.project.Project;
 import grader.compilation.ClassFilesCompiler;
-import grader.execution.ExecutionSpecificationSelector;
+import grader.config.ExecutionSpecificationSelector;
 import grader.settings.GraderSettingsManagerSelector;
 
 import java.io.File;
@@ -53,17 +53,7 @@ public class ACFilesCompiler implements ClassFilesCompiler {
 //        String fullExecName = workingDirectory + "/" + shortExecName;
         String fullObjName = "bin" + "\\" + shortObjName;
         String fullExecName = "bin" + "\\" + shortExecName;
-//        String windowsObjName = Common.toWindowsFileName(fullObjName);
-//        String windowsExecName = Common.toWindowsFileName(fullExecName);
 
-//        String[] command = {compilerPath, windowsName};
-//        ProcessBuilder builder = new ProcessBuilder(compilerPath);
-//        try {
-//			builder.start();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
         String[] args = {};
 //        String[] command = {compilerPath, windowsName, "-o",  fullObjName , EXECUTABLE_OPTION  + fullExecName};
         String[] command = {compilerPath, windowsName, "-o",  shortObjName , EXECUTABLE_OPTION  + shortExecName};
@@ -121,14 +111,7 @@ public class ACFilesCompiler implements ClassFilesCompiler {
        String[] command =  commandList.toArray(args);
        return processRunner.run(null, command, "", args, 3000);
 		
-//		int extensionIndex = aFileName.indexOf(AJavaRootCodeFolder.getSourceFileSuffix());
-//        if (extensionIndex < 1)
-//        	return;
-//        String baseName = aFileName.substring(0, extensionIndex);
-//		String sourceShort
-//		if (sourceFolder == buildFolder) {
-//			
-//		}
+
 		
 	}
 	

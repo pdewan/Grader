@@ -21,6 +21,7 @@ import grader.spreadsheet.csv.AllStudentsHistoryManager;
 import grader.spreadsheet.csv.AllStudentsHistoryManagerFactory;
 import grader.spreadsheet.csv.AnAllStudentsHistoryManager;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileFilter;
@@ -452,13 +453,18 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 
 	@Override
 	public double getManuallyGraded(String aStudentName, String anOnyen) {
-		// TODO Auto-generated method stub
-		return 0;
+		return basicFeatureGradeRecorder.getManuallyGraded(aStudentName, anOnyen);
 	}
 
 	@Override
-	public void setManuallyGraded(String aStudentName, String anOnyen, double aScore) {
-		// TODO Auto-generated method stub
+	public void setFullyGraded(String aStudentName, String anOnyen, double aScore) {
+		basicFeatureGradeRecorder.setFullyGraded(aStudentName, anOnyen, aScore);
 		
 	}
+	// no need to react to this. component spradsheet will take care of that.
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		
+	}
+
 }

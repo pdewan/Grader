@@ -1,5 +1,6 @@
 package grader.spreadsheet.csv;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import grader.file.FileProxy;
@@ -39,6 +40,12 @@ public class AFeatureAndFinalGradeRecorder implements FinalGradeRecorder {
 		// TODO Auto-generated method stub
 		featureGradeRecorder.addPropertyChangeListener(aListener);
 		finalGradeRecorder.addPropertyChangeListener(aListener);
+		
+	}
+	// children spteadsheets will take care of this
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
 		
 	}
 	

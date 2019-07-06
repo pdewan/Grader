@@ -308,9 +308,10 @@ public class AnAllStudentsHistoryManager implements AllStudentsHistoryManager, F
 	}
 
 	@Override
-	public void setManuallyGraded(String aStudentName, String anOnyen, double aScore) {
+	public void setFullyGraded(String aStudentName, String anOnyen, double aScore) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

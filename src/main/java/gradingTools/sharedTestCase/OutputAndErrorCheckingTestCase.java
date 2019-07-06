@@ -1,6 +1,6 @@
 package gradingTools.sharedTestCase;
 
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.execution.ResultingOutErr;
 import gradingTools.shared.testcases.MethodExecutionTest;
 import gradingTools.shared.testcases.MethodExecutionTest.OutputErrorStatus;

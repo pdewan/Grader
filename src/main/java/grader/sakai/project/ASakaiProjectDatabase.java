@@ -38,6 +38,7 @@ import grader.file.RootFolderProxy;
 import grader.language.LanguageDependencyManager;
 import grader.navigation.AProjectNavigator;
 import grader.navigation.NavigationListManager;
+import grader.navigation.NavigationListManagerFactory;
 import grader.navigation.ProjectNavigator;
 import grader.navigation.automatic.AnAutomaticProjectNavigator;
 import grader.navigation.automatic.AutomaticProjectNavigator;
@@ -60,6 +61,8 @@ import grader.sakai.BulkAssignmentFolder;
 import grader.sakai.GenericStudentAssignmentDatabase;
 import grader.sakai.StudentCodingAssignment;
 import grader.settings.GraderSettingsModel;
+import grader.settings.GraderSettingsModelSelector;
+import grader.settings.folders.OnyenRangeModel;
 import grader.spreadsheet.FeatureGradeRecorder;
 import grader.spreadsheet.FeatureGradeRecorderSelector;
 import grader.spreadsheet.FinalGradeRecorder;
@@ -79,6 +82,7 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,6 +91,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -164,6 +169,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	NotesGenerator notesGenerator;
 	Comparator<String> fileNameSorter;
 	String graderDirectory;
+	protected OnyenRangeModel onyens;
 
 	public ASakaiProjectDatabase(String aBulkAssignmentsFolderName,
 			String anAssignmentsDataFolderName, String aStartStudentID,
@@ -197,11 +203,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		assignmentsDataFolderName = anAssignmentsDataFolderName;
 		fileNameSorter = createFileNameSorter();
 		maybeMakeProjects();
-		// gradeRecorder = new
-		// ASakaiSpreadsheetGradeRecorder(bulkFolder.getSpreadsheet());
-		// gradeRecorder = new
-		// ASakaiCSVFinalGradeManager(bulkFolder.getSpreadsheet());
-		// gradeRecorder = new ASakaiCSVFinalGradeManager(this);
+		
 		featureGradeRecorder = createFeatureGradeRecorder();
 		gradeRecorder = createFinalGradeRecorder();
 
@@ -228,8 +230,10 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		hybridProjectNavigator = createHybridProjectNavigator();
 
 		// maybeMakeProjects();
-
+		
 		initInputFiles();
+		onyens = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens();
+		onyens.addPropertyChangeListener(this);
 
 	}
 
@@ -338,7 +342,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	protected FeatureGradeRecorder createFeatureGradeRecorder() {
 		return FeatureGradeRecorderSelector.createFeatureGradeRecorder(this);
 	}
-
+	// This will return conglomerate recorder
 	protected FinalGradeRecorder createTotalScoreRecorder() {
 		return featureGradeRecorder;
 
@@ -462,7 +466,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	// Project lastProject;
 	public SakaiProject runProject(String anOnyen) {
-		SakaiProject aProject = getProject(anOnyen);
+		SakaiProject aProject = getOrCreateProject(anOnyen);
 		// if (aProject != null) {
 		//
 		// String[] strings = {};
@@ -1023,7 +1027,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	public void runProjectInteractively(String anOnyen,
 			ProjectStepper aProjectStepper) {
-		SakaiProject aProject = getProject(anOnyen);
+		SakaiProject aProject = getOrCreateProject(anOnyen);
 
 
 		// origOut = System.out;
@@ -1098,7 +1102,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	boolean projectsMade;
 
-	public SakaiProject getProject(String aName) {
+	public SakaiProject getOrCreateProject(String aName) {
 		SakaiProject project = onyenToProject.get(aName);
 		if (project == null) {
 			StudentCodingAssignment aStudentAssignment = getStudentAssignment(aName);
@@ -1118,15 +1122,15 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	public StudentCodingAssignment getStudentAssignment(String anOnyen) {
 		GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
-
-		Collection<StudentCodingAssignment> studentAssignments = aStudentAssignmentDatabase
-				.getStudentAssignments();
-		for (StudentCodingAssignment anAssignment : studentAssignments) {
-			if (anAssignment.getOnyen().equals(anOnyen))
-				return anAssignment;
-
-		}
-		return null;
+		return aStudentAssignmentDatabase.getStudentAssignmentFromOnyen(anOnyen);
+//		Collection<StudentCodingAssignment> studentAssignments = aStudentAssignmentDatabase
+//				.getStudentAssignments();
+//		for (StudentCodingAssignment anAssignment : studentAssignments) {
+//			if (anAssignment.getOnyen().equals(anOnyen))
+//				return anAssignment;
+//
+//		}
+//		return null;
 
 	}
 
@@ -1299,26 +1303,71 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 			
 
 		}
+		addStudentProjects();
 
+//		// GenericStudentAssignmentDatabase<StudentCodingAssignment>
+//		// studentAssignmentDatabase = new
+//		// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
+//		GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
+//
+//		// studentAssignmentDatabase = new
+//		// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
+//
+//		System.out.println("Student ids from assignment database:" + aStudentAssignmentDatabase.getStudentIds());
+//		Collection<StudentCodingAssignment> studentAssignments = aStudentAssignmentDatabase
+//				.getStudentAssignments();
+//		
+//		for (StudentCodingAssignment anAssignment : studentAssignments) {
+//			if (onyenToProject.get(anAssignment.getOnyen()) != null) {
+//				continue;
+//			}
+//			RootFolderProxy projectFolder = anAssignment.getProjectFolder();
+//
+//			if (assignmentDataFolder != null
+//					&& !assignmentDataFolder.getStudentIDs().contains(
+//							anAssignment.getOnyen()))
+//				continue;
+//			if (anAssignment.getStudentFolder() == null
+//					|| anAssignment.getSubmissionFolder() == null)
+//				continue; // assume a message has already been given
+//
+//			SakaiProject project = makeProject(anAssignment);
+//			if (project != null /* && !project.isNoProjectFolder() */) {
+//				onyenToProject.put(anAssignment.getOnyen(), project);
+//			}
+//		}
+	}
+	Set<String> currentOnyentSet;
+
+	@Override
+	public void addStudentProjects() {
+		List<String> aRawOnyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();
+   	 Set<String> aRawOnyenSet = new HashSet(aRawOnyens);
+   	 if (currentOnyentSet != null  && currentOnyentSet.containsAll(aRawOnyenSet)) {
+   		 return;
+   	 }
+   	 
+   		 
+   			 
 		// GenericStudentAssignmentDatabase<StudentCodingAssignment>
-		// studentAssignmentDatabase = new
-		// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
-		GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
+				// studentAssignmentDatabase = new
+				// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
+				GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
 
-		// studentAssignmentDatabase = new
-		// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
-
+				// studentAssignmentDatabase = new
+				// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
+//		if (currentOnyentSet != null) {
+//			writeOnyens(); // the database checks this ile
+//			aStudentAssignmentDatabase.createStudentAssignments();
+//		}
 		System.out.println("Student ids from assignment database:" + aStudentAssignmentDatabase.getStudentIds());
 		Collection<StudentCodingAssignment> studentAssignments = aStudentAssignmentDatabase
 				.getStudentAssignments();
-		// ClearanceManager clearanceManager = new ACodeDatababaseStepper();
-		// OEFrame oeFrame = ObjectEditor.edit(clearanceManager);
-		// oeFrame.setLocation(700, 500);
-		// PrintStream origOut = System.out;
-		// InputStream origIn = System.in;
-		// Project lastProject = null;
-		// StudentAssignment lastAssignment = null;
+		
 		for (StudentCodingAssignment anAssignment : studentAssignments) {
+			if (onyenToProject.get(anAssignment.getOnyen()) != null) {
+				continue;
+			}
 			RootFolderProxy projectFolder = anAssignment.getProjectFolder();
 
 			if (assignmentDataFolder != null
@@ -1334,7 +1383,84 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 				onyenToProject.put(anAssignment.getOnyen(), project);
 			}
 		}
+		currentOnyentSet = aRawOnyenSet;
 	}
+	@Override
+	public void removeProject(String anOnyen) {
+		onyenToProject.remove(anOnyen);
+	}
+//	public void oldMaybeMakeProjects() {
+//		if (projectsMade)
+//			return;
+//		projectsMade = true;
+//		if (bulkFolder == null)
+//
+//		bulkFolder = new ASakaiBulkAssignmentFolder(bulkAssignmentsFolderName,
+//				assignmentRoot, fileNameSorter);
+//		String assignmentName = bulkFolder.getAssignmentName();
+//		if (assignmentsDataFolderName == null)
+//			assignmentsDataFolderName = BasicGradingEnvironment.get()
+//					.getDefaultAssignmentsDataFolderName();
+//		// if (assignmentsDataFolderName.startsWith("null"))
+//		// assignmentsDataFolderName = null;
+//		if (assignmentsDataFolderName != null) { // we may be creating the
+//													// database without folder
+//													// name
+//			String specificAssignmentDataFolderName = assignmentsDataFolderName
+//					+ "/" + assignmentName;
+//			maybeCreateFolder(specificAssignmentDataFolderName);
+//			File idFile = maybeCreateFile(specificAssignmentDataFolderName
+//					+ "/" + AnAssignmenDataFolder.ID_FILE_NAME);
+//
+//			maybeWriteStudentIDs(idFile);
+//
+//			assignmentDataFolder = new AnAssignmenDataFolder(
+//					specificAssignmentDataFolderName,
+//					bulkFolder.getSpreadsheet());
+//
+//			if (!assignmentDataFolder.exists()) {
+//				System.out.println("Expecting assignment data folder:"
+//						+ specificAssignmentDataFolderName);
+//			} else if (assignmentDataFolder.getRequirementsSpreadsheetFile() != null) {
+//				
+//				csvRequirementsSpecification = new ACSVRequirementsSpecification(assignmentDataFolder.getRequirementsSpreadsheetFile());
+//			}
+//			
+//
+//		}
+//
+//		// GenericStudentAssignmentDatabase<StudentCodingAssignment>
+//		// studentAssignmentDatabase = new
+//		// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
+//		GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
+//
+//		// studentAssignmentDatabase = new
+//		// ASakaiStudentCodingAssignmentsDatabase(bulkFolder);
+//
+//		System.out.println("Student ids from assignment database:" + aStudentAssignmentDatabase.getStudentIds());
+//		Collection<StudentCodingAssignment> studentAssignments = aStudentAssignmentDatabase
+//				.getStudentAssignments();
+//		
+//		for (StudentCodingAssignment anAssignment : studentAssignments) {
+//			if (onyenToProject.get(anAssignment.getOnyen()) != null) {
+//				continue;
+//			}
+//			RootFolderProxy projectFolder = anAssignment.getProjectFolder();
+//
+//			if (assignmentDataFolder != null
+//					&& !assignmentDataFolder.getStudentIDs().contains(
+//							anAssignment.getOnyen()))
+//				continue;
+//			if (anAssignment.getStudentFolder() == null
+//					|| anAssignment.getSubmissionFolder() == null)
+//				continue; // assume a message has already been given
+//
+//			SakaiProject project = makeProject(anAssignment);
+//			if (project != null /* && !project.isNoProjectFolder() */) {
+//				onyenToProject.put(anAssignment.getOnyen(), project);
+//			}
+//		}
+//	}
 
 	public void setGradeRecorder(FinalGradeRecorder gradeRecorder) {
 		this.gradeRecorder = gradeRecorder;
@@ -1647,4 +1773,25 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		 csvRequirementsSpecification = newValue;
 	}
 
+
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getSource() == onyens) {
+//			addStudentProjects();
+			if (currentOnyentSet != null) {
+//				writeOnyens(); // the database checks this ile
+				GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
+				aStudentAssignmentDatabase.createStudentAssignments();
+				writeOnyens(); // will call the navigator which will create the project
+				
+			}
+		}		
+	}
+	/*
+	 * To be overridden
+	 */
+	 protected void writeOnyens() {
+		 
+	 }
 }

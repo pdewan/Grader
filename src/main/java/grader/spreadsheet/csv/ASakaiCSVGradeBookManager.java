@@ -5,6 +5,7 @@ import grader.file.filesystem.AFileSystemFileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FinalGradeRecorder;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +30,8 @@ public class ASakaiCSVGradeBookManager implements SakaiCSVFinalGradeRecorder {
 	public static final int GRADE_COLUMN = 4;
 	public static final int TITLE_ROW = 2;
 	public static final int FIRST_STUDENT_ROW = TITLE_ROW + 1;
-	 public static final String DEFAULT_CHAR = "";
-	 public static final double  DEFAULT_VALUE = -1;
+//	 public static final String DEFAULT_CHAR = "";
+//	 public static final double  DEFAULT_VALUE = -1;
 
 //	InputStream input; // this may have to be reinitialized each time
 //	OutputStream output; // may have to reinitialized and closed each time
@@ -355,6 +356,11 @@ public class ASakaiCSVGradeBookManager implements SakaiCSVFinalGradeRecorder {
 	}
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
 	}

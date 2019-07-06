@@ -3,8 +3,11 @@ package grader.spreadsheet.csv;
 import grader.file.FileProxy;
 import grader.file.filesystem.AFileSystemFileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
+import grader.settings.AGraderSettingsModel;
+import grader.settings.GraderSettingsModelSelector;
 import grader.spreadsheet.FinalGradeRecorder;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -35,22 +38,36 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 
 //	InputStream input; // this may have to be reinitialized each time
 //	OutputStream output; // may have to reinitialized and closed each time
-	FileProxy gradeSpreadsheet;
+	FileProxy gradeSpreadsheetProxy;
+	File gradeSpreadsheetFile;
+	
+
 	
 	List<String[]>  table;
-  
+	void observeGraderSettingsModel() {
+		GraderSettingsModelSelector.getGraderSettingsModel().addPropertyChangeListener(this);
+	}
 	int originalTableSize;
 	public ASakaiCSVFinalGradeManager(FileProxy aGradeSpreadsheet) {
-		gradeSpreadsheet = aGradeSpreadsheet;		
+		gradeSpreadsheetProxy = aGradeSpreadsheet;	
+		observeGraderSettingsModel();
+		
 	}
 	public ASakaiCSVFinalGradeManager(File aGradeSpreadsheet) {
-		gradeSpreadsheet = new AFileSystemFileProxy(aGradeSpreadsheet)	;	
+		gradeSpreadsheetFile = aGradeSpreadsheet;
+		gradeSpreadsheetProxy = new AFileSystemFileProxy(aGradeSpreadsheet)	;
+		observeGraderSettingsModel();
 	}
 	public ASakaiCSVFinalGradeManager(String aFileName) {
-		gradeSpreadsheet = new AFileSystemFileProxy(new File(aFileName))	;	
+		gradeSpreadsheetFile = new  File(aFileName);
+//		gradeSpreadsheetProxy = new AFileSystemFileProxy(new File(aFileName))	;	
+		gradeSpreadsheetProxy = new AFileSystemFileProxy(gradeSpreadsheetFile)	;
+		observeGraderSettingsModel();
+
 	}
 	public ASakaiCSVFinalGradeManager(SakaiProjectDatabase aSakaiProjectDatabase) {
-		gradeSpreadsheet = aSakaiProjectDatabase.getBulkAssignmentFolder().getSpreadsheet();		
+		gradeSpreadsheetProxy = aSakaiProjectDatabase.getBulkAssignmentFolder().getSpreadsheet();	
+		observeGraderSettingsModel();
 	}
 	public List<String[]> getTable() {
 		return table;
@@ -112,10 +129,10 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	public void createTable() {
 		
 		try {
-			InputStream input = gradeSpreadsheet.getInputStream();
+			InputStream input = gradeSpreadsheetProxy.getInputStream();
 			CSVReader csvReader 	=	new CSVReader(new InputStreamReader(input));
 		     table = csvReader.readAll();
-		     System.out.println ("Read spreadsheet table of size:" + table.size() + " from " + gradeSpreadsheet.getAbsoluteName());
+		     System.out.println ("Read spreadsheet table of size:" + table.size() + " from " + gradeSpreadsheetProxy.getAbsoluteName());
 		     originalTableSize = table.size();
 		     
 			csvReader.close();
@@ -310,7 +327,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		}
 	}
 	void writeTable() {
-		OutputStream output = gradeSpreadsheet.getOutputStream();
+		OutputStream output = gradeSpreadsheetProxy.getOutputStream();
 		if (output == null) {
 			System.out.println("Cannot write grade as null output stream");
 			return;
@@ -354,7 +371,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 				return;
 		    }
 		    if (getClass().equals(ASakaiCSVFinalGradeManager.class)) {
-		    	System.out.println("Recording final grade:" + aScore + " in file " + gradeSpreadsheet.getAbsoluteName());
+		    	System.out.println("Recording final grade:" + aScore + " in file " + gradeSpreadsheetProxy.getAbsoluteName());
 		    }
 		    double oldScore = getGrade(aStudentName, anOnyen);
 		    recordGrade(row, aScore);
@@ -411,7 +428,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	
 	void trim() {
 //		String aFileName = gradeSpreadsheet.getAbsoluteName();
-		String aFileName = gradeSpreadsheet.getMixedCaseAbsoluteName();
+		String aFileName = gradeSpreadsheetProxy.getMixedCaseAbsoluteName();
 
 		StringBuffer aText = Common.toText(aFileName);
 //		String aNewText = aText.toString().replaceAll("\"", "");
@@ -427,7 +444,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	
 	void removeQuotesAndTrim() {
 //		String aFileName = gradeSpreadsheet.getAbsoluteName();
-		String aFileName = gradeSpreadsheet.getMixedCaseAbsoluteName();
+		String aFileName = gradeSpreadsheetProxy.getMixedCaseAbsoluteName();
 
 		StringBuffer aText = Common.toText(aFileName);
 		String aNewText = aText.toString().replaceAll("\"", "");
@@ -442,16 +459,39 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	}
 	
 	public FileProxy getGradeSpreadsheet() {
-		return gradeSpreadsheet;
+		return gradeSpreadsheetProxy;
 	}
 
 	public String getFileName() {
-		return gradeSpreadsheet.getAbsoluteName();
+		return gradeSpreadsheetProxy.getAbsoluteName();
 	}
 	protected PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener aListener) {
 		propertyChangeSupport.addPropertyChangeListener(aListener);
+	}
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String aPropertyName = evt.getPropertyName();
+		if (evt.getPropertyName() == AGraderSettingsModel.CLEAN_SLATE_ALL) {
+			if (!gradeSpreadsheetProxy.exists()) {
+				if (gradeSpreadsheetFile != null) {
+					try {
+						gradeSpreadsheetFile.createNewFile();
+						gradeSpreadsheetProxy = new AFileSystemFileProxy(gradeSpreadsheetFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		}
+		if (evt.getPropertyName() == AGraderSettingsModel.CLEAN_SLATE_ONYEN
+				|| evt.getPropertyName() == AGraderSettingsModel.CLEAN_SLATE_SPECIFIED ||
+				evt.getPropertyName() == AGraderSettingsModel.CLEAN_SLATE_ALL) {
+			table = null;
+			createTable();
+		}
 	}
 	
 

@@ -227,7 +227,7 @@ public class ABasicProjectStepper extends AClearanceManager implements
 			// TODO Auto-generated catch block
 			e.printStackTrace(); // not sure we will ever come here
 		}
-		return setProject(projectDatabase.getProject(anOnyen));
+		return setProject(projectDatabase.getOrCreateProject(anOnyen));
 
 	}
 
@@ -1584,7 +1584,7 @@ public class ABasicProjectStepper extends AClearanceManager implements
 			}
 			gradedProjectNavigator.setCurrentOnyenIndex(currentOnyenIndex);
 		}
-		SakaiProject aProject = projectDatabase.getProject(anOnyen);
+		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
 		projectDatabase.initIO();
 
 		projectDatabase.recordWindows();

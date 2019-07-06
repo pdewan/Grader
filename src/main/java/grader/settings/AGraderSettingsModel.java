@@ -13,6 +13,7 @@ import grader.modules.ModuleProblemManagerSelector;
 import grader.modules.ModuleProblemSelector;
 import grader.navigation.NavigationKind;
 import grader.navigation.NavigationListManagerFactory;
+import grader.sakai.GenericStudentAssignmentDatabase;
 import grader.sakai.StudentAssignment;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
@@ -557,24 +558,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 
         graderSettingsManager.save();
 
-//
-//        
-//        
-//        
-//        dynamicConfiguration.setProperty(EDITOR, editor);
-//        dynamicConfiguration.setProperty(MODULE, currentModule);
-//        dynamicConfiguration.setProperty(currentModule + "." + PROBLEM_PATH, downloadPath);
-//        dynamicConfiguration.setProperty(PROBLEM_PATH, downloadPath);
-//        dynamicConfiguration.setProperty(START_ONYEN, startingOnyen);
-//        dynamicConfiguration.setProperty(currentModule + "." + START_ONYEN, startingOnyen);
-//        dynamicConfiguration.setProperty(END_ONYEN, endingOnyen);
-//        dynamicConfiguration.setProperty(currentModule + "." + END_ONYEN, endingOnyen);
-//        try {
-//			dynamicConfiguration.save();
-//		} catch (ConfigurationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
     }
 
     @Override
@@ -597,7 +581,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     public void setFileBrowsing(GraderFilesSetterModel fileBrowsing) {
         this.fileBrowsing = fileBrowsing;
     }
-
+    @Override
     @Row(2)
     @Explanation("Specification of alphabetically sorted list of student onyens.")
     public OnyenRangeModel getOnyens() {
@@ -791,7 +775,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
         clear();
     }
-
+    public static final String CLEAN_SLATE_ALL = "CleanSlateAll";
     @Override
     @Explanation("Reset grades of all students in the class, cleaning the entire spreadsheet")
     @Position(2)
@@ -801,6 +785,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
         projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();
         clear();
+        propertyChangeSupport.firePropertyChange(CLEAN_SLATE_ALL, null, CLEAN_SLATE_ALL);
     }
 
     @Override
@@ -814,18 +799,15 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     		projectDatabase.clear();
     	}
     }
-
-    @Override
-    @Position(0)
-    @Explanation("Reset grades of student specified as argument of this operation")
-    public void cleanSlate(String anOnyen) {
+    
+    protected void doCleanSlate(String anOnyen) {
     	System.out.println("Clearing scores of student:" + anOnyen);
 
         maybeCreateProjectDatabase();
         FeatureGradeRecorder featureGradeRecorder = projectDatabase.getFeatureGradeRecorder();
 
         featureGradeRecorder.clearGrades(anOnyen, "");
-        SakaiProject aProject = projectDatabase.getProject(anOnyen);
+        SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
         if (aProject == null) {
             System.out.println("Did not find project of:" + anOnyen + " nothing to clean");
             return;
@@ -835,19 +817,53 @@ public class AGraderSettingsModel implements GraderSettingsModel {
             aStudentAssignment.cleanFeedbackFolder();
             aStudentAssignment.cleanSubmissionFolder();
         }
+        
+        GenericStudentAssignmentDatabase aStudentAssignmentDatabase = projectDatabase.getStudentAssignmentDatabase();
+        aStudentAssignmentDatabase.removeStudentAssignment(anOnyen);
+        
+        
 
-//        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
-//        projectDatabase.getStudentAssignmentDatabase().cleanFeedbackAndSubmissionFolder(anOnyen);
         clear();
     }
+    public static final String CLEAN_SLATE_ONYEN = "cleanSlateOnyen";
+    @Override
+    @Position(0)
+    @Explanation("Reset grades of student specified as argument of this operation")
+    public void cleanSlate(String anOnyen) {
+    	doCleanSlate(anOnyen);
+    	propertyChangeSupport.firePropertyChange(CLEAN_SLATE_ONYEN, null, anOnyen);
+//    	System.out.println("Clearing scores of student:" + anOnyen);
+//
+//        maybeCreateProjectDatabase();
+//        FeatureGradeRecorder featureGradeRecorder = projectDatabase.getFeatureGradeRecorder();
+//
+//        featureGradeRecorder.clearGrades(anOnyen, "");
+//        SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
+//        if (aProject == null) {
+//            System.out.println("Did not find project of:" + anOnyen + " nothing to clean");
+//            return;
+//        }
+//        StudentAssignment aStudentAssignment = aProject.getStudentAssignment();
+//        if (aStudentAssignment != null) {
+//            aStudentAssignment.cleanFeedbackFolder();
+//            aStudentAssignment.cleanSubmissionFolder();
+//        }
+//
+////        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
+////        projectDatabase.getStudentAssignmentDatabase().cleanFeedbackAndSubmissionFolder(anOnyen);
+//        clear();
+    }
+    public static final String CLEAN_SLATE_SPECIFIED = "CleanSlateSpecified";
     @Override
     @Position(1)
     @Explanation("Reset grades of student specified by start, end, and gotoonyens")
     public void cleanSlateSpecified() {
     	List<String> anOnyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();
     	for (String anOnyen:anOnyens) {
-    		cleanSlate(anOnyen);
+//    		cleanSlate(anOnyen);
+    		doCleanSlate(anOnyen);
     	}
+    	propertyChangeSupport.firePropertyChange(CLEAN_SLATE_SPECIFIED, null, CLEAN_SLATE_SPECIFIED);
     	
     }
 
@@ -923,7 +939,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         for (String anOnyen : onyens) {
             try {
                 System.out.println("Unzipping directory for onyen:" + anOnyen);
-                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getProject(anOnyen));
+                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getOrCreateProject(anOnyen));
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
 //		e.printStackTrace();
@@ -1001,7 +1017,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         for (String anOnyen : onyens) {
 //			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {
             try {
-                ProjectWrapper project = new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);
+                ProjectWrapper project = new ProjectWrapper(projectDatabase.getOrCreateProject(anOnyen), anOnyen);
                 project.getProject().clear();
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
@@ -1069,13 +1085,16 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     public boolean isPrivacyMode() {
         return privacyMode;
     }
+    public static final String ONYENS_PROPERTY = "onyens";
     @Visible(false)
     public void setPrivacyMode(boolean newValue) {
         if (privacyMode == newValue) {
             return;
         }
         this.privacyMode = newValue;
-        propertyChangeSupport.firePropertyChange("onyens", null, onyens);
+//        propertyChangeSupport.firePropertyChange("onyens", null, onyens);
+        propertyChangeSupport.firePropertyChange(ONYENS_PROPERTY, null, onyens);
+
     }
     @Position(5)
     public void togglePrivacyMode() {

@@ -461,6 +461,9 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 						!featureGradeRecorder.logSaved()) {
 					if (sourceHasBeenOpened)
 					sync(); // get ta comments from any un synced source files
+				double aManuallyGraded = projectStepper.isAllGraded()?FeatureGradeRecorder.TRUE_VALUE:FeatureGradeRecorder.DEFAULT_VALUE;
+				
+				featureGradeRecorder.setFullyGraded(projectStepper.getName(), projectStepper.getOnyen(), aManuallyGraded);
 				featureGradeRecorder.finish();
 				projectStepper.setChanged(false);
 				}
@@ -575,7 +578,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		
 		redirectProject();
 		String anOnyen = onyens.get(currentOnyenIndex);
-		SakaiProject aProject = projectDatabase.getProject(anOnyen);
+		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
 //		redirectProject();
 //		projectDatabase.initIO();
 //		projectDatabase.recordWindows();

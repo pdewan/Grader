@@ -3,11 +3,13 @@ package grader.assignment;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.AConfigurationManager;
+import grader.config.ExecutionSpecificationSelector;
 import grader.config.StaticConfigurationUtils;
 import grader.file.FileProxy;
 import grader.file.FileProxyUtils;
 import grader.file.filesystem.AFileSystemFileProxy;
 import grader.file.filesystem.AFileSystemRootFolderProxy;
+import grader.language.LanguageDependencyManager;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.settings.AGraderSettingsManager;
 import grader.settings.GraderSettingsManager;
@@ -102,23 +104,13 @@ public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements
     		return aRetVal.get(0);
     	return null;
     }
-
-    void initGraderData() {
-
-        FileProxy inputFolder = this.getFileEntryFromLocalName(inputFolderName);
-        if (inputFolder != null)
-            inputFiles = inputFolder.getChildrenNames();
-        else
-        	inputFiles = new HashSet<>();
-        for (String inputFile:inputFiles) {
-        	InputFileFound.newCase(inputFile, this);
-        }
-        FileProxy idFileProxy = getFileEntryFromLocalName(idFileName);
-        featureGradeFile = getFileEntryFromLocalName(featureGradeFileName);
-        gradedIdFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_GRADED_ID_FILE_NAME;
-        skippedIdFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_SKIPPED_FILE_NAME;
-        logFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_LOG_FILE_NAME;
-//        checkStyleConfigurationFileName = rootFolder.getAbsolutePath() + "/"  + DEFAULT_CONFIGURATION_FILE;
+    
+    void maybeLoadCheckStyleFile() {
+    	if (!ExecutionSpecificationSelector.getExecutionSpecification().isCheckStyle()) {
+    		if (LanguageDependencyManager.JAVA_LANGUAGE.equals(ExecutionSpecificationSelector.getExecutionSpecification().getLanguage()))
+    				Tracer.warning("Checkstyle not enabled");
+    		return;
+    	}
         checkStyleConfigurationFileName = rootFolder.getAbsolutePath() + "/"  + StaticConfigurationUtils.getCheckStyleFile();
 //        File aFoundFile =  getMatchingFile(rootFolder, ".*check.*xml");
 
@@ -162,6 +154,68 @@ public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements
         	System.out.println("Using check style file:" + aFile.getAbsolutePath());
         	setCheckStyleConfigurationFileName(aFile.getAbsolutePath());
         }
+    }
+
+    void initGraderData() {
+
+        FileProxy inputFolder = this.getFileEntryFromLocalName(inputFolderName);
+        if (inputFolder != null)
+            inputFiles = inputFolder.getChildrenNames();
+        else
+        	inputFiles = new HashSet<>();
+        for (String inputFile:inputFiles) {
+        	InputFileFound.newCase(inputFile, this);
+        }
+        FileProxy idFileProxy = getFileEntryFromLocalName(idFileName);
+        featureGradeFile = getFileEntryFromLocalName(featureGradeFileName);
+        gradedIdFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_GRADED_ID_FILE_NAME;
+        skippedIdFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_SKIPPED_FILE_NAME;
+        logFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_LOG_FILE_NAME;
+        maybeLoadCheckStyleFile();
+////        checkStyleConfigurationFileName = rootFolder.getAbsolutePath() + "/"  + DEFAULT_CONFIGURATION_FILE;
+//        checkStyleConfigurationFileName = rootFolder.getAbsolutePath() + "/"  + StaticConfigurationUtils.getCheckStyleFile();
+////        File aFoundFile =  getMatchingFile(rootFolder, ".*check.*xml");
+//
+//        File aFile = new File(checkStyleConfigurationFileName);
+//        if (!aFile.exists()) {
+////        	System.out.println("Searching for checkstyle file");
+//        	File aFoundFile = getMatchingFile(rootFolder, ".*check.*xml");
+//        	if (aFoundFile != null) {
+//        		aFile = aFoundFile;
+//        		checkStyleConfigurationFileName = aFoundFile.getAbsolutePath();
+//        		System.out.println ("Found check style file:" + checkStyleConfigurationFileName);
+//        		
+//        	}
+//        }
+//        if (!aFile.exists()) {
+//        	GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector
+//    				.getGraderSettingsManager();
+//    		String aModule = graderSettingsManager.getModule();
+//    		String aProblem = graderSettingsManager.getNormalizedProblem(aModule);
+//    		// "Comp401f17"
+//    		int aCourseIndex = "Comp".length();
+//    		int aSemesterIndex = aCourseIndex + "401".length();
+//    		
+//    		
+//    		String aCourseNumber = aModule.substring(aCourseIndex, aSemesterIndex);
+//    		String aSemester = aModule.substring(aSemesterIndex);
+//    		String aProblemNumber = aProblem.replace("Assignment", "a");
+//    		String aFileName = String.join("_", "unc_checks", aCourseNumber, aSemester, 
+//    				aProblemNumber) + ".xml";
+//    		aFile = new File("config" + "/checkstyle/" + aModule  + "/" + aFileName);
+//    		
+//    		
+//    		
+//    		
+//        }
+//        if (!aFile.exists()) {
+//        	System.err.println("Could not find checkstyle file:" + checkStyleConfigurationFileName);
+//        	checkStyleConfigurationFileName = AConfigurationManager.CONFIG_DIR + "/"  + DEFAULT_CONFIGURATION_FILE;
+//        	Tracer.warning("Using default checkstyle file:" + checkStyleConfigurationFileName );
+//        } else {
+//        	System.out.println("Using check style file:" + aFile.getAbsolutePath());
+//        	setCheckStyleConfigurationFileName(aFile.getAbsolutePath());
+//        }
         
         clearLogFile();
         requirementsSpreadsheetFile = getFileEntryFromLocalName(requirementsSpreadsheetFileName);

@@ -3,7 +3,6 @@ package grader.config;
 import framework.utils.UserPropertyWriter;
 import grader.basics.config.ABasicConfigurationManager;
 import grader.basics.project.CurrentProjectHolder;
-import grader.execution.ExecutionSpecificationSelector;
 import grader.executor.ExecutorSelector;
 import grader.language.LanguageDependencyManager;
 import grader.trace.config.DynamicConfigurationFileCreated;
@@ -46,20 +45,7 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
 
     }
 
-//    public void convertToDynamicConfiguration() {
-//        Map<String, String> settings = GraderSettings.get().getSettings();
-////	    	PropertiesConfiguration dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();
-//        for (String key : settings.keySet()) {
-//            dynamicConfiguration.setProperty(key, settings.get(key));
-//        }
-//        try {
-//            dynamicConfiguration.save();
-//        } catch (ConfigurationException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//
-//    }
+
     /**
      * These methods should be in StaticConfigurationUtils
      */

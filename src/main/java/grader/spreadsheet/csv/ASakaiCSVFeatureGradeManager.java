@@ -34,8 +34,10 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 	 public static final int EARLY_LATE_COLUMN = SOURCE_POINTS_COLUMN + 1;
 	 public static final String SOURCE_POINTS_TITLE = "Source Points";
 	 // the next two entries are new
-	 public static final int MANUALLY_GRADED_COLUMN = EARLY_LATE_COLUMN+ 1;
-	 public static final int TOTAL_COLUMN = MANUALLY_GRADED_COLUMN+ 1;
+	 public static final int FULLY_GRADED_COLUMN = EARLY_LATE_COLUMN+ 1;
+	 public static final String MANUALLY_GRADED_TITLE = "Graded";
+
+	 public static final int TOTAL_COLUMN = FULLY_GRADED_COLUMN+ 1;
 
 //	 public static final int TOTAL_COLUMN = EARLY_LATE_COLUMN+ 1;
 	 public static final String LATE_TITLE = "Early/Late";
@@ -81,7 +83,8 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 	
 	public void createTable() {
 		super.createTable();
-		if (gradingFeatures == null) return;
+		if (gradingFeatures == null) 
+			return;
 		String[] headers = table.get(TITLE_ROW);
 		if (headers.length < PRE_FEATURE_COLUMN + gradingFeatures.size() + 1) {
 			
@@ -95,6 +98,7 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 	void makeTitles() {
 		String[] titleRow = table.get(TITLE_ROW);
 		titleRow[EARLY_LATE_COLUMN] = LATE_TITLE;
+		titleRow[FULLY_GRADED_COLUMN] = MANUALLY_GRADED_TITLE;
 		titleRow[TOTAL_COLUMN] = TOTAL_TITLE;
 		titleRow[SOURCE_POINTS_COLUMN] = SOURCE_POINTS_TITLE;
 		for (int i = 0; i < gradingFeatures.size(); i++) {
@@ -110,6 +114,7 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 	
 	void makeMap() {
 //		System.out.println ("Making map for features:" + gradingFeatures);
+		resultToColumnNumber.clear();
 		for (int i = 0; i < gradingFeatures.size(); i++) {
 			int featureColumn = PRE_FEATURE_COLUMN + 1 + i;
 			featureToColumnNumber.put(gradingFeatures.get(i).getFeatureName(), featureColumn);
@@ -445,11 +450,11 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 				System.out.println("Cannot find row for:" + aStudentName + " " + anOnyen);
 				return -1;
 		    }
-		   return getGrade(row, MANUALLY_GRADED_COLUMN);
+		   return getGrade(row, FULLY_GRADED_COLUMN);
 
 	}
 	@Override
-	public void setManuallyGraded(String aStudentName, String anOnyen, double aScore) {
+	public void setFullyGraded(String aStudentName, String anOnyen, double aScore) {
         maybeCreateTable();
 		
 	    String[] row = getStudentRow(table, aStudentName, anOnyen);
@@ -458,7 +463,7 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 			return;
 	    }
 	    
-	    recordGrade(row, MANUALLY_GRADED_COLUMN, aScore);
+	    recordGrade(row, FULLY_GRADED_COLUMN, aScore);
 //	    refreshTotalGrade(row, aStudentName, anOnyen);
 	   
 	    writeTable();
@@ -529,9 +534,11 @@ public class ASakaiCSVFeatureGradeManager extends ASakaiCSVFinalGradeManager imp
 
 	@Override
 	public void setGradingFeatures(GradingFeatureList newVal) {
-		// TODO Auto-generated method stub
+		gradingFeatures = newVal;
+		makeMap();
 		
 	}
+	
 	@Override
 	public List<String> getFeatureNames() {
 		return featureNames;

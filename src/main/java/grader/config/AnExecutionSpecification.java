@@ -1,13 +1,10 @@
-package grader.execution;
+package grader.config;
 
+import grader.basics.config.ABasicExecutionSpecification;
 import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
-import grader.basics.execution.ABasicExecutionSpecification;
 import grader.basics.execution.GradingMode;
 import grader.basics.project.CurrentProjectHolder;
-import grader.config.AConfigurationManager;
-import grader.config.ConfigurationManagerSelector;
-import grader.config.StaticConfigurationUtils;
 import util.trace.Tracer;
 
 import static grader.basics.config.BasicStaticConfigurationUtils.DEFAULT_USE_PROJECT_CONFIGURATION;

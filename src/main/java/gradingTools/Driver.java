@@ -37,17 +37,17 @@ import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.execution.GradingMode;
 import grader.basics.execution.JavaMainClassFinderSelector;
 import grader.basics.execution.RunnerSelector;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ConfigurationManagerSelector;
+import grader.config.ExecutionSpecificationSelector;
 import grader.config.StaticConfigurationUtils;
 import grader.driver.GradingManagerFactory;
 import grader.driver.GradingManagerType;
 import grader.execution.AFlexibleMainClassFinder;
-import grader.execution.ExecutionSpecificationSelector;
 import grader.execution.GradingModeConfigurer;
 import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.interaction_logger.InteractionLogWriter;
@@ -63,6 +63,7 @@ import grader.settings.GraderSettingsManagerSelector;
 import grader.settings.GraderSettingsModel;
 import grader.settings.GraderSettingsModelSelector;
 import grader.spreadsheet.BasicFeatureGradeRecorderSelector;
+import grader.spreadsheet.FeatureGradeRecorder;
 import grader.spreadsheet.FeatureGradeRecorderSelector;
 import grader.spreadsheet.csv.AFeatureGradeRecorderFactory;
 import grader.spreadsheet.csv.AllStudentsHistoryManagerFactory;
@@ -106,7 +107,10 @@ public class Driver {
 //		if (!GraphicsEnvironment.isHeadless() && !Driver.isHeadless())
 //			JOptionPane.showMessageDialog(null, aMessage);
 	}
-
+	// Most of these settings are not really needed
+	// as the properties can be pulled rather than pushed
+	// the only thing is to change the feature grade recorder
+	// to conglomerate so things can be recorded more properly
 	static void setPostSettingsModelParameters() {
 		
 		// we reall no longer need a BasicGradingEnvironment  given the
@@ -165,17 +169,10 @@ public class Driver {
 	private static void _drive(String[] args, int settingsFrameX,
 			int settingsFrameY) {
 		try {
-		// ObjectEditor.setDefaultAttribute(AttributeNames.SHOW_SYSTEM_MENUS,
-		// false);
-		// BasicGradingEnvironment.set(new GradingEnvironment());
+	
 
 		setTracing();
-//		GradingMode.setGraderRun(true);
-//		GradingModeConfigurer.configureGradingMode();
-//		BasicProjectExecution.setReRunInfiniteProcesses(false);
-		
-		// ObjectEditor.setDefaultAttribute(AttributeNames.SHOW_DEBUG_INFO_WITH_TOOL_TIP,
-		// false);
+
 
 		ConfigurationManagerSelector.getConfigurationManager().init(args); // need
 																			// to
@@ -185,14 +182,7 @@ public class Driver {
 		configuration = ConfigurationManagerSelector.getConfigurationManager()
 				.getStaticConfiguration();
 		// we can set typed properties!
-		// configuration.setProperty("foo", new String[] {"a", "b"});
-		// List retVal = (List) configuration.getL("foo");
-		// moved
-		// , in progress
-		// this does nothing but slow things down, we should use some other
-		// mechanism to find requirements
-		// (new
-		// ARequirementsToCourseInfoTranslator()).findAssignmentsDirectory(configuration);
+	
 
 		controller = GradingManagerType.getFromConfigName(configuration
 				.getString("grader.controller", "ger"));
@@ -259,25 +249,10 @@ public class Driver {
 		// graderSettingsManager);
 		// requirements = getProjectRequirements();
 		GradingManager manager;
-		/*
-		 * switch (controller) { case A_GUI_GRADING_MANAGER: { // Logging //
-		 * ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
-		 * recorder.setProjectRequirements(requirements);
-		 * initLoggers(requirements, configuration);
-		 * 
-		 * // Run the GraderManager manager = new
-		 * AGUIGradingManager(projectName, requirements); manager.run(); break;
-		 * } case A_HEADLESS_GRADING_MANAGER: { // Run the GraderManager manager
-		 * = new AHeadlessGradingManager(projectName, requirements,
-		 * configuration, graderSettingsManager); manager.run(); break; } case
-		 * SAKAI_PROJECT_DATABASE: {
-		 */
+		
 		// Logging/results saving
 		// FeatureGradeRecorderSelector.setFactory(new
-		// ConglomerateRecorderFactory());
-		// BasicFeatureGradeRecorderSelector.setFactory(new
-		// AFeatureGradeRecorderFactory());
-		// ProjectDatabaseWrapper database = new ProjectDatabaseWrapper();
+		
 		String settings = configuration.getString("grader.settings", "oe");
 		// String settingsTry = configuration.getString("Grader.Settings");
 		if (settings.equalsIgnoreCase("oe")) {
@@ -330,11 +305,7 @@ public class Driver {
 					settingsModel.compileExecutor();
 				}
 			}
-			// for(String arg : args) {
-			// if (arg.equals("--clean-slate")) {
-			// settingsModel.cleanSlate();
-			// }
-			// }
+		
 			if (isNotHeadless()) {
 				settingsFrame = ObjectEditor.edit(settingsModel);
 				settingsFrame.setLocation(settingsFrameX, settingsFrameY);
@@ -361,16 +332,7 @@ public class Driver {
 																// one
 			BasicGradingEnvironment.get().setAssignmentName(projectName);
 
-			// moving code below
-			// requirements = getProjectRequirements();
-			// recorder.setProjectRequirements(requirements);
-			// if (requirements == null) {
-			// System.err.println("Exiting because selected assignment does not have any associated requirements. Please add requirements or select correct assignment after restarting.");
-			// System.exit(-1);
-			// }
-			//
-			// initLoggers(requirements, configuration);
-			// initAssignmentDataFolder();
+			
 		} else if (isNotHeadless()) {
 
 			// Start the grading process by, first, getting the settings the
@@ -378,45 +340,23 @@ public class Driver {
 			SettingsWindow settingsWindow = SettingsWindow.create();
 			settingsWindow.awaitBegin();
 
-			// ASakaiProjectDatabase.setCurrentSakaiProjectDatabase(new
-			// ASakaiProjectDatabase(settingsWindow.getDownloadPath(), null,
-			// settingsWindow.getStart(), settingsWindow.getEnd()));
+			
 		}
-		// String projectName = configuration.getString("project.name");
-		// Object projectProperty = configuration.getProperty("project.name");
-		// GradingEnvironment.get().setAssignmentName(projectName);
+		
 
 		setPostSettingsModelParameters();
 		// moved code to post settings model await being
-		// // Logging/results saving
-		// FeatureGradeRecorderSelector.setFactory(new
-		// ConglomerateRecorderFactory());
-		// BasicFeatureGradeRecorderSelector.setFactory(new
-		// AFeatureGradeRecorderFactory());
-		//
-		// // Create the database
-		// boolean loadClasses =
-		// StaticConfigurationUtils.getLoadClasses(configuration,
-		// graderSettingsManager);
-		// BasicGradingEnvironment.get().setLoadClasses(loadClasses);
-		// String language = StaticConfigurationUtils.getLanguage();
-		// LanguageDependencyManager.setLanguage(language);
-		// BasicGradingEnvironment.get().setCompileMissingObjectCode(StaticConfigurationUtils.getAllowCompileClasses(configuration,
-		// graderSettingsManager));
-		// BasicGradingEnvironment.get().setUnzipFiles(StaticConfigurationUtils.getUnzipFiles(configuration,
-		// graderSettingsManager));
-		// //
-		// AProject.setCheckStyle(StaticConfigurationUtils.getCheckStyle(configuration,
-		// graderSettingsManager));
-		// BasicGradingEnvironment.get().setCheckStyle(StaticConfigurationUtils.getCheckStyle());
-		// ProjectExecution.setUseMethodAndConstructorTimeOut(true);
-
+		
 		// before we load the database, see if we need to precompile
 		settingsModel.maybePreCompile();
 		settingsModel.maybePreUnzip();
 
 //		database = new ProjectDatabaseWrapper();
 		database = ProjectDatabaseFactory.createProjectDatabase();
+		// because of postseetingspatameters we should not get or create as 
+		// pre settings factories are different
+//		database = ProjectDatabaseFactory.getOrCreateProjectDatabase();
+
 		database.setGraderSettings(settingsModel);
 		database.setScoreFeedback(null); // we will be writing to feedback file
 											// which is more complete
@@ -424,13 +364,7 @@ public class Driver {
 		// moved code from above
 		requirements = getProjectRequirements();
 		System.out.println("got requirements:" + requirements);
-		// System.out.println ("SLEEPING");
-		// try {
-		// Thread.sleep(2000);
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+	
 		recorder.setProjectRequirements(requirements);
 		if (requirements == null) {
 			System.err
@@ -441,10 +375,21 @@ public class Driver {
 		initLoggers(requirements, configuration);
 
 		database.setProjectRequirements(requirements);
-
+		
+		// why do we have two feature grade recorders
+		FeatureGradeRecorder aFeatureGradeRecorder = BasicFeatureGradeRecorderSelector
+				.createFeatureGradeRecorder(database);
 		ConglomerateRecorder.getInstance().setBasicFeatureGradeRecorder(
-				BasicFeatureGradeRecorderSelector
-						.createFeatureGradeRecorder(database));
+				aFeatureGradeRecorder
+						);
+		
+//		ConglomerateRecorder.getInstance().setBasicFeatureGradeRecorder(
+//				BasicFeatureGradeRecorderSelector
+//						.createFeatureGradeRecorder(database)
+//						);
+//		 aFeatureGradeRecorder.setGradingFeatures(database.getGradingFeatures());
+//		 aFeatureGradeRecorder = database.getFeatureGradeRecorder();
+//		 aFeatureGradeRecorder.setGradingFeatures(database.getGradingFeatures());
 
 		// Possibly set the stepper displayer
 		boolean useFrameworkGUI = configuration.getBoolean(

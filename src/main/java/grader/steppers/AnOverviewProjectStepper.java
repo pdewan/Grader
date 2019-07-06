@@ -257,7 +257,7 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 			// TODO Auto-generated catch block
 			e.printStackTrace(); // not sure we will ever come here
 		}
-		Boolean retVal = setProject(projectDatabase.getProject(anOnyen)); //  this part should be done lazily, a project should be built only on demand. So a forked process can build it
+		Boolean retVal = setProject(projectDatabase.getOrCreateProject(anOnyen)); //  this part should be done lazily, a project should be built only on demand. So a forked process can build it
 //		SakaiProject project = getProject();
 //		loadSourceFromFile();
 //		internalSetSource(
@@ -1073,6 +1073,9 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		String oldVal = feedback;
 		feedback = featureGradeRecorder.computeSummary();
 		propertyChangeSupport.firePropertyChange("feedback", oldVal, feedback);
+		if (oldVal == null) {
+			System.out.println("old val == null");
+		}
 		if (!oldVal.equals(feedback))
 			FeedbackComputed.newCase(projectDatabase, this, project, null, feedback, this);
 	}
@@ -1411,7 +1414,7 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 			}
 			gradedProjectNavigator.setCurrentOnyenIndex(currentOnyenIndex);
 		}
-		SakaiProject aProject = projectDatabase.getProject(anOnyen);
+		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
 		
 
 		boolean retVal = setProject(anOnyen);

@@ -15,7 +15,7 @@ public class BasicFeatureGradeRecorderSelector {
 	}
 	
 	public static FeatureGradeRecorder createFeatureGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase) {
-		return factory.createGradeRecorder(aSakaiProjectDatabase);
+		return factory.createFeatureGradeRecorder(aSakaiProjectDatabase);
 	}
 
 	

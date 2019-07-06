@@ -1,4 +1,4 @@
-package grader.execution;
+package grader.config;
 
 import java.util.List;
 

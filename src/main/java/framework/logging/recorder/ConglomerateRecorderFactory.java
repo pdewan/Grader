@@ -15,13 +15,19 @@ import grader.spreadsheet.FinalGradeRecorder;
 public class ConglomerateRecorderFactory implements FeatureGradeRecorderFactory {
 
     @Override
-    public FeatureGradeRecorder createGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase) {
+    public FeatureGradeRecorder createFeatureGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase) {
         return ConglomerateRecorder.getInstance();
     }
 
 	@Override
-	public FinalGradeRecorder getGradeRecorder(
+	public FinalGradeRecorder getOrCreateFeatureGradeRecorder(
 			SakaiProjectDatabase aSakaiProjectDatabase) {
-		return createGradeRecorder(aSakaiProjectDatabase);
+		return createFeatureGradeRecorder(aSakaiProjectDatabase);
+	}
+
+	@Override
+	public FinalGradeRecorder getOrCreateFeatureGradeRecorder() {
+		// TODO Auto-generated method stub
+		return ConglomerateRecorder.getInstance();
 	}
 }

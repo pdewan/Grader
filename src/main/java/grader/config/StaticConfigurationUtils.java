@@ -7,7 +7,6 @@ import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
-import grader.execution.ExecutionSpecificationSelector;
 import grader.permissions.java.JavaProjectToPermissionFile;
 import grader.requirements.interpreter.AnInterpretedRequirements;
 import grader.requirements.interpreter.specification.CSVRequirementsSpecification;

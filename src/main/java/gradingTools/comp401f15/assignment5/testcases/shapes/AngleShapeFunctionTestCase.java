@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import framework.grading.testing.BasicTestCase;
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.BasicProjectIntrospection;

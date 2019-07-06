@@ -3,7 +3,7 @@ package grader.modules;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.BasicExecutionSpecificationSelector;
 import grader.config.ConfigurationManagerSelector;
-import grader.execution.ExecutionSpecificationSelector;
+import grader.config.ExecutionSpecificationSelector;
 
 import java.util.ArrayList;
 import java.util.List;

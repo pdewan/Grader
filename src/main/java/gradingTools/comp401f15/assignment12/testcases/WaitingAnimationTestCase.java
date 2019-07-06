@@ -1,6 +1,6 @@
 package gradingTools.comp401f15.assignment12.testcases;
 
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;

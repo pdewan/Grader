@@ -16,6 +16,7 @@ import framework.utils.GraderSettings;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FinalGradeRecorder;
+import grader.spreadsheet.FinalGradeRecorderSelector;
 import grader.spreadsheet.TotalScoreRecorderSelector;
 import grader.spreadsheet.csv.ASakaiCSVFeatureGradeManager;
 // this is logging both the feedback and final grade to through my Final grade recorder, which seems to be adding an extra line
@@ -181,8 +182,9 @@ public class CsvLogger implements Logger {
         // Maybe write this to a file
        
         	SakaiProjectDatabase aSakaiProjectDatabase = ASakaiProjectDatabase.getCurrentSakaiProjectDatabase();
-			FinalGradeRecorder aRecorder = TotalScoreRecorderSelector.getFactory().getGradeRecorder(aSakaiProjectDatabase);
-			
+//			FinalGradeRecorder aRecorder = TotalScoreRecorderSelector.getFactory().getOrCreateFinalGradeRecorder(aSakaiProjectDatabase);
+			FinalGradeRecorder aRecorder = FinalGradeRecorderSelector.getOrCreateFinalGradeRecorder();
+
 			
 			//Get the onyen
 			String id = recordingSession.getUserId();

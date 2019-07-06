@@ -2,6 +2,7 @@ package grader.sakai;
 
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
+import grader.config.ExecutionSpecificationSelector;
 import grader.file.FileProxy;
 import grader.file.RootFolderCreatorFactory;
 import grader.file.RootFolderProxy;
@@ -83,7 +84,8 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
 //        rootBulkDownloadFolder = ARootFolderCreator.createRootFolder(bulkDownloadDirectory);
         Tracer.info (this, " Initializing root folder" + bulkDownloadDirectory);
         String[] anExcludeSubFolders = null;
-        if (BasicGradingEnvironment.get().isUnzipFiles()) {
+        if (ExecutionSpecificationSelector.getExecutionSpecification().isUnzipFiles()) {
+//        if (BasicGradingEnvironment.get().isUnzipFiles()) {
         	anExcludeSubFolders = CODE_FOLDERS;
         }
     	rootBulkDownloadFolder = RootFolderCreatorFactory.getSingleton().createRootFolder(bulkDownloadDirectory, CODE_FOLDERS, IGNORE_FILES);

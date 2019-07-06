@@ -134,7 +134,7 @@ public class AnAssignmentShiftManager {
     	
     	if ( aShiftAndPercentage.getShift() > 0) {
     		int aNewShift = aStoredShift + aShiftAndPercentage.getShift();
-        	String aFullName = TotalScoreRecorderSelector.getFactory().getGradeRecorder(Driver.getDatabase()).getFullName(anOnyen);
+        	String aFullName = TotalScoreRecorderSelector.getFactory().getOrCreateFeatureGradeRecorder(Driver.getDatabase()).getFullName(anOnyen);
         	csvAssignmentShiftRecorder.setNumber(anOnyen, aFullName, aNewShift );
     	}
     	return aShiftAndPercentage.getPercentage();

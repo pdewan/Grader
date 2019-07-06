@@ -1,9 +1,11 @@
 package grader.spreadsheet;
 
+import java.beans.PropertyChangeListener;
+
 import grader.file.FileProxy;
 import util.models.PropertyListenerRegisterer;
 
-public interface FinalGradeRecorder extends PropertyListenerRegisterer{
+public interface FinalGradeRecorder extends PropertyListenerRegisterer, PropertyChangeListener{
 //	public String getFullName(int aRowIndex) ;
 
 	void setGrade(String aStudentName, String anOnyen, double aScore);

@@ -11,6 +11,8 @@ import grader.settings.AGraderSettingsModel;
 import grader.settings.GraderSettingsModel;
 import grader.settings.GraderSettingsModelSelector;
 import grader.settings.folders.OnyenRangeModel;
+import grader.spreadsheet.FinalGradeRecorder;
+import grader.spreadsheet.FinalGradeRecorderSelector;
 import grader.spreadsheet.csv.ASakaiCSVFinalGradeManager;
 import grader.spreadsheet.csv.SakaiCSVFinalGradeRecorder;
 import grader.steppers.OverviewProjectStepper;
@@ -37,7 +39,9 @@ import util.misc.Common;
  */
 public class AlphabeticNavigationListManager implements NavigationListManager {
 	public static final String END_ONYEN_POSITIVE_INFINITY = "$";
-	SakaiCSVFinalGradeRecorder gradesFile;
+//	SakaiCSVFinalGradeRecorder gradesFile;
+	FinalGradeRecorder gradesFile;
+
 	List<String> savedOnyens = null;
 	String savedDirectoryName = null;
 	String savedStartOnyen = null;
@@ -78,7 +82,8 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 
 	boolean includeOnyen(String anOnyen) {
 		return Driver.isHeadless()|| 
-				gradesFile.getRow(anOnyen) != null; 
+//				gradesFile.getRow(anOnyen) != null; 
+				gradesFile.getFullName(anOnyen)!= null;
 	}
 
 	@Override
@@ -100,7 +105,12 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
         File aDirectory = new File(aPath);
         
         if (!Driver.isHeadless()) {
-			gradesFile = new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiBulkAssignmentFolder.GRADES_SPREADSHEET_NAME);
+//			gradesFile = new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiBulkAssignmentFolder.GRADES_SPREADSHEET_NAME);
+			gradesFile = 
+					FinalGradeRecorderSelector.getOrCreateFinalGradeRecorder();
+					
+//					new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiBulkAssignmentFolder.GRADES_SPREADSHEET_NAME);
+
 		}
 
 
@@ -235,7 +245,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 		List<String> retVal = new ArrayList();
 		for (String anOnyen : anOnyens) {
 
-			SakaiProject aProject = aSakaiProjectDatabase.getProject(anOnyen);
+			SakaiProject aProject = aSakaiProjectDatabase.getOrCreateProject(anOnyen);
 			if (aProject != null && !aProject.isNoProjectFolder()) {
 				// System.out.println("Onyen:" + anOnyen +
 				// " ignored because of missing project");

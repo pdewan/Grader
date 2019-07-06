@@ -345,7 +345,7 @@ public class AProjectStepper extends AClearanceManager implements
 	public boolean setProject(String anOnyen) {
 
 		onyen = anOnyen;
-		return setProject(projectDatabase.getProject(anOnyen));
+		return setProject(projectDatabase.getOrCreateProject(anOnyen));
 
 	}
 
@@ -2252,7 +2252,7 @@ public class AProjectStepper extends AClearanceManager implements
 				throw new MissingOnyenException(anOnyen, this);
 			}
 		}
-		SakaiProject aProject = projectDatabase.getProject(anOnyen);
+		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
 		projectDatabase.initIO();
 
 		projectDatabase.recordWindows();
@@ -2345,7 +2345,7 @@ public class AProjectStepper extends AClearanceManager implements
 		}
 		redirectProject();
 		String anOnyen = onyens.get(currentOnyenIndex);
-		SakaiProject aProject = projectDatabase.getProject(anOnyen);
+		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
 //		redirectProject();
 //		projectDatabase.initIO();
 //		projectDatabase.recordWindows();

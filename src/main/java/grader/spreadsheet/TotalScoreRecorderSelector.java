@@ -17,7 +17,7 @@ public class TotalScoreRecorderSelector {
 	}
 	
 	public static FinalGradeRecorder createFinalGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase) {
-		return factory.createGradeRecorder(aSakaiProjectDatabase);
+		return factory.createFeatureGradeRecorder(aSakaiProjectDatabase);
 	}
 
 	

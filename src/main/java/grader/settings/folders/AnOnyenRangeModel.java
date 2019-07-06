@@ -54,7 +54,7 @@ public class AnOnyenRangeModel implements OnyenRangeModel{
 	    	return ANONYMOUS;
 	    	else return getEndingOnyen();
 	}
-
+	// this makes no sense, IT should mean setEndgingOnyen
 	public void setDisplayedEndingOnyen(String newValue) {
 		String oldValue = endingOnyen;
 		this.endingOnyen = newValue;

@@ -3,6 +3,7 @@ package grader.spreadsheet;
 import grader.sakai.project.SakaiProjectDatabase;
 
 public interface FinalGradeRecorderFactory {
-	FinalGradeRecorder createGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase);
-	FinalGradeRecorder getGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase);
+	FinalGradeRecorder createFeatureGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase);
+	FinalGradeRecorder getOrCreateFeatureGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase);
+	FinalGradeRecorder getOrCreateFeatureGradeRecorder();
 }

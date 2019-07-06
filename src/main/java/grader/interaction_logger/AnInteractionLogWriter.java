@@ -3,7 +3,7 @@ package grader.interaction_logger;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.trace.CSVSerializable;
 import grader.config.ConfigurationManagerSelector;
-import grader.execution.ExecutionSpecificationSelector;
+import grader.config.ExecutionSpecificationSelector;
 import grader.interaction_logger.manual_grading_stats.GradingHistoryManagerSelector;
 import grader.trace.interaction_logger.InteractionLogEntryAdded;
 import grader.trace.interaction_logger.InteractionLogFileCreatedOrLoaded;

@@ -1,8 +1,8 @@
 package grader.checkStyle;
 
 import framework.execution.ProcessRunner;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.config.BasicStaticConfigurationUtils;
-import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.Runner;
 import grader.basics.execution.RunningProject;
 import grader.sakai.project.ASakaiProjectDatabase;

@@ -3,7 +3,7 @@ package gradingTools.comp110.assignment3.testCases;
 
 
 import framework.grading.testing.BasicTestCase;
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.execution.NotRunnableException;
 import grader.basics.execution.ResultingOutErr;
 import grader.basics.junit.NotAutomatableException;

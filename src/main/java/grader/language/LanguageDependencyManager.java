@@ -6,8 +6,11 @@ import grader.basics.execution.JavaMainClassFinderSelector;
 import grader.checkStyle.CheckStyleInvoker;
 import grader.checkStyle.JavaCheckStyleInvokerFactory;
 import grader.compilation.ClassFilesCompiler;
+import grader.compilation.FilesToCompileFinder;
+import grader.compilation.FilesToCompileFinderSelector;
 import grader.compilation.JavaClassFilesCompilerSelector;
 import grader.compilation.c.CFilesCompilerSelector;
+import grader.compilation.c.CFilesToCompileFinderSelector;
 import grader.config.ConfigurationManager;
 import grader.config.StaticConfigurationUtils;
 import grader.permissions.Permissible;
@@ -21,6 +24,8 @@ import java.util.Map;
 public class LanguageDependencyManager extends BasicLanguageDependencyManager {
 	
 	 static Map<String, ClassFilesCompiler> languageToCompiler = new HashMap();
+	 static Map<String, FilesToCompileFinder> languageToFilesToCompileFinder = new HashMap();
+
 	 static Map<String, CheckStyleInvoker> languageToCheckStyleInvoker = new HashMap();
 	 static Map<String, Permissible> languageToDefaultPermissible = new HashMap<>();
 	 static Map<String, PermissionsGenerator> languageToPermissionGenerator = new HashMap<>();
@@ -34,7 +39,9 @@ public class LanguageDependencyManager extends BasicLanguageDependencyManager {
 	public static PermissionsGenerator getPermissionGenerator() {
 		return languageToPermissionGenerator.get(getLanguage());
 	}
-	// not called t all
+	public static FilesToCompileFinder getFilesToCompileFinder() {
+		return languageToFilesToCompileFinder.get(getLanguage());
+	}
 //	public static void setCOBj(ConfigurationManager aConfigurationManager) {
 //	String cObj = aConfigurationManager.getCourseConfiguration().getString(StaticConfigurationUtils.C_OBJ);
 //	if (cObj == null)
@@ -67,6 +74,10 @@ static {
 	
 	languageToCompiler.put(JAVA_LANGUAGE, JavaClassFilesCompilerSelector.getClassFilesCompiler() );
 	languageToCompiler.put(C_LANGUAGE, CFilesCompilerSelector.getClassFilesCompiler());
+	languageToFilesToCompileFinder.put(JAVA_LANGUAGE, FilesToCompileFinderSelector.getOrCreateFilesToCompileFinder());
+	languageToFilesToCompileFinder.put(C_LANGUAGE, CFilesToCompileFinderSelector.getOrCreateFilesToCompileFinder());
+
+
 	languageToCheckStyleInvoker.put(JAVA_LANGUAGE, JavaCheckStyleInvokerFactory.getSingleton());
 	
 	languageToDefaultPermissible.put(JAVA_LANGUAGE, new DefaultJavaPermissible());

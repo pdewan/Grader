@@ -1,5 +1,6 @@
 package grader.spreadsheet;
 
+import framework.utils.GraderSettings;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.csv.AFinalGradeRecorderFactory;
 
@@ -14,8 +15,13 @@ public class FinalGradeRecorderSelector {
 		FinalGradeRecorderSelector.factory = factory;
 	}
 	
+	
+	
 	public static FinalGradeRecorder createFinalGradeRecorder(SakaiProjectDatabase aSakaiProjectDatabase) {
-		return factory.createGradeRecorder(aSakaiProjectDatabase);
+		return factory.createFeatureGradeRecorder(aSakaiProjectDatabase);
+	}
+	public static FinalGradeRecorder getOrCreateFinalGradeRecorder() {
+		return factory.getOrCreateFeatureGradeRecorder();
 	}
 
 	

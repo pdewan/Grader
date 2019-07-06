@@ -1,14 +1,15 @@
 package gradingTools.comp401f15.assignment11.testcases;
 
-import static grader.basics.execution.BasicProjectExecution.restoreOutputAndGetRedirectedOutput;
 import framework.execution.ARunningProject;
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 import grader.util.ProjectIntrospection;
 import gradingTools.sharedTestCase.MethodDefinedTestCase;
+
+import static grader.basics.config.BasicProjectExecution.restoreOutputAndGetRedirectedOutput;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

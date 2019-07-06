@@ -9,7 +9,7 @@ import java.util.Set;
 
 import wrappers.framework.project.ProjectWrapper;
 import framework.execution.ARunningProject;
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.execution.ResultWithOutput;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;

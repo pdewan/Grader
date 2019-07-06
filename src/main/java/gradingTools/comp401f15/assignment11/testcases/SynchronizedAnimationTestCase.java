@@ -1,6 +1,6 @@
 package gradingTools.comp401f15.assignment11.testcases;
 
-import grader.basics.execution.BasicProjectExecution;
+import grader.basics.config.BasicProjectExecution;
 import grader.basics.junit.TestCaseResult;
 import util.misc.ThreadSupport;
 import util.trace.TraceableListener;

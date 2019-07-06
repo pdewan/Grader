@@ -27,6 +27,7 @@ import grader.spreadsheet.FinalGradeRecorder;
 import grader.trace.settings.InvalidOnyenRangeException;
 import grader.trace.settings.MissingOnyenException;
 
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -36,12 +37,12 @@ import javax.swing.Icon;
 
 import util.misc.ClearanceManager;
 
-public interface SakaiProjectDatabase {
+public interface SakaiProjectDatabase extends PropertyChangeListener{
 	public BulkAssignmentFolder getBulkAssignmentFolder();
 	
 	public AssignmentDataFolder getAssignmentDataFolder() ;
 	
-	public SakaiProject getProject(String aName) ;
+	public SakaiProject getOrCreateProject(String aName) ;
 	public Set<String> getOnyens() ;
 	
 	public Collection<SakaiProject> getProjects();
@@ -183,6 +184,10 @@ public interface SakaiProjectDatabase {
 	void restoreGraderDirectory();
 
 	void clear();
+
+	void addStudentProjects();
+
+	void removeProject(String anOnyen);
 	
 
 

@@ -1,7 +1,7 @@
 package grader.trace;
 
 import framework.execution.ProcessRunner;
-import grader.execution.AnExecutionSpecification;
+import grader.config.AnExecutionSpecification;
 import trace.grader.basics.GraderBasicsTraceUtility;
 import util.trace.ImplicitKeywordKind;
 import util.trace.Tracer;

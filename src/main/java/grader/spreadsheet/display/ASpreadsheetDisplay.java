@@ -4,6 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import grader.settings.GraderSettingsManagerSelector;
+import grader.settings.GraderSettingsModelSelector;
+import grader.settings.folders.OnyenRangeModel;
 import grader.spreadsheet.FinalGradeRecorder;
 import grader.spreadsheet.csv.SakaiCSVFinalGradeRecorder;
 import gradingTools.assignment9.testCases.ListenerAndPainterTagTestCase;
@@ -15,16 +18,20 @@ public class ASpreadsheetDisplay extends AListenableVector implements Spreadshee
 	
 	FinalGradeRecorder finalGradeRecorder;
 	ProjectDatabaseWrapper projectDatabase;
+	OnyenRangeModel onyenRangeModel;
 //	List<SpreadsheetItemDisplay> contents;
 	
 	public ASpreadsheetDisplay() {
+		projectDatabase = ProjectDatabaseFactory.getOrCreateProjectDatabase();
 		refresh();
 		ProjectDatabaseFactory.addPropertyChangeListener(this);
+		onyenRangeModel = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens();
+		onyenRangeModel.addPropertyChangeListener(this); // added after project database
 		
 	}
 	
 	void refresh() {
-		projectDatabase = ProjectDatabaseFactory.getOrCreateProjectDatabase();
+//		projectDatabase = ProjectDatabaseFactory.getOrCreateProjectDatabase();
 		finalGradeRecorder = projectDatabase.getGradeRecorder();
 		List<String> anOnyenList = projectDatabase.getOnyenNavigationList();
 //		if (contents == null) {
@@ -51,6 +58,9 @@ public class ASpreadsheetDisplay extends AListenableVector implements Spreadshee
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName() == ProjectDatabaseFactory.PROPERTY_NAME ) {
 			projectDatabase = ProjectDatabaseFactory.getOrCreateProjectDatabase();;
+		} else if (evt.getSource() == onyenRangeModel) {
+//			ProjectDatabaseFactory.createProjectDatabase(); 
+			refresh();
 		}
 	}
 	
