@@ -3,6 +3,7 @@ package grader.navigation.manual;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.GraderSettingsModel;
+import grader.settings.GraderSettingsModelSelector;
 import grader.trace.settings.InvalidOnyenRangeException;
 import grader.trace.settings.ManualNavigationEnded;
 import grader.trace.settings.ManualNavigationStarted;
@@ -42,11 +43,13 @@ public class AManualProjectNavigator implements ManualProjectNavigator {
 		ManualNavigationStarted.newCase(settingsModel, database, this);
 		if (settingsModel == null) return;
 		while (true) {
-		String goToOnyen = settingsModel.getOnyens().getGoToOnyens();
+//		String goToOnyen = settingsModel.getOnyens().getOnyenList();
+    	String aGoToOnyen = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens().getGoToOnyen();
+
 		Object aFrame = null;
 		try {
 		
-			boolean retVal = database.startProjectStepper(goToOnyen);
+			boolean retVal = database.startProjectStepper(aGoToOnyen);
 //			 aFrame = database.displayProjectStepper(database.getProjectStepper());
 			if (retVal)
 				break;
@@ -67,7 +70,7 @@ public class AManualProjectNavigator implements ManualProjectNavigator {
 			}
 			
 		} catch (MissingOnyenException moe) {
-			String message = "Student:" + goToOnyen + " not in specified range. Try again.";
+			String message = "Student:" + aGoToOnyen + " not in specified range. Try again.";
 			Tracer.error(message);
 			if (!GraphicsEnvironment.isHeadless())
 			JOptionPane.showMessageDialog(null, message);

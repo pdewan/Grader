@@ -7,6 +7,8 @@ import grader.trace.settings.StartOnyenUserChange;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.objectweb.asm.tree.JumpInsnNode;
+
 import util.annotations.Explanation;
 import util.annotations.Label;
 import util.annotations.Row;
@@ -17,7 +19,7 @@ import bus.uigen.ObjectEditor;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 public class AnOnyenRangeModel implements OnyenRangeModel{	
 	public static final String ANONYMOUS = "*******";
-	String startingOnyen = "", endingOnyen = "", goToOnyen = "";
+	String startingOnyen = "", endingOnyen = "", onyenList = "", goToOnyen = "";
 	GraderSettingsModel graderSettings;
 	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	public AnOnyenRangeModel(GraderSettingsModel aGraderSettings) {
@@ -28,7 +30,7 @@ public class AnOnyenRangeModel implements OnyenRangeModel{
 		return startingOnyen;
 	}
     @Row(0)
-    @Label("Starting Onyen:")
+    @Label("Onyen Range Start:")
     public String getDisplayedStartingOnyen() {
     	if (graderSettings.isPrivacyMode())
     	return ANONYMOUS;
@@ -48,7 +50,7 @@ public class AnOnyenRangeModel implements OnyenRangeModel{
 		return endingOnyen;
 	}
 	@Row(1)
-    @Label("Ending Onyen:")
+    @Label("Onyen Range End:")
 	public String getDisplayedEndingOnyen() {
 		if (graderSettings.isPrivacyMode())
 	    	return ANONYMOUS;
@@ -67,14 +69,30 @@ public class AnOnyenRangeModel implements OnyenRangeModel{
 	@Override
 //	@Explanation("The onyen you will start at when you review grades")
 	@Explanation("A comma separated list of onyens, which overrides the start..end range and is not saved")
-	public String getGoToOnyens() {
-		return goToOnyen;
+	public String getOnyenList() {
+		return onyenList;
 	}
+	public static final String SELECTED_ONYENS_PROPERTY = "SelectedOnyens";
     @Override
-	public void setGoToOnyens(String goToOnyen) {
-		this.goToOnyen = goToOnyen;
+	public void setOnyenList(String newVal) {
+    	String anOldOnyens = onyenList;
+		this.onyenList = newVal;
+		propertyChangeSupport.firePropertyChange(SELECTED_ONYENS_PROPERTY, anOldOnyens, newVal);
 	}
 
+    @Row(3)
+	@Override
+	@Explanation("The onyen you will start at when you review grades")
+	public String getGoToOnyen() {
+		return goToOnyen;
+	}
+	public static final String GO_TO_ONYEN_PROPERTY = "GoToOnyen";
+    @Override
+	public void setGoToOnyen(String newVal) {
+    	String anOldOnyen = goToOnyen;
+		this.goToOnyen = newVal;
+		propertyChangeSupport.firePropertyChange(GO_TO_ONYEN_PROPERTY, anOldOnyen, newVal);
+	}
 	
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener aListener) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import grader.settings.GraderSettingsManagerSelector;
+import grader.settings.GraderSettingsModel;
 import grader.settings.GraderSettingsModelSelector;
 import grader.settings.folders.OnyenRangeModel;
 import grader.spreadsheet.FinalGradeRecorder;
@@ -14,7 +15,8 @@ import util.models.AListenableVector;
 import wrappers.grader.sakai.project.ProjectDatabaseFactory;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 
-public class ASpreadsheetDisplay extends AListenableVector implements SpreadsheetDisplay{
+public class ASpreadsheetDisplay extends AListenableVector<SpreadsheetItemDisplay> 
+	implements SpreadsheetDisplay{
 	
 	FinalGradeRecorder finalGradeRecorder;
 	ProjectDatabaseWrapper projectDatabase;
@@ -61,6 +63,15 @@ public class ASpreadsheetDisplay extends AListenableVector implements Spreadshee
 		} else if (evt.getSource() == onyenRangeModel) {
 //			ProjectDatabaseFactory.createProjectDatabase(); 
 			refresh();
+		}
+	}
+	@Override
+	public void open(SpreadsheetItemDisplay aSpreadsheetItemDisplay) {
+		System.out.println("Open called with:" + aSpreadsheetItemDisplay);
+		GraderSettingsModel aModel = GraderSettingsModelSelector.getGraderSettingsModel();
+		boolean aGraderStarted = aModel.isGraderStarted();
+		if (!aGraderStarted) {
+			aModel.getOnyens().setOnyenList(aSpreadsheetItemDisplay.getId());
 		}
 	}
 	

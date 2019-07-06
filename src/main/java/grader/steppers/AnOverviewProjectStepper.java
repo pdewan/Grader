@@ -144,7 +144,9 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 
 	
 	public AnOverviewProjectStepper() {
-		gradedProjectNavigator = new AGradedProjectNavigator();
+//		gradedProjectNavigator = new AGradedProjectNavigator();
+		gradedProjectNavigator = GradedProjectNavigatorSelector.getOrCreateGradedProjectNavigator();
+
 		gradedProjectOverview = new AGradedProjectOverview();
 		autoVisitBehavior = new AnAutoVisitBehavior();
 		taCommentsExtractor = TACommentsExtractorSelector.getTACommentExtractor();

@@ -246,23 +246,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	@Override
 	@Explanation("Go to next student after saving current student changes.")
 	public synchronized void next() {
-//		if (!preProceed()) {
-//			JOptionPane.showMessageDialog(null, "Cannot proceed as assignment not completely graded. Turn off the proceed when finished box if you do not want this check.");
-//			return ;
-//		}
 
-//		try {
-//			// Common.appendText(logFile, getOnyen() + " Skipped " +
-//			// Common.currentTimeAsDate() + "\n");
-//			Common.appendText(skippedFile, projectStepper.getOnyen() + "\n");
-//			File file = new File(logFile);
-//			if (file.exists())
-//				file.createNewFile();
-//			List<String> list = FileProxyUtils.toList(file);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		UserNextStep.newCase(projectDatabase, projectStepper, project, this);
 		 userMove(true);
 		// should put person in skipped list
@@ -503,15 +487,10 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	}
 	
 	void userMove(boolean forward) {
-//		if (!preProceed() && !projectStepper.isSettingUpProject()) {
-//			JOptionPane.showMessageDialog(null, "Cannot proceed as assignment not completely graded. Turn off the Stop-If-Not-Done checkbox if you do not want this check.");
-//			return ;
-//		}
+
 		if (!checkLeave()) return;
 		move(forward);
-//		if (move(forward)) {
-//		setSuccessfulUserMove(currentOnyenIndex);
-//		}
+
 	}
 	int firstMatchedIndex = -1;
 	int lastMatchedIndex = -1;
@@ -535,38 +514,17 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	public synchronized boolean move(boolean forward) {
 		
 		maybeSaveState();
-//		// josh's code
-//		// no serialization otherwise
-//		if (changed || 
-//				!featureGradeRecorder.logSaved()) 
-//		featureGradeRecorder.finish();
-//
-//		// my original code
-//		projectDatabase.resetIO();
-//		projectDatabase.clearWindows();
+
 		if (forward) {
-//			currentOnyenIndex++;
 			setCurrentOnyenIndex(currentOnyenIndex+1);
 
 			if (currentOnyenIndex >= onyens.size()) {
-//				hasMoreSteps = false;
-//				knowLastFilteredItem = true;
-//				if (firstMatchedIndex == -1) { // have matched nothing
-//					if (GraphicsEnvironment.isHeadless() || Driver.isHeadless()) {
-//						JOptionPane.showMessageDialog(null, "No entries matchin filter, exiting");
-//					}
-//					move(false); // go back one
-//					notifyPreconditionChanged();
-//				}
+
 				processReachedEnd();
 				
-//				lastMatchedIndex = currentOnyenIndex - 1;
-//				JOptionPane.showMessageDialog(null, "No more entries matchin filter, exiting");
-//				System.exit(0);
-//				return false;
+
 			}
 		} else {
-//			currentOnyenIndex--;
 			setCurrentOnyenIndex(currentOnyenIndex-1);
 			
 			if (currentOnyenIndex < 0 || currentOnyenIndex < firstMatchedIndex) {
@@ -579,9 +537,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		redirectProject();
 		String anOnyen = onyens.get(currentOnyenIndex);
 		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
-//		redirectProject();
-//		projectDatabase.initIO();
-//		projectDatabase.recordWindows();
+
 		if (aProject == null && doNotVisitNullProjects) {
 			ProjectStepStarted.newCase(projectDatabase, projectStepper, null, this);
 
@@ -600,7 +556,6 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 				return false;
 			
 			if (!retVal && filteredOnyenIndex != currentOnyenIndex) {
-//				currentOnyenIndex = filteredOnyenIndex;
 				setCurrentOnyenIndex(filteredOnyenIndex);
 				try {
 					projectStepper.internalSetOnyen(onyens.get(filteredOnyenIndex));
@@ -617,28 +572,16 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 			} else {
 				
 				
-//				setFilteredOnyenIndex(filteredOnyenIndex);
 				setFilteredOnyenIndex(currentOnyenIndex);
-//				setSuccessfulForwardMove(currentOnyenIndex);
-//				filteredOnyenIndex = currentOnyenIndex;
+
 				setSuccessfulMoveFlags(forward);
 			}
 			return retVal;
 		}
-//		filteredOnyenIndex = currentOnyenIndex;
 		setFilteredOnyenIndex(currentOnyenIndex);
-//		setSuccessfulMove(currentOnyenIndex);
 		return true;
 			
-		// these two steps should go into setProject unless there is something
-		// subttle here, specially as the stepProject step below is commented
-		// put
-		// if (isAutoRun())
-		// projectDatabase.runProject(anOnyen, aProject);
-		// if (isAutoAutoGrade())
-		// autoGrade();
-
-		// setProject(anOnyen);
+		
 	}
 
 	@Override

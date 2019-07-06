@@ -5,6 +5,7 @@ import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.ProjectStepper;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.GraderSettingsModel;
+import grader.settings.GraderSettingsModelSelector;
 import grader.trace.settings.AutomaticNavigationEnded;
 import grader.trace.settings.AutomaticNavigationStarted;
 import grader.trace.settings.InvalidOnyenRangeException;
@@ -36,7 +37,12 @@ public class AnAutomaticProjectNavigator implements AutomaticProjectNavigator {
 //		if (animate && settingsFrame != null)
 //			settingsFrame.dispose(); // keep only one frame around at a time
             try {
-                database.startProjectStepper("");// first step
+//            	String aGoToOnyen = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens().getGoToOnyen();
+            	// this is different from aGotOnyens which is plural, and should be called selected onyens
+                // we do not want goToOnyen to be used in automatic steper
+            	database.startProjectStepper("");// first step
+//                database.startProjectStepper(aGoToOnyen);// first step
+
                 if (animate && settingsFrame != null) {
                     settingsFrame.dispose(); // keep only one frame around at a time
                 }

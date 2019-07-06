@@ -40,7 +40,7 @@ public abstract class AnAbstractSakaiStudentAssignmentsDatabase<GenericAssignmen
     	OnyenRangeModel anOnyenRangeModel = aGraderSettingsModel.getOnyens();
     	String aStartOnyen = anOnyenRangeModel.getStartingOnyen();
     	String anEndOnyen = anOnyenRangeModel.getEndingOnyen();
-    	String aGotoOnyen = anOnyenRangeModel.getGoToOnyens();
+    	String aGotoOnyen = anOnyenRangeModel.getOnyenList();
 //        Set<String> studentFolderNames = bulkAssignmentFolder.getStudentFolderNames();
 //        createStudentAssinments(studentFolderNames);
     	createStudentAssignments();

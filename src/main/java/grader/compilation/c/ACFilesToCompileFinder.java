@@ -42,6 +42,7 @@ public class ACFilesToCompileFinder extends AFilesToCompileFinder implements Fil
 
 			ArrayList<File> aFilesToCompile = new ArrayList<File>();
 			String anExecutable = 	BasicProcessRunner.getMainEntryPoint(aProject, null);
+			// It will never be main, it will be: BasicProcessRunner.MAIN_ENTRY_POINT
 			File anExecutableFile = anExecutable == null?null:new File(aBuildFolder.getAbsoluteFile()+"//" + anExecutable);
 			for (File file : sourceFiles) {
 				String className = BasicProjectClassesManager.getClassName(file);
