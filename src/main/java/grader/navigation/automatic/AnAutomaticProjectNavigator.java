@@ -40,7 +40,7 @@ public class AnAutomaticProjectNavigator implements AutomaticProjectNavigator {
 //            	String aGoToOnyen = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens().getGoToOnyen();
             	// this is different from aGotOnyens which is plural, and should be called selected onyens
                 // we do not want goToOnyen to be used in automatic steper
-            	database.startProjectStepper("");// first step
+            	database.startProjectStepper("");// first step, we ignore go to
 //                database.startProjectStepper(aGoToOnyen);// first step
 
                 if (animate && settingsFrame != null) {
@@ -80,10 +80,11 @@ public class AnAutomaticProjectNavigator implements AutomaticProjectNavigator {
                     clearanceManager.waitForClearance();
                 }
             }
-//            System.out.println("&&& " + Arrays.toString(database.getOnyenNavigationList().toArray()));
             if (projectStepper.getCurrentOnyenIndex() < onyensSize - 1) {
 //                System.out.println("&&& " + projectStepper.getOnyen());
-                projectStepper.move(true);
+//                projectStepper.move(true, true); 
+                projectStepper.move(true, false); // this should not happen
+
             } else {
                 projectStepper.save();
                 break;

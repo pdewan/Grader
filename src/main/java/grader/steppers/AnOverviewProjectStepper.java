@@ -447,9 +447,9 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		// the multiplier is not being loaded here, so cannot be used for filtering
 		
 
-		if (!gradedProjectNavigator.shouldVisit()) {
-			return false;
-		}
+//		if (!gradedProjectNavigator.shouldVisit()) {
+//			return false;
+//		}
 
 
 		// Josh: Added event
@@ -1387,7 +1387,7 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	public boolean runProjectsInteractively(String aGoToOnyen) throws MissingOnyenException, InvalidOnyenRangeException {
 		List<String> onyens = projectDatabase.getOnyenNavigationList();
 		if (onyens.size() == 0) {
-			String message = "Start or end onyen not found in specified range, see console for error messages such as missing feedback folder. May want to restart grader";
+			String message = "Specified onyens not found, see console for error messages such as missing feedback folder. May want to restart grader";
 //			JOptionPane.showMessageDialog(null, message);
 			InvalidOnyenRangeException invalidOnyenRangeException = InvalidOnyenRangeException.newCase(message, this);
 //			throw new InvalidOnyenRangeException(message);
@@ -1400,39 +1400,71 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 //			hasMoreSteps = false;
 			return false;
 		}
-//		projectDatabase.getAssignmentDataFolder().clearLogFile();
-//		List<String> onyens = projectDatabase.getOnyenNavigationList();
-		
-		String anOnyen = aGoToOnyen;
-		if (aGoToOnyen.isEmpty() || AlphabeticNavigationListManager.isGoToOnyenList()) {
-		
-			anOnyen= onyens.get(gradedProjectNavigator.getCurrentOnyenIndex());
-		} else {
-			int currentOnyenIndex = onyens.indexOf(anOnyen);
-			if (currentOnyenIndex == -1) {
-				MissingOnyenException missingOnyenException = MissingOnyenException.newCase(anOnyen, this);
-//				throw new MissingOnyenException(anOnyen, this);
-				throw missingOnyenException;
-			}
-			gradedProjectNavigator.setCurrentOnyenIndex(currentOnyenIndex);
-		}
+//		
+//		
+//		String anOnyen = aGoToOnyen;
+		boolean hasGoTo = !aGoToOnyen.isEmpty();
+//		if (!hasGoTo|| AlphabeticNavigationListManager.hasGoToOnyenList()) {
+//		
+//			anOnyen= onyens.get(gradedProjectNavigator.getCurrentOnyenIndex()); // goto list will be the oynen list
+//		} else {
+//			int currentOnyenIndex = onyens.indexOf(anOnyen);
+//			if (currentOnyenIndex == -1) {
+//				MissingOnyenException missingOnyenException = MissingOnyenException.newCase(anOnyen, this);
+////				throw new MissingOnyenException(anOnyen, this);
+//				throw missingOnyenException;
+//			}
+//			gradedProjectNavigator.setCurrentOnyenIndex(currentOnyenIndex);
+//		}
+		int aFirstIndex = computeIndexOfFirstProjectToBeSet(onyens, aGoToOnyen);
+		gradedProjectNavigator.setCurrentOnyenIndex(aFirstIndex);
+		String anOnyen = onyens.get(aFirstIndex);
 		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
 		
 
-		boolean retVal = setProject(anOnyen);
-		if (!retVal) {
-			 next();
-			 if (!gradedProjectNavigator.hasMoreSteps()) {
-//				 currentOnyenIndex = filteredOnyenIndex;
-				 gradedProjectNavigator.setCurrentOnyenIndex(gradedProjectNavigator.getFilteredOnyenIndex());
-				 return false;
-			 }
-		}
-		gradedProjectNavigator.setFilteredOnyenIndex(gradedProjectNavigator.getCurrentOnyenIndex());
-//		filteredOnyenIndex = currentOnyenIndex;
-		return true;
+		boolean retVal = setProject(anOnyen); // may have to jump to some other index
+//		if (!retVal) {
+////			 next();
+//			 nextFiltered();
+//			 if (!gradedProjectNavigator.hasMoreSteps()) {
+////				 currentOnyenIndex = filteredOnyenIndex;
+//				 gradedProjectNavigator.setCurrentOnyenIndex(gradedProjectNavigator.getFilteredOnyenIndex());
+//				 return false;
+//			 }
+//		}
+//		gradedProjectNavigator.setFilteredOnyenIndex(gradedProjectNavigator.getCurrentOnyenIndex());
+////		filteredOnyenIndex = currentOnyenIndex;
+//		return true;
+		processFirstSetProject(hasGoTo, retVal);
+		return true; // does not seem the return value matters
+		
 		
 
+	}
+	
+	protected int computeIndexOfFirstProjectToBeSet(List<String> onyens, String aGoToOnyen) {
+		int currentOnyenIndex = 0;
+		boolean hasGoToOnyen = !aGoToOnyen.isEmpty();
+		if (hasGoToOnyen) {
+			currentOnyenIndex = onyens.indexOf(hasGoToOnyen);
+			if (currentOnyenIndex == -1) {
+				System.err.println("Go to onyen " + aGoToOnyen + "not found, moving to start of onyen list");
+				currentOnyenIndex = 0;
+			}
+		}
+		return currentOnyenIndex;
+		
+	}
+	
+	protected void processFirstSetProject(boolean isGoTo, boolean shouldVisit) {
+	
+		if (isGoTo) {
+			return ; // user wants to go there
+		}
+		if (!shouldVisit) {
+			gradedProjectNavigator.nextFiltered(); // visit all projects until next filtered
+		}
+		
 	}
 	
 
@@ -1531,8 +1563,8 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	public void previous() {
 		gradedProjectNavigator.previous();
 	}
-	public boolean move(boolean forward) {
-		return gradedProjectNavigator.move(forward);
+	public boolean move(boolean forward, boolean isFiltered) {
+		return gradedProjectNavigator.move(forward, isFiltered);
 	}
 	public boolean isProceedWhenDone() {
 		return gradedProjectNavigator.isProceedWhenDone();
@@ -1546,6 +1578,10 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	}
 	public void internalSetOnyen(String anOnyen) throws MissingOnyenException {
 		gradedProjectNavigator.internalSetOnyen(anOnyen);
+	}
+	@Override
+	public void setOnyenIndex(int onyenIndex) throws MissingOnyenException {
+		gradedProjectNavigator.setOnyenIndex(onyenIndex);		
 	}
 	public boolean shouldVisit() {
 		return gradedProjectNavigator.shouldVisit();
@@ -1818,5 +1854,16 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		// TODO Auto-generated method stub
 		return gradedProjectOverview.getTextOverview();
 	}
+	@Override
+	public void previousFiltered() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void nextFiltered() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 }

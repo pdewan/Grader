@@ -1804,8 +1804,8 @@ public class ABasicProjectStepper extends AClearanceManager implements
 	public void previous() {
 		gradedProjectNavigator.previous();
 	}
-	public boolean move(boolean forward) {
-		return gradedProjectNavigator.move(forward);
+	public boolean move(boolean forward, boolean isFiltered) {
+		return gradedProjectNavigator.move(forward, true);
 	}
 	public boolean isProceedWhenDone() {
 		return gradedProjectNavigator.isProceedWhenDone();

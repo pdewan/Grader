@@ -28,13 +28,7 @@ public class AnIndividualStudentHistoryManager extends ASakaiCSVFeatureGradeMana
 		resetTable();
 		writeTable();
 	}
-//	public AnIndividualStudentHistoryManager(SakaiProjectDatabase aSakaiProjectDatabase) {
-//		super(aSakaiProjectDatabase);
-//		maybeCreateTable();
-//		resetTable();
-//		writeTable();		
-////		gradeSpreadsheet = aGradeSpreadsheet;		
-//	}
+
 	
 	
 	public void resetTable() {
@@ -54,13 +48,18 @@ public class AnIndividualStudentHistoryManager extends ASakaiCSVFeatureGradeMana
 	// should be called by all student manager
 	public String[] addNewRow() {
 		String[] aPreviousRow = table.get(table.size()-1);
+		if (aPreviousRow[GRADE_COLUMN].isEmpty()) {
+			return null; // we never wrote the previous one
+		}
 		String[] aNewRow = new String[aPreviousRow.length];
 		
 		for (int i=GRADE_COLUMN - 1; i < aNewRow.length; i++) {
 			aNewRow[i] = "";
 		}
 		int aRunNumber = (table.size() - 1 - TITLE_ROW);
-		if (aRunNumber == 0) {
+//		if (aRunNumber == 0) {
+		if (aRunNumber == 0 || aPreviousRow[GRADE_COLUMN].isEmpty()) {
+
 			previousScore = 0.0;
 		} else {
 			previousScore = Double.parseDouble(aPreviousRow[GRADE_COLUMN]);
@@ -88,50 +87,6 @@ public class AnIndividualStudentHistoryManager extends ASakaiCSVFeatureGradeMana
 	}
 
 
-//	@Override
-//	public void setGrade(String aStudentName, String anOnyen, String aFeature, double aScore) {
-//            try {
-////                maybeCreateTable();
-////                String[] row = getStudentRow(table, aStudentName, anOnyen);
-//            	String[] row= table.get(table.size() - 1);
-////                if (row == null) {
-////                    System.out.println("Cannot find row for:" + aStudentName + " " + anOnyen);
-////                    return;
-////                }
-//
-//                recordGrade(row, aFeature, aScore);
-//                writeTable();
-//            } catch (Exception e) {
-//                    e.printStackTrace();
-//            }
-//	}
-	
-//	@Override
-//	public void setResultFormat(String aStudentName, String anOnyen, String aFeature,
-//			String aResult) {
-//		try {
-//
-////			maybeCreateTable();
-//			
-////		    String[] row = getStudentRow(table, aStudentName, anOnyen);
-//        	String[] row= table.get(table.size() - 1);
-//
-////		    if (row == null) {
-////				System.out.println("Cannot find row for:" + aStudentName + " " + anOnyen);
-////				return;
-////		    }
-//		    
-//		    recordResult(row, aFeature, aResult);
-//		    writeTable();
-//
-//
-//
-//	} catch (Exception e) {
-//		e.printStackTrace();
-//		
-//	}
-//		
-//	}
 
 	
 

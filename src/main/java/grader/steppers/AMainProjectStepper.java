@@ -176,8 +176,8 @@ public class AMainProjectStepper implements MainProjectStepper {
 		return overviewProjectStepper.preRunProjectsInteractively();
 	}
 
-	public boolean move(boolean forward) {
-		return overviewProjectStepper.move(forward);
+	public boolean move(boolean forward, boolean isFiltered) {
+		return overviewProjectStepper.move(forward, isFiltered);
 	}
 
 	@Visible(false)
@@ -655,6 +655,20 @@ public class AMainProjectStepper implements MainProjectStepper {
 
 	public GradedProjectTextOverview getTextOverview() {
 		return overviewProjectStepper.getTextOverview();
+	}
+	@Override
+	public void setOnyenIndex(int onyenIndex) {
+		overviewProjectStepper.setOnyenIndex(onyenIndex);
+		
+	}
+	@Override
+	public void previousFiltered() {
+		overviewProjectStepper.previousFiltered();
+		
+	}
+	@Override
+	public void nextFiltered() {
+		overviewProjectStepper.nextFiltered();
 	}
 	
 //	@Override

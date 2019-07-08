@@ -75,7 +75,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     	}
     	return null;
 	}
-	public static boolean isGoToOnyenList() {
+	public static boolean hasGoToOnyenList() {
 		return maybeGetGoToOnyenList() != null;
 	}
 	

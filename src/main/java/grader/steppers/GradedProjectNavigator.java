@@ -58,7 +58,7 @@ public interface GradedProjectNavigator   extends /*ClearanceManager,*/ Property
 
 //	boolean preRunProjectsInteractively();
 
-	boolean move(boolean forward);
+	boolean move(boolean forward, boolean isFiltered);
 //	public boolean isAutoAutoGrade() ;
 //    public void setAutoAutoGrade(boolean newVal) ;
 //    public void autoAutoGrade() ;
@@ -123,6 +123,12 @@ public interface GradedProjectNavigator   extends /*ClearanceManager,*/ Property
 	void terminate();
 
 	boolean preRun();
+
+	void setOnyenIndex(int onyenIndex) ;
+
+	void previousFiltered();
+
+	void nextFiltered();
 
 
 

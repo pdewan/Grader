@@ -968,7 +968,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		maybeCreateThreadPoolExecutor();
 		return executor;
 	}
-	public static int DISPOSE_TIMEOUT = 2000;
+	public static int DISPOSE_TIMEOUT = 4000;
 	@Override
 	public  void clearWindows() {
 		if (oldWindows != null && oldList != null) {// somebody went before me,
@@ -1000,10 +1000,12 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 					Object aRetVal = aFuture.get(DISPOSE_TIMEOUT, TimeUnit.MILLISECONDS);
 				} catch (TimeoutException | InterruptedException | ExecutionException e) {
 					System.err.println("Cannot dispose: " + frame);
-					System.err.println("Exiting, Please remove from grading, onyen:" + getProjectStepper().getOnyen());
+					System.err.println("Exiting, Please restart grader, Eclipse and/or OS");
 
-					e.printStackTrace();
-					System.exit(-1);
+//					System.err.println("Exiting, Please remove from grading, onyen:" + getProjectStepper().getOnyen());
+
+//					e.printStackTrace();
+//					System.exit(-1);
 					
 				}
 //				frame.setVisible(false);

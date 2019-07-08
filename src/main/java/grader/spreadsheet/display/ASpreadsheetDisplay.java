@@ -10,6 +10,8 @@ import grader.settings.GraderSettingsModelSelector;
 import grader.settings.folders.OnyenRangeModel;
 import grader.spreadsheet.FinalGradeRecorder;
 import grader.spreadsheet.csv.SakaiCSVFinalGradeRecorder;
+import grader.steppers.GradedProjectNavigator;
+import grader.steppers.GradedProjectNavigatorSelector;
 import gradingTools.assignment9.testCases.ListenerAndPainterTagTestCase;
 import util.models.AListenableVector;
 import wrappers.grader.sakai.project.ProjectDatabaseFactory;
@@ -67,11 +69,15 @@ public class ASpreadsheetDisplay extends AListenableVector<SpreadsheetItemDispla
 	}
 	@Override
 	public void open(SpreadsheetItemDisplay aSpreadsheetItemDisplay) {
+		String anOnyen = aSpreadsheetItemDisplay.getId();
 		System.out.println("Open called with:" + aSpreadsheetItemDisplay);
 		GraderSettingsModel aModel = GraderSettingsModelSelector.getGraderSettingsModel();
 		boolean aGraderStarted = aModel.isGraderStarted();
 		if (!aGraderStarted) {
-			aModel.getOnyens().setOnyenList(aSpreadsheetItemDisplay.getId());
+			aModel.getOnyens().setGoToOnyen(anOnyen);
+		} else {
+			GradedProjectNavigator aGradedProjectNavigator = GradedProjectNavigatorSelector.getOrCreateGradedProjectNavigator();
+			aGradedProjectNavigator.internalSetOnyen(anOnyen);
 		}
 	}
 	

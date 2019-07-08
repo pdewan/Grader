@@ -31,7 +31,10 @@ import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -58,6 +61,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	boolean playMode;
 	boolean exitOnQuit = true;
 	boolean knowLastFilteredItem = false;
+	protected boolean hasSeeked = false;
 	
 
 	OverviewProjectStepper projectStepper;
@@ -102,16 +106,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 				.getGradedIdFileName();
 		skippedFile = aProjectDatabase.getAssignmentDataFolder()
 				.getSkippedIdFileName();
-//		ObjectEditor.setMethodAttribute(AGradedProjectNavigator.class, "togglePlayPause", AttributeNames.LABEL, computeTogglePlayPauseLabel());
 
-		// configuteNavigationList does this
-//		setCurrentOnyenIndex(0);
-
-//		ings.getNavigationSetter().getNavigationFilterSetter().addPropertyChangeListener(this);
-//		getNavigationSetter().getNavigationFilterSetter().addPropertyChangeListener(this);
-		
-		// recordWindows(); // the first project does not wait so we need to
-		// record here
 
 	}
 	// we intercept window closes
@@ -148,7 +143,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 //			return;
 		}
 //		currentOnyenIndex = onyenIndex;
-		setCurrentOnyenIndex( onyenIndex);
+		internalSetCurrentOnyenIndex( onyenIndex);
 		maybeSaveState();
 		redirectProject();
 		boolean retVal = projectStepper.setProject(anOnyen);
@@ -159,12 +154,54 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		}
 		// again this will void a getter call when properties are redisplayed
 		propertyChangeSupport.firePropertyChange(oldOnyen, null, onyen);
-
-
-
+	}
+	/**
+	 * Thisis different from setCurrentOnyenIndex, meant tomove items
+	 */
+	@Override
+	public void setOnyenIndex(int onyenIndex) throws MissingOnyenException {
+		// project = projectDatabase.getProject(anOnyen);
+		if (onyenIndex >= onyens.size()) {
+		
+			Tracer.error("Onyen index too large in setOnyenIndex ");
+		return;
+//			throw new MissingOnyenException(anOnyen, this);
+//			return;
+		}
+		hasSeeked = true;
+		doSetOnyenIndex(onyenIndex);
+//		String anOnyen = onyens.get(onyenIndex);
+////		currentOnyenIndex = onyenIndex;ring oldOnyen = onyen;
+//		String oldOnyen = onyen;
+//		setCurrentOnyenIndex( onyenIndex);
+//		maybeSaveState();
+//		redirectProject();
+//		boolean retVal = projectStepper.setProject(anOnyen);
+//		if (!retVal) {
+//			onyen = oldOnyen;
+//			propertyChangeSupport.firePropertyChange("onyen", null, onyen);
+//			return;
+//		}
+//		// again this will void a getter call when properties are redisplayed
+//		propertyChangeSupport.firePropertyChange(oldOnyen, null, onyen);
 	}
 
-
+	protected void doSetOnyenIndex (int onyenIndex) {
+		String anOnyen = onyens.get(onyenIndex);
+//		currentOnyenIndex = onyenIndex;ring oldOnyen = onyen;
+		String oldOnyen = onyen;
+		internalSetCurrentOnyenIndex( onyenIndex);
+		maybeSaveState();
+		redirectProject();
+		boolean retVal = projectStepper.setProject(anOnyen);
+		if (!retVal) {
+			onyen = oldOnyen;
+			propertyChangeSupport.firePropertyChange("onyen", null, onyen);
+			return;
+		}
+		// again this will void a getter call when properties are redisplayed
+		propertyChangeSupport.firePropertyChange(oldOnyen, null, onyen);
+	}
 
 	void notifyPreconditionChanged() {
 		propertyChangeSupport.firePropertyChange("this", null, this);
@@ -200,8 +237,9 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	}
 	@Override
 	public boolean shouldVisit() {
-		if (manualOnyen )
+		if (manualOnyen ) // what is this?
 			return true;
+		
 		GraderSettingsModel graderSettingsModel = projectDatabase.getGraderSettings();
 		if (graderSettingsModel == null) return true;
 		if (graderSettingsModel.getNavigationSetter().getNavigationKind() != NavigationKind.MANUAL)
@@ -209,8 +247,13 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		BasicNavigationFilter navigationFilter = projectDatabase.getNavigationFilter();
 		return navigationFilter.includeProject(projectStepper, projectDatabase);
 	}
-	
+	protected boolean matchesFilter() {
+		BasicNavigationFilter navigationFilter = projectDatabase.getNavigationFilter();
 
+		return navigationFilter.includeProject(projectStepper, projectDatabase);
+
+	}
+	 
 
 	boolean settingUpProject;
 	
@@ -224,66 +267,103 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	boolean noNextFilteredRecords;
 	
 	boolean hasNextFilteredRecords () {
-		return !knowLastFilteredItem || 
-				currentOnyenIndex < lastMatchedIndex;
+//		return !knowLastFilteredItem || 
+//				currentOnyenIndex < lastMatchedIndex;
+		return lastTreeSetIndex != -1 && currentOnyenIndex < lastTreeSetIndex;
 	}
 	boolean hasPreviousFilteredRecords() {
-		return firstMatchedIndex != -1 && currentOnyenIndex > firstMatchedIndex;
+//		return firstMatchedIndex != -1 && currentOnyenIndex > firstMatchedIndex;
+		return firstTeeeSetIndex != -1 && currentOnyenIndex > firstTeeeSetIndex;
+
 	}
 
 	@Override
 	public boolean preNext() {
 		return /*!noNextFilteredRecords /*&& preProceed()* && */
-				hasNextFilteredRecords() &&
+//				hasNextFilteredRecords() &&
 				currentOnyenIndex < onyens.size() - 1;
 		// this does not make sense, next is a stronger condition than next
 
 		// return !preDone() && nextOnyenIndex < onyens.size() - 1 ;
 	}
+	public boolean preNextFiltered() {
+		return !noEntriesMatchedFilter &&
+				
+				hasNextFilteredRecords() &&
+				preNext();
+	
+	}
 	@Row(0)
-	@Column(0)
+	@Column(2)
 	@ComponentWidth(100)
 	@Override
 	@Explanation("Go to next student after saving current student changes.")
+	@Label(">")
 	public synchronized void next() {
 
 		UserNextStep.newCase(projectDatabase, projectStepper, project, this);
-		 userMove(true);
+		 userMove(true, false);
+		// should put person in skipped list
+
+	}
+	@Row(0)
+	@Column(0)
+	@ComponentWidth(100)
+	@Explanation("Go to next student after saving current student changes.")
+	@Label(">>")
+	public synchronized void nextFiltered() {
+
+		UserNextStep.newCase(projectDatabase, projectStepper, project, this);
+		 userMove(true, true);
 		// should put person in skipped list
 
 	}
 	boolean noPreviousFilteredRecords;
+	
 
 	@Override
 	public boolean prePrevious() {
-		return hasPreviousFilteredRecords() && /*preProceed() &&*/ currentOnyenIndex > 0;
-//				&& currentOnyenIndex > firstMatchedIndex;
+		return 
+//				(hasSeeked || hasPreviousFilteredRecords()) &&  
+				
+			currentOnyenIndex > 0;
+//				
+	}
+	public boolean prePreviousFiltered() {
+		return !noEntriesMatchedFilter &&
+				(hasSeeked || hasPreviousFilteredRecords()) &&  
+				
+			prePrevious();
+//				
 	}
 	@Row(0)
-	@Column(1)
+	@Column(3)
 	@ComponentWidth(100)
 	@Override
 	@Explanation("Go to previous student after saving current student changes.")
-	public synchronized void previous() {
-		
-		
-		// should have a user move
-
-		// try {
-		// Common.appendText(logFile, onyen + " Skipped " +
-		// Common.currentTimeAsDate() + "\n");
-		// Common.appendText(skippedFile, onyen + "\n");
-		// List<String> list = FileProxyUtils.toList(new File(logFile));
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+	@Label("<")
+	public synchronized void previous() {		
 		UserPreviousStep.newCase(projectDatabase, projectStepper, project, this);
 
-		 userMove(false);
+		 userMove(false, false);
 		// should put person in skipped list
 
 	}
+	@Override
+	@Row(0)
+	@Column(1)
+	@ComponentWidth(100)
+	@Explanation("Go to previous student after saving current student changes.")
+	@Label("<<")
+	public synchronized void previousFiltered() {		
+		UserPreviousStep.newCase(projectDatabase, projectStepper, project, this);
+
+		 userMove(false, true);
+		// should put person in skipped list
+
+	}
+	
+	
 	String computeTogglePlayPauseLabel() {
 		return playMode?"Pause":"Play";	
 	}
@@ -367,7 +447,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		if (hasMoreSteps == newVal)
 			return;
 		hasMoreSteps = newVal;
-		if (hasMoreSteps == false)
+		if (!hasMoreSteps)
 			writeScores(projectStepper);
 
 		notifyPreconditionChanged();
@@ -415,7 +495,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	public void configureNavigationList() {
 		onyens = projectDatabase.getOnyenNavigationList();
 		NavigationListConfigured.newCase(projectDatabase, projectStepper, project, onyens, this);
-		setCurrentOnyenIndex( 0);
+		internalSetCurrentOnyenIndex( 0);
 //		hasMoreSteps = true;
 		setHasMoreSteps(true);
 		firstMatchedIndex = -1;
@@ -486,54 +566,235 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		return true;
 	}
 	
-	void userMove(boolean forward) {
+	void userMove(boolean forward, boolean isFiltered) {
 
-		if (!checkLeave()) return;
-		move(forward);
+		if (!checkLeave()) 
+			return;
+		move(forward, isFiltered);
 
 	}
 	int firstMatchedIndex = -1;
+//	int firstMatchedIndex = Integer.MAX_VALUE;
+
 	int lastMatchedIndex = -1;
+	TreeSet<Integer> knownFilteredItems = new TreeSet();
+	// These should replace matched indices above
+	int firstTeeeSetIndex = -1;
+	int lastTreeSetIndex = -1;
 	
+	protected boolean noEntriesMatchedFilter = false;
+//	protected void processReachedEnd() {
+//		hasMoreSteps = false;
+//		knowLastFilteredItem = true;
+//		if (firstMatchedIndex == -1 || firstMatchedIndex == onyens.size()) { // have matched nothing
+////			if (GraphicsEnvironment.isHeadless() || Driver.isHeadless()) {
+////				JOptionPane.showMessageDialog(null, "No entries matchin filter, exiting");
+////			}
+////			Driver.maybeShowMessage("No entries matching filter, exiting");
+//			Driver.maybeShowMessage("No entries matching filter, skipping to last record");
+//			noEntriesMatchedFilter = true;
+//			hasMoreSteps = true;
+//			
+////			quit();
+////			notifyPreconditionChanged();
+//		} else {
+//			Driver.maybeShowMessage("Reached the end of items matching filter");
+//		}
+//	}
+	protected void processReachedEndOfFilteredItems() {
+		Driver.maybeShowMessage("Reached the end of filtered items, not moving position");
+	}
 	protected void processReachedEnd() {
-		hasMoreSteps = false;
-		knowLastFilteredItem = true;
-		if (firstMatchedIndex == -1 || firstMatchedIndex == onyens.size()) { // have matched nothing
-//			if (GraphicsEnvironment.isHeadless() || Driver.isHeadless()) {
-//				JOptionPane.showMessageDialog(null, "No entries matchin filter, exiting");
+		Driver.maybeShowMessage("Reached the end of items, not moving position");
+
+//		hasMoreSteps = false;
+//		knowLastFilteredItem = true;
+//		if (firstMatchedIndex == -1 || firstMatchedIndex == onyens.size()) { // have matched nothing
+////			if (GraphicsEnvironment.isHeadless() || Driver.isHeadless()) {
+////				JOptionPane.showMessageDialog(null, "No entries matchin filter, exiting");
+////			}
+////			Driver.maybeShowMessage("No entries matching filter, exiting");
+//			Driver.maybeShowMessage("No entries matching filter, skipping to last record");
+//			noEntriesMatchedFilter = true;
+//			hasMoreSteps = true;
+//			
+////			quit();
+////			notifyPreconditionChanged();
+//		} else {
+//			Driver.maybeShowMessage("Reached the end of items matching filter");
+//		}
+	}
+	
+//	@Visible(false)
+//	public synchronized boolean oldMove(boolean forward, boolean isFiltered) {
+//		hasSeeked = false;
+//		maybeSaveState();
+//
+//		if (forward) {
+//			internalSetCurrentOnyenIndex(currentOnyenIndex+1);
+//
+//			if (currentOnyenIndex >= onyens.size()) {
+//
+//				processReachedEnd();
+//				if (noEntriesMatchedFilter) {
+//					setOnyenIndex(0);
+//					return false;
+//				}
+//				
+//
 //			}
-			Driver.maybeShowMessage("No entries matching filter, exiting");
-			quit();
-//			notifyPreconditionChanged();
-		} else {
-			Driver.maybeShowMessage("Reached the end of items matching filter");
+//		} else {
+//			internalSetCurrentOnyenIndex(currentOnyenIndex-1);
+//			
+//			if (currentOnyenIndex < 0 || currentOnyenIndex < firstMatchedIndex) {
+//				hasMoreSteps = false;
+//				return false;
+//			}
+//
+//		}
+//		
+//		redirectProject();
+//		String anOnyen = onyens.get(currentOnyenIndex);
+//		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
+//
+//		if (aProject == null && doNotVisitNullProjects) {
+//			ProjectStepStarted.newCase(projectDatabase, projectStepper, null, this);
+//
+//			ProjectStepAborted.newCase(projectDatabase, projectStepper, null, this);
+//			return 	false;
+//		}
+//		boolean projectSet = projectStepper.setProject(anOnyen);
+////		if (!projectSet) {
+//		if (!projectSet && isFiltered) {
+//			if (!hasMoreSteps || currentOnyenIndex >= onyens.size() - 1) {
+//				processReachedEnd();
+//				// we are allowing non filter items
+//				if (noEntriesMatchedFilter) {
+//					setOnyenIndex(0);					
+//					return false;
+//				} else {
+//					setOnyenIndex(onyens.size() - 1);
+//					return false;
+//				}
+//				// removing this as we are allowing non filter records
+////				move(false); // go back one
+////				return false;
+//			}
+//			boolean retVal = move(forward, isFiltered);
+//			if (!hasMoreSteps)
+//				return false;
+//			
+//			if (!retVal && filteredOnyenIndex != currentOnyenIndex) {
+//				internalSetCurrentOnyenIndex(filteredOnyenIndex);
+//				try {
+//					projectStepper.internalSetOnyen(onyens.get(filteredOnyenIndex));
+//				} catch (MissingOnyenException e) {
+//					e.printStackTrace(); // this should never be executed
+//				}
+//				if (projectStepper.getProject().isNoProjectFolder())
+//					return false;
+//				String message = "Cannot move as no more records that satisfy selection condition. You can change the filter settings.";
+//				Tracer.error(message);
+//				if (!GraphicsEnvironment.isHeadless())
+//				JOptionPane.showMessageDialog(null, message);
+//				setFailedMoveFlags(forward);
+//			} else {
+//				
+//				
+//				setFilteredOnyenIndex(currentOnyenIndex);
+//
+//				setSuccessfulMoveFlags(forward);
+//			}
+//			return retVal;
+//		}
+//		if (isFiltered) {
+//			setFilteredOnyenIndex(currentOnyenIndex);
+//		}
+//		return true;
+//			
+//		
+//	}
+	
+	protected int findNextFiltered() {
+		for (int anIndex:knownFilteredItems) {
+			if (anIndex > currentOnyenIndex)
+				return anIndex;
 		}
+		return currentOnyenIndex;
+	}
+	protected int findPreviousFiltered() {
+		for (int anIndex:knownFilteredItems) {
+			if (anIndex < currentOnyenIndex)
+				return anIndex;
+		}
+		return currentOnyenIndex;
 	}
 	@Override
-	@Visible(false)
-	public synchronized boolean move(boolean forward) {
-		
+	public synchronized boolean move(boolean forward, boolean isFiltered) {
+		hasSeeked = false;
 		maybeSaveState();
-
-		if (forward) {
-			setCurrentOnyenIndex(currentOnyenIndex+1);
-
-			if (currentOnyenIndex >= onyens.size()) {
-
-				processReachedEnd();
-				
-
-			}
-		} else {
-			setCurrentOnyenIndex(currentOnyenIndex-1);
-			
-			if (currentOnyenIndex < 0 || currentOnyenIndex < firstMatchedIndex) {
-				hasMoreSteps = false;
+		int aNewIndex = currentOnyenIndex;
+		if (isFiltered) {
+			 aNewIndex = forward?findNextFiltered():findPreviousFiltered();
+			if (aNewIndex == currentOnyenIndex) {
+				processReachedEndOfFilteredItems();
+				redirectProject();
 				return false;
 			}
+		} else {
+			 aNewIndex = forward?currentOnyenIndex + 1:currentOnyenIndex - 1;
+			 if (aNewIndex < 0 || aNewIndex >= onyens.size()) {
+				 processReachedEnd();
+					redirectProject();
 
+				 return false;
+			 }
 		}
-		
+		currentOnyenIndex = aNewIndex;
+//
+//		if (forward) {
+//			if (currentOnyenIndex >= onyens.size() - 1) {
+//
+//				processReachedEnd();
+//				return false;
+////				if (noEntriesMatchedFilter) {
+////					setOnyenIndex(0);
+////					return false;
+////				}
+//				
+//
+//			}
+//			internalSetCurrentOnyenIndex(currentOnyenIndex+1);
+////
+////			if (currentOnyenIndex >= onyens.size()) {
+////
+////				processReachedEnd();
+////				return false;
+//////				if (noEntriesMatchedFilter) {
+//////					setOnyenIndex(0);
+//////					return false;
+//////				}
+////				
+////
+////			}
+//		} else {
+//			
+//			if (currentOnyenIndex <= 0 ) {
+//				processReachedEnd();
+//				return false;
+//			}
+//			internalSetCurrentOnyenIndex(currentOnyenIndex-1);
+//
+//		}
+//		if (isFiltered) {
+//			int aNewIndex = forward?findNextFiltered():findPreviousFiltered();
+//			if (aNewIndex == currentOnyenIndex) {
+//				processReachedEndOfFilteredItems();
+//				return false;
+//			}
+//			currentOnyenIndex = aNewIndex;
+//		}
+		internalSetCurrentOnyenIndex(aNewIndex);
 		redirectProject();
 		String anOnyen = onyens.get(currentOnyenIndex);
 		SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
@@ -545,41 +806,54 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 			return 	false;
 		}
 		boolean projectSet = projectStepper.setProject(anOnyen);
-		if (!projectSet) {
-			if (!hasMoreSteps || currentOnyenIndex >= onyens.size() - 1) {
-				processReachedEnd();
-				move(false); // go back one
-				return false;
-			}
-			boolean retVal = move(forward);
-			if (!hasMoreSteps)
-				return false;
-			
-			if (!retVal && filteredOnyenIndex != currentOnyenIndex) {
-				setCurrentOnyenIndex(filteredOnyenIndex);
-				try {
-					projectStepper.internalSetOnyen(onyens.get(filteredOnyenIndex));
-				} catch (MissingOnyenException e) {
-					e.printStackTrace(); // this should never be executed
-				}
-				if (projectStepper.getProject().isNoProjectFolder())
-					return false;
-				String message = "Cannot move as no more records that satisfy selection condition. You can change the filter settings.";
-				Tracer.error(message);
-				if (!GraphicsEnvironment.isHeadless())
-				JOptionPane.showMessageDialog(null, message);
-				setFailedMoveFlags(forward);
-			} else {
-				
-				
-				setFilteredOnyenIndex(currentOnyenIndex);
-
-				setSuccessfulMoveFlags(forward);
-			}
-			return retVal;
-		}
-		setFilteredOnyenIndex(currentOnyenIndex);
-		return true;
+		return projectSet;
+////		if (!projectSet) {
+//		if (!projectSet && isFiltered) {
+//			if (!hasMoreSteps || currentOnyenIndex >= onyens.size() - 1) {
+//				processReachedEnd();
+//				// we are allowing non filter items
+//				if (noEntriesMatchedFilter) {
+//					setOnyenIndex(0);					
+//					return false;
+//				} else {
+//					setOnyenIndex(onyens.size() - 1);
+//					return false;
+//				}
+//				// removing this as we are allowing non filter records
+////				move(false); // go back one
+////				return false;
+//			}
+//			boolean retVal = move(forward, isFiltered);
+//			if (!hasMoreSteps)
+//				return false;
+//			
+//			if (!retVal && filteredOnyenIndex != currentOnyenIndex) {
+//				internalSetCurrentOnyenIndex(filteredOnyenIndex);
+//				try {
+//					projectStepper.internalSetOnyen(onyens.get(filteredOnyenIndex));
+//				} catch (MissingOnyenException e) {
+//					e.printStackTrace(); // this should never be executed
+//				}
+//				if (projectStepper.getProject().isNoProjectFolder())
+//					return false;
+//				String message = "Cannot move as no more records that satisfy selection condition. You can change the filter settings.";
+//				Tracer.error(message);
+//				if (!GraphicsEnvironment.isHeadless())
+//				JOptionPane.showMessageDialog(null, message);
+//				setFailedMoveFlags(forward);
+//			} else {
+//				
+//				
+//				setFilteredOnyenIndex(currentOnyenIndex);
+//
+//				setSuccessfulMoveFlags(forward);
+//			}
+//			return retVal;
+//		}
+//		if (isFiltered) {
+//			setFilteredOnyenIndex(currentOnyenIndex);
+//		}
+//		return true;
 			
 		
 	}
@@ -601,7 +875,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		move(true);
+		move(true, true);
 	
 
 	}
@@ -609,11 +883,42 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	public int getCurrentOnyenIndex() {
 		return currentOnyenIndex;
 	}
+	/**
+	 * Called when one goes to a specific onyen from the settings model
+	 * Actually called for setting the first project to be visited
+	 */
 	@Override
 	public void setCurrentOnyenIndex(int newValue) {
+		hasSeeked = true;
+		internalSetCurrentOnyenIndex(newValue);
+//		if (newValue == currentOnyenIndex) return;
+//		this.currentOnyenIndex = newValue;
+//		setSequenceNumber();
+		
+	}
+	protected void refreshFilteredSet() {
+		boolean aMatchesFilter = matchesFilter();
+		if (aMatchesFilter) {
+			knownFilteredItems.add(currentOnyenIndex);
+		} else {
+			knownFilteredItems.remove(currentOnyenIndex);
+		}
+		if (knownFilteredItems.size() == 0) {
+			firstTeeeSetIndex = -1;
+			lastTreeSetIndex = -1;
+		} else {
+			firstTeeeSetIndex = knownFilteredItems.first();
+			lastTreeSetIndex = knownFilteredItems.last();
+		}
+	}
+	public void internalSetCurrentOnyenIndex(int newValue) {
 		if (newValue == currentOnyenIndex) return;
+		if (currentOnyenIndex != - 1) {
+		refreshFilteredSet();// check the current item, probbaly will be removed from filter
+		}
 		this.currentOnyenIndex = newValue;
 		setSequenceNumber();
+		refreshFilteredSet(); // now check the new item
 		
 	}
 	
@@ -622,7 +927,18 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		return filteredOnyenIndex;
 	}
 	
-	protected void setSuccessfulMove (int anIndex) {
+//	protected void setSuccessfulFilteredMove (int anIndex) {
+//		if (firstMatchedIndex == -1) {
+//			firstMatchedIndex = anIndex;
+//		}
+//		if (anIndex > lastMatchedIndex) {
+//			lastMatchedIndex = anIndex;	
+//		 }
+//		
+//	}
+	
+	protected void setSuccessfulFilteredMove (int anIndex) {
+		
 		if (firstMatchedIndex == -1) {
 			firstMatchedIndex = anIndex;
 		}
@@ -631,8 +947,10 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		 }
 		
 	}
-	@Override
-	public void setFilteredOnyenIndex(int filteredOnyenIndex) {
+	// this seems to be called externally only for the first onyen in onyen list
+	public void oldSetFilteredOnyenIndex(int filteredOnyenIndex) {
+		if (noEntriesMatchedFilter)
+			return;
 		this.filteredOnyenIndex = filteredOnyenIndex;
 		
 //		if (firstMatchedIndex == -1) {
@@ -641,7 +959,23 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 //		if (currentOnyenIndex > lastMatchedIndex) {
 //			lastMatchedIndex = currentOnyenIndex;	
 //		 }
-		setSuccessfulMove(filteredOnyenIndex);
+		setSuccessfulFilteredMove(filteredOnyenIndex);
+	}
+	
+	// this seems to be called externally only for the first onyen in onyen list
+	@Override
+	public void setFilteredOnyenIndex(int filteredOnyenIndex) {
+		if (noEntriesMatchedFilter)
+			return;
+		this.filteredOnyenIndex = filteredOnyenIndex;
+		
+//		if (firstMatchedIndex == -1) {
+//			firstMatchedIndex = currentOnyenIndex;
+//		}
+//		if (currentOnyenIndex > lastMatchedIndex) {
+//			lastMatchedIndex = currentOnyenIndex;	
+//		 }
+		setSuccessfulFilteredMove(filteredOnyenIndex);
 	}
 
 
@@ -691,7 +1025,9 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	}
 	@Row(1)
 	@Column(0)
-	@ComponentWidth(100)
+//	@ComponentWidth(100)
+	@ComponentWidth(150)
+
 	@Override
 	@Explanation("View and add comments to source using the text editor registered with the OS.")
 	public void openSource() {
@@ -706,7 +1042,8 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 	
 	@Row(1)
 	@Column(1)
-	@ComponentWidth(100)
+//	@ComponentWidth(100)
+	@ComponentWidth(150)
 	@Explanation("To be implemented.")
 	public void exploreSource() {
 		projectStepper.openSource();
@@ -744,8 +1081,10 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		
 	}
 	@ComponentWidth(100)
-	@Row(0)
-	@Column(2)
+//	@Row(0)
+//	@Column(2)
+	@Row(2)
+	@Column(3)
 	@Override
 	@Explanation("Quit session after saving current student changes.")
 	public void quit() {

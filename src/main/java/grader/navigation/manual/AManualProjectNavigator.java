@@ -39,6 +39,7 @@ public class AManualProjectNavigator implements ManualProjectNavigator {
 		
 	}
 	
+	protected boolean allowNonFilterItems = true;
 	public void navigate(GraderSettingsModel settingsModel, OEFrame settingsFrame, boolean exitOnCompletion) {
 		ManualNavigationStarted.newCase(settingsModel, database, this);
 		if (settingsModel == null) return;
@@ -51,7 +52,7 @@ public class AManualProjectNavigator implements ManualProjectNavigator {
 		
 			boolean retVal = database.startProjectStepper(aGoToOnyen);
 //			 aFrame = database.displayProjectStepper(database.getProjectStepper());
-			if (retVal)
+			if (retVal || allowNonFilterItems)
 				break;
 			else {
 				String message = "";
@@ -62,11 +63,7 @@ public class AManualProjectNavigator implements ManualProjectNavigator {
 				} else
 					message = "Did not find any entries  matching filter for manual mode. Exiting";
 				maybeTryAgain(settingsModel, exitOnCompletion, message);
-//				Tracer.error(message);
-//				JOptionPane.showMessageDialog(null, message);
-//				if (exitOnCompletion)
-//					System.exit(0);
-//				ASakaiProjectDatabase.dispose(aFrame);
+
 			}
 			
 		} catch (MissingOnyenException moe) {

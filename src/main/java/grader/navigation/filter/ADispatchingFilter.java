@@ -16,6 +16,8 @@ public class ADispatchingFilter implements BasicNavigationFilter{
 	@Override
 	public boolean includeProject(ProjectStepper aProjectState,
 			SakaiProjectDatabase aDatabase) {
+		if (aProjectState.getProject() == null)
+			return false;
 		String filterName = (String) navigationFilterType.getValue();
 		BasicNavigationFilter currentFilter = NavigationFilterRepository.getFilter(filterName);
 		return currentFilter.includeProject(aProjectState, aDatabase);	

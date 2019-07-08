@@ -1496,7 +1496,7 @@ public class AProjectStepper extends AClearanceManager implements
 //		 runProjectsInteractively();
 //	}
 //=======
-		 move(true);
+		 move(true, true);
 		// should put person in skipped list
 
 	}
@@ -1521,7 +1521,7 @@ public class AProjectStepper extends AClearanceManager implements
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
-		 move(false);
+		 move(false, true);
 		// should put person in skipped list
 
 	}
@@ -2317,7 +2317,7 @@ public class AProjectStepper extends AClearanceManager implements
 	
 
 	@Override
-	public synchronized boolean move(boolean forward) {
+	public synchronized boolean move(boolean forward, boolean isFiltered) {
 		maybeSaveState();
 //		// josh's code
 //		// no serialization otherwise
@@ -2351,7 +2351,7 @@ public class AProjectStepper extends AClearanceManager implements
 //		projectDatabase.recordWindows();
 		boolean projectSet = setProject(anOnyen);
 		if (!projectSet) {
-			boolean retVal = move(forward);
+			boolean retVal = move(forward, isFiltered);
 			if (!retVal && filteredOnyenIndex != currentOnyenIndex) {
 				currentOnyenIndex = filteredOnyenIndex;
 				try {
@@ -2406,7 +2406,7 @@ public class AProjectStepper extends AClearanceManager implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		move(true);
+		move(true, true);
 //<<<<<<< HEAD
 ////		projectDatabase.resetIO();
 ////		projectDatabase.clearWindows();

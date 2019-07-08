@@ -182,8 +182,8 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 		mainProjectStepper.next();
 	}
 
-	public boolean move(boolean forward) {
-		return mainProjectStepper.move(forward);
+	public boolean move(boolean forward, boolean isFiltered) {
+		return mainProjectStepper.move(forward, isFiltered);
 	}
 
 	public boolean isAutoAutoGrade() {
@@ -266,7 +266,7 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	public String getOverallNotes() {
 		return mainProjectStepper.getOverallNotes();
 	}
-
+	
 	public void internalSetOnyen(String anOnyen) throws MissingOnyenException {
 		mainProjectStepper.internalSetOnyen(anOnyen);
 	}
@@ -667,6 +667,21 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	public GradedProjectTextOverview getTextOverview() {
 		// TODO Auto-generated method stub
 		return mainProjectStepper.getTextOverview();
+	}
+	@Override
+	public void setOnyenIndex(int onyenIndex)  {
+		mainProjectStepper.setOnyenIndex(onyenIndex);
+
+		
+	}
+	@Override
+	public void previousFiltered() {
+		mainProjectStepper.previousFiltered();
+	}
+	@Override
+	public void nextFiltered() {
+		mainProjectStepper.nextFiltered();
+		
 	}
 
 
