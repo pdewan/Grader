@@ -2,7 +2,7 @@ package gradingTools.comp401f15.assignment11.testcases;
 
 import java.lang.reflect.Method;
 
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 
 public class FutureTester {
 	public void test() {

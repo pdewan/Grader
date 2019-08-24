@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import framework.grading.testing.BasicTestCase;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.BasicProjectIntrospection;

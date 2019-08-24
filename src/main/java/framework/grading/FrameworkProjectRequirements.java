@@ -17,7 +17,7 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.grading.testing.TestCase;
 import grader.assignment.shift.AnAssignmentShiftManager;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.CurrentProjectHolder;
 import grader.basics.project.Project;

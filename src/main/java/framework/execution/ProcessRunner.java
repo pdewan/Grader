@@ -1,10 +1,10 @@
 package framework.execution;
 
+import grader.basics.config.BasicExecutionSpecification;
+import grader.basics.config.BasicExecutionSpecificationSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.execution.ARunnerErrorStreamProcessor;
 import grader.basics.execution.ARunnerInputStreamProcessor;
-import grader.basics.execution.BasicExecutionSpecification;
-import grader.basics.execution.BasicExecutionSpecificationSelector;
 import grader.basics.execution.BasicProcessRunner;
 import grader.basics.execution.EntryPointNotFound;
 import grader.basics.execution.NotRunnableException;

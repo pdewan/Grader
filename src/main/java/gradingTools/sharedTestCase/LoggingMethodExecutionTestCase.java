@@ -1,6 +1,6 @@
 package gradingTools.sharedTestCase;
 
-import static grader.basics.config.BasicProjectExecution.restoreOutputAndGetRedirectedOutput;
+import static grader.basics.execution.BasicProjectExecution.restoreOutputAndGetRedirectedOutput;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import framework.execution.ARunningProject;
 import framework.grading.testing.BasicTestCase;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.BasicProjectIntrospection;

@@ -2,7 +2,7 @@ package grader.config;
 
 import java.util.List;
 
-import grader.basics.execution.BasicExecutionSpecification;
+import grader.basics.config.BasicExecutionSpecification;
 
 public interface ExecutionSpecification extends BasicExecutionSpecification {
 

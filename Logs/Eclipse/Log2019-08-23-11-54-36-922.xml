@@ -1,0 +1,1182 @@
+<Events startTimestamp="1566575676922" logVersion="1.0.0.1">
+  <DocumentChange __id="4251" _type="Delete" date="Sat Aug 24 12:21:57 EDT 2019" docASTNodeCount="189" docActiveCodeLength="1023" docExpressionCount="118" docLength="1023" endLine="16" length="11" offset="438" startLine="15" timestamp="88040362">
+    <text><![CDATA[		StringU
+]]></text>
+  </DocumentChange>
+  <Command __id="4252" _type="EclipseCommand" commandID="org.eclipse.ui.edit.delete" date="Sat Aug 24 12:21:57 EDT 2019" timestamp="88040383" />
+  <Command __id="4253" _type="EclipseCommand" commandID="org.eclipse.ui.file.save" date="Sat Aug 24 12:21:58 EDT 2019" timestamp="88041444" />
+  <Command __id="4254" _type="FileOpenCommand" date="Sat Aug 24 12:22:42 EDT 2019" docASTNodeCount="326" docActiveCodeLength="2859" docExpressionCount="204" docLength="2859" projectName="comp110-grader" timestamp="88085695">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\AnInterpretedRequirements.java]]></filePath>
+    <snapshot><![CDATA[package grader.requirements.interpreter;
+
+import framework.grading.FrameworkProjectRequirements;
+import framework.grading.testing.BasicTestCase;
+import grader.requirements.interpreter.specification.CSVRequirementsSpecification;
+
+public class AnInterpretedRequirements extends FrameworkProjectRequirements implements InterpretedRequirements  {
+	CSVRequirementsSpecification csvRequirementsSpecification;	
+	public AnInterpretedRequirements(CSVRequirementsSpecification aCSVRequirementsSpecification) {
+		csvRequirementsSpecification = aCSVRequirementsSpecification;
+		addRequirements();
+	}
+	
+	public void addRequirements() {
+		int aNumRequirements = csvRequirementsSpecification.getNumberOfRequirements();
+		for (int i = 0; i < aNumRequirements; i++) {
+			addRequirement(i);
+		}		
+	}
+	
+	public void addRequirement(int aRequirementNum) {
+		String aType = "";
+		try {
+		 aType = csvRequirementsSpecification.getType(aRequirementNum);
+		if (aType == null) return;
+		String aTypeLC = aType.toLowerCase();
+		if (DUE_DATE.equals(aTypeLC)) {
+			 addDueDate(aRequirementNum);
+		} else if (FEATURE.equals(aTypeLC)) {
+			addFeature(aRequirementNum);
+		} else if (RESTRICTION.equals(aTypeLC)) {
+			addRestriction(aRequirementNum);
+		}
+		} catch (Exception e) {
+			System.out.println("Could not add requirement#:" + aRequirementNum + " " + aType );
+			e.printStackTrace();
+		}
+	}
+	
+	public void addDueDate(int aRequirementNum) {
+			String aDateTime = csvRequirementsSpecification.getDescription(aRequirementNum);
+			Double aPercentage = csvRequirementsSpecification.getMaxScore(aRequirementNum);
+			addDueDate(aDateTime, aPercentage);
+	}
+	
+    public void addFeature(int aRequirementNum) {
+    	boolean isExtraCredit = csvRequirementsSpecification.isExtraCredit(aRequirementNum);
+    	boolean isManual = csvRequirementsSpecification.isManual(aRequirementNum);
+
+    	String aName = csvRequirementsSpecification.getDescription(aRequirementNum);
+    	Double aMaxScore =  csvRequirementsSpecification.getMaxScore(aRequirementNum);
+    	BasicTestCase aTestCase = new AnInterpretedTestCase(aName, csvRequirementsSpecification, aRequirementNum);
+    	addFeature(isManual, aName, aMaxScore, isExtraCredit, aTestCase);		
+	}
+    
+    public void addRestriction(int aRequirementNum) {
+    	boolean isExtraCredit = csvRequirementsSpecification.isExtraCredit(aRequirementNum);
+    	boolean isManual = csvRequirementsSpecification.isManual(aRequirementNum);
+    	String aName = csvRequirementsSpecification.getDescription(aRequirementNum);
+    	Double aMaxScore =  csvRequirementsSpecification.getMaxScore(aRequirementNum);
+    	BasicTestCase aTestCase = new AnInterpretedTestCase(aName, csvRequirementsSpecification, aRequirementNum);
+    	addRestriction(isManual, aName, aMaxScore, isExtraCredit, aTestCase);		
+   	}
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4255" _type="MoveCaretCommand" caretOffset="0" date="Sat Aug 24 12:22:42 EDT 2019" docOffset="0" timestamp="88085850" />
+  <Command __id="4256" _type="MoveCaretCommand" caretOffset="1005" date="Sat Aug 24 12:23:29 EDT 2019" docOffset="1138" timestamp="88132462" />
+  <Command __id="4257" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.open.editor" date="Sat Aug 24 12:23:30 EDT 2019" timestamp="88133868" />
+  <Command __id="4258" _type="MoveCaretCommand" caretOffset="2049" date="Sat Aug 24 12:23:57 EDT 2019" docOffset="2182" timestamp="88160328" />
+  <Command __id="4259" _type="FileOpenCommand" date="Sat Aug 24 12:23:58 EDT 2019" docASTNodeCount="1204" docActiveCodeLength="8796" docExpressionCount="713" docLength="13106" projectName="comp110-grader" timestamp="88161504">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\framework\grading\FrameworkProjectRequirements.java]]></filePath>
+    <snapshot><![CDATA[package framework.grading;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import util.trace.Tracer;
+import wrappers.framework.project.ProjectWrapper;
+import framework.execution.ARunningProject;
+import framework.grading.testing.CheckResult;
+import framework.grading.testing.Checkable;
+import framework.grading.testing.Feature;
+import framework.grading.testing.Restriction;
+import framework.grading.testing.TestCase;
+import grader.assignment.shift.AnAssignmentShiftManager;
+import grader.basics.execution.BasicProjectExecution;
+import grader.basics.project.BasicProjectIntrospection;
+import grader.basics.project.CurrentProjectHolder;
+import grader.basics.project.Project;
+import grader.language.LanguageDependencyManager;
+import grader.sakai.project.SakaiProject;
+import grader.settings.GraderSettingsModelSelector;
+
+/**
+ * This is the fundamental container which holds all the features and
+ * restrictions on which programs are graded.
+ */
+public class FrameworkProjectRequirements implements ProjectRequirements {
+
+    private List<Feature> features;
+    private List<Restriction> restrictions;
+//    protected Map<Object, Object> userData = new HashMap();
+    private List<DueDate> dueDates = new ArrayList<DueDate>();
+    
+
+    
+
+	/**
+     * It's important that there is a nullary constructor because this needs to
+     * be able to be simply instantiated via reflection.
+     */
+    public FrameworkProjectRequirements() {
+        features = new ArrayList<Feature>();
+        restrictions = new ArrayList<Restriction>();
+    }
+
+    // Feature adding methods
+    public void addFeature(Feature feature) {
+        features.add(feature);
+        feature.initRequirements(this);
+    }
+
+    public void addFeature(String name, double points, List<TestCase> testCases) {
+        addFeature(new Feature(name, points, testCases));
+    }
+
+    public void addFeature(String name, double points, boolean extraCredit, List<TestCase> testCases) {
+        addFeature(new Feature(name, points, extraCredit, testCases));
+    }
+
+    public void addFeature(String name, double points, TestCase... testCases) {
+        addFeature(new Feature(name, points, testCases));
+    }
+
+    public void addFeature(String name, double points, boolean extraCredit, TestCase... testCases) {
+        addFeature(new Feature(name, points, extraCredit, testCases));
+    }
+
+    public void addFeature(boolean anIsManual, String name, double points, boolean extraCredit, TestCase... testCases) {
+        addFeature(new Feature(anIsManual, name, points, extraCredit, testCases));
+    }
+
+    public void addRestriction(boolean anIsManual, String name, double points, boolean extraCredit, TestCase... testCases) {
+        addRestriction(new Restriction(anIsManual, name, points, extraCredit, testCases));
+    }
+
+    public void addManualFeature(String name, double points, boolean extraCredit) {
+        addFeature(new Feature(true, name, points, extraCredit,  new TestCase[]{}));
+    }
+
+    public void addManualFeature(String name, double points, TestCase... testCases) {
+        addFeature(new Feature(true, name, points, false, testCases));
+    }
+
+    public void addManualFeature(String name, double points, boolean extraCredit, TestCase... testCases) {
+        addFeature(new Feature(true, name, points, extraCredit, testCases));
+    }
+    
+
+    // Restriction adding methods
+    public void addRestriction(Restriction restriction) {
+        restrictions.add(restriction);
+        restriction.initRequirements(this);
+    }
+
+    public void addRestriction(String name, double points, TestCase... testCases) {
+        addRestriction(new Restriction(name, points, testCases));
+    }
+
+    public void addRestriction(String name, double points, List<TestCase> testCases) {
+        addRestriction(new Restriction(name, points, testCases));
+    }
+    public void addManualRestriction(String name, double points, boolean extraCredit, TestCase... testCases) {
+        addRestriction(new Restriction(true, name, points, extraCredit, testCases));
+    }
+    public void addManualRestriction(String name, double points, TestCase... testCases) {
+        addRestriction(new Restriction(true, name, points, false, testCases));
+    }
+    
+     
+
+    // Due date adding methods
+    public void addDueDate(DateTime dateTime, double percentage) {
+        dueDates.add(new DueDate(dateTime, percentage));
+    }
+
+    public void addDueDate(String dateTime, double percentage) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
+        DateTime dt = formatter.parseDateTime(dateTime);
+        addDueDate(dt, percentage);
+    }
+
+    // Getters
+    public List<Feature> getFeatures() {
+        return features;
+    }
+
+    public List<Restriction> getRestrictions() {
+        return restrictions;
+    }
+
+    // Grading methods
+    /**
+     * Given a project, this checks all the features against it.
+     *
+     * @param project The project to check, or grade.
+     * @return A list of {@link CheckResult} corresponding to the features
+     */
+    public List<CheckResult> checkFeatures(Project project) {
+//    	getUserData().clear();
+    	clearUserObjects();
+    	// need to do this once for all features and test cases to prserve caches
+    	CurrentProjectHolder.setProject(project); // for Junit test cases
+//    	BasicProjectIntrospection.clearProjectCaches(); // all th eclasses and methods cached
+        List<CheckResult> results = new LinkedList<CheckResult>();
+        SakaiProject sakaiProject = null;
+        if (project instanceof ProjectWrapper) {
+            ProjectWrapper projectWrapper = (ProjectWrapper) project;
+            sakaiProject = projectWrapper.getProject();
+        }
+        for (Feature feature : features) {
+//        	if (feature.isManual()) 
+//        		continue;
+//        	CurrentProjectHolder.setProject(project); // in case some feature reset the project
+        	BasicProjectExecution.redirectOutput();
+        	if (isInteractiveRun(feature))
+        		results.add(feature.check(project, false)); // added again below
+            if (sakaiProject != null) { // should we do the check anyway, regardless of whether sakaiProject is null or not
+                sakaiProject.setCurrentGradingFeature(feature);
+            
+            try {
+                results.add(feature.check(project)); //so the feature is added twice?
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+            
+        			String anOutput = BasicProjectExecution.restoreOutputAndGetRedirectedOutput();
+        			 if (anOutput != null && !anOutput.isEmpty()) {
+                     	ARunningProject.appendToTranscriptFile(project, feature.getName(), anOutput);
+                     }
+        			 Tracer.resetNumTraces();
+        			
+        		
+            }
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Given a project, this checks all the restrictions against it.
+     *
+     * @param project The project to check, or grade.
+     * @return A list of {@link CheckResult} corresponding to the restrictions
+     */
+    public List<CheckResult> checkRestrictions(Project project) {
+        List<CheckResult> results = new LinkedList<CheckResult>();
+        for (Restriction restriction : restrictions) {
+        	if (isInteractiveRun(restriction))
+        		results.add(restriction.check(project, false));
+        	else
+              results.add(restriction.check(project));
+        }
+        return results;
+    }
+    public static int MILLI_SECONDS_IN_DAY = 24*60*60*1000;
+    
+//    public static final String ASSIGNENT_ID = "Assignment";
+    
+   
+   
+//    public static ProjectRequirements getRequirement(Project aProject, ProjectRequirements anOriginal, int aShift) {
+//    	Class anOriginalClass = anOriginal.getClass();
+//    	String aClassName = anOriginalClass.getName();
+//    	int anAssignmentStartIndex = aClassName.indexOf(ASSIGNENT_ID);
+//    	if (anAssignmentStartIndex == -1)
+//    		return null;
+//    	if (anAssignmentStartIndex == -1) {
+//    		return anOriginal;
+//    	}
+//    	int anAssignmentNumberStartIndex = anAssignmentStartIndex + ASSIGNENT_ID.length();
+//    	int anAssignmentNumberEndIndex;
+//    	for (anAssignmentNumberEndIndex = anAssignmentNumberStartIndex +1;
+//    			
+//    			anAssignmentNumberEndIndex < aClassName.length() && 
+//    			Character.isDigit(aClassName.charAt(anAssignmentNumberEndIndex));
+//    			anAssignmentNumberEndIndex++);   
+//    	
+//    	// This may not have a number actually
+//        String anAssignmentNumberString = aClassName.substring(
+//        		anAssignmentNumberStartIndex, anAssignmentNumberEndIndex);
+//             	
+//    	try {
+//    		int anAssignmentNumber = Integer.parseInt(anAssignmentNumberString);
+//    		int aNewAssignmentNumber = anAssignmentNumber + aShift;
+//    		String aNewAssignmentClass = ASSIGNENT_ID + aNewAssignmentNumber;
+//    		String aNewClassName = aClassName.replace(
+//    				ASSIGNENT_ID + anAssignmentNumber,
+//    				ASSIGNENT_ID + aNewAssignmentNumber);
+//    		Class<?> aNewClass = Class.forName(aNewClassName);
+//
+//			return (ProjectRequirements) aNewClass.newInstance();
+//    		
+//    		
+//    	} catch (NumberFormatException e) {
+//    		Tracer.error(aClassName + " does not have a number following " + ASSIGNENT_ID );
+//    		return anOriginal;
+//    	} catch (InstantiationException e) {			
+//			e.printStackTrace();
+//			return anOriginal;
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//			return anOriginal;
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return anOriginal;
+//
+//		}
+//    }
+
+   
+    @Override
+    public double checkDueDate(Project aProject, DateTime dateTime) {
+    	return AnAssignmentShiftManager.checkDueDate(this, aProject, dateTime);
+//    	return checkDueDate(dateTime);
+    	
+    }
+    /**
+     * Given a due date, this figures out what score modifier (a percentage)
+     * should be given.
+     *
+     * @param dateTime The submission time of the project
+     * @return A score modifier percentage
+     */
+    public double checkDueDate(DateTime dateTime) {
+        if (dueDates.isEmpty()) {
+            return 1;
+        }
+        double percentage = 0;
+        DateTime graceDateTime = dateTime;
+        int aGraceDays = GraderSettingsModelSelector.getGraderSettingsModel().getGraceDays();
+//        aGraceDays = 1; // to see if it works right
+        if (aGraceDays > 0) {
+        	graceDateTime = dateTime.minus(aGraceDays*MILLI_SECONDS_IN_DAY);
+        }
+        for (DueDate dueDate : dueDates) {
+        	if (dueDate.getCutoffDate().isAfter(graceDateTime)) {
+//            if (dueDate.getCutoffDate().isAfter(dateTime)) {
+                percentage = Math.max(percentage, dueDate.getPercentage());
+            }
+        }
+        Class aCurrentClass;
+        
+        // if percentage is 0, find the first subsequent assignment that gives them non zero
+        // return that percentage
+        // maybe record that shift in file
+        // if current assignment is sacrificed, put multiplier of 0 regardless of value returned.
+        
+        return percentage;
+    }
+
+    @Override
+    public Object[] getPermissions() {
+        return LanguageDependencyManager.getDefaultPermissible().getPermissions();
+    }
+    @Override
+    public Object getUserObject (Object aKey) {
+//    	return userData.get(aKey);
+    	return BasicProjectIntrospection.getUserObject(aKey);
+    }
+    @Override
+    public void putUserObject (Object aKey, Object aValue) {
+//    	 userData.put(aKey, aValue);
+    	BasicProjectIntrospection.putUserObject(aKey, aValue);
+    }
+    boolean isInteractiveRun(Checkable aFeature) {
+    	return aFeature.getName().equals(INTERACTIVE_RUN);
+    }
+
+	@Override
+	public Feature getInteractiveRunFeature() {
+		for (Feature aFeature:features) {
+//			if (aFeature.getName().equals(INTERACTIVE_RUN))
+			if (isInteractiveRun(aFeature))
+				return aFeature;
+		}
+		return null;
+	}
+	@Override
+	public Restriction getInteractiveRunRestriction() {
+		for (Restriction aRestriction:restrictions) {
+//			if (aFeature.getName().equals(INTERACTIVE_RUN))
+			if (isInteractiveRun(aRestriction))
+				return aRestriction;
+		}
+		return null;
+	}
+
+//	@Override
+//	public Map<Object, Object> getUserData() {
+//		return userData;
+//	}
+	@Override
+	public void clearUserObjects() {
+		BasicProjectIntrospection.clearUserObjects();
+	}
+	
+	@Override
+	public List<DueDate> getDueDates() {
+		return dueDates;
+	}
+	@Override
+	public void setDueDates(List<DueDate> dueDates) {
+		this.dueDates = dueDates;
+	}
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4260" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.open.editor" date="Sat Aug 24 12:23:58 EDT 2019" timestamp="88161587" />
+  <Command __id="4261" _type="SelectTextCommand" caretOffset="1656" date="Sat Aug 24 12:23:58 EDT 2019" end="1656" start="1646" timestamp="88161660" />
+  <Command __id="4262" _type="FileOpenCommand" date="Sat Aug 24 12:24:08 EDT 2019" docASTNodeCount="326" docActiveCodeLength="2859" docExpressionCount="204" docLength="2859" projectName="comp110-grader" timestamp="88171284">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\AnInterpretedRequirements.java]]></filePath>
+  </Command>
+  <Command __id="4263" _type="EclipseCommand" commandID="org.eclipse.ui.navigate.backwardHistory" date="Sat Aug 24 12:24:08 EDT 2019" timestamp="88171344" />
+  <Command __id="4264" _type="MoveCaretCommand" caretOffset="2049" date="Sat Aug 24 12:24:08 EDT 2019" docOffset="2182" timestamp="88171399" />
+  <Command __id="4265" _type="MoveCaretCommand" caretOffset="1966" date="Sat Aug 24 12:24:28 EDT 2019" docOffset="2099" timestamp="88191496" />
+  <Command __id="4266" _type="FileOpenCommand" date="Sat Aug 24 12:24:29 EDT 2019" docASTNodeCount="381" docActiveCodeLength="2795" docExpressionCount="271" docLength="2928" projectName="comp110-grader" timestamp="88192790">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\AnInterpretedTestCase.java]]></filePath>
+    <snapshot><![CDATA[package grader.requirements.interpreter;
+
+import wrappers.framework.project.ProjectWrapper;
+import framework.grading.testing.BasicTestCase;
+import grader.basics.execution.RunningProject;
+import grader.basics.junit.NotAutomatableException;
+import grader.basics.junit.TestCaseResult;
+import grader.basics.project.NotGradableException;
+import grader.basics.project.Project;
+import grader.requirements.interpreter.checkers.InterpretedChecker;
+import grader.requirements.interpreter.checkers.InterpretedCheckerRegistry;
+import grader.requirements.interpreter.checkers.InterpretedCheckerResult;
+import grader.requirements.interpreter.specification.CSVRequirementsSpecification;
+import grader.sakai.project.SakaiProject;
+import gradingTools.utils.RunningProjectUtils;
+
+public class AnInterpretedTestCase extends BasicTestCase{
+	CSVRequirementsSpecification csvRequirementsSpecification;
+	int featureNumber;
+	String input;
+	
+	public AnInterpretedTestCase(String aName, CSVRequirementsSpecification aCSVRequirementsSpecification,
+							int aFeatureNum
+							) {
+		super(aName);
+		csvRequirementsSpecification = aCSVRequirementsSpecification;
+		featureNumber = aFeatureNum;
+	}
+
+	@Override
+	public TestCaseResult test(Project project, boolean autoGrade)
+			throws NotAutomatableException, NotGradableException {
+		SakaiProject aSakaiProject = ((ProjectWrapper) project).getProject();
+		String anInput = InterpretedVariablesSubstituter.getInput(csvRequirementsSpecification, featureNumber);
+		Integer aTimeOut = csvRequirementsSpecification.getTimeOut(featureNumber);
+		String anOutput = "";
+		RunningProject runningProject = null;
+		if (aTimeOut != null) {
+		 runningProject = RunningProjectUtils.runProject(project, aTimeOut, anInput);
+		anOutput = runningProject.await();
+		} else { // use the I/O from last run, could also store I/O mapping in project
+			anInput = aSakaiProject.getCurrentInput();
+			anOutput = aSakaiProject.getCurrentOutput().toString();
+		}
+		String aComparator = csvRequirementsSpecification.getChecker(featureNumber);
+		InterpretedChecker aChecker = InterpretedCheckerRegistry.getInterpretedChecker(aComparator);
+		int numArgs = aChecker.getNumArgs();
+		String[] anArgs = new String[numArgs];
+		String allArgs = "";
+		for (int i = 0; i < numArgs; i++) {
+			String anArg = csvRequirementsSpecification.getArg(featureNumber, i);
+			String anActualArg = InterpretedVariablesSubstituter.getValue(aSakaiProject, csvRequirementsSpecification, featureNumber, anOutput, anArg);
+			anArgs[i] = anActualArg;
+			allArgs += " " + anArg;
+		}
+		InterpretedCheckerResult aResult = aChecker.check(anArgs);
+		String aFunctionCall = aComparator + " " + allArgs;
+		
+//		if (checkable instanceof Feature && aResult.isSucceeded()) {
+		if (aResult.isSucceeded()) {
+			return pass("");
+		} else 
+			return fail(aFunctionCall + " failed \n" + aResult.getNotes());
+	}
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4267" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.open.editor" date="Sat Aug 24 12:24:29 EDT 2019" timestamp="88192863" />
+  <Command __id="4268" _type="SelectTextCommand" caretOffset="286" date="Sat Aug 24 12:24:29 EDT 2019" end="286" start="265" timestamp="88192936" />
+  <Command __id="4269" _type="MoveCaretCommand" caretOffset="1400" date="Sat Aug 24 12:26:05 EDT 2019" docOffset="2081" timestamp="88288869" />
+  <Command __id="4270" _type="SelectTextCommand" caretOffset="1418" date="Sat Aug 24 12:26:06 EDT 2019" end="1418" start="1400" timestamp="88289220" />
+  <Command __id="4271" _type="FileOpenCommand" date="Sat Aug 24 12:26:08 EDT 2019" docASTNodeCount="26" docActiveCodeLength="187" docExpressionCount="13" docLength="221" projectName="comp110-grader" timestamp="88291690">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\checkers\InterpretedChecker.java]]></filePath>
+    <snapshot><![CDATA[package grader.requirements.interpreter.checkers;
+
+
+public interface InterpretedChecker {
+//	public boolean isExpandFiles();
+	public int getNumArgs();
+	public InterpretedCheckerResult check (String[] anArgs);
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4272" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.open.editor" date="Sat Aug 24 12:26:08 EDT 2019" timestamp="88291752" />
+  <Command __id="4273" _type="SelectTextCommand" caretOffset="90" date="Sat Aug 24 12:26:08 EDT 2019" end="90" start="72" timestamp="88291812" />
+  <Command __id="4274" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.open.type.hierarchy" date="Sat Aug 24 12:26:15 EDT 2019" timestamp="88298994" />
+  <Command __id="4278" _type="FileOpenCommand" date="Sat Aug 24 12:26:56 EDT 2019" docASTNodeCount="1397" docActiveCodeLength="9980" docExpressionCount="918" docLength="16129" projectName="GraderBasics" timestamp="88339441">
+    <filePath><![CDATA[D:\dewan_backup\Java\GraderBasics\src\grader\basics\util\DirectoryUtils.java]]></filePath>
+    <snapshot><![CDATA[package grader.basics.util;
+
+import grader.basics.BasicLanguageDependencyManager;
+import grader.basics.settings.BasicGradingEnvironment;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+//import scala.Option;
+import util.misc.Common;
+
+import util.trace.Tracer;
+
+/**
+ * A set of utilities to assist with the recursive nature of directories.
+ */
+public class DirectoryUtils {
+
+    /**
+     * Finds the first file in the given folder that matches the provided filter
+     * @param folder The folder to look in
+     * @param filter The filter to apply
+     * @return The first found file wrapped in an {@link Option} in case none was found.
+     */
+    public static Option<File> find(File folder, FileFilter filter) {
+        File[] files = folder.listFiles(filter);
+        if (files == null || files.length == 0) {
+            return Option.empty();
+        } else {
+            return Option.apply(files[0]);
+        }
+    }
+
+    /**
+     * Looks for a folder with the given name recursively in a provided directory.
+     * @param currentDir The directory to start looking in
+     * @param folderName The name of the desired directory
+     * @return The located directory wrapped in an {@link Option} in case it wasn't found
+     */
+    public static Option<File> locateFolder(File currentDir, final String folderName) {
+        // Don't accept files (they don't make sense) or Mac meta folders
+        if (!currentDir.isDirectory() || currentDir.getName().equals("__MACOSX")) {
+            return Option.empty();
+        } else {
+            Option<File> folder = find(currentDir, new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    return pathname.getName().equals(folderName);
+                }
+            });
+            if (folder.isDefined()) {
+                return folder;
+            } else {
+                for (File file : currentDir.listFiles()) {
+                    Option<File> possible = locateFolder(file, folderName);
+                    if (possible.isDefined()) {
+                        return possible;
+                    }
+                }
+                return Option.empty();
+            }
+        }
+    }
+
+    /**
+     * Looks for all files matching the provided filter recursively.
+     * @param dir The directory to start looking from
+     * @param filter The filter to apply
+     * @return The set all of all files that matched the filter
+     */
+    public static Set<File> getFiles(File dir, final FileFilter filter) {
+        // Get files in this folder
+        File[] files = dir.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return !pathname.isDirectory() && filter.accept(pathname);
+            }
+        });
+        
+        Set<File> allFiles = new HashSet<>(files.length);
+        //if (files != null) {
+            allFiles.addAll(Arrays.asList(files));
+        //}
+
+        // Get files in sub directories
+        File[] directories = dir.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isDirectory();
+            }
+        });
+        
+        //if (directories != null) {
+            for (File directory : directories) {
+                allFiles.addAll(getFiles(directory, filter));
+            }
+        //}
+
+        return allFiles;
+    }
+
+	public static Set<File> getSourceFiles(File sourceFolder, String aSourceFilePattern) {
+	Set<File> aSourceFiles = getFiles(sourceFolder, new FileFilter() {
+		@Override
+		public boolean accept(File pathname) {
+//			return pathname.getName().endsWith(".java");
+			
+			try {
+				return ((aSourceFilePattern == null) || pathname.getCanonicalPath().contains(aSourceFilePattern)) &&					
+						!pathname.getName().startsWith(".") && !pathname.getName().equals("package-info.java") &&
+						pathname.getName().endsWith(BasicLanguageDependencyManager.getSourceFileSuffix());
+			} catch (IOException e) {				
+				e.printStackTrace();
+				return false; // should never happen
+			}
+
+		}
+	});
+	return aSourceFiles;
+	}
+	
+	public static boolean hasSuffix (String name, List<String> ignoreSuffixes) {
+		for (String suffix:ignoreSuffixes) {
+			if (name.endsWith(suffix)) {
+                            return true;
+                        }
+			
+		}
+		return false; 
+		
+		
+	}
+	
+	public static boolean compare (File correctDir, File testDir) {
+		List<String> suffixes = new ArrayList<>();
+		return compare(correctDir, testDir, suffixes);
+		
+	}
+	
+	public static String handleSpacesInExecutale(String aCommand) {
+//		return aCommand.replaceAll("Program Files", "\"Program Files\""); // hack for now
+		return "\"" + aCommand + "\"";
+	}
+	
+	public static String diffWithResult( String anOptions, File correctChild, File testChild, String anOutputFileName) {
+		String diffTool = BasicGradingEnvironment.get().getDiff();
+		if ((diffTool == null || diffTool.isEmpty())) {
+			System.out.println("cannot diff as no difftool provided");
+			return "";
+		}
+//			diffTool = handleSpacesInExecutale(diffTool);
+//		Path aPath = Paths.get(diffTool);
+		try {
+//			String aCanonicalPath = aPath.toFile().getCanonicalPath();
+			String aCanonicalPath = diffTool;
+			String aCorrectChildName =  "\"" + correctChild.getAbsolutePath() + "\"";
+			String aTestChildName = "\"" + testChild.getAbsolutePath() + "\"";
+			
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, correctChild.getAbsolutePath(), testChild.getAbsolutePath(), ">", testChild.getAbsolutePath()+"diff" );
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, aCorrectChildName, aTestChildName);
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, aCorrectChildName, aTestChildName,  ">", anOutputFileName);
+			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, anOptions, aCorrectChildName, aTestChildName);
+
+
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath );
+			Process aProcess;
+			aProcessBuilder.redirectError(Redirect.INHERIT);
+			if (anOutputFileName == null) {
+//				aProcessBuilder.redirectOutput(Redirect.INHERIT);
+				aProcess = aProcessBuilder.start();
+				aProcess.waitFor();
+				BufferedReader br = new BufferedReader(new InputStreamReader(aProcess.getInputStream()));
+
+				StringBuilder builder = new StringBuilder();
+				String line = null;
+				while ( (line = br.readLine()) != null) {
+				   builder.append(line);
+				   builder.append(System.getProperty("line.separator"));
+				}
+				String result = builder.toString();
+				return result;
+				
+
+			} else {
+
+			File anOutputFile = new File(anOutputFileName);
+			if (!anOutputFile.exists())
+				anOutputFile.createNewFile();
+			aProcessBuilder.redirectOutput(Redirect.to(anOutputFile));
+			 aProcess = aProcessBuilder.start();
+			aProcess.waitFor();
+			return Common.toText(anOutputFile);
+			}
+
+//			Process aProcess = aProcessBuilder.start();
+//			aProcess.waitFor();
+//			String diffText = Common.toText(new File(testChild.getAbsolutePath()+"diff"));
+
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+//		String command = diffTool + " " + correctChild.getAbsolutePath() + " " + testChild.getAbsolutePath() + " > " + testChild.getAbsolutePath()+"diff";
+////		try {
+////			Runtime.getRuntime().exec(command);
+//			OEMisc.runWithProcessExecer(diffTool);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	
+		
+	}
+	public static void diff( String anOptions, File anOriginalFile, File aModifiedFile, String anOutputFileName) {
+		String diffTool = BasicGradingEnvironment.get().getDiff();
+		if ((diffTool == null || diffTool.isEmpty())) {
+			System.out.println("cannot diff as no difftool provided");
+			return;
+		}
+		String[] anOptionsList = anOptions.replace("\"", "").split("\\s+");
+//			diffTool = handleSpacesInExecutale(diffTool);
+//		Path aPath = Paths.get(diffTool);
+		try {
+//			String aCanonicalPath = aPath.toFile().getCanonicalPath();
+			String aCanonicalPath = diffTool;
+			String anOriginalFileName =  "\"" + anOriginalFile.getAbsolutePath() + "\"";
+			String aModifiedFileName = "\"" + aModifiedFile.getAbsolutePath() + "\"";
+			String[] anArgs = new String[anOptionsList.length + 3];
+			for (int i=0; i < anOptionsList.length; i++) {
+				anArgs[i + 1] = anOptionsList[i];
+			}
+			anArgs[0] = aCanonicalPath;
+			anArgs[anOptionsList.length + 1] = anOriginalFileName;
+			anArgs[anOptionsList.length + 2] = aModifiedFileName;
+			
+			
+			
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, correctChild.getAbsolutePath(), testChild.getAbsolutePath(), ">", testChild.getAbsolutePath()+"diff" );
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, aCorrectChildName, aTestChildName);
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, aCorrectChildName, aTestChildName,  ">", anOutputFileName);
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, anOptions, anOriginalFileName, aModifiedFileName);
+			ProcessBuilder aProcessBuilder = new ProcessBuilder(anArgs);
+
+
+//			ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath );
+			aProcessBuilder.redirectError(Redirect.INHERIT);
+			if (anOutputFileName == null) {
+				aProcessBuilder.redirectOutput(Redirect.INHERIT);
+				
+
+			} else {
+
+			File anOutputFile = new File(anOutputFileName);
+			if (!anOutputFile.exists())
+				anOutputFile.createNewFile();
+			aProcessBuilder.redirectOutput(Redirect.to(anOutputFile));
+			
+			}
+
+			Process aProcess = aProcessBuilder.start();
+			aProcess.waitFor();
+//			String diffText = Common.toText(new File(testChild.getAbsolutePath()+"diff"));
+
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+//		String command = diffTool + " " + correctChild.getAbsolutePath() + " " + testChild.getAbsolutePath() + " > " + testChild.getAbsolutePath()+"diff";
+////		try {
+////			Runtime.getRuntime().exec(command);
+//			OEMisc.runWithProcessExecer(diffTool);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	
+		
+	}
+	
+	public static boolean compare (File correctDir, File testDir, List<String> ignoreSuffixes) {
+		boolean retVal = true;		
+		if (!correctDir.isDirectory() || ! testDir.isDirectory()) {
+			Tracer.error("test or corect dir not really directories");
+			return false;
+		}
+		File[] correctChildren = correctDir.listFiles();
+		File[] testChildren = testDir.listFiles();
+		if (correctChildren.length != testChildren.length) {
+			Tracer.error("correct and test dir not same size:" + correctDir.getAbsolutePath() + "(" + correctChildren.length + "," + testChildren.length + ")");
+			Tracer.info(DirectoryUtils.class, "Correct:" +  Common.toString(correctChildren) + " Test:" + Common.toString(testChildren));
+			System.out.println( "Correct:" +  Common.toString(correctChildren) + " Test:" + Common.toString(testChildren));
+
+			retVal = false;
+//			return false;
+			
+		}
+		for (File correctChild:correctChildren) {
+			File testChild = new File (testDir,  correctChild.getName());
+			if (!testChild.exists()) {
+				Tracer.error("test file does not exist:" + testChild.getName());
+				retVal = false;
+//				return false;
+                                continue;
+			}
+			if (hasSuffix(correctChild.getName(), ignoreSuffixes)) {
+                            continue;
+                        }
+			if (correctChild.isDirectory()) {
+				if (!testChild.isDirectory()) {
+					Tracer.error("Test file is not a directory:" + testChild.getName());
+					retVal = false;
+//					return false;
+				}
+					if (!compare(correctChild, testChild, ignoreSuffixes)) {
+						retVal = false;
+						continue;
+//						return false;
+					} else {
+                                            continue;
+                                }
+				
+			}
+//			if (hasSuffix(correctChild.getName(), ignoreSuffixes))
+//				continue;
+//			String diffTool = GradingEnvironment.get().getDiff();
+//			if (!(diffTool == null || diffTool.isEmpty())) {
+////				diffTool = handleSpacesInExecutale(diffTool);
+////			Path aPath = Paths.get(diffTool);
+//			try {
+////				String aCanonicalPath = aPath.toFile().getCanonicalPath();
+//				String aCanonicalPath = diffTool;
+//				String aCorrectChildName =  "\"" + correctChild.getAbsolutePath() + "\"";
+//				String aTestChildName = "\"" + testChild.getAbsolutePath() + "\"";
+//				String anOutputFileName =  testChild.getAbsolutePath() + "diff";
+//				File anOutputFile = new File(anOutputFileName);
+//				if (!anOutputFile.exists())
+//					anOutputFile.createNewFile();
+////				ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, correctChild.getAbsolutePath(), testChild.getAbsolutePath(), ">", testChild.getAbsolutePath()+"diff" );
+////				ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, aCorrectChildName, aTestChildName);
+////				ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, aCorrectChildName, aTestChildName,  ">", anOutputFileName);
+//				ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath, aCorrectChildName, aTestChildName);
+//
+//
+////				ProcessBuilder aProcessBuilder = new ProcessBuilder(aCanonicalPath );
+//
+//				aProcessBuilder.redirectError(Redirect.INHERIT);
+//				
+//				aProcessBuilder.redirectOutput(Redirect.appendTo(anOutputFile));
+//
+//				Process aProcess = aProcessBuilder.start();
+//				aProcess.waitFor();
+////				String diffText = Common.toText(new File(testChild.getAbsolutePath()+"diff"));
+//
+//			} catch (IOException | InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+////			String command = diffTool + " " + correctChild.getAbsolutePath() + " " + testChild.getAbsolutePath() + " > " + testChild.getAbsolutePath()+"diff";
+//////			try {
+//////				Runtime.getRuntime().exec(command);
+////				OEMisc.runWithProcessExecer(diffTool);
+////			} catch (IOException e) {
+////				// TODO Auto-generated catch block
+////				e.printStackTrace();
+////			}
+//			}
+
+			String correctText = Common.toText(correctChild).replaceAll("\r\n", "\n");
+			String testText = Common.toText(testChild).replaceAll("\r\n", "\n");
+			if (!correctText.equals(testText)) {
+				Tracer.error("Not equal to test file:" + correctChild.getAbsolutePath());
+				Tracer.info(DirectoryUtils.class, "-----------------Correct Text-----------------\n" + correctText);
+				Tracer.info(DirectoryUtils.class,"-----------------Test Text-----------------\n" + testText);
+//				System.out.println( "-----------------Correct Text-----------------\n" + correctText);
+//				System.out.println("-----------------Test Text-----------------\n" + testText);
+				diff("-w", correctChild, testChild, null);
+				retVal = false;
+//				return false;
+			} else {
+				Tracer.info(DirectoryUtils.class, "Equal to test file:" + correctChild.getAbsolutePath());
+			}
+			
+			
+		}		
+		return retVal;
+//		return true;
+	}
+	
+	public static void main (String[] args) {
+		File correctDir = new File ("Test Data/Correct 110 F13 Results/Assignment3");
+		File testDir = new File ("Test Data/Test 110 F13 Assignments/Assignment3");
+		String[] ignoreSuffixesArray = {".zip", ".ini", ".json"};
+		List<String> ignoreSuffixesList = Arrays.asList(ignoreSuffixesArray);
+		compare (correctDir, testDir, ignoreSuffixesList);
+		
+	}
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4279" _type="PredictionCommand" date="Sat Aug 24 12:26:56 EDT 2019" prediction_type="MakingProgress" timestamp="88339442" />
+  <Command __id="4280" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.open.editor" date="Sat Aug 24 12:26:56 EDT 2019" timestamp="88339511" />
+  <Command __id="4281" _type="SelectTextCommand" caretOffset="7606" date="Sat Aug 24 12:26:56 EDT 2019" end="7606" start="7602" timestamp="88339575" />
+  <Command __id="4282" _type="FileOpenCommand" date="Sat Aug 24 12:27:06 EDT 2019" docASTNodeCount="281" docActiveCodeLength="1746" docExpressionCount="174" docLength="2032" projectName="comp110-grader" timestamp="88349817">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\checkers\ADiffChecker.java]]></filePath>
+  </Command>
+  <Command __id="4283" _type="EclipseCommand" commandID="org.eclipse.ui.navigate.backwardHistory" date="Sat Aug 24 12:27:06 EDT 2019" timestamp="88349881" />
+  <Command __id="4284" _type="MoveCaretCommand" caretOffset="1456" date="Sat Aug 24 12:27:06 EDT 2019" docOffset="1537" timestamp="88349935" />
+  <Command __id="4285" _type="ShellCommand" date="Sat Aug 24 12:32:02 EDT 2019" timestamp="88645089" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="4286" _type="ShellCommand" date="Sat Aug 24 12:52:46 EDT 2019" timestamp="89889305" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="4287" _type="ShellCommand" date="Sat Aug 24 12:52:53 EDT 2019" timestamp="89897012" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="4288" _type="ShellCommand" date="Sat Aug 24 12:53:01 EDT 2019" timestamp="89904940" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="4289" _type="EclipseCommand" commandID="org.eclipse.search.ui.openFileSearchPage" date="Sat Aug 24 12:53:01 EDT 2019" timestamp="89905010" />
+  <Command __id="4290" _type="FileOpenCommand" date="Sat Aug 24 12:53:45 EDT 2019" docASTNodeCount="648" docActiveCodeLength="5050" docExpressionCount="395" docLength="5793" projectName="comp110-grader" timestamp="89949007">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\execution\AProxyProjectClassLoader.java]]></filePath>
+    <snapshot><![CDATA[package grader.execution;
+
+import grader.file.FileProxy;
+import grader.file.filesystem.AFileSystemFileProxy;
+import grader.project.flexible.FlexibleProject;
+import grader.project.folder.RootCodeFolder;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class AProxyProjectClassLoader extends ClassLoader implements ProxyClassLoader {
+    public static final String CLASS_MAIN = "main.finalAssignment";
+
+    RootCodeFolder rootCodeFolder;
+    String projectFolderName, binaryFolderName, binaryFileSystemFolderName;
+    
+
+	String sourceFolderMixedCaseName;
+    List<Class> classesLoaded = new ArrayList();
+    
+    Map<String, Class> dynamicallyCompiledClass = new HashMap();
+
+    public AProxyProjectClassLoader(RootCodeFolder aRootCodeFolder) {
+        init(aRootCodeFolder);
+    }
+
+    void init(RootCodeFolder aRootCodeFolder) {
+        rootCodeFolder = aRootCodeFolder;
+        binaryFolderName = rootCodeFolder.getBinaryProjectFolderName();
+        if (rootCodeFolder.getBinaryFolder() != null && rootCodeFolder.getBinaryFolder() instanceof AFileSystemFileProxy) {
+        binaryFileSystemFolderName = rootCodeFolder.getBinaryFolder().getMixedCaseAbsoluteName();
+        } 
+//        else if (rootCodeFolder.getSourceFolder() != null){
+//        	binaryFolderMixedCaseName = rootCodeFolder.getSourceFolder().
+//        			getMixedCaseAbsoluteName().replaceAll(
+//        					"/" + ARootCodeFolder.SOURCE + "/", 
+//        					"/" + ARootCodeFolder.BINARY + "/");
+//        }
+        projectFolderName = rootCodeFolder.getProjectFolderName();
+//        if (projectFolderName == null)
+//        	projectFolderName = binaryFolderName; // bin folder was missing so bin folder became project folder and hence this confusion
+    }
+
+    public InputStream getResourceAsStream(String name) {
+        InputStream retVal = super.getResourceAsStream(name);
+        if (retVal != null)
+            return retVal;
+        String aFullFileName = projectFolderName + "/" + name;
+        FileProxy fileProxy = rootCodeFolder.getRootFolder().getFileEntry(aFullFileName);
+        InputStream inputStream = fileProxy.getInputStream();
+        return inputStream;
+    }
+    @Override
+    public Collection<Class> getDynamicallyCompiledClasses() {
+    	return dynamicallyCompiledClass.values();
+    }
+    @Override
+    public Class defineDynamicallyCompiledClass (String aClassName, byte[] aBytes) {
+    		Class aClass = dynamicallyCompiledClass.get(aClassName); 
+    		if (aClass == null)
+    	
+    			aClass = super.defineClass(aClassName, aBytes, 0, aBytes.length);
+            if (aClass != null)
+            	dynamicallyCompiledClass.put(aClassName, aClass);
+            return aClass;
+        
+    }
+    
+    InputStream getInputStreamOfClass(String aFileName) {
+    	// refetch the file as we may have recompiled classes
+		File classFile = new File(binaryFileSystemFolderName, aFileName);
+		if (classFile.exists()) {
+			try {
+				return  new FileInputStream(classFile);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+    	
+             String aFullFileName = binaryFolderName + "/" + aFileName;
+             FileProxy classFileProxy = rootCodeFolder.getFileEntry(aFullFileName);
+            return classFileProxy.getInputStream();
+		}
+    	
+    }
+
+    public Class findClass(String aClassName) throws ClassNotFoundException {
+        try {
+        	Class retVal = dynamicallyCompiledClass.get(aClassName);
+        	if (retVal != null)
+        		return retVal;
+            byte classBytes[];
+            String aFileName = aClassName.replaceAll("\\.", "/") + ".class";
+//            String aFullFileName = binaryFolderName + "/" + aFileName;
+//            FileProxy classFile = rootCodeFolder.getFileEntry(aFullFileName);
+//            InputStream inputStream = classFile.getInputStream();
+            InputStream inputStream = getInputStreamOfClass(aFileName);
+            classBytes = new byte[inputStream.available()];
+            inputStream.read(classBytes);
+            Class classObject = defineClass(aClassName, classBytes, 0, classBytes.length);
+            classesLoaded.add(classObject);
+            return classObject;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public void clear() {
+    	classesLoaded.clear();
+    }
+    public Class loadClass(String aClassName) throws ClassNotFoundException {
+    	try {
+        return super.loadClass(aClassName);
+    	} catch (Exception e) {
+    		return null;
+    	}
+    }
+
+    public static void run(FlexibleProject aProject, String mainClassName) {
+        try {
+            ClassLoader classLoader = new AProxyProjectClassLoader(aProject.getRootCodeFolder());
+            Class mainClass = classLoader.loadClass(mainClassName);
+            Method mainMethod = mainClass.getMethod("main", String[].class);
+            String[] strings = {"move 10 100"};
+            Object[] myArgs = {strings};
+            mainMethod.invoke(mainClass, myArgs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public String getBinaryFileSystemFolderName() {
+		return binaryFileSystemFolderName;
+	}
+    @Override
+	public void setBinaryFileSystemFolderName(String binaryFileSystemFolderName) {
+		this.binaryFileSystemFolderName = binaryFileSystemFolderName;
+	}
+
+    public List<Class> getClassesLoaded() {
+        return classesLoaded;
+    }
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4291" _type="SelectTextCommand" caretOffset="1615" date="Sat Aug 24 12:53:46 EDT 2019" end="1615" start="1604" timestamp="89949154" />
+  <Command __id="4292" _type="ShellCommand" date="Sat Aug 24 12:54:13 EDT 2019" timestamp="89976925" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="4293" _type="ShellCommand" date="Sat Aug 24 12:54:35 EDT 2019" timestamp="89998546" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="4294" _type="ShellCommand" date="Sat Aug 24 12:54:39 EDT 2019" timestamp="90002802" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="4295" _type="ShellCommand" date="Sat Aug 24 12:55:10 EDT 2019" timestamp="90033820" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="4296" _type="ShellCommand" date="Sat Aug 24 12:55:26 EDT 2019" timestamp="90049385" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="4297" _type="ShellCommand" date="Sat Aug 24 12:55:55 EDT 2019" timestamp="90078126" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="4298" _type="EclipseCommand" commandID="org.eclipse.ui.project.properties" date="Sat Aug 24 12:55:55 EDT 2019" timestamp="90078147" />
+  <Command __id="4299" _type="ShellCommand" date="Sat Aug 24 12:56:08 EDT 2019" timestamp="90091233" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="4300" _type="ShellCommand" date="Sat Aug 24 12:57:00 EDT 2019" timestamp="90143081" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="4301" _type="EclipseCommand" commandID="org.eclipse.ui.project.properties" date="Sat Aug 24 12:57:00 EDT 2019" timestamp="90143112" />
+  <Command __id="4302" _type="PasteCommand" date="Sat Aug 24 12:57:24 EDT 2019" timestamp="90167427" />
+  <Command __id="4303" _type="ShellCommand" date="Sat Aug 24 12:57:31 EDT 2019" timestamp="90174281" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="4304" _type="ShellCommand" date="Sat Aug 24 12:58:04 EDT 2019" timestamp="90207157" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="4305" _type="EclipseCommand" commandID="org.eclipse.ui.project.properties" date="Sat Aug 24 12:58:04 EDT 2019" timestamp="90207178" />
+  <Command __id="4306" _type="FileOpenCommand" date="Sat Aug 24 12:58:39 EDT 2019" docASTNodeCount="63" docActiveCodeLength="416" docExpressionCount="32" docLength="416" projectName="comp110-grader" timestamp="90242492">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\checkers\ACheckerResult.java]]></filePath>
+    <snapshot><![CDATA[package grader.requirements.interpreter.checkers;
+
+public class ACheckerResult implements InterpretedCheckerResult {
+	String notes = "";
+	boolean succeeded;
+	
+	public ACheckerResult(String notes, boolean succeeded) {
+		super();
+		this.notes = notes;
+		this.succeeded = succeeded;
+	}
+	public String getNotes() {
+		return notes;
+	}
+	
+	public boolean isSucceeded() {
+		return succeeded;
+	}
+	
+	
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4307" _type="MoveCaretCommand" caretOffset="0" date="Sat Aug 24 12:58:39 EDT 2019" docOffset="0" timestamp="90242626" />
+  <Command __id="4308" _type="FileOpenCommand" date="Sat Aug 24 12:58:45 EDT 2019" docASTNodeCount="281" docActiveCodeLength="1746" docExpressionCount="174" docLength="2032" projectName="comp110-grader" timestamp="90248831">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\checkers\ADiffChecker.java]]></filePath>
+  </Command>
+  <Command __id="4309" _type="MoveCaretCommand" caretOffset="1456" date="Sat Aug 24 12:58:45 EDT 2019" docOffset="1537" timestamp="90248943" />
+  <Command __id="4310" _type="FileOpenCommand" date="Sat Aug 24 12:58:57 EDT 2019" docASTNodeCount="326" docActiveCodeLength="2859" docExpressionCount="204" docLength="2859" projectName="comp110-grader" timestamp="90260237">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\AnInterpretedRequirements.java]]></filePath>
+  </Command>
+  <Command __id="4311" _type="MoveCaretCommand" caretOffset="1966" date="Sat Aug 24 12:58:57 EDT 2019" docOffset="2099" timestamp="90260371" />
+  <Command __id="4312" _type="FileOpenCommand" date="Sat Aug 24 12:59:18 EDT 2019" docASTNodeCount="63" docActiveCodeLength="416" docExpressionCount="32" docLength="416" projectName="comp110-grader" timestamp="90281893">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\checkers\ACheckerResult.java]]></filePath>
+  </Command>
+  <Command __id="4313" _type="MoveCaretCommand" caretOffset="0" date="Sat Aug 24 12:59:18 EDT 2019" docOffset="0" timestamp="90282012" />
+  <Command __id="4314" _type="MoveCaretCommand" caretOffset="92" date="Sat Aug 24 12:59:24 EDT 2019" docOffset="92" timestamp="90287704" />
+  <Command __id="4315" _type="FileOpenCommand" date="Sat Aug 24 12:59:25 EDT 2019" docASTNodeCount="21" docActiveCodeLength="168" docExpressionCount="11" docLength="168" projectName="comp110-grader" timestamp="90288514">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\requirements\interpreter\checkers\InterpretedCheckerResult.java]]></filePath>
+    <snapshot><![CDATA[package grader.requirements.interpreter.checkers;
+
+public interface InterpretedCheckerResult {
+	public String getNotes() ;
+	
+	public boolean isSucceeded() ;
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="4316" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.open.editor" date="Sat Aug 24 12:59:25 EDT 2019" timestamp="90288580" />
+  <Command __id="4317" _type="SelectTextCommand" caretOffset="94" date="Sat Aug 24 12:59:25 EDT 2019" end="94" start="70" timestamp="90288658" />

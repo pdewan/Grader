@@ -4,7 +4,7 @@ import java.util.Map;
 
 import util.misc.Common;
 import framework.grading.testing.BasicTestCase;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.NotRunnableException;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;

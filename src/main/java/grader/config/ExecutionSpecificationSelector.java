@@ -1,6 +1,6 @@
 package grader.config;
 
-import grader.basics.execution.BasicExecutionSpecificationSelector;
+import grader.basics.config.BasicExecutionSpecificationSelector;
 
 public class ExecutionSpecificationSelector {
 	public static ExecutionSpecification executionSpecification;

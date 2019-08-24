@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import util.misc.Common;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;

@@ -1,0 +1,3 @@
+Id,Prediction,Date,File,StartTime,ElapsedTime,BusyTime,Commands,editOrInsertPercentage,debugPercentage,navigationPercentage,focusPercentage,removePercentage,editPercentage,COMMAND_RATE,NAVIGATION_RATE,DEBUG_RATE,FOCUS_RATE,EDIT_RATE,REMOVE_RATE,INSERT_RATE,webLinkTimes,Web Page Visits
+20,NO,Thu Aug 22 16:17:11 EDT 2019,AJavaPalindromeBasedGraderTester.java,1566505031566,449197,0,(D)7(I)18,0.72,28.000000000000004,0.0,0.0,0.0,0.0,0.0556792873051225,0.0,0.015590200445434299,0.0,0.0,0.0,0.0400890868596882,0.0,[]
+,YES,Thu Aug 22 16:17:11 EDT 2019,AJavaPalindromeBasedGraderTester.java, 1566505031566

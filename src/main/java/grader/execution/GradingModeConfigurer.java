@@ -1,9 +1,9 @@
 package grader.execution;
 
 import framework.execution.ProcessRunnerFactory;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.config.BasicExecutionSpecificationSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
-import grader.basics.execution.BasicExecutionSpecificationSelector;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.GradingMode;
 import grader.basics.execution.JavaMainClassFinderSelector;
 import grader.basics.execution.RunnerSelector;

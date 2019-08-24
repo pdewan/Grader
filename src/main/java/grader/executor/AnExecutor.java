@@ -1,7 +1,7 @@
 package grader.executor;
 
-import grader.basics.execution.BasicExecutionSpecification;
-import grader.basics.execution.BasicExecutionSpecificationSelector;
+import grader.basics.config.BasicExecutionSpecification;
+import grader.basics.config.BasicExecutionSpecificationSelector;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.compilation.c.CFilesCompilerSelector;

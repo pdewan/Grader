@@ -1,7 +1,7 @@
 package grader.util;
 
 import framework.execution.ARunningProject;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.Project;
 

@@ -2,7 +2,7 @@ package framework.project;
 
 import framework.execution.ARunningProject;
 import grader.basics.BasicLanguageDependencyManager;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.RunningProject;
 import grader.basics.project.BasicClassDescription;
 import grader.basics.project.BasicProjectClassesManager;

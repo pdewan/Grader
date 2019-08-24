@@ -37,7 +37,7 @@ import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
-import grader.basics.config.BasicProjectExecution;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.GradingMode;
 import grader.basics.execution.JavaMainClassFinderSelector;
 import grader.basics.execution.RunnerSelector;

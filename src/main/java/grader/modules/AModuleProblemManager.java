@@ -1,7 +1,7 @@
 package grader.modules;
 
+import grader.basics.config.BasicExecutionSpecificationSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
-import grader.basics.execution.BasicExecutionSpecificationSelector;
 import grader.config.ConfigurationManagerSelector;
 import grader.config.ExecutionSpecificationSelector;
 

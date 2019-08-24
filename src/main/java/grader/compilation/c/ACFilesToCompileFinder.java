@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import framework.project.ProjectClassesManager;
-import grader.basics.config.BasicProjectExecution;
 import grader.basics.execution.BasicProcessRunner;
+import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.RunningProject;
 import grader.basics.project.BasicProjectClassesManager;
 import grader.basics.project.Project;
