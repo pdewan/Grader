@@ -1,11 +1,10 @@
 package grader.project.flexible;
 
-import grader.file.FileProxy;
-
 import java.io.IOException;
 
 import util.javac.SourceClass;
 import bus.uigen.reflect.ClassProxy;
+import grader.basics.file.FileProxy;
 
 import com.github.antlrjavaparser.api.CompilationUnit;
 import com.thoughtworks.qdox.model.JavaClass;

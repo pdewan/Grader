@@ -1,9 +1,9 @@
 package grader.sakai;
 
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderProxy;
+import grader.basics.file.zipfile.AZippedRootFolderProxy;
 import grader.basics.trace.ProjectFolderNotFound;
-import grader.file.FileProxy;
-import grader.file.RootFolderProxy;
-import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.project.flexible.AFlexibleProject;
 import grader.project.flexible.FlexibleProject;
 import grader.trace.project.ProjectFolderAssumed;

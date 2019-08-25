@@ -1,13 +1,13 @@
 package grader.project.source;
 
 
+import grader.basics.util.GraderFileUtils;
 import grader.project.view.ClassViewManager;
 import grader.project.view.ViewableClassDescription;
 import grader.sakai.project.SakaiProject;
 import grader.trace.source.SourceFileComputed;
 import grader.trace.source.SourceFileLoaded;
 import grader.trace.source.SourceFileSaved;
-import grader.util.GraderFileUtils;
 
 import java.io.File;
 import java.io.PrintWriter;

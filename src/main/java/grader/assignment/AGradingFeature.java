@@ -2,10 +2,10 @@ package grader.assignment;
 
 import framework.grading.testing.Checkable;
 import grader.auto_notes.NotesGenerator;
+import grader.basics.file.FileProxy;
 import grader.basics.project.CurrentProjectHolder;
 import grader.checkers.CheckResult;
 import grader.checkers.FeatureChecker;
-import grader.file.FileProxy;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.steppers.OverviewProjectStepper;

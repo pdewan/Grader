@@ -4,9 +4,9 @@ import framework.grading.testing.CheckResult;
 import framework.navigation.StudentFolder;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
+import grader.basics.file.FileProxy;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
 import grader.basics.junit.TestCaseResult;
-import grader.file.FileProxy;
-import grader.file.filesystem.AFileSystemFileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FeatureGradeRecorder;
 

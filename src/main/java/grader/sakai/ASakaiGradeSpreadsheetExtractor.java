@@ -1,7 +1,7 @@
 package grader.sakai;
 
-import grader.file.FileProxy;
-import grader.file.RootFolderProxy;
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderProxy;
 import grader.trace.sakai_bulk_folder.FinalGradeFileLoaded;
 import grader.trace.sakai_bulk_folder.FinalGradeFileNotFound;
 

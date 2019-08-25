@@ -1,9 +1,9 @@
 //non Java doc reg exp: (?s)/\*[^*](?:(?!\*/).)*\(non-javadoc\)(?:(?!\*/).)*\*/
 package grader.project.flexible;
 
+import grader.basics.file.FileProxy;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.execution.ProxyClassLoader;
-import grader.file.FileProxy;
 import grader.trace.compilation.ClassFileCouldNotBeCompiled;
 import grader.trace.compilation.ClassFileNotFound;
 import grader.trace.compilation.ClassLoaded;

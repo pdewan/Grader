@@ -2,7 +2,7 @@ package grader.requirements.interpreter;
 
 import framework.grading.FrameworkProjectRequirements;
 import framework.grading.testing.BasicTestCase;
-import grader.requirements.interpreter.specification.CSVRequirementsSpecification;
+import grader.basics.requirements.interpreter.specification.CSVRequirementsSpecification;
 
 public class AnInterpretedRequirements extends FrameworkProjectRequirements implements InterpretedRequirements  {
 	CSVRequirementsSpecification csvRequirementsSpecification;	

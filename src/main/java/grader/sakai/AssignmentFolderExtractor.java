@@ -1,6 +1,6 @@
 package grader.sakai;
 
-import grader.file.RootFolderProxy;
+import grader.basics.file.RootFolderProxy;
 
 public interface AssignmentFolderExtractor {
 

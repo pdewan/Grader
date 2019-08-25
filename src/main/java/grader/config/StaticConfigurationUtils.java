@@ -6,10 +6,10 @@ import grader.basics.BasicLanguageDependencyManager;
 import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.project.Project;
+import grader.basics.requirements.interpreter.specification.CSVRequirementsSpecification;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.permissions.java.JavaProjectToPermissionFile;
 import grader.requirements.interpreter.AnInterpretedRequirements;
-import grader.requirements.interpreter.specification.CSVRequirementsSpecification;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.GraderSettingsManager;
@@ -1289,7 +1289,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		} catch (Exception e) {
 			System.out
 					.println("Could not find interpreted requirements "
-							+ AnAssignmenDataFolder.DEFAULT_REQUIREMENTS_SPREADHEET_NAME
+							+ CSVRequirementsSpecification.DEFAULT_REQUIREMENTS_SPREADHEET_NAME
 							+ " in assignment data folder:"
 							+ aDatabase.getAssignmentDataFolder()
 									.getMixedCaseAbsoluteName());

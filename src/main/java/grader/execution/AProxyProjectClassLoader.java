@@ -1,7 +1,7 @@
 package grader.execution;
 
-import grader.file.FileProxy;
-import grader.file.filesystem.AFileSystemFileProxy;
+import grader.basics.file.FileProxy;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
 import grader.project.flexible.FlexibleProject;
 import grader.project.folder.RootCodeFolder;
 

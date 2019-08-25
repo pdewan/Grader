@@ -1,7 +1,7 @@
 package grader.project.flexible;
 
+import grader.basics.util.GraderFileUtils;
 import grader.language.LanguageDependencyManager;
-import grader.util.GraderFileUtils;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package grader.sakai.project;
 
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import grader.project.flexible.AFlexibleProject;
 import grader.sakai.StudentAssignment;
 import grader.sakai.StudentCodingAssignment;

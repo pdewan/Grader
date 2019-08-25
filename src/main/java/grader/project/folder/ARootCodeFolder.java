@@ -1,13 +1,13 @@
 package grader.project.folder;
 
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderProxy;
+import grader.basics.file.zipfile.AZippedRootFolderProxy;
 import grader.basics.project.Project;
 import grader.basics.trace.BinaryFolderNotFound;
 import grader.basics.trace.ProjectFolderNotFound;
 import grader.basics.trace.SourceFolderAssumed;
 import grader.basics.trace.SourceFolderNotFound;
-import grader.file.FileProxy;
-import grader.file.RootFolderProxy;
-import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.language.LanguageDependencyManager;
 import grader.trace.project.BinaryFolderIdentified;
 import grader.trace.project.SourceFolderIdentified;

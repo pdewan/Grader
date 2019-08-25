@@ -1,9 +1,9 @@
 package grader.sakai;
 
-import grader.file.FileProxy;
-import grader.file.RootFolderProxy;
-
 import java.util.Set;
+
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderProxy;
 
 public interface BulkAssignmentFolder {
     public RootFolderProxy getAssignmentFolder();

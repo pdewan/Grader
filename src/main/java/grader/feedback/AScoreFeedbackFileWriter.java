@@ -1,7 +1,7 @@
 package grader.feedback;
 
 import grader.assignment.GradingFeature;
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.ProjectStepper;
 

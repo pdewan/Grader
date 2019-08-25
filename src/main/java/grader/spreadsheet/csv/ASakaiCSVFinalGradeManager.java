@@ -1,7 +1,7 @@
 package grader.spreadsheet.csv;
 
-import grader.file.FileProxy;
-import grader.file.filesystem.AFileSystemFileProxy;
+import grader.basics.file.FileProxy;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.settings.AGraderSettingsModel;
 import grader.settings.GraderSettingsModelSelector;

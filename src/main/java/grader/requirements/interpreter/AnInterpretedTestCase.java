@@ -7,11 +7,11 @@ import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
-import grader.requirements.interpreter.checkers.InterpretedChecker;
-import grader.requirements.interpreter.checkers.InterpretedCheckerRegistry;
-import grader.requirements.interpreter.checkers.InterpretedCheckerResult;
-import grader.requirements.interpreter.specification.CSVRequirementsSpecification;
+import grader.basics.requirements.interpreter.specification.CSVRequirementsSpecification;
 import grader.sakai.project.SakaiProject;
+import gradingTools.interpreter.checkers.InterpretedChecker;
+import gradingTools.interpreter.checkers.InterpretedCheckerRegistry;
+import gradingTools.interpreter.checkers.InterpretedCheckerResult;
 import gradingTools.utils.RunningProjectUtils;
 
 public class AnInterpretedTestCase extends BasicTestCase{

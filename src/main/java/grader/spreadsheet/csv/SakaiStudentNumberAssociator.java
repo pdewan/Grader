@@ -1,6 +1,6 @@
 package grader.spreadsheet.csv;
 
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import grader.spreadsheet.FinalGradeRecorder;
 
 public interface SakaiStudentNumberAssociator {

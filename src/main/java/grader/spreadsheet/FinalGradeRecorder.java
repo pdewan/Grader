@@ -2,7 +2,7 @@ package grader.spreadsheet;
 
 import java.beans.PropertyChangeListener;
 
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import util.models.PropertyListenerRegisterer;
 
 public interface FinalGradeRecorder extends PropertyListenerRegisterer, PropertyChangeListener{

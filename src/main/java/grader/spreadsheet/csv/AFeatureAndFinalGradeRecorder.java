@@ -3,7 +3,7 @@ package grader.spreadsheet.csv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FinalGradeRecorder;
 

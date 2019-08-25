@@ -1,10 +1,10 @@
 package grader.assignment;
 
-import grader.file.FileProxy;
-import grader.file.RootFolderProxy;
-
 import java.util.List;
 import java.util.Set;
+
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderProxy;
 
 public interface AssignmentDataFolder extends RootFolderProxy {
     public Set<String> getInputFiles();

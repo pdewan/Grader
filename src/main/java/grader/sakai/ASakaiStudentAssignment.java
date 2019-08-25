@@ -1,8 +1,8 @@
 package grader.sakai;
 
-import grader.file.FileProxy;
-import grader.file.FileProxyUtils;
-import grader.file.filesystem.AFileSystemFileProxy;
+import grader.basics.file.FileProxy;
+import grader.basics.file.FileProxyUtils;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
 import grader.trace.sakai_bulk_folder.CommentsFileLoaded;
 import grader.trace.sakai_bulk_folder.DocumentFileLoaded;
 import grader.trace.sakai_bulk_folder.FeedbackFolderLoaded;

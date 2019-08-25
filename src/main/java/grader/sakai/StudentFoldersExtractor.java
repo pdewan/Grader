@@ -1,9 +1,9 @@
 package grader.sakai;
 
-import grader.file.RootFolderProxy;
-
 import java.util.Comparator;
 import java.util.Set;
+
+import grader.basics.file.RootFolderProxy;
 
 public interface StudentFoldersExtractor {
 

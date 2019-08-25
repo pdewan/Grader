@@ -3,10 +3,7 @@ package grader.execution;
 
 import grader.basics.execution.ABasicMainClassFinder;
 import grader.basics.execution.NotRunnableException;
-//import framework.project.ClassDescription;
-//import framework.project.ClassesManager;
-//import framework.project.Project;
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import grader.project.flexible.FlexibleClassDescription;
 import grader.project.flexible.FlexibleClassesManager;
 import grader.project.flexible.FlexibleProject;

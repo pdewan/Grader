@@ -327,5 +327,11 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 		return null;
 	}
 
+	@Override
+	public String getSimpleName() {
+		// TODO Auto-generated method stub
+		return delegateGradableJUnitTestCase.getSimpleName();
+	}
+
 
 }

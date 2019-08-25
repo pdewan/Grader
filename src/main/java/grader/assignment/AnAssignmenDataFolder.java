@@ -1,14 +1,16 @@
 package grader.assignment;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
+import grader.basics.config.ABasicConfigurationManager;
+import grader.basics.file.FileProxy;
+import grader.basics.file.FileProxyUtils;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
+import grader.basics.file.filesystem.AFileSystemRootFolderProxy;
+import grader.basics.requirements.interpreter.specification.CSVRequirementsSpecification;
 import grader.basics.settings.BasicGradingEnvironment;
-import grader.config.AConfigurationManager;
 import grader.config.ExecutionSpecificationSelector;
 import grader.config.StaticConfigurationUtils;
-import grader.file.FileProxy;
-import grader.file.FileProxyUtils;
-import grader.file.filesystem.AFileSystemFileProxy;
-import grader.file.filesystem.AFileSystemRootFolderProxy;
 import grader.language.LanguageDependencyManager;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.settings.AGraderSettingsManager;
@@ -34,8 +36,7 @@ import util.trace.Tracer;
 public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements AssignmentDataFolder {
 	public static final String DEFAULT_CONFIGURATION_FILE = "checks.xml";
 
-	public static final String DEFAULT_REQUIREMENTS_SPREADHEET_NAME = "Requirements.csv";
-    public static final String ID_FILE_NAME = "onyens.txt";
+	public static final String ID_FILE_NAME = "onyens.txt";
     public static final String DEFAULT_LOG_FILE_NAME = "log.txt";
     public static final String DEFAULT_SKIPPED_FILE_NAME = "skipped_onyens.txt";
     public static final String DEFAULT_GRADED_ID_FILE_NAME = "graded_onyens.txt";
@@ -50,7 +51,7 @@ public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements
     String inputFolderName = DEFAULT_INPUT_FOLDER_NAME;
     String featureGradeFileName = DEFAULT_FEATURE_GRADE_FILE_NAME;
     String backupFeatureGradeFileName = DEFAULT_BACKUP_FEATURE_GRADE_FILE_NAME;
-    String requirementsSpreadsheetFileName = DEFAULT_REQUIREMENTS_SPREADHEET_NAME;
+    String requirementsSpreadsheetFileName = CSVRequirementsSpecification.DEFAULT_REQUIREMENTS_SPREADHEET_NAME;
     
     File originalFeatureGradeFile, backupFeatureGradeFile;
     String checkStyleConfigurationFileName;
@@ -148,7 +149,7 @@ public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements
         }
         if (!aFile.exists()) {
         	System.err.println("Could not find checkstyle file:" + checkStyleConfigurationFileName);
-        	checkStyleConfigurationFileName = AConfigurationManager.CONFIG_DIR + "/"  + DEFAULT_CONFIGURATION_FILE;
+        	checkStyleConfigurationFileName = ABasicConfigurationManager.CONFIG_DIR + "/"  + DEFAULT_CONFIGURATION_FILE;
         	Tracer.warning("Using default checkstyle file:" + checkStyleConfigurationFileName );
         } else {
         	System.out.println("Using check style file:" + aFile.getAbsolutePath());

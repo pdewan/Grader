@@ -2,6 +2,7 @@ package grader.demo.main;
 
 import grader.assignment.AGradingFeature;
 import grader.assignment.GradingFeature;
+import grader.basics.file.FileProxy;
 import grader.checkers.AFailingChecker;
 import grader.checkers.AProjectTracer;
 import grader.demo.feedback.ATracingAllTextSourceDisplayer;
@@ -13,7 +14,6 @@ import grader.feedback.AutoFeedback;
 import grader.feedback.ManualFeedback;
 import grader.feedback.ScoreFeedback;
 import grader.feedback.SourceDisplayer;
-import grader.file.FileProxy;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FeatureGradeRecorder;
 import grader.trace.settings.InvalidOnyenRangeException;

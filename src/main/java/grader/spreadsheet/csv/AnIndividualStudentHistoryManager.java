@@ -8,7 +8,7 @@ import java.util.List;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 import grader.assignment.GradingFeature;
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import grader.sakai.project.ProjectStepperFactory;
 import grader.sakai.project.SakaiProjectDatabase;
 

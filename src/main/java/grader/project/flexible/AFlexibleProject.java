@@ -5,6 +5,11 @@ import framework.grading.testing.TestCase;
 import framework.logging.loggers.FeedbackTextSummaryLogger;
 import grader.basics.execution.MainClassFinder;
 import grader.basics.execution.RunningProject;
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderCreator;
+import grader.basics.file.RootFolderProxy;
+import grader.basics.file.filesystem.AFileSystemRootFolderProxy;
+import grader.basics.file.zipfile.AZippedRootFolderProxy;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.trace.ProjectFolderNotFound;
 import grader.config.StaticConfigurationUtils;
@@ -13,10 +18,6 @@ import grader.execution.FlexibleMainClassFinder;
 import grader.execution.ProjectRunnerSelector;
 import grader.execution.ProxyBasedClassesManager;
 import grader.execution.ProxyClassLoader;
-import grader.file.FileProxy;
-import grader.file.RootFolderProxy;
-import grader.file.filesystem.AFileSystemRootFolderProxy;
-import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.language.LanguageDependencyManager;
 import grader.project.folder.ARootCodeFolder;
 import grader.project.folder.RootCodeFolder;
@@ -46,8 +47,10 @@ import com.thoughtworks.qdox.JavaDocBuilder;
 
 public class AFlexibleProject implements FlexibleProject {
 
-    public static final String ZIP_SUFFIX_1 = ".zip";
-    public static final String ZIP_SUFFIX_2 = ".jar";
+//    public static final String ZIP_SUFFIX_1 = ".zip";
+//    public static final String ZIP_SUFFIX_2 = ".jar";
+    public static final String ZIP_SUFFIX_1 = RootFolderCreator.ZIP_SUFFIX_1;
+    public static final String ZIP_SUFFIX_2 = RootFolderCreator.ZIP_SUFFIX_2;
 //    public static final String ZIP_SUFFIX_2 = ".zip"; // forget about jars, but keep another suffix
 
     public static final String DEFAULT_PROJECT_FOLDER = ".";

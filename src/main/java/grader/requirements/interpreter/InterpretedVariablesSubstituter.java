@@ -1,6 +1,6 @@
 package grader.requirements.interpreter;
 
-import grader.requirements.interpreter.specification.CSVRequirementsSpecification;
+import grader.basics.requirements.interpreter.specification.CSVRequirementsSpecification;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;

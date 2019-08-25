@@ -1,9 +1,9 @@
 package grader.modules;
 
+import grader.basics.file.RootFolderProxy;
+import grader.basics.file.filesystem.AFileSystemRootFolderProxy;
+import grader.basics.file.zipfile.AZippedRootFolderProxy;
 import grader.config.StaticConfigurationUtils;
-import grader.file.RootFolderProxy;
-import grader.file.filesystem.AFileSystemRootFolderProxy;
-import grader.file.zipfile.AZippedRootFolderProxy;
 
 import java.io.File;
 import java.io.IOException;

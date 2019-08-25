@@ -1,8 +1,8 @@
 package wrappers.grader.file;
 
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderProxy;
 import grader.basics.util.DirectoryUtils;
-import grader.file.FileProxy;
-import grader.file.RootFolderProxy;
 
 import java.io.File;
 import java.io.FileFilter;

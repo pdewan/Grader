@@ -10,11 +10,11 @@ import framework.navigation.SakaiStudentFolder;
 import framework.navigation.StudentFolder;
 import framework.project.StandardProject;
 import framework.utils.GraderSettings;
+import grader.basics.trace.file.load.FileUnzipped;
 import grader.basics.util.DirectoryUtils;
 import grader.project.flexible.AFlexibleProject;
 import grader.project.flexible.FlexibleProject;
 import grader.sakai.project.SakaiProject;
-import grader.trace.file.load.FileUnzipped;
 
 /**
  * This transforms a "grader" project into a "framework" project.

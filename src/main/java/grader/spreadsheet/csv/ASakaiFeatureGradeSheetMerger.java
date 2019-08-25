@@ -2,8 +2,8 @@ package grader.spreadsheet.csv;
 
 import grader.assignment.AnAssignmenDataFolder;
 import grader.assignment.AssignmentDataFolder;
-import grader.file.FileProxy;
-import grader.file.filesystem.AFileSystemFileProxy;
+import grader.basics.file.FileProxy;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
 import grader.spreadsheet.FeatureGradeRecorder;
 import grader.spreadsheet.FinalGradeRecorder;
 

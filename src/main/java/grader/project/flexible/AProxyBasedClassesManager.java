@@ -1,12 +1,12 @@
 package grader.project.flexible;
 
+import grader.basics.file.FileProxy;
 import grader.basics.settings.BasicGradingEnvironment;
+import grader.basics.util.GraderFileUtils;
 import grader.execution.ProxyBasedClassesManager;
 import grader.execution.ProxyClassLoader;
-import grader.file.FileProxy;
 import grader.language.LanguageDependencyManager;
 import grader.project.folder.RootCodeFolder;
-import grader.util.GraderFileUtils;
 
 import java.util.List;
 

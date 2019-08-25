@@ -1,12 +1,12 @@
 package grader.sakai;
 
+import grader.basics.file.FileProxy;
+import grader.basics.file.RootFolderCreatorFactory;
+import grader.basics.file.RootFolderProxy;
+import grader.basics.file.zipfile.AZippedRootFolderProxy;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ExecutionSpecificationSelector;
-import grader.file.FileProxy;
-import grader.file.RootFolderCreatorFactory;
-import grader.file.RootFolderProxy;
-import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.project.flexible.FlexibleProject;
 import grader.trace.sakai_bulk_folder.AssignmentRootFolderLoaded;
 import grader.trace.sakai_bulk_folder.FinalGradeFileLoaded;

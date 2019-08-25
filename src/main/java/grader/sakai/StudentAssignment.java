@@ -1,9 +1,9 @@
 package grader.sakai;
 
-import grader.file.FileProxy;
-
 import java.util.Date;
 import java.util.List;
+
+import grader.basics.file.FileProxy;
 
 public interface StudentAssignment {
 

@@ -1,6 +1,6 @@
 package grader.spreadsheet.xlsx;
 
-import grader.file.FileProxy;
+import grader.basics.file.FileProxy;
 import grader.spreadsheet.FinalGradeRecorder;
 
 import java.beans.PropertyChangeEvent;

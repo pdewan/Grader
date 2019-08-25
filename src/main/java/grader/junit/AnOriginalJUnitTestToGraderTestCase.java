@@ -349,6 +349,12 @@ public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implement
 		return null;
 	}
 
+	@Override
+	public String getSimpleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 //	@Override
 //	public void setTopLevelSuite(GradableJUnitSuite newVal) {
 //		// TODO Auto-generated method stub

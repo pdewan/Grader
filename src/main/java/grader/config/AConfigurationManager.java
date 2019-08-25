@@ -21,24 +21,23 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class AConfigurationManager extends ABasicConfigurationManager implements ConfigurationManager {
 
-    public static final String CONFIG_DIR = "config";
     public static final String CONFIG_FILE = "config.properties";
     public static final String DYNAMIC_CONFIGURATION_FILE = "dynamicconfig.properties";
-    public static final String COURSE_FILE = "course.properties";
     public static final String DYNAMIC_MODULES_FILE = "dynamicmodules.properties";
     public static final String DYNAMIC_CONFIG_PROPERTY = "grader.dynamicConfiguration";
 //    public static final String STATIC_CONFIGURATION_FILE_NAME = "./config/config.properties";
-    public static final String STATIC_CONFIGURATION_FILE_NAME = "./" + CONFIG_DIR + "/" + CONFIG_FILE;
-    public static final String DYNAMIC_CONFIGURATION_FILE_NAME = "./" + CONFIG_DIR + "/" + DYNAMIC_CONFIGURATION_FILE;
+    public static final String STATIC_CONFIGURATION_FILE_NAME = "./" + ABasicConfigurationManager.CONFIG_DIR + "/" + CONFIG_FILE;
+    public static final String DYNAMIC_CONFIGURATION_FILE_NAME = "./" + ABasicConfigurationManager.CONFIG_DIR + "/" + DYNAMIC_CONFIGURATION_FILE;
 
-    public static final String COURSE_CONFIGURATION_FILE_NAME = "./" + CONFIG_DIR + "/" + COURSE_FILE;
-    public static final String DYNAMIC_MODULE_CONFIGURATION_FILE_NAME = "./" + CONFIG_DIR + "/" + DYNAMIC_MODULES_FILE;
+    public static final String DYNAMIC_MODULE_CONFIGURATION_FILE_NAME = "./" + ABasicConfigurationManager.CONFIG_DIR + "/" + DYNAMIC_MODULES_FILE;
 
 
     private static PropertiesConfiguration staticConfiguration = new PropertiesConfiguration();
     static File userPropsFile;
     PropertiesConfiguration dynamicConfiguration;
-    PropertiesConfiguration moduleConfiguration, dynamicModuleConfiguration;
+//    PropertiesConfiguration moduleConfiguration, dynamicModuleConfiguration;
+    PropertiesConfiguration dynamicModuleConfiguration;
+
 
     public AConfigurationManager() {
 //		init();
@@ -66,14 +65,14 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
     public void setStaticConfiguration(PropertiesConfiguration staticConfiguration) {
         this.staticConfiguration = staticConfiguration;
     }
-    @Override
-    public PropertiesConfiguration getCourseConfiguration() {
-        return moduleConfiguration;
-    }
-    @Override
-    public void setCourseConfiguration(PropertiesConfiguration newVal) {
-        this.moduleConfiguration = newVal;
-    }
+//    @Override
+//    public PropertiesConfiguration getCourseConfiguration() {
+//        return moduleConfiguration;
+//    }
+//    @Override
+//    public void setCourseConfiguration(PropertiesConfiguration newVal) {
+//        this.moduleConfiguration = newVal;
+//    }
     
     @Override
     public PropertiesConfiguration getDynamicModuleConfiguration() {
@@ -113,7 +112,7 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
 
             DynamicConfigurationFileRead.newCase(dynamicConfigurationName, this);
             
-            setCourseConfiguration(createCourseConfiguration(args));
+//            setCourseConfiguration(createCourseConfiguration(args));
             
             
            File dynamicModuleFile = new File(DYNAMIC_MODULE_CONFIGURATION_FILE_NAME);
@@ -158,23 +157,23 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
         }
     }
     
-    PropertiesConfiguration createCourseConfiguration(String[] args) {
-       
-                try {
-                	File aFile = new File(COURSE_CONFIGURATION_FILE_NAME);
-                	if (!aFile.exists()) {
-                		Tracer.warning (COURSE_CONFIGURATION_FILE_NAME + " does not exist, using defaults");
-                		return null;
-                	}
-					return new PropertiesConfiguration(COURSE_CONFIGURATION_FILE_NAME);
-				} catch (ConfigurationException e) {
-					e.printStackTrace();
-					return null;
-				}
-                
-                // Andrew might need to add stuff like in the method below
-        
-    }
+//    PropertiesConfiguration createCourseConfiguration(String[] args) {
+//       
+//                try {
+//                	File aFile = new File(ABasicConfigurationManager.COURSE_CONFIGURATION_FILE_NAME);
+//                	if (!aFile.exists()) {
+//                		Tracer.warning (ABasicConfigurationManager.COURSE_CONFIGURATION_FILE_NAME + " does not exist, using defaults");
+//                		return null;
+//                	}
+//					return new PropertiesConfiguration(ABasicConfigurationManager.COURSE_CONFIGURATION_FILE_NAME);
+//				} catch (ConfigurationException e) {
+//					e.printStackTrace();
+//					return null;
+//				}
+//                
+//                // Andrew might need to add stuff like in the method below
+//        
+//    }
     
     PropertiesConfiguration createStaticConfiguration(String[] args) {
         userPropsFile = null;
@@ -191,11 +190,11 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
                 return new PropertiesConfiguration(STATIC_CONFIGURATION_FILE_NAME);
             }
 //		           UserPropertyWriter userProperties = new UserPropertyWriter(Paths.get("config", "config.properties").toString());
-            UserPropertyWriter userProperties = new UserPropertyWriter(Paths.get(CONFIG_DIR, CONFIG_FILE).toString());
+            UserPropertyWriter userProperties = new UserPropertyWriter(Paths.get(ABasicConfigurationManager.CONFIG_DIR, CONFIG_FILE).toString());
 // this seems to be Andrew's code duplicating the properties in a thread specific file
             
             userProperties.setUserProperties(args);
-            userPropsFile = Paths.get(CONFIG_DIR, "user-config.properties").toFile();
+            userPropsFile = Paths.get(ABasicConfigurationManager.CONFIG_DIR, "user-config.properties").toFile();
             
             if (userPropsFile.exists()) {
                 userPropsFile.delete();
