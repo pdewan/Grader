@@ -10,11 +10,14 @@ import framework.navigation.SakaiStudentFolder;
 import framework.navigation.StudentFolder;
 import framework.project.StandardProject;
 import framework.utils.GraderSettings;
+import grader.basics.project.source.BasicTextManager;
 import grader.basics.trace.file.load.FileUnzipped;
 import grader.basics.util.DirectoryUtils;
 import grader.project.flexible.AFlexibleProject;
 import grader.project.flexible.FlexibleProject;
+import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProject;
+import grader.sakai.project.SakaiProjectDatabase;
 
 /**
  * This transforms a "grader" project into a "framework" project.
@@ -170,4 +173,20 @@ public class ProjectWrapper extends StandardProject {
         }).get();
         return new SakaiStudentFolder(folder);
     }
+    @Override
+    public  String getSource() {
+    	
+		return project.
+				getClassesTextManager().getEditedAllSourcesText(project.getSourceFileName());
+		
+//		return Common.toText(aRunningProject.getProject().getSourceFileName()).toString();
+	}
+    public BasicTextManager getTextManager() {
+    	return project.getClassesTextManager();
+    }
+    public String getAssignmentDataFolderName() {
+		return ASakaiProjectDatabase.getCurrentSakaiProjectDatabase().getAssignmentDataFolder().getMixedCaseAbsoluteName();
+		
+	}
+    
 }

@@ -10,6 +10,7 @@ import grader.basics.file.RootFolderCreator;
 import grader.basics.file.RootFolderProxy;
 import grader.basics.file.filesystem.AFileSystemRootFolderProxy;
 import grader.basics.file.zipfile.AZippedRootFolderProxy;
+import grader.basics.project.source.BasicTextManager;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.trace.ProjectFolderNotFound;
 import grader.config.StaticConfigurationUtils;
@@ -75,7 +76,7 @@ public class AFlexibleProject implements FlexibleProject {
     ClassLoader oldClassLoader;
     String outputFolder = ".";
     String sourceFileName, outputFileName, checkStyleFileName;
-    String sourceSuffix = ClassesTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
+    String sourceSuffix = BasicTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
     String outputSuffix = DEFAULT_TRANSCRIPT_FILE_SUFFIX;
     String checkStyleSuffix = DEFAULT_CHECK_STYLE_FILE_SUFFIX;
     boolean hasBeenRun, canBeRun = true; // strange that initial value is true
@@ -255,7 +256,7 @@ public class AFlexibleProject implements FlexibleProject {
     }
 
     public String createLocalSourceFileName() {
-        return classesTextManager.DEFAULT_SOURCES_FILE_PREFIX + sourceSuffix;
+        return BasicTextManager.DEFAULT_SOURCES_FILE_PREFIX + sourceSuffix;
     }
     
     
@@ -344,7 +345,7 @@ public class AFlexibleProject implements FlexibleProject {
         try { // Added by Josh: Exceptions can occur when making class descriptions
             classesManager.makeClassDescriptions(this);
             classViewManager = new AClassViewManager(classesManager);
-            classesTextManager = new AClassesTextManager(classViewManager);
+            classesTextManager = new AClassesTextManager(new File(sourceFileName), classViewManager);
             classesTextManager.initializeAllSourcesText();
 //            System.out.println("Write sources to:" + sourceFileName);
             classesTextManager.writeAllSourcesText(sourceFileName);

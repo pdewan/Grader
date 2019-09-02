@@ -9,6 +9,7 @@ import grader.basics.execution.RunningProject;
 import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.ClassesManager;
 import grader.basics.project.Project;
+import grader.basics.project.source.BasicTextManager;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.trace.BinaryFolderMade;
 import grader.basics.trace.BinaryFolderNotFound;
@@ -296,6 +297,18 @@ public class OriginalStandardProject implements FatProject {
 
 	@Override
 	public File getObjectFolder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicTextManager getTextManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getSource() {
 		// TODO Auto-generated method stub
 		return null;
 	}

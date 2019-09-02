@@ -9,6 +9,7 @@ import framework.execution.ARunningProject;
 import framework.project.FatProject;
 import grader.basics.execution.NotRunnableException;
 import grader.basics.project.ClassesManager;
+import grader.basics.project.source.BasicTextManager;
 import grader.basics.util.Option;
 //import scala.Option;
 import util.pipe.InputGenerator;
@@ -132,6 +133,18 @@ public class ManualProject implements FatProject {
 
 	@Override
 	public File getObjectFolder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicTextManager getTextManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getSource() {
 		// TODO Auto-generated method stub
 		return null;
 	}

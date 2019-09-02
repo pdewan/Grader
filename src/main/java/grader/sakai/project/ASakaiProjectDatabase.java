@@ -16,6 +16,7 @@ import grader.auto_notes.ANotesGenerator;
 import grader.auto_notes.NotesGenerator;
 import grader.basics.execution.MainClassFinder;
 import grader.basics.file.RootFolderProxy;
+import grader.basics.project.source.BasicTextManager;
 import grader.basics.requirements.interpreter.specification.ACSVRequirementsSpecification;
 import grader.basics.requirements.interpreter.specification.CSVRequirementsSpecification;
 import grader.basics.settings.BasicGradingEnvironment;
@@ -54,7 +55,6 @@ import grader.navigation.sorter.FileNameSorterSelector;
 import grader.photos.APhotoReader;
 import grader.photos.PhotoReader;
 import grader.project.flexible.AFlexibleProject;
-import grader.project.source.ClassesTextManager;
 import grader.sakai.ASakaiBulkAssignmentFolder;
 import grader.sakai.ASakaiStudentCodingAssignmentsDatabase;
 import grader.sakai.BulkAssignmentFolder;
@@ -145,8 +145,8 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	protected CSVRequirementsSpecification csvRequirementsSpecification;
 	GradingFeatureList gradingFeatures = new AGradingFeatureList();
 
-	String sourceFileNameSuffix = ClassesTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
-	String sourceFileNamePrefix = ClassesTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
+	String sourceFileNameSuffix = BasicTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
+	String sourceFileNamePrefix = BasicTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
 
 	String outputSuffix = AFlexibleProject.DEFAULT_TRANSCRIPT_FILE_SUFFIX;
 //
@@ -358,7 +358,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	}
 
 	public String sourceSuffix() {
-		return ClassesTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
+		return BasicTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
 	}
 
 	public String outputSuffix() {

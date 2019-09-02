@@ -1,13 +1,15 @@
 package grader.project.source;
 
 
+import grader.basics.project.source.ABasicTextManager;
+import grader.basics.project.source.BasicTextManager;
+import grader.basics.trace.source.SourceFileComputed;
+import grader.basics.trace.source.SourceFileLoaded;
+import grader.basics.trace.source.SourceFileSaved;
 import grader.basics.util.GraderFileUtils;
 import grader.project.view.ClassViewManager;
 import grader.project.view.ViewableClassDescription;
 import grader.sakai.project.SakaiProject;
-import grader.trace.source.SourceFileComputed;
-import grader.trace.source.SourceFileLoaded;
-import grader.trace.source.SourceFileSaved;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -18,12 +20,8 @@ import java.util.Map;
 import util.misc.Common;
 
 
-public class AClassesTextManager implements ClassesTextManager {
-    public static final String SOURCE_SUFFIX = "//END OF FILE\n";
-    public static final String SOURCE_PREFIX = "//START OF FILE: ";
-    public static final int MAX_FILE_NAME_LENGTH = 100;
+public class AClassesTextManager extends ABasicTextManager implements ClassesTextManager {
     Map<String, StringBuffer> views = new HashMap();
-    StringBuffer allSourcesText;
     ClassViewManager classesManager;
 //    String sourceFileNamePrefix = SOURCE_PREFIX;
 //    String sourceFileNameSuffix = SOURCE_SUFFIX;
@@ -31,7 +29,8 @@ public class AClassesTextManager implements ClassesTextManager {
 //    Project project;
 
 
-    public AClassesTextManager(ClassViewManager aClassesManager) {
+    public AClassesTextManager(File aSourceFolder, ClassViewManager aClassesManager) {
+    	super(aSourceFolder);
         classesManager = aClassesManager;
 //        sourceFileNameSuffix = aProject.getSourceSuffix();
     }
@@ -39,20 +38,20 @@ public class AClassesTextManager implements ClassesTextManager {
     /* (non-Javadoc)
      * @see grader.project.ClassesSourceManager#writeAllSourcesText()
      */
-    @Override
-    public void writeAllSourcesText(String aFileName) {
-        try {
-        	File sourceFile = new File(aFileName);
-        	if (sourceFile.exists()) return;
-            PrintWriter out = new PrintWriter(aFileName);
-            String allText = getAllSourcesText().toString();
-            out.print(allText);
-            out.close();
-            SourceFileComputed.newCase(aFileName, allText, this);
-        } catch (Exception e) {
-//            e.printStackTrace(); // Commented out by Josh
-        }
-    }
+//    @Override
+//    public void writeAllSourcesText(String aFileName) {
+//        try {
+//        	File sourceFile = new File(aFileName);
+//        	if (sourceFile.exists()) return;
+//            PrintWriter out = new PrintWriter(aFileName);
+//            String allText = getAllSourcesText().toString();
+//            out.print(allText);
+//            out.close();
+//            SourceFileComputed.newCase(aFileName, allText, this);
+//        } catch (Exception e) {
+////            e.printStackTrace(); // Commented out by Josh
+//        }
+//    }
     
     @Override
     public void setEditedAllSourcesText(String aFileName, String newValue) {
@@ -89,15 +88,15 @@ public class AClassesTextManager implements ClassesTextManager {
     /* (non-Javadoc)
      * @see grader.project.ClassesSourceManager#initializeAllSourcesText()
      */
-    @Override
-    public void initializeAllSourcesText() {
-        Collection<ViewableClassDescription> filteredClasses = classesManager.getViewableClassDescriptions();
-        allSourcesText = toStringBuffer(filteredClasses);
-    }
+//    @Override
+//    public void initializeAllSourcesText() {
+//        Collection<ViewableClassDescription> filteredClasses = classesManager.getViewableClassDescriptions();
+//        allSourcesText = toStringBuffer(filteredClasses);
+//    }
 
     @Override
     public StringBuffer toStringBuffer(Collection<ViewableClassDescription> sourceClasses) {
-        int totalTextSize = totalTextSize(sourceClasses) + sourceClasses.size() * (SOURCE_SUFFIX.length() + SOURCE_PREFIX.length() + MAX_FILE_NAME_LENGTH);
+        int totalTextSize = totalTextSize(sourceClasses) + sourceClasses.size() * (BasicTextManager.SOURCE_SUFFIX.length() + BasicTextManager.SOURCE_PREFIX.length() + BasicTextManager.MAX_FILE_NAME_LENGTH);
         StringBuffer retVal = new StringBuffer(totalTextSize);
         for (ViewableClassDescription viewable : sourceClasses) {
         	SakaiProject aProject =  (SakaiProject) viewable.getClassDescription().getProject();
@@ -106,10 +105,10 @@ public class AClassesTextManager implements ClassesTextManager {
         	String aLocalName = GraderFileUtils.toRelativeName(aProjectFolderName, viewable.getClassDescription().getSourceFile().getAbsoluteName());
 //        	String fileName = viewable.getClassDescription().getSourceFile().getParentRelativeName();
 //        	String prefix = SOURCE_PREFIX + fileName + "\n";
-        	String prefix = SOURCE_PREFIX + aLocalName + "\n";
+        	String prefix = BasicTextManager.SOURCE_PREFIX + aLocalName + "\n";
         	retVal.append(prefix);
             retVal.append(viewable.getClassDescription().getText());
-            retVal.append(SOURCE_SUFFIX);
+            retVal.append(BasicTextManager.SOURCE_SUFFIX);
         }
         return retVal;
     }
@@ -128,19 +127,19 @@ public class AClassesTextManager implements ClassesTextManager {
     /* (non-Javadoc)
      * @see grader.project.ClassesSourceManager#getAllSourcesText()
      */
-    @Override
-    public StringBuffer getAllSourcesText() {
-        if (allSourcesText == null)
-            initializeAllSourcesText();
-        return allSourcesText;
-    }
+//    @Override
+//    public StringBuffer getAllSourcesText() {
+//        if (allSourcesText == null)
+//            initializeAllSourcesText();
+//        return allSourcesText;
+//    }
 
     /* (non-Javadoc)
      * @see grader.project.ClassesSourceManager#setAllSourcesText(java.lang.StringBuffer)
      */
-    @Override
-    public void setAllSourcesText(StringBuffer anAllSourcesText) {
-        allSourcesText = allSourcesText;
-    }
+//    @Override
+//    public void setAllSourcesText(StringBuffer anAllSourcesText) {
+//        allSourcesText = allSourcesText;
+//    }
 
 }
