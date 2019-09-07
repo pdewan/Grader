@@ -164,10 +164,16 @@ public class ARunningProject extends BasicRunningProject implements ProcessInput
 
 	//
 	protected void maybeSetCurrentProjectIO() {
+		super.maybeSetCurrentProjectIO();
 		if (project != null) {
-//			project.setCurrentOutput(new StringBuffer(output));
-			project.setCurrentOutput(allProcessedOutput); // any need to create a copy?
-			project.setCurrentInput(input.toString());
+			project.setCurrentInput(projectWrapper.getCurrentInput());
+			project.setCurrentOutput(projectWrapper.getCurrentOutput());
+//			project.setCurrentOutput(allProcessedOutput); // any need to create a copy?
+//			String anInput = input.toString();
+//			project.setCurrentInput(anInput);
+//
+//			projectWrapper.setCurrentOutput(allProcessedOutput);
+//			projectWrapper.setCurrentInput(anInput);
 		}
 	}
 

@@ -49,7 +49,9 @@ public class AnInterpretedTestCase extends BasicTestCase{
 		String allArgs = "";
 		for (int i = 0; i < numArgs; i++) {
 			String anArg = csvRequirementsSpecification.getArg(featureNumber, i);
-			String anActualArg = InterpretedVariablesSubstituter.getValue(aSakaiProject, csvRequirementsSpecification, featureNumber, anOutput, anArg);
+//			String anActualArg = InterpretedVariablesSubstituter.getValue(aSakaiProject, csvRequirementsSpecification, featureNumber, anOutput, anArg);
+			String anActualArg = InterpretedVariablesSubstituter.getValue(project, csvRequirementsSpecification, featureNumber, anOutput, anArg);
+
 			anArgs[i] = anActualArg;
 			allArgs += " " + anArg;
 		}

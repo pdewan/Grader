@@ -1217,6 +1217,7 @@ public class AProjectStepper extends AClearanceManager implements
 //=======
 		setChanged (true);
 		project.clearOutput();
+		wrappedProject.clearOutput();
 		for (GradingFeature gradingFeature : projectDatabase
 				.getGradingFeatures()) {
 			if (gradingFeature.isAutoGradable()) {

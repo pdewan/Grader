@@ -148,4 +148,34 @@ public class ManualProject implements FatProject {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getCurrentInput() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCurrentInput(String currentInput) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public StringBuffer getCurrentOutput() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void clearOutput() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCurrentOutput(StringBuffer currentOutput) {
+		// TODO Auto-generated method stub
+		
+	}
 }
