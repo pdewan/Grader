@@ -96,5 +96,11 @@ public class ManualClassesManager implements ClassesManager {
 		return null;
 	}
 
+	@Override
+	public Set<ClassDescription> findBySupertypes(Class[] anInterfaces) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

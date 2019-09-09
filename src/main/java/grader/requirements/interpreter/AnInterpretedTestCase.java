@@ -11,7 +11,7 @@ import grader.basics.requirements.interpreter.specification.CSVRequirementsSpeci
 import grader.sakai.project.SakaiProject;
 import gradingTools.interpreter.checkers.InterpretedChecker;
 import gradingTools.interpreter.checkers.InterpretedCheckerRegistry;
-import gradingTools.interpreter.checkers.InterpretedCheckerResult;
+import gradingTools.interpreter.checkers.CheckerResult;
 import gradingTools.utils.RunningProjectUtils;
 
 public class AnInterpretedTestCase extends BasicTestCase{
@@ -55,7 +55,7 @@ public class AnInterpretedTestCase extends BasicTestCase{
 			anArgs[i] = anActualArg;
 			allArgs += " " + anArg;
 		}
-		InterpretedCheckerResult aResult = aChecker.check(anArgs);
+		CheckerResult aResult = aChecker.check(anArgs);
 		String aFunctionCall = aComparator + " " + allArgs;
 		
 //		if (checkable instanceof Feature && aResult.isSucceeded()) {

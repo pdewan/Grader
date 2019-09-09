@@ -530,6 +530,12 @@ public class OriginalProjectClassesManager implements ClassesManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Set<ClassDescription> findBySupertypes(Class[] anInterfaces) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
    
 }
