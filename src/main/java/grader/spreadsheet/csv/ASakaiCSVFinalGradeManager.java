@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -129,6 +130,10 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	public void createTable() {
 		
 		try {
+			if (!gradeSpreadsheetProxy.exists()) {
+				System.out.println("Spreadsheet file doesn't exist: " + gradeSpreadsheetProxy.getAbsoluteName());
+				return;
+			}
 			InputStream input = gradeSpreadsheetProxy.getInputStream();
 			CSVReader csvReader 	=	new CSVReader(new InputStreamReader(input));
 		     table = csvReader.readAll();
@@ -490,7 +495,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 				|| evt.getPropertyName() == AGraderSettingsModel.CLEAN_SLATE_SPECIFIED ||
 				evt.getPropertyName() == AGraderSettingsModel.CLEAN_SLATE_ALL) {
 			table = null;
-			createTable();
+//			createTable();
 		}
 	}
 	

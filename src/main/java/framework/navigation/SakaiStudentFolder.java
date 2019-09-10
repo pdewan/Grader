@@ -17,6 +17,7 @@ import grader.basics.project.CurrentProjectHolder;
 import grader.basics.util.DirectoryUtils;
 import grader.basics.util.Option;
 import grader.project.flexible.AFlexibleProject;
+import grader.util.SakaiDateUtil;
 
 /**
  * A Sakai-structured student folder.
@@ -149,7 +150,7 @@ public class SakaiStudentFolder implements StudentFolder<StandardProject> {
             try {
                 String timestampText = FileUtils.readFileToString(timestampFile);
             	System.out.println("Found timestamp:" + timestampText);
-            	Date aDate = Common.toDate(timestampText);
+            	Date aDate = SakaiDateUtil.toDate(timestampText);
             	System.out.println ("Timestamp Date:" + aDate );
             	DateTime aDateTime = new DateTime(aDate);
             	System.out.println ("Date time:" + aDateTime );

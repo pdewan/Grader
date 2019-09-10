@@ -401,7 +401,7 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
     @Override
     public boolean logSaved() {
         for (Logger logger : loggers) {
-        	System.out.println ("Wrtiing to logger:" + logger);
+        	System.out.println ("Writing to logger:" + logger);
             // recordingSession is null if we are examining this entry to determine if we should visit
             if (recordingSession != null && !logger.isSaved(recordingSession.getUserId())) {
                 return false;

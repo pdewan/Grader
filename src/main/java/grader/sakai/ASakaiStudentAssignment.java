@@ -1,16 +1,5 @@
 package grader.sakai;
 
-import grader.basics.file.FileProxy;
-import grader.basics.file.FileProxyUtils;
-import grader.basics.file.filesystem.AFileSystemFileProxy;
-import grader.trace.sakai_bulk_folder.CommentsFileLoaded;
-import grader.trace.sakai_bulk_folder.DocumentFileLoaded;
-import grader.trace.sakai_bulk_folder.FeedbackFolderLoaded;
-import grader.trace.sakai_bulk_folder.SubmissionFolderLoaded;
-import grader.trace.sakai_bulk_folder.SubmissionFolderNotFound;
-import grader.trace.sakai_bulk_folder.TimestampFileLoaded;
-import grader.util.GraderCommon;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -21,7 +10,17 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
-import util.misc.Common;
+import grader.basics.file.FileProxy;
+import grader.basics.file.FileProxyUtils;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
+import grader.trace.sakai_bulk_folder.CommentsFileLoaded;
+import grader.trace.sakai_bulk_folder.DocumentFileLoaded;
+import grader.trace.sakai_bulk_folder.FeedbackFolderLoaded;
+import grader.trace.sakai_bulk_folder.SubmissionFolderLoaded;
+import grader.trace.sakai_bulk_folder.SubmissionFolderNotFound;
+import grader.trace.sakai_bulk_folder.TimestampFileLoaded;
+import grader.util.GraderCommon;
+import grader.util.SakaiDateUtil;
 import util.trace.Tracer;
 
 public class ASakaiStudentAssignment implements StudentAssignment {
@@ -98,7 +97,7 @@ public class ASakaiStudentAssignment implements StudentAssignment {
 			try {
 				timeStamp = FileProxyUtils.toText(timeStampFile);
 				if (timeStamp != null) {
-					date = Common.toDate(timeStamp);
+					date = SakaiDateUtil.toDate(timeStamp);
 					TimestampFileLoaded.newCase(timeStampFile.getAbsoluteName(), this);
 				}
 			} catch (Exception e) {

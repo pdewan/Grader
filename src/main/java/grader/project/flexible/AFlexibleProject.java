@@ -345,7 +345,8 @@ public class AFlexibleProject implements FlexibleProject {
         try { // Added by Josh: Exceptions can occur when making class descriptions
             classesManager.makeClassDescriptions(this);
             classViewManager = new AClassViewManager(classesManager);
-            classesTextManager = new AClassesTextManager(new File(sourceFileName), classViewManager);
+            classesTextManager = new AClassesTextManager(new File(rootCodeFolder.getSourceProjectFolderName()), classViewManager);
+//            classesTextManager = new AClassesTextManager(new File(sourceFileName), classViewManager);
             classesTextManager.initializeAllSourcesText();
 //            System.out.println("Write sources to:" + sourceFileName);
             classesTextManager.writeAllSourcesText(sourceFileName);
