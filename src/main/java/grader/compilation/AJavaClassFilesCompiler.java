@@ -50,12 +50,13 @@ public class AJavaClassFilesCompiler implements ClassFilesCompiler{
 			if (myClassPath != null) {
 //				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-cp", myClassPath, "-Xlint:unchecked"));
 				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-cp", aCompleteClasspath, "-Xlint:unchecked"));
+				System.out.println("Buildfolder:" + buildFolderPath + " classpath: " + aCompleteClasspath);
 
 			} else {
 				optionList.addAll(Arrays.asList("-d", buildFolderPath, "-Xlint:unchecked"));
+				System.out.println("Buildfolder:" + buildFolderPath + " classpath: " + myClassPath);
 
 			}
-			System.out.println("Buildfolder:" + buildFolderPath + " classpath: " + myClassPath);
 
 			Iterable<? extends JavaFileObject> compilationUnits = fileManager
 					.getJavaFileObjectsFromFiles(sourceFiles);

@@ -453,61 +453,61 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 			
 		}
 
-//	protected void maybeCompileWrongVersion(String className, File file, Set<File> sourceFiles) {
-//		try {
-//			System.out
-//				.println(
-//					"Class files are the incorrect version for the current Java version. Attempting to recompile files.");
-//			// List<File> recompiledFileList = new ArrayList<>();
-//			// recompiledFileList.add(file);
-//			// if (project.hasBeenCompiled() )
-//			if (hasBeenCompiled())
-//				return;
-//			// project.setHasBeenCompiled(true);
-//			maybeSetHasBeenCompiled(true);
-//			List<File> recompiledFileList = new ArrayList<>(sourceFiles);
-//			// recompiledFileList.add(file);
-//			System.out.println("Recompiling files:" + recompiledFileList);
-//			RunningProject runningProject = LanguageDependencyManager
-//				.getSourceFilesCompiler().compile(basicProject, sourceFolder,
-//					buildFolder, basicProject.getObjectFolder(), recompiledFileList);
-//			// project.setCanBeCompiled(true);
-//			maybeSetCanBeCompiled(true);
-//			// may have to unload class so am doing this reset
-//			manageClassLoader();
-//			// project.setNewClassLoader();
-//			// proxyClassLoader = project.getClassLoader();
-//			// project.getClassLoader().setBinaryFileSystemFolderName(buildFolder.getAbsolutePath());
-//
-//			classLoader = new URLClassLoader(new URL[] { buildFolder.toURI().toURL() });
-//
-//
-//			if (runningProject != null) {
-//				appendOutputAndErrorsToTranscriptFile(runningProject);
-//				// runningProject
-//				// .appendOutputAndErrorsToTranscriptFile(project);
-//
-//			}
-//			System.out.println("Compilation attempt finished.");
-//
-//			Class c = null;
-//			if (BasicGradingEnvironment.get().isLoadClasses()) {
-//				// c = classLoader.loadClass(className);
-//				c = proxyClassLoader.loadClass(className);
-//
-//			}
-//
-//			if (c != null) {
-//				classDescriptions
-//					.add(new BasicClassDescription(c, file));
-//			}
-//		} catch (Exception ex) {
-//			// project.setCanBeCompiled(false);
-//			maybeSetCanBeCompiled(false);
-//
-//			System.out.println("Compilation failed: " + ex.toString());
-//		}
-//	}
+	protected void maybeCompileWrongVersion(String className, File file, Set<File> sourceFiles) {
+		try {
+			System.out
+				.println(
+					"Class files are the incorrect version for the current Java version. Attempting to recompile files.");
+			// List<File> recompiledFileList = new ArrayList<>();
+			// recompiledFileList.add(file);
+			// if (project.hasBeenCompiled() )
+			if (hasBeenCompiled())
+				return;
+			// project.setHasBeenCompiled(true);
+			maybeSetHasBeenCompiled(true);
+			List<File> recompiledFileList = new ArrayList<>(sourceFiles);
+			// recompiledFileList.add(file);
+			System.out.println("Recompiling files:" + recompiledFileList);
+			RunningProject runningProject = LanguageDependencyManager
+				.getSourceFilesCompiler().compile(basicProject, sourceFolder,
+					buildFolder, basicProject.getObjectFolder(), recompiledFileList);
+			// project.setCanBeCompiled(true);
+			maybeSetCanBeCompiled(true);
+			// may have to unload class so am doing this reset
+			manageClassLoader();
+			// project.setNewClassLoader();
+			// proxyClassLoader = project.getClassLoader();
+			// project.getClassLoader().setBinaryFileSystemFolderName(buildFolder.getAbsolutePath());
+
+			classLoader = new URLClassLoader(new URL[] { buildFolder.toURI().toURL() });
+
+
+			if (runningProject != null) {
+				appendOutputAndErrorsToTranscriptFile(runningProject);
+				// runningProject
+				// .appendOutputAndErrorsToTranscriptFile(project);
+
+			}
+			System.out.println("Compilation attempt finished.");
+
+			Class c = null;
+			if (BasicGradingEnvironment.get().isLoadClasses()) {
+				// c = classLoader.loadClass(className);
+				c = proxyClassLoader.loadClass(className);
+
+			}
+
+			if (c != null) {
+				classDescriptions
+					.add(new BasicClassDescription(c, file));
+			}
+		} catch (Exception ex) {
+			// project.setCanBeCompiled(false);
+			maybeSetCanBeCompiled(false);
+
+			System.out.println("Compilation failed: " + ex.toString());
+		}
+	}
 
 	// /**
 	// * This loads all the classes based on the source code files.
