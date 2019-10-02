@@ -1,7 +1,7 @@
 package grader.util;
 
 public class GraderCommon {
-	public static String[] docSuffixes = {".doc", ".docx", ".pdf", ".ppt", ".pptx", ".txt", ".png", ".jpg", ".jpeg", ".gif", ".tiff", ".bmp"};
+	public static String[] docSuffixes = {".doc", ".docx", ".pdf", ".ppt", ".pptx", ".txt", ".png", ".jpg", ".jpeg", ".gif", ".tiff", ".bmp", ".lisp", ".prolog", ".sml"};
 	public static String[] imageSuffixes = {".pdf", ".png", ".jpg", ".jpeg", ".gif", ".tiff", ".bmp", ".docx", ".doc"};
 
 	
