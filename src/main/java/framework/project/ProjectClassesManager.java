@@ -506,6 +506,9 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 			maybeSetCanBeCompiled(false);
 
 			System.out.println("Compilation failed: " + ex.toString());
+		} catch (Error e) {
+			Tracer.error("Recompilation had problems");
+			e.printStackTrace();
 		}
 	}
 
