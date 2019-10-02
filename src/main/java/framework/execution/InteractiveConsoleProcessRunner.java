@@ -4,6 +4,7 @@ import grader.basics.execution.BasicProcessRunner;
 import grader.basics.execution.NotRunnableException;
 import grader.basics.execution.Runner;
 import grader.basics.execution.RunningProject;
+import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.util.TimedProcess;
@@ -18,11 +19,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import util.misc.Common;
 import util.pipe.InputGenerator;
+import util.trace.Tracer;
 
 /**
  * This runs the program in a new process.
@@ -36,15 +39,28 @@ public class InteractiveConsoleProcessRunner implements Runner {
     static Thread inputThread;
     static Thread errorThread;
     StringBuffer input;
-    
+    String entryPoint;
 
     public InteractiveConsoleProcessRunner(Project aProject) throws NotRunnableException {
         try {
+        	
+       
+        	 Class aMainClass = BasicProjectIntrospection.getMainClass();
+        	 if (aMainClass != null) {
+        		 entryPoint = aMainClass.getName();
+        		 Map<String, String> aMap = new HashMap<String, String>();
+        		 aMap.put(BasicProcessRunner.MAIN_ENTRY_POINT, entryPoint);
+        		 entryPoints = aMap;
+        		 
+        	 } else {
+                 Tracer.info(this, "No set main class, searching for main class");
+                 
+        	 
 //            entryPoint = getEntryPoint(aProject);
 //            entryPoint = JavaMainClassFinderSelector.getMainClassFinder().getEntryPoint(aProject);
-            entryPoints = LanguageDependencyManager.getMainClassFinder().getEntryPoints(aProject, StaticConfigurationUtils.getPotentialMainEntryPointNames());
-
-            folder = aProject.getBuildFolder(entryPoints.get(BasicProcessRunner.MAIN_ENTRY_POINT));
+                entryPoints = LanguageDependencyManager.getMainClassFinder().getEntryPoints(aProject, StaticConfigurationUtils.getPotentialMainEntryPointNames());
+        	 }
+             folder = aProject.getBuildFolder(entryPoints.get(BasicProcessRunner.MAIN_ENTRY_POINT));
             project = aProject;
             MainClassFound.newCase(entryPoints.get(BasicProcessRunner.MAIN_ENTRY_POINT), project.getSourceFolder().getName(), this);
         } catch (Exception e) {
@@ -52,6 +68,26 @@ public class InteractiveConsoleProcessRunner implements Runner {
             throw new NotRunnableException();
         }
     }
+//    public InteractiveConsoleProcessRunner(Project aProject) throws NotRunnableException {
+//        try {
+//        	String anEntryPoint = null;
+//       
+//        	 Class aMainClass = BasicProjectIntrospection.getMainClass();
+//        	 if (aMainClass != null) {
+//        		 Tracer.info(this, "No set main class, searching for main class");
+//        	 }
+////            entryPoint = getEntryPoint(aProject);
+////            entryPoint = JavaMainClassFinderSelector.getMainClassFinder().getEntryPoint(aProject);
+//            entryPoints = LanguageDependencyManager.getMainClassFinder().getEntryPoints(aProject, StaticConfigurationUtils.getPotentialMainEntryPointNames());
+//
+//            folder = aProject.getBuildFolder(entryPoints.get(BasicProcessRunner.MAIN_ENTRY_POINT));
+//            project = aProject;
+//            MainClassFound.newCase(entryPoints.get(BasicProcessRunner.MAIN_ENTRY_POINT), project.getSourceFolder().getName(), this);
+//        } catch (Exception e) {
+//        	MainClassNotFound.newCase(entryPoints.get(BasicProcessRunner.MAIN_ENTRY_POINT), project.getSourceFolder().getName(), this);
+//            throw new NotRunnableException();
+//        }
+//    }
 
 //    /**
 //     * This figures out what class is the "entry point", or, what class has main(args)
