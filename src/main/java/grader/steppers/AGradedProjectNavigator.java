@@ -1015,7 +1015,7 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 //	@Visible(false)
 	@ComponentWidth(100)
 	@Row(1)
-	@Column(2)
+	@Column(1)
 	@Override
 	@Explanation("Save uncomitted changes in the text areas wihout hitting and entering a return and sync with changes to source code made using external text editor.")
 	public void sync() {		
@@ -1045,8 +1045,29 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 //	@ComponentWidth(100)
 	@ComponentWidth(150)
 	@Explanation("To be implemented.")
+	@Visible(false)
 	public void exploreSource() {
 		projectStepper.openSource();
+	}
+	@Row(1)
+	@Column(2)
+//	@ComponentWidth(100)
+	@ComponentWidth(75)
+	@Explanation("Download Src")
+	@Label("!src")
+	@Override
+	public void downloadSource() {
+		projectStepper.downloadSource();
+	}
+	@Row(1)
+	@Column(3)
+//	@ComponentWidth(100)
+	@ComponentWidth(75)
+	@Explanation("Upload Src")
+	@Label("^src")
+	@Override
+	public void uploadSource() {
+		projectStepper.uploadSource();
 	}
 	@ComponentWidth(100)
 	@Row(2)

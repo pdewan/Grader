@@ -683,6 +683,15 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 		mainProjectStepper.nextFiltered();
 		
 	}
+	@Override
+	public void downloadSource() {
+		mainProjectStepper.downloadSource();
+		
+	}
+	@Override
+	public void uploadSource() {
+		mainProjectStepper.uploadSource();
+	}
 
 
 }

@@ -670,6 +670,15 @@ public class AMainProjectStepper implements MainProjectStepper {
 	public void nextFiltered() {
 		overviewProjectStepper.nextFiltered();
 	}
+	@Override
+	public void downloadSource() {
+		overviewProjectStepper.downloadSource();
+	}
+	@Override
+	public void uploadSource() {
+		overviewProjectStepper.uploadSource();
+		
+	}
 	
 //	@Override
 //	public void newFocus(String aProperty) {

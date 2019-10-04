@@ -297,6 +297,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         }
 //		fileBrowsing.getDownloadFolder().setText(problemDownloadPath);
         refreshProblemDownloadPath();
+        refreshTestProjectSrc();
         if (moduleProblemSelector != null) {
             moduleProblemSelector.getModule().setValue(currentModule);
 //				String savedProblem = currentProblem;
@@ -325,8 +326,20 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         } else {
         	System.err.println("Null problem download path");
         }
-        GraderSettings.get().set("path", problemDownloadPath);
+//        GraderSettings.get().set("path", problemDownloadPath);
+        GraderSettings.get().set(StaticConfigurationUtils.PROBLEM_PATH, problemDownloadPath);
 
+
+    }
+    void refreshTestProjectSrc() {
+        if (testProjectSrc != null) {
+        	Tracer.info (this, "Refreshing test project src:" + testProjectSrc);
+            fileBrowsing.getTestProjectSrc().setText(testProjectSrc);
+        } else {
+        	System.err.println("Null test project src");
+        }
+//        GraderSettings.get().set("path", problemDownloadPath);
+        GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrc);
     }
 
     void loadSettings() {
@@ -518,6 +531,8 @@ public class AGraderSettingsModel implements GraderSettingsModel {
             moduleProblemSelector.getModule().addPropertyChangeListener(this);
             moduleProblemSelector.getProblem().addPropertyChangeListener(this);
             fileBrowsing.getDownloadFolder().getLabel().addPropertyChangeListener(this);
+            fileBrowsing.getTestProjectSrc().getLabel().addPropertyChangeListener(this);
+            getFileBrowsing().getTestProjectSrc().getLabel().addPropertyChangeListener(this);
             onyens.addPropertyChangeListener(this);
         }
 
@@ -1084,6 +1099,20 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         	} else if (evt.getPropertyName().equals("displayedEndingOnyen")) {
         		GraderSettings.get().set(END_ONYEN, (String) evt.getNewValue());
         	}
+        }  else if (evt.getSource() == fileBrowsing.getTestProjectSrc().getLabel()) {
+            String newPath = fileBrowsing.getTestProjectSrc().getLabel().getText();
+            if (grader.settings.folders.AFileSetterModel.INVALID_FILE_NAME_MESSAGE.equals(newPath)) {
+            	return; // no need to do anything, this is a side effect of a previous action
+            }
+            if (newPath == null) {
+                return;
+            }
+            if (testProjectSrc != null && testProjectSrc.equals(newPath)) {
+                return; // bounce back
+            }
+            graderSettingsManager.setTestProjectSrc(newPath);
+            refreshAll();
+//            DownloadPathUserChange.newCase(newPath, this, this);
         }
 
     }

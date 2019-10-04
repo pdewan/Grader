@@ -130,6 +130,10 @@ public interface GradedProjectNavigator   extends /*ClearanceManager,*/ Property
 
 	void nextFiltered();
 
+	void uploadSource();
+
+	void downloadSource();
+
 
 
 //	void setFrame(Object aFrame);

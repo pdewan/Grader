@@ -6,6 +6,8 @@ import grader.assignment.AGradingFeature;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 import grader.auto_notes.NotesGenerator;
+import grader.basics.config.BasicExecutionSpecificationSelector;
+import grader.config.StaticConfigurationUtils;
 import grader.documents.DocumentDisplayerRegistry;
 import grader.interaction_logger.manual_grading_stats.GradingHistoryManagerSelector;
 import grader.navigation.AlphabeticNavigationListManager;
@@ -13,6 +15,7 @@ import grader.project.source.TACommentsExtractor;
 import grader.project.source.TACommentsExtractorSelector;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
+import grader.settings.GraderSettingsManagerSelector;
 import grader.settings.GraderSettingsModel;
 import grader.settings.GraderSettingsModelSelector;
 import grader.settings.navigation.NavigationSetter;
@@ -1863,6 +1866,19 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	public void nextFiltered() {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void downloadSource() {
+		System.out.println("Project source:" + project.getSourceProjectFolderName());
+//		System.out.println("Test project source:" + BasicExecutionSpecificationSelector.getBasicExecutionSpecification().getStringProperty(StaticConfigurationUtils.TEST_PROJECT_SRC, null));
+		System.out.println("Test project source:" + GraderSettingsManagerSelector.getGraderSettingsManager().getTestProjectSrc());
+
+	}
+	@Override
+	public void uploadSource() {
+		System.out.println("Project source:" + project.getSourceProjectFolderName());
+//		System.out.println("Test project source:" + BasicExecutionSpecificationSelector.getBasicExecutionSpecification().getStringProperty(StaticConfigurationUtils.TEST_PROJECT_SRC, null));
+		System.out.println("Test project source:" + GraderSettingsManagerSelector.getGraderSettingsManager().getTestProjectSrc());
 	}
 	
 	
