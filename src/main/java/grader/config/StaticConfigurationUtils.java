@@ -74,6 +74,8 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	
 	public static final String EDITOR = "editor";
 	public static final String DIFF = "diff";
+	public static final String TEST_PROJECT_SRC = "testProjectSrc";
+
 	public static final String MODULE = "currentModule";
 	public static final String PROBLEM_PATH = "path";
 	public static final String PROBLEM_NAME = "problem";

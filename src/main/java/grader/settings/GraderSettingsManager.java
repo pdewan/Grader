@@ -61,6 +61,8 @@ public interface GraderSettingsManager {
 	String getPythonInterpreterPath();
 	void setPythonInterpreterPath(String aNewValue);
 	void init();
+	String getTestProjectSrc();
+	void setTestProjectSrc(String newValue);
 	
 
 }

@@ -79,6 +79,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     List<String> problems = new ArrayList();
     String editor;
     String diff;
+    String testProjectSrc;
     String currentModule;
     List<String> currentProblems;
     String currentProblem;
@@ -418,6 +419,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 //		maybeConvertToDynamicConfiguration();
         editor = graderSettingsManager.getEditor();
         diff = graderSettingsManager.getDiff();
+        testProjectSrc = graderSettingsManager.getTestProjectSrc();
 
 //		 editor = dynamicConfiguration.getString(EDITOR);
 //		if (editor != null) {
@@ -526,6 +528,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         String editor = fileBrowsing.getTextEditor().getLabel().getText();
         String downloadPath = fileBrowsing.getDownloadFolder().getLabel().getText();
         String diff = fileBrowsing.getDiff().getLabel().getText();
+        String testProjectSrcFolder = fileBrowsing.getTestProjectSrc().getLabel().getText(); 
         String startingOnyen = onyens.getStartingOnyen();
         String endingOnyen = onyens.getEndingOnyen();
         GraderSettings.get().set(START_ONYEN, startingOnyen);
@@ -534,8 +537,12 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         GraderSettings.get().set(PROBLEM_PATH, downloadPath);
         BasicGradingEnvironment.get().setAssignmentName(currentProblem);
 //        ASakaiProjectDatabase.setCurrentSakaiProjectDatabase(new ASakaiProjectDatabase(downloadPath, null));
-        GraderSettings.get().set("editor", editor);
-        GraderSettings.get().set("diff", diff);
+//        GraderSettings.get().set("editor", editor);
+        GraderSettings.get().set(StaticConfigurationUtils.EDITOR, editor);
+//        GraderSettings.get().set("diff", diff);
+        GraderSettings.get().set(StaticConfigurationUtils.DIFF, diff);
+
+        GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrcFolder);
 
         GraderSettings.get().save();
         graderSettingsManager.setEditor(editor);

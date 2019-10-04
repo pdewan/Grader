@@ -8,4 +8,5 @@ public interface GraderFilesSetterModel {
 	public FileSetterModel getDiff() ;
 	
 	public void initFrame(JFrame aFrame) ;
+	FileSetterModel getTestProjectSrc();
 }

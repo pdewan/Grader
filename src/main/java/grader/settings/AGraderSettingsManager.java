@@ -239,6 +239,24 @@ public class AGraderSettingsManager implements GraderSettingsManager {
         dynamicConfiguration.setProperty(StaticConfigurationUtils.DIFF, newValue);
 
     }
+    
+    @Override
+    public String getTestProjectSrc() {
+        String diff = dynamicConfiguration.getString(StaticConfigurationUtils.TEST_PROJECT_SRC);
+        if (diff != null) {
+//				editor = GraderSettings.get().get("editor");
+            BasicGradingEnvironment.get().setDiff(diff); // why not for path also, perhaps its not used later?
+        } else {
+        	diff = BasicGradingEnvironment.get().getDiff();
+        }
+        return diff;
+    }
+
+    @Override
+    public void setTestProjectSrc(String newValue) {
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.TEST_PROJECT_SRC, newValue);
+
+    }
 
     @Override
     public String getModule() {
