@@ -19,4 +19,10 @@ public class AnUnsortedNavigationListCreator implements NavigationListManager {
 		return null;
 	}
 
+	@Override
+	public List<String> getOnyenNavigationList(SakaiProjectDatabase aSakaiProjectDatabase, boolean selectedOnly) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

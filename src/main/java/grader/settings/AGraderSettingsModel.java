@@ -954,9 +954,8 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         maybeCreateProjectDatabase();
 
         List<String> onyens = projectDatabase.getOnyenNavigationList();
-//		OnyenRangeModel anOnyenRangeModel = getOnyens();
-//		String aStartOnyen = GraderSettings.get().
-//		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();
+    	onyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();
+
 
         for (String anOnyen : onyens) {
             try {

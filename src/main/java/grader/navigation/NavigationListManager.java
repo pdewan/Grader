@@ -9,4 +9,6 @@ public interface NavigationListManager {
 
 	List<String> getRawOnyenNavigationList();
 
+	List<String> getOnyenNavigationList(SakaiProjectDatabase aSakaiProjectDatabase, boolean selectedOnly);
+
 }

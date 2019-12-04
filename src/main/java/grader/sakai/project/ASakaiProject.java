@@ -2,6 +2,7 @@ package grader.sakai.project;
 
 import grader.basics.file.FileProxy;
 import grader.project.flexible.AFlexibleProject;
+import grader.project.folder.RootCodeFolder;
 import grader.sakai.StudentAssignment;
 import grader.sakai.StudentCodingAssignment;
 
@@ -51,7 +52,11 @@ public class ASakaiProject extends AFlexibleProject implements SakaiProject {
     	if (zipFile != null) {
     		return zipFile.getMixedCaseAbsoluteName();
     	} else {
-    		return getRootCodeFolder().getMixedCaseAbsoluteName();
+    		RootCodeFolder aFolder = getRootCodeFolder();
+    		if (aFolder == null) {
+    			return null;
+    		}
+    		return aFolder.getMixedCaseAbsoluteName();
     	}
     }
 //     @Override

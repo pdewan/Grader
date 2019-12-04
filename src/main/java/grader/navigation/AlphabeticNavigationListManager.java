@@ -54,6 +54,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 	String savedRawGoToOnyens = null;
 	String savedRawEndOnyen = null;
 	
+	
 	List<String> emptyOnyenList = new ArrayList();
 	public static void trim (String[] aStrings) {
 		for (int i = 0; i < aStrings.length; i++) {
@@ -222,18 +223,24 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     	}
         return anOnyens;
     }
-	
-	// the argument does not really matter now
-    @Override
+	 @Override
+
 	public List<String> getOnyenNavigationList(
 			SakaiProjectDatabase aSakaiProjectDatabase) {
+		return getOnyenNavigationList(aSakaiProjectDatabase, true);
+	}
+	
+	// the argument does not really matter now
+	 @Override
+   	public List<String> getOnyenNavigationList(
+			SakaiProjectDatabase aSakaiProjectDatabase, boolean selectedOnly) {
     	File aDirectory = new File(GraderSettings.get().get("path"));
         String aStartOnyen = GraderSettings.get().get("start");
     	String anEndOnyen = GraderSettings.get().get("end");
     	String aGoToOnyen = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens().getOnyenList();
 
 
-    	if (
+    	if (selectedOnly &&
     		aStartOnyen.equals(savedStartOnyen) &&
     		anEndOnyen.equals(savedEndOnyen) &&
     		aGoToOnyen.equals(savedGoToOnyens) &&
@@ -262,11 +269,15 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 							.getProjectStepper(), aSakaiProjectDatabase
 							.getProjectStepper().getProject(), anOnyens, this);
 		savedOnyens = retVal;
+//		savedOnyens = savedRawOnyens;
+		System.out.println ("MAKING SELECTED ONYENS AS RAW ONYENS");
 	 	savedStartOnyen = aStartOnyen;
     	savedEndOnyen = anEndOnyen;
     	savedDirectoryName = aDirectory.getName(); 
     	savedGoToOnyens = aGoToOnyen;
 		return retVal;
+//		return savedOnyens;
+
 	}
 //    public List<String> getOnyenNavigationList(SakaiProjectDatabase aSakaiProjectDatabase) {
 //    	List<String> aGoToOnyensList = maybeGetGoToOnyenList();

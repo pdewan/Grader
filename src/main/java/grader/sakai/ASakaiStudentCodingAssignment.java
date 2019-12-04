@@ -10,6 +10,7 @@ import grader.trace.project.ProjectFolderAssumed;
 import grader.trace.project.RubrickFileLoaded;
 
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Set;
 
 public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment implements StudentCodingAssignment {
@@ -37,6 +38,28 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
             findRubrickAndProject();
         }
     }
+    
+    RootFolderProxy searchForProjectFolder (RootFolderProxy aFolder) {
+    	Set<String> childrenNames = aFolder.getChildrenNames();
+    	for (String aChildName:childrenNames) {
+    		if (aChildName.equals("src")) {
+    			return aFolder;
+    		}
+    	}
+    	List<FileProxy> aChildren = aFolder.getFileEntries();
+    	for (FileProxy aChild:aChildren) {
+    		if (isZipName(aChild.getLocalName())) {
+    			RootFolderProxy aChildRootFolder = new AZippedRootFolderProxy(aChild.getMixedCaseAbsoluteName());
+    			return searchForProjectFolder(aChildRootFolder);
+    		}
+    		
+    		if (aChild.isDirectory()) {
+    			return searchForProjectFolder(aChild);
+    		}
+    	}
+    	return null;
+    	
+    }
 
     FileProxy getZipChild(FileProxy aFolder) {
         Set<String> childrenNames = aFolder.getChildrenNames();
@@ -54,6 +77,11 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
         }
         return null;
 
+    }
+    
+    protected boolean isZipName (String childName) {
+    	return childName.endsWith(AFlexibleProject.ZIP_SUFFIX_1) || 
+        		childName.endsWith(AFlexibleProject.ZIP_SUFFIX_2);
     }
 
     FileProxy getUniqueNonMACOSFolderChild(FileProxy aFolder) {
@@ -125,7 +153,10 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
             if (unzippedFolder == null) {
             	System.out.println ("Did not find unzipped folder, processing zip file:" + zipFile);
 //                projectFolder = new AZippedRootFolderProxy(zipFile.getAbsoluteName());
-                projectFolder = new AZippedRootFolderProxy(zipFile.getMixedCaseAbsoluteName());
+                
+                
+            	projectFolder = new AZippedRootFolderProxy(zipFile.getMixedCaseAbsoluteName());
+//            	projectFolder = new AZippedRootFolderProxy(aProjectProxy.getMixedCaseAbsoluteName());
 
             } else {
             	System.out.println ("Found unzipped folder, processing zip folder:" + unzippedFolder);
@@ -134,6 +165,10 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
                     projectFolder = unzippedFolder; // not sure if this is ever reasonable
                 }
             }
+//            RootFolderProxy searchedProjectChild =  searchForProjectFolder(projectFolder);
+//            if (searchedProjectChild != null) {
+//            	projectFolder = searchedProjectChild;
+//            }
 
         }
         if (projectFolder == null) {
