@@ -96,7 +96,7 @@ public class AClassesTextManager extends ABasicTextManager implements ClassesTex
 
     @Override
     public StringBuffer toStringBuffer(Collection<ViewableClassDescription> sourceClasses) {
-        int totalTextSize = totalTextSize(sourceClasses) + sourceClasses.size() * (BasicTextManager.SOURCE_SUFFIX.length() + BasicTextManager.SOURCE_PREFIX.length() + BasicTextManager.MAX_FILE_NAME_LENGTH);
+        int totalTextSize = totalTextSize(sourceClasses) + sourceClasses.size() * (BasicTextManager.SOURCE_SUFFIX.length() + 1 + BasicTextManager.SOURCE_PREFIX.length() + BasicTextManager.MAX_FILE_NAME_LENGTH);
         StringBuffer retVal = new StringBuffer(totalTextSize);
         for (ViewableClassDescription viewable : sourceClasses) {
         	SakaiProject aProject =  (SakaiProject) viewable.getClassDescription().getProject();

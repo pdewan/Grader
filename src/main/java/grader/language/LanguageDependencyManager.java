@@ -74,9 +74,12 @@ static {
 	
 	languageToCompiler.put(JAVA_LANGUAGE, JavaClassFilesCompilerSelector.getClassFilesCompiler() );
 	languageToCompiler.put(C_LANGUAGE, CFilesCompilerSelector.getClassFilesCompiler());
+	languageToCompiler.put(CPlusPlus_LANGUAGE, CFilesCompilerSelector.getClassFilesCompiler());
+
 	languageToFilesToCompileFinder.put(JAVA_LANGUAGE, FilesToCompileFinderSelector.getOrCreateFilesToCompileFinder());
 	languageToFilesToCompileFinder.put(C_LANGUAGE, CFilesToCompileFinderSelector.getOrCreateFilesToCompileFinder());
 
+	languageToFilesToCompileFinder.put(CPlusPlus_LANGUAGE, CFilesToCompileFinderSelector.getOrCreateFilesToCompileFinder());
 
 	languageToCheckStyleInvoker.put(JAVA_LANGUAGE, JavaCheckStyleInvokerFactory.getSingleton());
 	
