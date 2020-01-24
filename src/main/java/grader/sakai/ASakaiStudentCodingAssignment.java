@@ -92,7 +92,7 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
             FileProxy child = submissionFolder.getFileEntry(childName);
             if (child.isDirectory() && childName.indexOf("macosx") == -1) { // all names seem to be lowercase so let us not convert again
                 if (folderChild != null) {
-                    return null;
+                    return aFolder;
                 } else {
                     folderChild = child;
                 }
