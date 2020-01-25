@@ -84,6 +84,7 @@ public class AnOnyenRangeModel implements OnyenRangeModel{
 	@Override
 	@Explanation("The onyen you will start at when you review grades")
     @Label("Manual Navigation Start Onyen:")
+    @Visible(false)
 	public String getGoToOnyen() {
 		return goToOnyen;
 	}
