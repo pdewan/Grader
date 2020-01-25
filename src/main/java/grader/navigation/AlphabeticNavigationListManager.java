@@ -39,6 +39,8 @@ import util.misc.Common;
  */
 public class AlphabeticNavigationListManager implements NavigationListManager {
 	public static final String END_ONYEN_POSITIVE_INFINITY = "$";
+	public static final String START_ONYEN_ZERO = "^";
+
 //	SakaiCSVFinalGradeRecorder gradesFile;
 	FinalGradeRecorder gradesFile;
 
@@ -155,11 +157,11 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 
 		StudentFolderNamesSorted.newCase(Common.arrayToArrayList(files), this);
 		
-		
 
     	String aStartFilePart = ".*\\(" + aStartOnyen.trim() + "\\)$";
     	String anEndFilePart = ".*\\(" + anEndOnyen.trim()  + "\\)$";
     	boolean goToEnd = anEndOnyen.equals(END_ONYEN_POSITIVE_INFINITY);
+    	boolean startFromBeginning = START_ONYEN_ZERO.equals(aStartOnyen);
 		
 		System.out.println("Searching for onyens between:" + aStartOnyen + "->" + anEndOnyen);
     	boolean foundStart = false;
@@ -167,7 +169,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
         for (File file : files) {
             if (file.isDirectory()) {
 
-                if (file.getName().matches(aStartFilePart)) {
+                if (startFromBeginning || file.getName().matches(aStartFilePart)) {
                     include = true;
                 	System.out.println ("Found start onyen:" + file.getName());
                 	foundStart = true;

@@ -403,14 +403,14 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     void refreshOnyens(String aModule) {
         String startingOnyen = graderSettingsManager.getStartingOnyen(aModule);
 
-        if (startingOnyen != null) {
+        if (startingOnyen != null && !startingOnyen.isEmpty()) {
 //        	String startingOnyen = GraderSettings.get().get("start");
             onyens.setDisplayedStartingOnyen(startingOnyen);
         }
 //        String endingOnyen = dynamicConfiguration.getString(aModule + "." + END_ONYEN,
 //        		dynamicConfiguration.getString(END_ONYEN));
         String endingOnyen = graderSettingsManager.getEndingOnyen(aModule);
-        if (endingOnyen != null) {
+        if (endingOnyen != null && !endingOnyen.isEmpty()) {
             onyens.setDisplayedEndingOnyen(endingOnyen);
         }
     }
@@ -960,11 +960,18 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         for (String anOnyen : onyens) {
             try {
                 System.out.println("Unzipping directory for onyen:" + anOnyen);
-                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getOrCreateProject(anOnyen));
+                SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
+                if (aProject == null) {
+                	System.err.println("No project found for onyen:" + anOnyen);
+                	continue;
+                }
+                ProjectWrapper.getDirectoryAndMaybeUnzip(aProject);
+
+//                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getOrCreateProject(anOnyen));
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
 //		e.printStackTrace();
-                System.out.println("Could not unzip project for student:" + anOnyen + " " + e);
+                System.err.println("Could not unzip project for student:" + anOnyen + " " + e);
                 e.printStackTrace();
             }
 ////			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {

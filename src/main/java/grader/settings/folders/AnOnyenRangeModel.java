@@ -19,7 +19,7 @@ import bus.uigen.ObjectEditor;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 public class AnOnyenRangeModel implements OnyenRangeModel{	
 	public static final String ANONYMOUS = "*******";
-	String startingOnyen = "", endingOnyen = "", onyenList = "", goToOnyen = "";
+	String startingOnyen = "^", endingOnyen = "$", onyenList = "", goToOnyen = "";
 	GraderSettingsModel graderSettings;
 	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	public AnOnyenRangeModel(GraderSettingsModel aGraderSettings) {
@@ -83,6 +83,7 @@ public class AnOnyenRangeModel implements OnyenRangeModel{
     @Row(3)
 	@Override
 	@Explanation("The onyen you will start at when you review grades")
+    @Label("Manual Navigation Start Onyen:")
 	public String getGoToOnyen() {
 		return goToOnyen;
 	}
