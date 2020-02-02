@@ -144,6 +144,7 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
 //    	getUserData().clear();
     	clearUserObjects();
     	// need to do this once for all features and test cases to prserve caches
+    	// this is a second call to it, one from another place.does not hut
     	CurrentProjectHolder.setProject(project); // for Junit test cases
 //    	BasicProjectIntrospection.clearProjectCaches(); // all th eclasses and methods cached
         List<CheckResult> results = new LinkedList<CheckResult>();

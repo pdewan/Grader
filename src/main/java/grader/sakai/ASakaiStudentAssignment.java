@@ -54,6 +54,9 @@ public class ASakaiStudentAssignment implements StudentAssignment {
 			name = aStudentDescription.substring(0, parenIndex);
 			onyen = aStudentDescription.substring(parenIndex + 1, studentDescription.length() - 1);
 			studentFolder = aFileProxy;
+			if (aFileProxy == null) {
+				System.out.println("Null file proxy, could not create student assignment for:" + onyen);
+			}
 			submissionFolder = aFileProxy.getFileEntryFromLocalName(SUBMISSION_LOCAL_NAME);
 			if (submissionFolder != null) {
 				SubmissionFolderLoaded.newCase(submissionFolder.getAbsoluteName(), this);

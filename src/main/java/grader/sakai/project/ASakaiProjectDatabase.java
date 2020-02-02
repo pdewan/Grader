@@ -1155,7 +1155,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	@Override
 	public GenericStudentAssignmentDatabase<StudentCodingAssignment> getStudentAssignmentDatabase() {
-		if (studentAssignmentDatabase == null)
+		if (studentAssignmentDatabase == null )
 			studentAssignmentDatabase = new ASakaiStudentCodingAssignmentsDatabase(
 					getBulkAssignmentFolder());
 		return studentAssignmentDatabase;

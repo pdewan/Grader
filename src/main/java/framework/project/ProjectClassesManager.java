@@ -297,7 +297,7 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 //				}
 				try {
 					// ideally should check if automatic compilation has occurred
-					System.out.println("Attempting to compile files.");
+//					System.out.println("Attempting to compile files.");
 					// project.setHasBeenCompiled(true);
 					maybeSetHasBeenCompiled(true);
 					aFilesToCompile = new ArrayList<>(sourceFiles); // compile
@@ -322,6 +322,8 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 					// aFilesToCompile);
 					boolean aSavedValue = BasicProjectExecution.isWaitForMethodConstructorsAndProcesses();
 					BasicProjectExecution.setWaitForMethodConstructorsAndProcesses(true);
+					System.out.println("Attempting to compile files:" + aFilesToCompile);
+
 					RunningProject runningProject = LanguageDependencyManager.getSourceFilesCompiler()
 						.compile(basicProject, sourceFolder, buildFolder, basicProject.getObjectFolder(), aFilesToCompile);
 					if (runningProject != null) {

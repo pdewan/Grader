@@ -9,6 +9,8 @@ import grader.basics.junit.AGradableJUnitTest;
 import grader.basics.junit.AJUnitTestResult;
 import grader.basics.junit.GradableJUnitSuite;
 import grader.basics.junit.GradableJUnitTest;
+import grader.basics.junit.JUnitTestContext;
+import grader.basics.junit.JUnitTestsEnvironment;
 import grader.basics.junit.MaxScoreAssignmentResult;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
@@ -16,6 +18,7 @@ import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 //import grader.junit.test.directreference.ACartesianPointJUnitTester;
 import grader.basics.testcase.JUnitTestCase;
+import grader.basics.testcase.PassFailJUnitTestCase;
 /**
  * This is a transformation of a JUnit test case into a grader test ccase/
  * It keeps references to both the JUnit case and the tree node created by localchecks
@@ -332,6 +335,12 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 		// TODO Auto-generated method stub
 		return delegateGradableJUnitTestCase.getSimpleName();
 	}
+	@Override
+	/**
+	 * No need to add this wrapper test case to environment, need to add the
+	 * wrapped test
+	 */
+	protected void addPassFailJUnitTestInstance() {
 
-
+    }
 }
