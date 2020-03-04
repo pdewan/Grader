@@ -520,6 +520,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 //		}
 		List<String> retVal = getInheritedListModuleProblemProperty(aProcessName
 				+ "." + EXECUTION_COMMAND, null);
+		if (retVal == null) {
+			retVal = BasicStaticConfigurationUtils.getBasicCommand(aProcessName);
+		}
 		if (retVal.isEmpty()) {
 			return getExecutionCommand();
 		} else {
