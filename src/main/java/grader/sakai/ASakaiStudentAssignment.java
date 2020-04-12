@@ -10,9 +10,11 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
+import grader.basics.config.BasicExecutionSpecificationSelector;
 import grader.basics.file.FileProxy;
 import grader.basics.file.FileProxyUtils;
 import grader.basics.file.filesystem.AFileSystemFileProxy;
+import grader.config.ExecutionSpecificationSelector;
 import grader.trace.sakai_bulk_folder.CommentsFileLoaded;
 import grader.trace.sakai_bulk_folder.DocumentFileLoaded;
 import grader.trace.sakai_bulk_folder.FeedbackFolderLoaded;
@@ -121,7 +123,15 @@ public class ASakaiStudentAssignment implements StudentAssignment {
 	}
 
 	void findDocuments() {
-		Set<String> entryNames = studentFolder.getDescendentEntryNames(submissionFolder);
+		Set<String> entryNames = null;
+		if (ExecutionSpecificationSelector.getExecutionSpecification().isSubDocuments()) {
+			entryNames = studentFolder.getDescendentEntryNames(submissionFolder);
+		} else {
+			entryNames = studentFolder.getChildrenNames();
+		}
+		
+//		studentFolder.getDescendentEntryNames(submissionFolder);
+//		studentFolder.getChildrenNames();
 
 		for (String entryName : entryNames) {
 
