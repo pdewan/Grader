@@ -127,7 +127,18 @@ public class ASakaiStudentAssignment implements StudentAssignment {
 		if (ExecutionSpecificationSelector.getExecutionSpecification().isSubDocuments()) {
 			entryNames = studentFolder.getDescendentEntryNames(submissionFolder);
 		} else {
-			entryNames = studentFolder.getChildrenNames();
+			FileProxy unzippedFolder = null;
+			for (FileProxy folder : submissionFolder.getChildren()) {
+				if (folder.isDirectory()) {
+					unzippedFolder = folder;
+					break;
+				}
+			}
+			if (unzippedFolder != null) {
+				entryNames = unzippedFolder.getChildrenNames();
+			} else {
+				entryNames = submissionFolder.getDescendentEntryNames(submissionFolder);
+			}
 		}
 		
 //		studentFolder.getDescendentEntryNames(submissionFolder);
