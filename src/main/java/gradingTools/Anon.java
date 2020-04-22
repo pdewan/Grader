@@ -314,10 +314,12 @@ public class Anon {
 		}
 		w.close(); 
 		//remove old csv and rename the new one
-		Process rmcsv =new ProcessBuilder(new String[]{"cmd.exe","/c","cd",folderName,"&","rm","grades.csv","&","exit"}).start();
+//		Process rmcsv =new ProcessBuilder(new String[]{"cmd.exe","/c","cd",folderName,"&","rm","grades.csv","&","exit"}).start();
+		r.close();
+		csv.delete();
+		temp.renameTo(csv);
 		Thread.sleep(100);
 		//if(!temp.renameTo(csv)){System.out.println("Couldn't replace file!?");System.exit(0);}
-		r.close();
 	}
 	
 	private static void Anon_ize_grades_Linux(String folderName) throws IOException, InterruptedException {
