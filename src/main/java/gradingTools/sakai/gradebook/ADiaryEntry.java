@@ -26,6 +26,16 @@ public class ADiaryEntry implements DiaryEntry {
 		this.grader = grader;
 		this.comment = comment;
 	}
+	public ADiaryEntry(DateTime date, String email, String fullName,
+			int diaryPoints, int questionPoint) {
+		super();
+		this.date = date;
+		this.email = email;
+		this.fullName = fullName;
+		this.diaryPoints = diaryPoints;
+		this.questionPoints = questionPoint;
+		
+	}
 	@Override
 	public DateTime getDate() {
 		return date;
