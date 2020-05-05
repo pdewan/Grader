@@ -17,8 +17,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 
 
@@ -42,7 +44,7 @@ public class Anon {
 	static FileWriter logger;
 	static int counter; //used for differentiating students
 	static String[] ignoreFileSuffixes = {};
-	
+	static List<String> fileNames = new ArrayList<>();
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//instantiate vars
@@ -67,19 +69,28 @@ public class Anon {
 			courseMode=false;
 			if (args[1].equals("true")) {
 				deleteTXTAndHTML = true;
-			}
+			} 
 			logger.write("In single assignment mode. Delete txt and html files = " + deleteTXTAndHTML + "\n");
-		}
-		else if (args.length == 3){
+		} else if(args.length == 2) {
 			folderName = args[0];
 //			zipFileName = args[0];
-			courseMode=true;
+			courseMode=false;
 			if (args[1].equals("true")) {
 				deleteTXTAndHTML = true;
+				logger.write("In single assignment mode. Delete txt and html files = " + deleteTXTAndHTML + "\n");
+			} 
+			if (args[2].equals("0")) {
+				deleteUnnecessaryFiles(new File(folderName));
+				return;
+			} else if (args[2].equals("1")) {
+				deleteFolder(new File(folderName));
+				return;
+			} else if (args[2].equals("2")) {
+				courseMode=true;
+				logger.write("In course folder mode. Delete txt and html files = " + deleteTXTAndHTML + "\n");
 			}
-			logger.write("In course folder mode. Delete txt and html files = " + deleteTXTAndHTML + "\n");
-		} else {
-			System.out.println("Enter main args: folderName (deleteTXTAndHTMLFiles) (CourseMode)");
+		}  else {
+			System.out.println("Enter main args: folderName (deleteTXTAndHTMLFiles) (Mode)");
 			System.exit(0);
 		}
 		//determine which version to run based on OS
@@ -111,6 +122,7 @@ public class Anon {
 				unzipAllZipFiles(new File(folderName));
 				Anon_ize_Course_Windows(folderName);
 			}
+			zipDirectory(new File(folderName), folderName+"Anon.zip");
 		}
 		else if(os.contains("mac")){ //currently not supported
 			Process testMac=new ProcessBuilder(new String[]{"/bin/bash","-c","mkdir", "goo", "&", "touch", "goo/hi.txt", "&", "ls" ,"|" ,"grep", "goo"}).start();
@@ -169,6 +181,9 @@ public class Anon {
 				folderName = entry.getName().substring(0,entry.getName().indexOf("/"));
 			}
 			String filePath = destDirectory + File.separator + entry.getName().replace("/", "\\");
+			if (filePath.equals("E:\\Assignment 5\\Assignment 1\\Gartland, Alexander(alexjg96)\\Submission attachment(s)\\Assignment1.java\\.checkstyle")) {
+				int i = 0;
+			}
 			if (!entry.isDirectory()) {
 				// if the entry is a file, extracts it
 				extractFile(zipIn, filePath);
@@ -448,7 +463,7 @@ public class Anon {
 	}
 	protected static boolean maybeDeleteFile(File file) {
 		for (String aSuffix:getIgnoreFileSuffixes()) {
-			if (file.getName().endsWith(aSuffix)) {
+			if (file.getName().toLowerCase().endsWith(aSuffix)) {
 				file.delete();
 				return true;
 //				break;
@@ -773,5 +788,68 @@ public class Anon {
 	public static void setIgnoreFileSuffixes(String[] ignoreFileSuffixes) {
 		Anon.ignoreFileSuffixes = ignoreFileSuffixes;
 	}
+	
+	public static void deleteUnnecessaryFiles(File folder) {
+		for (File file : folder.listFiles()) {
+			if (file.isDirectory()) {
+				deleteUnnecessaryFiles(file);
+			} else {
+				maybeDeleteFile(file);
+			}
+		}
+	}
+	
+//	private static boolean isIgnored(String s){
+//		for (String string : ignoreFileSuffixes) {
+//			if (s.toLowerCase().endsWith(string)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+	
+	public static void deleteFolder(File folder) {
+		for (File file : folder.listFiles()) {
+			if (file.isDirectory()) {
+				deleteFolder(file);
+			} else {
+				file.delete();
+			}
+		}
+		folder.delete();
+	}
 
+	private static void zipDirectory(File folder, String zipFileName) {
+        try {
+        	populateFilesList(folder);
+            FileOutputStream fos = new FileOutputStream(zipFileName);
+            ZipOutputStream zos = new ZipOutputStream(fos);
+            for(String filePath : fileNames){
+//                System.out.println("Zipping "+filePath);
+                ZipEntry ze = new ZipEntry(filePath.substring(folder.getAbsolutePath().lastIndexOf("\\")+1, filePath.length()));
+                zos.putNextEntry(ze);
+                FileInputStream fis = new FileInputStream(filePath);
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len = fis.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+                zos.closeEntry();
+                fis.close();
+            }
+            zos.close();
+            fos.close();
+            deleteFolder(folder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void populateFilesList(File folder) throws IOException {
+        File[] files = folder.listFiles();
+        for(File file : files){
+            if(file.isFile()) fileNames.add(file.getAbsolutePath());
+            else populateFilesList(file);
+        }
+    }
 }
