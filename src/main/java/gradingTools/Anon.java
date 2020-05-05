@@ -41,6 +41,9 @@ public class Anon {
 	static File log_file;
 	static FileWriter logger;
 	static int counter; //used for differentiating students
+	static String[] ignoreFileSuffixes = {};
+	
+
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//instantiate vars
 		CommentsIdenMap=new HashMap<String,String>();
@@ -395,6 +398,9 @@ public class Anon {
 //		while(true){
 		
 		for(File file: folder.listFiles()){
+			if (maybeDeleteFile(file)) {
+				continue;
+			}
 //			line = r.readLine();
 			//csv handled elsewhere
 			String line = file.getName();
@@ -440,13 +446,23 @@ public class Anon {
 		}
 		return null;
 	}
-	
+	protected static boolean maybeDeleteFile(File file) {
+		for (String aSuffix:getIgnoreFileSuffixes()) {
+			if (file.getName().endsWith(aSuffix)) {
+				file.delete();
+				return true;
+//				break;
+			}
+		}
+		return false;
+	}
 	private static void findTXTAndHTMLFiles_Windows(File folder, String firstName, String lastName, String ID) throws IOException{
 //		File folder = new File(folderName);
 		if (folder.listFiles() == null) {
 			return;
 		}
 		for(File file: folder.listFiles()){
+			
 			if (file.isDirectory()) {
 				String filePath = file.getPath();
 				String fileName = file.getName();
@@ -458,6 +474,15 @@ public class Anon {
 				}
 				findTXTAndHTMLFiles_Windows(file, firstName, lastName, ID);
 			} else {
+				if (maybeDeleteFile(file)) {
+					continue;
+				}
+//				for (String aSuffix:getIgnoreFileSuffixes()) {
+//					if (file.getName().endsWith(aSuffix)) {
+//						file.delete();
+//						break;
+//					}
+//				}
 				if (deleteTXTAndHTML) {
 					if (file.getName().endsWith(".txt") || file.getName().endsWith(".html")) {
 						file.delete();
@@ -740,6 +765,13 @@ public class Anon {
 	    CommentsIdenMap.put(text, generatedString);
 	    return generatedString;
 	    
+	}
+	public static String[] getIgnoreFileSuffixes() {
+		return ignoreFileSuffixes;
+	}
+
+	public static void setIgnoreFileSuffixes(String[] ignoreFileSuffixes) {
+		Anon.ignoreFileSuffixes = ignoreFileSuffixes;
 	}
 
 }
