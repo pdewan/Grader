@@ -14,10 +14,10 @@ public class AnonDriver {
 //	public static final String ZIP_Folder_NAME = "G:\\My Drive\\SakaiDownloads\\comp533\\Spring19\\";
 //	public static final String ZIP_Folder_NAME = "G:\\My Drive\\SakaiDownloads\\comp533\\Spring18\\";
 //	public static final String ZIP_Folder_NAME = "G:\\My Drive\\SakaiDownloads\\comp401\\Fall17\\";
-	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Fall2016\\";
+//	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Fall2016\\";
 
-//	public static final String ZIP_Folder_NAME = "E:\\Assignment 5\\";
-//	public static final String FOLDER_TO_DELETE = "E:\\Assignment 5\\Assignment 1";
+	public static final String ZIP_Folder_NAME = "E:\\anon\\";
+	public static final String FOLDER_TO_DELETE = "E:\\anon\\Assignment 2";
 
 	static String[] ignoreFileSuffixes = {".png", ".class", ".gif", ".jpg"};
 
@@ -25,7 +25,7 @@ public class AnonDriver {
 //			"Assignment 0.zip",
 			"Assignment 1.zip",
 			"Assignment 2.zip",
-//			"Assignment 3.zip",
+			"Assignment 3.zip",
 //			"Assignment 4.zip",
 //			"Assignment 5.zip",
 //			"Assignment 6.zip",
@@ -47,8 +47,9 @@ public class AnonDriver {
 			String aFullZipFileName = ZIP_Folder_NAME + aZipFileName;
 	
 		try {
-			String[] myArgs = {aFullZipFileName, "0"};
-//			String[] myArgs = {FOLDER_TO_DELETE, "2"};
+			String[] myArgs = {aFullZipFileName};
+//			String[] myArgs = {FOLDER_TO_DELETE, "false", "0"};
+//			String[] myArgs = {FOLDER_TO_DELETE, "false", "1"};
 			Anon.main(myArgs);
 //			
 //			myArgs = new String[] {"G:\\My Drive\\401 Grader Files\\Assignment 2.zip", "false"};

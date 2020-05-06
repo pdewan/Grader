@@ -71,7 +71,7 @@ public class Anon {
 				deleteTXTAndHTML = true;
 			} 
 			logger.write("In single assignment mode. Delete txt and html files = " + deleteTXTAndHTML + "\n");
-		} else if(args.length == 2) {
+		} else if(args.length == 3) {
 			folderName = args[0];
 //			zipFileName = args[0];
 			courseMode=false;
@@ -86,6 +86,9 @@ public class Anon {
 				deleteFolder(new File(folderName));
 				return;
 			} else if (args[2].equals("2")) {
+				zipDirectory(new File(folderName), folderName+"Anon.zip");
+				return;
+			} else if (args[2].equals("3")) {
 				courseMode=true;
 				logger.write("In course folder mode. Delete txt and html files = " + deleteTXTAndHTML + "\n");
 			}
@@ -181,9 +184,9 @@ public class Anon {
 				folderName = entry.getName().substring(0,entry.getName().indexOf("/"));
 			}
 			String filePath = destDirectory + File.separator + entry.getName().replace("/", "\\");
-			if (filePath.equals("E:\\Assignment 5\\Assignment 1\\Gartland, Alexander(alexjg96)\\Submission attachment(s)\\Assignment1.java\\.checkstyle")) {
-				int i = 0;
-			}
+//			if (filePath.equals("E:\\Assignment 5\\Assignment 1\\Gartland, Alexander(alexjg96)\\Submission attachment(s)\\Assignment1.java\\.checkstyle")) {
+//				int i = 0;
+//			}
 			if (!entry.isDirectory()) {
 				// if the entry is a file, extracts it
 				extractFile(zipIn, filePath);
@@ -799,15 +802,6 @@ public class Anon {
 		}
 	}
 	
-//	private static boolean isIgnored(String s){
-//		for (String string : ignoreFileSuffixes) {
-//			if (s.toLowerCase().endsWith(string)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-	
 	public static void deleteFolder(File folder) {
 		for (File file : folder.listFiles()) {
 			if (file.isDirectory()) {
@@ -820,6 +814,7 @@ public class Anon {
 	}
 
 	private static void zipDirectory(File folder, String zipFileName) {
+		fileNames.clear();
         try {
         	populateFilesList(folder);
             FileOutputStream fos = new FileOutputStream(zipFileName);
