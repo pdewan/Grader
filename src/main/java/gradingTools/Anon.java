@@ -793,6 +793,10 @@ public class Anon {
 	}
 	
 	public static void deleteUnnecessaryFiles(File folder) {
+		if (!folder.exists()) {
+			System.err.println ("No folder:" + folder);
+			return;
+		}
 		for (File file : folder.listFiles()) {
 			if (file.isDirectory()) {
 				deleteUnnecessaryFiles(file);
