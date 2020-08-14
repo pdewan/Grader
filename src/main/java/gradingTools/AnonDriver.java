@@ -15,7 +15,9 @@ public class AnonDriver {
 //	public static final String ZIP_Folder_NAME = "G:\\My Drive\\SakaiDownloads\\comp533\\Spring18\\";
 //	public static final String ZIP_Folder_NAME = "G:\\My Drive\\SakaiDownloads\\comp401\\Fall17\\";
 //	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Fall2016\\";
-	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Spring2020\\";
+//	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Spring2020\\";
+	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Comp410\\Fall2019\\";
+
 
 //	public static final String ZIP_Folder_NAME = "E:\\anon\\";
 //	public static final String FOLDER_TO_DELETE = "E:\\anon\\Assignment 2";
@@ -23,12 +25,12 @@ public class AnonDriver {
 	static String[] ignoreFileSuffixes = {".png", ".class", ".gif", ".jpg", ".jar", ".zip", ".pptx"};
 
 	public static final String[] ZIP_fiLE_NAMES = {
-//			"Assignment 0.zip",
-//			"Assignment 1.zip",
-//			"Assignment 2.zip",
-//			"Assignment 3.zip",
-//			"Assignment 4.zip",
-//			"Assignment 5.zip",
+			"Assignment 0.zip",
+			"Assignment 1.zip",
+			"Assignment 2.zip",
+			"Assignment 3.zip",
+			"Assignment 4.zip",
+			"Assignment 5.zip",
 //			"Assignment 6.zip",
 //			"Assignment 7.zip",
 //			"Assignment 8.zip",

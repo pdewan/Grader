@@ -22,6 +22,7 @@ import grader.sakai.project.SakaiProject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -341,5 +342,11 @@ public class OriginalStandardProject implements FatProject {
 	public void setCurrentOutput(StringBuffer currentOutput) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<File> getSourceFiles() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
