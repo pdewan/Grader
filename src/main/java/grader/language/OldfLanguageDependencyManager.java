@@ -2,7 +2,7 @@ package grader.language;
 
 import grader.basics.execution.ExecutableFinderSelector;
 import grader.basics.execution.JavaMainClassFinderSelector;
-import grader.basics.execution.MainClassFinder;
+import grader.basics.execution.CommandGenerator;
 import grader.checkStyle.CheckStyleInvoker;
 import grader.checkStyle.JavaCheckStyleInvokerFactory;
 import grader.compilation.ClassFilesCompiler;
@@ -22,7 +22,7 @@ public class OldfLanguageDependencyManager  {
 	static  String sourceFileSuffix = ".java";
 	 static Map<String, String> languageToSourceFileSuffix = new HashMap<>();
 	 static Map<String, String> languageToBinaryFileSuffix = new HashMap<>();
-	 static Map<String, MainClassFinder> languageToMainClassFinder = new HashMap();
+	 static Map<String, CommandGenerator> languageToMainClassFinder = new HashMap();
 	 static Map<String, ClassFilesCompiler> languageToCompiler = new HashMap();
 	 static Map<String, CheckStyleInvoker> languageToCheckStyleInvoker = new HashMap();
 	 static Map<String, Permissible> languageToDefaultPermissible = new HashMap<>();
@@ -81,7 +81,7 @@ public class OldfLanguageDependencyManager  {
 	public static String getBinaryFileSuffix() {
 		return binaryFileSuffix;
 	}
-	public static MainClassFinder getMainClassFinder() {
+	public static CommandGenerator getMainClassFinder() {
 		return languageToMainClassFinder.get(getLanguage());
 	}
 	

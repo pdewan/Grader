@@ -3,7 +3,7 @@ package grader.project.flexible;
 import framework.grading.testing.Checkable;
 import framework.grading.testing.TestCase;
 import framework.logging.loggers.FeedbackTextSummaryLogger;
-import grader.basics.execution.MainClassFinder;
+import grader.basics.execution.CommandGenerator;
 import grader.basics.execution.RunningProject;
 import grader.basics.file.FileProxy;
 import grader.basics.file.RootFolderCreator;
@@ -85,7 +85,7 @@ public class AFlexibleProject implements FlexibleProject {
 
 
     JavaDocBuilder javaDocBuilder;
-    MainClassFinder mainClassFinder;
+    CommandGenerator mainClassFinder;
     Checkable currentGradingFeature; // ugly but do not want to change project runner code that has access to project and not grading feature
     String[][] args;
     boolean runChecked;
@@ -180,7 +180,7 @@ public class AFlexibleProject implements FlexibleProject {
         this.outputFolder = outputFolder;
     }
 
-    protected MainClassFinder createMainClassFinder() {
+    protected CommandGenerator createMainClassFinder() {
 //        return new AMainClassFinder();
 //    	return JavaMainClassFinderSelector.getMainClassFinder();
         return LanguageDependencyManager.getMainClassFinder();
@@ -411,7 +411,7 @@ public class AFlexibleProject implements FlexibleProject {
 		}
 
 	@Override()
-    public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles, MainClassFinder aMainClassFinder) {
+    public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles, CommandGenerator aMainClassFinder) {
         args = anArgs;
         try {
             mainClassName = aMainClassName;

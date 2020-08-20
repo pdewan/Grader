@@ -2,7 +2,7 @@ package grader.project.flexible;
 
 import framework.grading.testing.Checkable;
 import framework.grading.testing.TestCase;
-import grader.basics.execution.MainClassFinder;
+import grader.basics.execution.CommandGenerator;
 import grader.basics.execution.RunningProject;
 import grader.execution.ProxyBasedClassesManager;
 import grader.execution.ProxyClassLoader;
@@ -77,7 +77,7 @@ public interface FlexibleProject {
 
     boolean runChecked();
 
-    public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles, MainClassFinder aMainClassFinder);
+    public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles, CommandGenerator aMainClassFinder);
 
     Thread runProject();
 

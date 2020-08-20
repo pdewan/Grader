@@ -14,7 +14,7 @@ import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 import grader.auto_notes.ANotesGenerator;
 import grader.auto_notes.NotesGenerator;
-import grader.basics.execution.MainClassFinder;
+import grader.basics.execution.CommandGenerator;
 import grader.basics.file.RootFolderProxy;
 import grader.basics.project.source.BasicTextManager;
 import grader.basics.requirements.interpreter.specification.ACSVRequirementsSpecification;
@@ -154,7 +154,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	AutoFeedback autoFeedback;
 	ManualFeedback manualFeedback;
 	SourceDisplayer sourceDisplayer;
-	MainClassFinder mainClassFinder;
+	CommandGenerator mainClassFinder;
 
 	String startStudentID, endStudentID;
 	ProjectStepper projectStepper;
@@ -371,7 +371,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	}
 
 
-	protected MainClassFinder createMainClassFinder() {
+	protected CommandGenerator createMainClassFinder() {
 //		return new AMainClassFinder();
 //		return JavaMainClassFinderSelector.getMainClassFinder();
         return LanguageDependencyManager.getMainClassFinder();

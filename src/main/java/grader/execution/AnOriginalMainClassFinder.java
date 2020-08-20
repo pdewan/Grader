@@ -2,7 +2,7 @@ package grader.execution;
 
 
 import grader.basics.execution.BasicProcessRunner;
-import grader.basics.execution.MainClassFinder;
+import grader.basics.execution.CommandGenerator;
 import grader.basics.execution.NotRunnableException;
 import grader.basics.file.FileProxy;
 import grader.basics.project.Project;
@@ -21,7 +21,7 @@ import java.util.Map;
 import util.misc.Common;
 import wrappers.framework.project.ProjectWrapper;
 
-public class AnOriginalMainClassFinder implements MainClassFinder {
+public class AnOriginalMainClassFinder implements CommandGenerator {
     public static final String DEFAULT_MAIN_PACKAGE_NAME = "main";
     
     protected boolean isEntryPoint (String aCandidate, grader.basics.project.ClassesManager manager) {
@@ -175,6 +175,18 @@ public class AnOriginalMainClassFinder implements MainClassFinder {
 
 	@Override
 	public void setDefaultCommand(List<String> aCommand) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getUserBinary() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setUserBinary(String newVal) {
 		// TODO Auto-generated method stub
 		
 	}
