@@ -11,6 +11,8 @@ import java.util.Map;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import grader.config.StaticConfigurationUtils;
+
 /**
  * Created by Andrew on 2/11/14.
  */
@@ -73,7 +75,9 @@ public class UserPropertyWriter {
                     propValue = userProperties[++i].trim();
                     break;
                 case "--logger":
-                    propName = "grader.logger";
+//                    propName = "grader.logger";
+                    propName = StaticConfigurationUtils.LOGGERS;
+
                     propValue = userProperties[++i].trim();
                     break;
                 case "--course-name":

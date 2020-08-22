@@ -95,7 +95,8 @@ public class ASakaiCSVGradeBookManager implements SakaiCSVFinalGradeRecorder {
 			InputStream input = gradeSpreadsheet.getInputStream();
 			CSVReader csvReader 	=	new CSVReader(new InputStreamReader(input));
 		     table = csvReader.readAll();
-		     System.out.println ("Read spreadsheet table of size:" + table.size());
+		     Tracer.info (this, "Read spreadsheet table of size:" + table.size());
+//		     System.out.println ("Read spreadsheet table of size:" + table.size());
 		     originalTableSize = table.size();
 		     
 			csvReader.close();

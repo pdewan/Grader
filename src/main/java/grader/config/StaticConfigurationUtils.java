@@ -51,7 +51,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 
 	public static final List<String> DEFAULT_VISIT_ACTIONS = new ArrayList(Arrays.asList(new String[]{AUTO_GRADE}));
 	public static final String LOAD_CLASSES = "loadClasses";
-	public static final boolean DEFAULT_LOAD_CLASSES = false;
+	public static final boolean DEFAULT_LOAD_CLASSES = true;
 
 	public static final String COMPILE_MISSING_CLASSES = "compileMissingObjectCode";
 	public static final boolean DEFAULT_COMPILE_MISSING_CLASSES = true;;
@@ -287,7 +287,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		//
 		// return retVal;
 		return getInheritedBooleanModuleProblemProperty(configuration,
-				graderSettingsManager, PRIVACY, false);
+				graderSettingsManager, PRIVACY, DEFAULT_PRIVACY);
 
 	}
 
@@ -307,7 +307,7 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		//
 		// return retVal;
 		return BasicStaticConfigurationUtils.getInheritedBooleanModuleProblemProperty(configuration, aModule,
-				aProblem, test, PRIVACY, false);
+				aProblem, test, PRIVACY, DEFAULT_PRIVACY);
 
 	}
 
@@ -809,12 +809,16 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 				basicCommand = getBasicCommand(aProcessName);
 
 			}
-			System.out.println("Basic Command:" + basicCommand);
+			Tracer.info(StaticConfigurationUtils.class, "Basic Command:" + basicCommand);
+
+//			System.out.println("Basic Command:" + basicCommand);
 		String[] retVal = BasicStaticConfigurationUtils.getExecutionCommand(basicCommand, aProject, aProcessName, aBuildFolder, anEntryPoint, anEntryTagTarget, anArgs);
 		List<String> aListRetVal = Arrays.asList(retVal);
 		
 		replacePermissionVariables(aListRetVal, aProject);
-		System.out.println("Execution Command:" + aListRetVal);
+//		System.out.println("Execution Command:" + aListRetVal);
+		Tracer.info(StaticConfigurationUtils.class, "Execution Command:" + aListRetVal);
+
 
 		return aListRetVal.toArray(new String[0]);
 

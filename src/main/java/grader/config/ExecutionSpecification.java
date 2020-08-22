@@ -37,6 +37,10 @@ public interface ExecutionSpecification extends BasicExecutionSpecification {
 	String getRequirementsFormat();
 	List<String> getAutoVisitActions();
 	String getCCompiler();
+	boolean isPrivacy();
+	void setPrivacy(boolean newVal);
+	String getLoggers();
+	void setLoggers(String newVal);
 
 
 //	public abstract List<String> getProcesses(String aProcessTeam);

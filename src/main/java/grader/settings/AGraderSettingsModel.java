@@ -5,6 +5,7 @@ import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.project.CurrentProjectHolder;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ConfigurationManagerSelector;
+import grader.config.ExecutionSpecificationSelector;
 import grader.config.StaticConfigurationUtils;
 import grader.executor.ExecutorSelector;
 import grader.modules.AModuleProblemSelector;
@@ -308,9 +309,11 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         graderSettingsManager.setModule(currentModule);
         graderSettingsManager.setProblem(currentModule, currentProblem);
 
-        boolean isPrivacy = StaticConfigurationUtils.getPrivacy(
-                ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration(),
-                graderSettingsManager);
+//        boolean isPrivacy = StaticConfigurationUtils.getPrivacy(
+//                ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration(),
+//                graderSettingsManager);
+        
+        boolean isPrivacy = ExecutionSpecificationSelector.getExecutionSpecification().isPrivacy();
         setPrivacyMode(isPrivacy);
 //		if (problems.size() > 0) {
 //			currentProblem = problems.get(problems.size() - 1);
@@ -802,7 +805,9 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     @Explanation("Reset grades of all students in the class, cleaning the entire spreadsheet")
     @Position(2)
     public void cleanSlateAll() {
-    	System.out.println("Clearing scores of all students");
+    	
+    	Tracer.info(this, "Clearing scores of all students");
+//    	System.out.println("Clearing scores of all students");
         maybeCreateProjectDatabase();
         projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
         projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();
@@ -823,7 +828,9 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     }
     
     protected void doCleanSlate(String anOnyen) {
-    	System.out.println("Clearing scores of student:" + anOnyen);
+    	Tracer.info(this, "Clearing scores of student:" + anOnyen);
+
+//    	System.out.println("Clearing scores of student:" + anOnyen);
 
         maybeCreateProjectDatabase();
         FeatureGradeRecorder featureGradeRecorder = projectDatabase.getFeatureGradeRecorder();
@@ -831,7 +838,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         featureGradeRecorder.clearGrades(anOnyen, "");
         SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
         if (aProject == null) {
-            System.out.println("Did not find project of:" + anOnyen + " nothing to clean");
+            System.err.println("Did not find project of:" + anOnyen + " nothing to clean");
             return;
         }
         StudentAssignment aStudentAssignment = aProject.getStudentAssignment();
@@ -959,7 +966,9 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 
         for (String anOnyen : onyens) {
             try {
-                System.out.println("Unzipping directory for onyen:" + anOnyen);
+                Tracer.info(this, "Unzipping directory for onyen:" + anOnyen);
+
+//                System.out.println("Unzipping directory for onyen:" + anOnyen);
                 SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
                 if (aProject == null) {
                 	System.err.println("No project found for onyen:" + anOnyen);

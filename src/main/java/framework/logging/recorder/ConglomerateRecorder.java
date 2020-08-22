@@ -372,8 +372,10 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
     @Override
     public void setEarlyLatePoints(String aStudentName, String anOnyen,
             double aScore) {
-    	System.out.println ("setEarlyLatePoints:Setting Late Penalty:" + anOnyen + " score " + aScore);
-        recordingSession.setLatePenalty(aScore);
+//    	System.out.println ("setEarlyLatePoints:Setting Late Penalty:" + anOnyen + " score " + aScore);
+    	Tracer.info (this, "setEarlyLatePoints:Setting Late Penalty:" + anOnyen + " score " + aScore);
+
+    	recordingSession.setLatePenalty(aScore);
 
         basicFeatureGradeRecorder.setEarlyLatePoints(aStudentName, anOnyen, aScore);
         AllStudentsHistoryManagerFactory.getAllStudentsHistoryManager().setEarlyLatePoints(aStudentName, anOnyen, aScore);

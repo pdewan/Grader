@@ -24,6 +24,7 @@ import grader.project.flexible.FlexibleProject;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
+import util.trace.Tracer;
 
 /**
  * This transforms a "grader" project into a "framework" project.
@@ -119,7 +120,9 @@ public class ProjectWrapper extends StandardProject {
         //System.out.println(")()()()()( " + project.getRootCodeFolder().getAbsoluteName());
         //File path = new File(project.getProjectFolderName());
         File path = new File(aZipFileName);
-        System.out.println("got path:" + path);
+        Tracer.info(ProjectWrapper.class, "got path:" + path);
+
+//        System.out.println("got path:" + path);
 
         //System.out.println("()()()()() " + path.getAbsolutePath());
         if (path.isFile()) {
@@ -145,7 +148,9 @@ public class ProjectWrapper extends StandardProject {
 //                System.out.println("Made directory:" + dir);
 
                 try {
-                	System.out.println ("unzipping:" + path);
+                	Tracer.info(ProjectWrapper.class, "unzipping:" + path);
+
+//                	System.out.println ("unzipping:" + path);
                     ZipFile zip = new ZipFile(path);
                     extractFolder(path.getAbsolutePath());
 //                    ZipReader.readRecursive(path, dir);
@@ -202,7 +207,9 @@ public class ProjectWrapper extends StandardProject {
 	}
     static public void extractFolder(String zipFile) throws ZipException, IOException 
     {
-        System.out.println(zipFile);
+        Tracer.info(ProjectWrapper.class, "Extracting folder from" + zipFile);
+
+//        System.out.println(zipFile);
         int BUFFER = 2048;
         File file = new File(zipFile);
 

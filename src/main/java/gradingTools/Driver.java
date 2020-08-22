@@ -67,6 +67,7 @@ import grader.spreadsheet.FeatureGradeRecorder;
 import grader.spreadsheet.FeatureGradeRecorderSelector;
 import grader.spreadsheet.csv.AFeatureGradeRecorderFactory;
 import grader.spreadsheet.csv.AllStudentsHistoryManagerFactory;
+import grader.trace.GraderTraceUtility;
 import grader.trace.settings.GraderSettingsDisplayed;
 
 /**
@@ -363,8 +364,9 @@ public class Driver {
 		// ASakaiProjectDatabase.setCurrentSakaiProjectDatabase(database);
 		// moved code from above
 		requirements = getProjectRequirements();
-		System.out.println("got requirements:" + requirements);
-	
+//		System.out.println("got requirements:" + requirements);
+		Tracer.info(Driver.class, "Requirements:" + requirements);
+
 		recorder.setProjectRequirements(requirements);
 		if (requirements == null) {
 			System.err
@@ -784,12 +786,16 @@ public class Driver {
 			// Logging
 			ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
 			recorder.setProjectRequirements(requirements);
+			
+			String aLoggers = ExecutionSpecificationSelector.getExecutionSpecification().getLoggers();
+			String[] loggingMethods = aLoggers.split("\\s*\\+\\s*");
+//			String[] loggingMethods = configuration.getString("grader.logger",
+//					"csv").split("\\s*\\+\\s*");
+			
+			Tracer.info(Driver.class, "Found loggers:" + Arrays.asList(loggingMethods) );
 
-			String[] loggingMethods = configuration.getString("grader.logger",
-					"csv").split("\\s*\\+\\s*");
-
-			System.out
-					.println("Found loggers:" + Arrays.asList(loggingMethods));
+//			System.out
+//					.println("Found loggers:" + Arrays.asList(loggingMethods));
 			// lazy coding means feedback should be the last step so that
 			// isSaved works correctly
 			recorder.addLogger(new CsvLogger()); // always add this
@@ -834,7 +840,10 @@ public class Driver {
 		}
 		Traceable.setPrintTime(true);
 		// Tracer.showInfo(false);
-		Tracer.showInfo(true);
+//		Tracer.showInfo(true);
+		GraderTraceUtility.setTracing();
+//		Tracer.setBufferTracedMessages(false);
+
 		// Tracer.setKeywordPrintStatus(OverallNotesChanged.class, true);
 		// Tracer.setKeywordPrintStatus(Tracer.ALL_KEYWORDS, true);
 	}

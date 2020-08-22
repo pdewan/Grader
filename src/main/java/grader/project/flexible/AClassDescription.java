@@ -3,6 +3,8 @@ package grader.project.flexible;
 
 import grader.basics.file.FileProxy;
 import grader.basics.settings.BasicGradingEnvironment;
+import grader.config.ExecutionSpecificationSelector;
+import grader.config.StaticConfigurationUtils;
 import grader.execution.ProxyClassLoader;
 import grader.trace.compilation.ClassFileCouldNotBeCompiled;
 import grader.trace.compilation.ClassFileNotFound;
@@ -93,8 +95,9 @@ public class AClassDescription implements FlexibleClassDescription {
                         }
                         classFileNotfound.printStackTrace();
                         Tracer.error(classFileNotfound.getMessage());
+                        if (ExecutionSpecificationSelector.getExecutionSpecification().isCompileMissingClasses()) {
 
-                        if (BasicGradingEnvironment.get().isCompileMissingObjectCode()) {
+//                        if (BasicGradingEnvironment.get().isCompileMissingObjectCode()) {
                             String compileClassMessage = "Attempting to compile class:" + aClassName;
                             Tracer.error(compileClassMessage);
 				// need to compile multiple files in one shot because of dependencies

@@ -43,6 +43,7 @@ import util.annotations.StructurePattern;
 import util.annotations.StructurePatternNames;
 import util.annotations.Visible;
 import util.introspect.ClassLoaderFactory;
+import util.trace.Tracer;
 import wrappers.framework.project.ProjectWrapper;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
@@ -597,7 +598,8 @@ public class AnAutoVisitBehavior implements
 
 //		if (!isNotRunnable()) {
             ProjectRequirements aProjectRequirements = projectDatabase.getProjectRequirements();
-            System.out.println ("Project requirements:" + aProjectRequirements);
+            Tracer.info(this, "Project requirements:" + aProjectRequirements );
+//            System.out.println ("Project requirements:" + aProjectRequirements);
 //            System.out.println("SLEEPING");
 //            try {
 //				Thread.sleep(2000);
@@ -702,7 +704,7 @@ public class AnAutoVisitBehavior implements
 				// double gradePercentage = timestamp.isDefined() ?
         // projectDatabase.getProjectRequirements().checkDueDate(timestamp.get())
         // : 0;
-        System.out.println("time stamp defined:" + timestamp.get());
+        Tracer.info(this, "Time stamp defined:" + timestamp.get());
         double aMultiplier = timestamp.isDefined()
                 ? projectDatabase.getProjectRequirements().checkDueDate(wrappedProject, timestamp.get())
                 : 0;

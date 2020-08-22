@@ -301,6 +301,26 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.PRE_COMPILE_MISSING_CLASSES, newVal);
 	}
 	@Override
+	public boolean isPrivacy() {
+		return getBooleanProperty(StaticConfigurationUtils.PRIVACY, StaticConfigurationUtils.DEFAULT_PRIVACY);
+	}
+	@Override
+	public void setPrivacy(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.PRIVACY, newVal);
+
+	}
+	@Override
+	public String getLoggers() {
+		return getStringProperty(StaticConfigurationUtils.LOGGERS, StaticConfigurationUtils.DEFAULT_LOGGERS);
+
+	}
+	@Override
+	public void setLoggers(String newVal) {
+		runtimeGraderStringProperties.put(StaticConfigurationUtils.LOGGERS, newVal);
+
+
+	}
+	@Override
 	public boolean isCompileMissingClasses() {
 		return getBooleanProperty(StaticConfigurationUtils.COMPILE_MISSING_CLASSES, StaticConfigurationUtils.DEFAULT_COMPILE_MISSING_CLASSES);
 	}

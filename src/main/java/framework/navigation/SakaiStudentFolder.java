@@ -12,7 +12,9 @@ import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 
 import util.misc.Common;
+import util.trace.Tracer;
 import framework.project.StandardProject;
+import grader.assignment.timestamp.TimestampComputerSelector;
 import grader.basics.project.CurrentProjectHolder;
 import grader.basics.util.DirectoryUtils;
 import grader.basics.util.Option;
@@ -135,25 +137,47 @@ public class SakaiStudentFolder implements StudentFolder<StandardProject> {
             return Option.empty();
         }
     }
-
+    protected Option<DateTime> dateTime;
+    @Override
+    public Option<DateTime> getTimestamp() {
+    	if (dateTime == null) {
+//    		dateTime = computeTimestamp();
+    		DateTime aDateTime = TimestampComputerSelector.getTimestampComputer().computeStudentFolderTimeStamp(this);
+    		dateTime = 
+    				(aDateTime == null)?
+    						Option.empty():
+    						Option.apply(aDateTime);
+    		
+    	}
+    	return dateTime;
+    }
     /**
      * Figures out the time the student submitted things. This is wrapped in an {@link Option} in case nothing was
      * submitted.
      *
      * @return The time as a {@link DateTime} for better time manipulation.
      */
-    @Override
-    public Option<DateTime> getTimestamp() {
+//    @Override
+    public Option<DateTime> computeTimestamp() {
         File timestampFile = new File(folder, "timestamp.txt");
         if (timestampFile.exists()) {
-        	System.out.println(("Found timestamp file:" + timestampFile.getAbsolutePath()));
+        	Tracer.info(this, "Found timestamp file:" + timestampFile.getAbsolutePath());
+
+//        	System.out.println(("Found timestamp file:" + timestampFile.getAbsolutePath()));
             try {
                 String timestampText = FileUtils.readFileToString(timestampFile);
-            	System.out.println("Found timestamp:" + timestampText);
+            	Tracer.info(this, "Found timestamp:" + timestampText);
+
+//            	System.out.println("Found timestamp:" + timestampText);
             	Date aDate = SakaiDateUtil.toDate(timestampText);
-            	System.out.println ("Timestamp Date:" + aDate );
+
+            	Tracer.info (this, "Timestamp Date:" + aDate );
+//            	System.out.println ("Timestamp Date:" + aDate );
+
             	DateTime aDateTime = new DateTime(aDate);
-            	System.out.println ("Date time:" + aDateTime );
+            	Tracer.info (this, "Date time:" + aDateTime );
+
+//            	System.out.println ("Date time:" + aDateTime );
             	return Option.apply(aDateTime);
 
 

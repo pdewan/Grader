@@ -16,9 +16,11 @@ import grader.config.ExecutionSpecificationSelector;
 import grader.language.LanguageDependencyManager;
 import grader.navigation.NavigationKind;
 import grader.settings.GraderSettingsModelSelector;
+import scala.collection.parallel.ParIterableLike.Max;
 import util.trace.Tracer;
 
 public class AFilesToCompileFinder implements FilesToCompileFinder {
+	public static final double MAX_SOURCE_OBJECT_DIFFERENCE = 1000;
 	/**
 	 * Given a .java and .class file, returns whether the .java file needs to be
 	 * compiled or recompiled
@@ -36,14 +38,37 @@ public class AFilesToCompileFinder implements FilesToCompileFinder {
 			return true;
 		String javaName = aSourceFile.getName();
 		String className = anObjectFile.getName();
-		return 
-			// we will check this in caller of isCompileSourceFiles
-			// !project.hasBeenCompiled() 
-		 !anObjectFile.getName().startsWith("_") &&
-			!aSourceFile.getName().startsWith("._") &&
-			(BasicGradingEnvironment.get().isForceCompile()
-				|| !anObjectFile.exists()
-				|| anObjectFile.lastModified() < aSourceFile.lastModified());
+		if (ExecutionSpecificationSelector.getExecutionSpecification().isForceCompile()) {
+			Tracer.info(AFilesToCompileFinder.class, "Force compiling:" + javaName);
+			return true;
+
+		};
+		
+		if (!anObjectFile.exists()) {
+			Tracer.info(AFilesToCompileFinder.class, "Object file does not exist for:" + javaName);
+			return true;
+		}
+		if (anObjectFile.getName().startsWith("_") || aSourceFile.getName().startsWith("_")) {
+			Tracer.info(AFilesToCompileFinder.class, 
+					"Not considering for recompiling object or source file starting with _" + anObjectFile + " " + aSourceFile);;
+			return false;
+		}
+		long aSourceModifiedTime = aSourceFile.lastModified();
+		long anObjectModifiedTime = anObjectFile.lastModified();
+		long aDifference = aSourceModifiedTime - anObjectModifiedTime;
+		if (aDifference > MAX_SOURCE_OBJECT_DIFFERENCE) {
+			Tracer.info(AFilesToCompileFinder.class, "Source file time - object file time = " + aDifference + " > " + MAX_SOURCE_OBJECT_DIFFERENCE + " recompiling ");
+			return true;
+		}
+		return false;
+//		return 
+//			// we will check this in caller of isCompileSourceFiles
+//			// !project.hasBeenCompiled() 
+//		 !anObjectFile.getName().startsWith("_") &&
+//			!aSourceFile.getName().startsWith("._") &&
+//			(BasicGradingEnvironment.get().isForceCompile()
+//				|| !anObjectFile.exists()
+//				|| anObjectFile.lastModified() < aSourceFile.lastModified());
 		// (classFile.lastModified() - javaFile.lastModified()) < 1000;
 
 	}

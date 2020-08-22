@@ -234,6 +234,8 @@ public class AConfigurationManager extends ABasicConfigurationManager implements
             UserPropertyWriter userProperties = new UserPropertyWriter(dynamicConfigName);
 // this seems to be Andrew's code duplicating the properties in a thread specific file
             System.out.println ("Writing user properties:" + Arrays.toString(args));
+            Tracer.info (this, "Writing user properties:" + Arrays.toString(args));
+
             userProperties.setUserProperties(args);
             userPropsFile = Paths.get(dynamicConfigName).toFile();
             

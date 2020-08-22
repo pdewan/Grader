@@ -322,7 +322,8 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 					// aFilesToCompile);
 					boolean aSavedValue = BasicProjectExecution.isWaitForMethodConstructorsAndProcesses();
 					BasicProjectExecution.setWaitForMethodConstructorsAndProcesses(true);
-					System.out.println("Attempting to compile files:" + aFilesToCompile);
+//					System.out.println("Attempting to compile files:" + aFilesToCompile);
+					Tracer.info(this, "Attempting to compile files:" + aFilesToCompile);
 
 					RunningProject runningProject = LanguageDependencyManager.getSourceFilesCompiler()
 						.compile(basicProject, sourceFolder, buildFolder, basicProject.getObjectFolder(), aFilesToCompile);
@@ -336,7 +337,10 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 					} else {
 						Tracer.info (this, "No output from compiler"); 
 					}
-					System.out.println("Compilation attempt finished.");
+//					System.out.println("Compilation attempt finished.");
+					Tracer.info(this, "Compilation attempt finished.");
+
+					
 					maybeSetCanBeCompiled(true);
 					BasicProjectExecution.setWaitForMethodConstructorsAndProcesses(aSavedValue);
 

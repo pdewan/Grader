@@ -29,6 +29,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import util.misc.Common;
+import util.trace.Tracer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -162,8 +163,8 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
     	String anEndFilePart = ".*\\(" + anEndOnyen.trim()  + "\\)$";
     	boolean goToEnd = anEndOnyen.equals(END_ONYEN_POSITIVE_INFINITY);
     	boolean startFromBeginning = START_ONYEN_ZERO.equals(aStartOnyen);
-		
-		System.out.println("Searching for onyens between:" + aStartOnyen + "->" + anEndOnyen);
+		Tracer.info(this, "Searching for onyens between:" + aStartOnyen + "->" + anEndOnyen );
+//		System.out.println("Searching for onyens between:" + aStartOnyen + "->" + anEndOnyen);
     	boolean foundStart = false;
 
         for (File file : files) {
@@ -171,7 +172,9 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 
                 if (startFromBeginning || file.getName().matches(aStartFilePart)) {
                     include = true;
-                	System.out.println ("Found start onyen:" + file.getName());
+            		Tracer.info(this, "Found start onyen:" + file.getName());
+
+//                	System.out.println ("Found start onyen:" + file.getName());
                 	foundStart = true;
                 }
                 if (include) {
@@ -183,7 +186,8 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
                 }
 
                 if (file.getName().matches(anEndFilePart)) {
-                	System.out.println ("Found end onyen:" + file.getName());
+                	Tracer.info(this, "Found end onyen:" + file.getName() );
+//                	System.out.println ("Found end onyen:" + file.getName());
                     include = false;
                     break;
                 }
@@ -191,7 +195,7 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
         }
                        
         if (!foundStart) {
-        	System.out.println ("Did not find start onyen:" +  aStartOnyen + " in:" + Arrays.toString(files));
+        	System.err.println ("Did not find start onyen:" +  aStartOnyen + " in:" + Arrays.toString(files));
 
         }
         if (include && !goToEnd) { // did not find ending onyen
@@ -272,7 +276,8 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 							.getProjectStepper().getProject(), anOnyens, this);
 		savedOnyens = retVal;
 //		savedOnyens = savedRawOnyens;
-		System.out.println ("MAKING SELECTED ONYENS AS RAW ONYENS");
+		Tracer.info (this, "Making Selected Onyens as Raw Onyens");
+//		System.out.println ("MAKING SELECTED ONYENS AS RAW ONYENS");
 	 	savedStartOnyen = aStartOnyen;
     	savedEndOnyen = anEndOnyen;
     	savedDirectoryName = aDirectory.getName(); 

@@ -419,13 +419,13 @@ public class ARootCodeFolder implements RootCodeFolder {
     }
     
     protected boolean maybeInitializeDescendents(FileProxy aFileProxy) {
-		System.out.println("maybe initializing children of " + aFileProxy);
+//		System.out.println("maybe initializing children of " + aFileProxy);
 
     	if (!aFileProxy.getFile().isDirectory()) {
     		return false;
     	}
 		if (!aFileProxy.isDescendentsInitialized()) {
-			System.out.println(" initializing children of " + aFileProxy);
+//			System.out.println(" initializing children of " + aFileProxy);
 
 			RootFolderProxy aRoot = aFileProxy.getRootFolderProxy();
 			aRoot.initEntries(aFileProxy.getFile());
@@ -446,7 +446,7 @@ public class ARootCodeFolder implements RootCodeFolder {
 
 			for (FileProxy aChildProxy: aFileProxies) {
 				if (!aChildProxy.isDescendentsInitialized()) {
-					System.out.println(" initializing children of " + aChildProxy);
+//					System.out.println(" initializing children of " + aChildProxy);
 
 					RootFolderProxy aRoot = aChildProxy.getRootFolderProxy();
 					aRoot.initEntries(aChildProxy.getFile());

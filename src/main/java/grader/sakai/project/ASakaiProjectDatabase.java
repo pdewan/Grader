@@ -1233,7 +1233,9 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	@Override
 	public void clear() {
-		System.out.println("Clearing project database");
+		Tracer.info(this, "Clearing project database");
+
+//		System.out.println("Clearing project database");
 		bulkFolder.clear();
 		assignmentDataFolder.clear();
 		GenericStudentAssignmentDatabase<StudentCodingAssignment> aStudentAssignmentDatabase = getStudentAssignmentDatabase();
@@ -1362,7 +1364,9 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 //			writeOnyens(); // the database checks this ile
 //			aStudentAssignmentDatabase.createStudentAssignments();
 //		}
-		System.out.println("Student ids from assignment database:" + aStudentAssignmentDatabase.getStudentIds());
+		Tracer.info(this, "Student ids from assignment database:" + aStudentAssignmentDatabase.getStudentIds());
+
+//		System.out.println("Student ids from assignment database:" + aStudentAssignmentDatabase.getStudentIds());
 		Collection<StudentCodingAssignment> studentAssignments = aStudentAssignmentDatabase
 				.getStudentAssignments();
 		

@@ -8,6 +8,7 @@ import grader.project.flexible.AFlexibleProject;
 import grader.project.flexible.FlexibleProject;
 import grader.trace.project.ProjectFolderAssumed;
 import grader.trace.project.RubrickFileLoaded;
+import util.trace.Tracer;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -159,7 +160,9 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
 //            	projectFolder = new AZippedRootFolderProxy(aProjectProxy.getMixedCaseAbsoluteName());
 
             } else {
-            	System.out.println ("Found unzipped folder, processing zip folder:" + unzippedFolder);
+            	Tracer.info (this, "Found unzipped folder, processing zip folder:" + unzippedFolder);
+
+//            	System.out.println ("Found unzipped folder, processing zip folder:" + unzippedFolder);
                 projectFolder = getUniqueNonMACOSFolderChild(unzippedFolder);
                 if (projectFolder == null) {
                     projectFolder = unzippedFolder; // not sure if this is ever reasonable

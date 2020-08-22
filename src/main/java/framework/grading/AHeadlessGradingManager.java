@@ -8,6 +8,7 @@ import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
 import framework.navigation.StudentFolder;
+import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.project.Project;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.util.Option;
@@ -108,20 +109,24 @@ public class AHeadlessGradingManager implements GradingManager {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
-
     private void getGradingOptions() throws ConfigurationException {
 
-        downloadPath = configuration.getString("grader.headless.path", null);
+//        downloadPath = configuration.getString("grader.headless.path", null);
+        downloadPath = configuration.getString(BasicStaticConfigurationUtils.HEADLESS_PATH, BasicStaticConfigurationUtils.DEFAULT_HEADLESS_PATH);
+
         if (downloadPath != null) {
             graderSettingsManager.setDownloadPath("grader.headless", downloadPath);
         }
         
-        start = configuration.getString("grader.headless.start", null);
+//        start = configuration.getString("grader.headless.start", null);
+        start = configuration.getString("grader.headless.start", "vitkus");
+
         if (start != null) {
             graderSettingsManager.setStartingOnyen("grader.headless", start); // is this ever retrieved? why is the module grader.headless?
         }
 
-        end = configuration.getString("grader.headless.end", null);
+//        end = configuration.getString("grader.headless.end", null);
+        end = configuration.getString("grader.headless.end", "vitkus");
         if (end != null) {
             graderSettingsManager.setEndingOnyen("grader.headless", end);
         }

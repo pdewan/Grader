@@ -260,7 +260,9 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	}
 
 	public boolean setProject(String anOnyen) {
-		System.out.println ("Processing onyen:" + anOnyen);
+//		System.out.println ("Processing onyen:" + anOnyen);
+		Tracer.info(this, "Processing onyen:" + anOnyen);
+
 		try {
 			gradedProjectOverview.internalSetOnyen(anOnyen);
 		} catch (MissingOnyenException e) {
