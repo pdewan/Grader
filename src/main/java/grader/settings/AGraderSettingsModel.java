@@ -339,7 +339,8 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         	Tracer.info (this, "Refreshing test project src:" + testProjectSrc);
             fileBrowsing.getTestProjectSrc().setText(testProjectSrc);
         } else {
-        	System.err.println("Null test project src");
+        	return;
+//        	System.err.println("Null test project src");
         }
 //        GraderSettings.get().set("path", problemDownloadPath);
         GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrc);

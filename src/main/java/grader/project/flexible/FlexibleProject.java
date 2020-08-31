@@ -148,4 +148,6 @@ public interface FlexibleProject {
 	
 		void setWrapper(ProjectWrapper newValue);
 
+		void setCheckstyleText(String newVal);
+
 }

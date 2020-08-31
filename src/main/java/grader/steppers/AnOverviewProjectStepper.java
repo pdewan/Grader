@@ -255,7 +255,10 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	
 	protected void loadSourceChecksFromFile() {		
 		String anOldValue = sourceChecks;
-		 sourceChecks = project.getCheckstyleText();		
+//		 sourceChecks = project.getCheckstyleText();
+//		 sourceChecks = wrappedProject.getCheckstyleText();	
+		 sourceChecks = project.getStoredCheckstyleText();
+
 		propertyChangeSupport.firePropertyChange("sourceChecks", anOldValue, sourceChecks); // will be ignored because of suppress and 
 	}
 
@@ -858,6 +861,7 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 	@Override
 	public void firstDocument() {
 		nextDocumentIndex = 0;
+		nextDocument();
 	}
 
 	@Row(7)

@@ -6,12 +6,12 @@ import gradingTools.assignment1.testCases.ProductTestCase;
 import gradingTools.assignment1.testCases.SingleTokenTestCase;
 import gradingTools.assignment1.testCases.SumTestCase;
 import gradingTools.assignment6.testCases.QuestionTestCase;
-import gradingTools.comp401f15.assignment1.testcases.ImageEnclosedTestCase;
 import gradingTools.comp401f15.assignment1.testcases.InvalidCharacterTestCase;
 import gradingTools.comp401f15.assignment1.testcases.MainClassDefinedTestCase;
 import gradingTools.comp401f15.assignment1.testcases.MinDeclaredMethodsInSameOrDifferentClassTestCase;
 import gradingTools.comp401f15.assignment1.testcases.TerminateWithPeriodTestCase;
 import gradingTools.comp401f15.assignment1.testcases.VariableSpacesTestCase;
+import gradingTools.sharedTestCase.ImageEnclosedTestCase;
 import gradingTools.sharedTestCase.NoWarningOrErrorTestCase;
 import gradingTools.sharedTestCase.checkstyle.CheckStyleIllegalImportOrCallTestCase;
 

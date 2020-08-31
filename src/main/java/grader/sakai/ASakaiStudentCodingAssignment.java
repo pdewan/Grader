@@ -152,7 +152,7 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
         } else {
             FileProxy unzippedFolder = getUnzippedFolder(submissionFolder, zipFile);
             if (unzippedFolder == null) {
-            	System.out.println ("Did not find unzipped folder, processing zip file:" + zipFile);
+            	Tracer.info (this, "Did not find unzipped folder, processing zip file:" + zipFile);
 //                projectFolder = new AZippedRootFolderProxy(zipFile.getAbsoluteName());
                 
                 

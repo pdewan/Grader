@@ -10,6 +10,7 @@ import grader.basics.project.BasicProject;
 import grader.basics.project.ClassesManager;
 import grader.basics.project.CurrentProjectHolder;
 import grader.basics.util.Option;
+import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProject;
 
 import java.io.File;
@@ -109,5 +110,27 @@ public class StandardProject extends BasicProject implements FatProject {
     	return retVal;
 //        return new InteractiveConsoleProcessRunner(this).run("");
     }
-   
+    public static File getCheckstyleOutFolder(SakaiProject aProject) {
+    	return new File (aProject.getOutputFolder());
+    }
+    public String createLocalCheckStyleOutputFileName() {
+
+		return defaultCheckstyleOutputfileName();
+	}
+    public static String defaultCheckstyleOutputfileName() {
+    	return DEFAULT_CHECK_STYLE_FILE_PREFIX + DEFAULT_CHECK_STYLE_FILE_SUFFIX;
+    }
+    public File getCheckstyleOutFolder() {
+    	return getCheckstyleOutFolder(project);
+//    	return new File (project.getOutputFolder());
+    }
+    protected File getCheckStyleConfigurationDefaultFolder() {
+		return new File("config" + "/checkstyle/");
+	}
+    public String getCheckstyleText() {
+    	String retVal = super.getCheckstyleText();
+    	project.setCheckstyleText(retVal);
+    	return retVal;
+    	
+    }
 }

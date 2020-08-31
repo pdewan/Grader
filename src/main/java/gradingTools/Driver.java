@@ -12,11 +12,14 @@ import javax.swing.JOptionPane;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import util.trace.MessagePrefixKind;
 import util.trace.TooManyTracesException;
 import util.trace.Traceable;
 import util.trace.TraceableBus;
 import util.trace.TraceableLogFactory;
+import util.trace.TraceableWarning;
 import util.trace.Tracer;
+import util.trace.uigen.UnknownPropertyNotification;
 import wrappers.grader.sakai.project.ProjectDatabaseFactory;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
@@ -834,6 +837,14 @@ public class Driver {
 	}
 
 	public static void setTracing() {
+		
+		ObjectEditor.setDenseMagnification(1.0);
+//		ExecutionSpecificationSelector.getExecutionSpecification().setGraderProblemDownloadPath("foo");
+//		ExecutionSpecificationSelector.getExecutionSpecification().setUseProjectConfiguration(true); // duplicating what is in the ASuite
+//		Tracer.showInfo(true);
+		TraceableWarning.doNotWarn(UnknownPropertyNotification.class);
+
+		Tracer.setMessagePrefixKind(MessagePrefixKind.FULL_CLASS_NAME);
 		TraceableLogFactory.setEnableTraceableLog(false);
 		if (isHeadless()) {
 			Traceable.setLogMesssages(false);

@@ -185,4 +185,16 @@ public class ManualProject implements FatProject {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getCheckstyleText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getStoredCheckstyleText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

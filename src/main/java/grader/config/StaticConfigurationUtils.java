@@ -1,7 +1,6 @@
 package grader.config;
 
 import framework.grading.ProjectRequirements;
-import grader.assignment.AnAssignmenDataFolder;
 import grader.basics.BasicLanguageDependencyManager;
 import grader.basics.config.BasicConfigurationManagerSelector;
 import grader.basics.config.BasicStaticConfigurationUtils;
@@ -66,11 +65,11 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static final boolean DEFAULT_UNZIP_FILES = true;
 
 	
-	public static final String CHECK_STYLE = "checkStyle";
-	public static final boolean DEFAULT_CHECK_STYLE = false;
+//	public static final String CHECK_STYLE = "checkStyle";
+//	public static final boolean DEFAULT_CHECK_STYLE = false;
 
 	
-	public static final String CHECK_STYLE_FILE = "checkStyleFile";
+//	public static final String CHECK_STYLE_FILE = "checkStyleFile";
 	
 	public static final String EDITOR = "editor";
 	public static final String DIFF = "diff";
@@ -254,12 +253,12 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 		return ExecutionSpecificationSelector.getExecutionSpecification().isForkMain();
 	}
 	
-	public static String getCheckStyleFile() {
-
-		return getInheritedStringModuleProblemProperty(
-				 CHECK_STYLE_FILE, AnAssignmenDataFolder.DEFAULT_CONFIGURATION_FILE);
-
-	}
+//	public static String getCheckStyleFile() {
+//
+//		return getInheritedStringModuleProblemProperty(
+//				 CHECK_STYLE_FILE, BasicStaticConfigurationUtils.DEFAULT_CONFIGURATION_FILE);
+//
+//	}
 
 	public static boolean getForceCompileClasses(
 			PropertiesConfiguration configuration,

@@ -19,6 +19,7 @@ import grader.spreadsheet.FinalGradeRecorder;
 import grader.spreadsheet.FinalGradeRecorderSelector;
 import grader.spreadsheet.TotalScoreRecorderSelector;
 import grader.spreadsheet.csv.ASakaiCSVFeatureGradeManager;
+import util.trace.Tracer;
 // this is logging both the feedback and final grade to through my Final grade recorder, which seems to be adding an extra line
 public class CsvLogger implements Logger {
 
@@ -199,8 +200,8 @@ public class CsvLogger implements Logger {
 //	            
 //	         }
 			double rawScore = recordingSession.getScore();
-			System.out.println ("CSV logger raw score:" + rawScore);
-			System.out.println("Late Penalty/Multiplier:" + recordingSession.getLatePenalty());
+			Tracer.info (this, "CSV logger raw score:" + rawScore);
+			Tracer.info (this, "Late Penalty/Multiplier:" + recordingSession.getLatePenalty());
 			double total = ASakaiCSVFeatureGradeManager.getTotalGrade(rawScore, recordingSession.getLatePenalty(), recordingSession.getSourcePoints());
 
 			aRecorder.setGrade(id, onyen, total);

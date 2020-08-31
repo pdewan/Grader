@@ -1,14 +1,20 @@
 package grader.sakai.project;
 
 import grader.basics.file.FileProxy;
+import grader.basics.project.BasicProject;
 import grader.project.flexible.AFlexibleProject;
 import grader.project.folder.RootCodeFolder;
 import grader.sakai.StudentAssignment;
 import grader.sakai.StudentCodingAssignment;
+import util.misc.Common;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.Icon;
+
+import framework.project.StandardProject;
 
 public class ASakaiProject extends AFlexibleProject implements SakaiProject {
     StudentCodingAssignment studentAssignment;
@@ -59,6 +65,22 @@ public class ASakaiProject extends AFlexibleProject implements SakaiProject {
     		return aFolder.getMixedCaseAbsoluteName();
     	}
     }
+     @Override
+     public String getStoredCheckstyleText() {
+    	 if (checkStyleText == null || checkStyleText.isEmpty()) {
+    		 File aFolder = StandardProject.getCheckstyleOutFolder(this);
+    		 String aFileName = StandardProject.defaultCheckstyleOutputfileName();
+    		 String anOutFileName = aFolder.getAbsolutePath() + "/" + aFileName;
+    		 try {
+    			 checkStyleText = Common.readFile(new File(anOutFileName)).toString();
+    		 } catch (IOException e) {
+    			 e.printStackTrace();
+    		 }
+    	 }
+    	 return checkStyleText;
+     }
+}
+
 //     @Override
 //     public ProjectWrapper getWrapper() {
 // 		return wrapper;
@@ -69,4 +91,4 @@ public class ASakaiProject extends AFlexibleProject implements SakaiProject {
 // 	}
 
 	
-}
+//}

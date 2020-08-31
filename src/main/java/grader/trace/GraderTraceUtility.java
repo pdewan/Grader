@@ -1,6 +1,7 @@
 package grader.trace;
 
 import framework.execution.ProcessRunner;
+import framework.logging.loggers.CsvLogger;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.SakaiStudentFolder;
 import framework.project.ProjectClassesManager;
@@ -61,6 +62,10 @@ public class GraderTraceUtility extends GraderBasicsTraceUtility {
 			Tracer.setKeywordPrintStatus(ConglomerateRecorder.class, true);
 			Tracer.setKeywordPrintStatus(AnAutoVisitBehavior.class, true);
 			Tracer.setKeywordPrintStatus(SakaiTimestampComputer.class, true);
+			Tracer.setKeywordPrintStatus(ASakaiStudentCodingAssignment.class, true);
+		     Tracer.setKeywordPrintStatus(CsvLogger.class, true);
+
+
 
 
 

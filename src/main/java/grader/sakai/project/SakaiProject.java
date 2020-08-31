@@ -17,6 +17,8 @@ public interface SakaiProject extends FlexibleProject {
 	String getProjectZipFileOrFolderMixedCaseAbsoluteName();
 	void clear();
 
+	String getStoredCheckstyleText();
+
 //	ProjectWrapper getWrapper();
 //
 //	void setWrapper(ProjectWrapper newValue);

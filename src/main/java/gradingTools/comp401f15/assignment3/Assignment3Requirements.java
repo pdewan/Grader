@@ -1,7 +1,6 @@
 package gradingTools.comp401f15.assignment3;
 
 import framework.grading.FrameworkProjectRequirements;
-import gradingTools.comp401f15.assignment1.testcases.ImageEnclosedTestCase;
 import gradingTools.comp401f15.assignment1.testcases.MainClassDefinedTestCase;
 import gradingTools.comp401f15.assignment3.testcases.EndClassTestCase;
 import gradingTools.comp401f15.assignment3.testcases.EndEchoTestCase;
@@ -27,6 +26,7 @@ import gradingTools.comp401f15.assignment3.testcases.WordClassTestCase;
 import gradingTools.comp401f15.assignment3.testcases.WordComputationTestCase;
 import gradingTools.comp401f15.assignment3.testcases.WordEchoTestCase;
 import gradingTools.comp401f15.assignment3.testcases.WordTokenBeanTestCase;
+import gradingTools.sharedTestCase.ImageEnclosedTestCase;
 import gradingTools.sharedTestCase.checkstyle.CheckStyleClassDefinedTestCase;
 import gradingTools.sharedTestCase.checkstyle.CheckStyleIllegalImportOrCallTestCase;
 import gradingTools.sharedTestCase.checkstyle.CheckStyleVariableHasClassTypeTestCase;

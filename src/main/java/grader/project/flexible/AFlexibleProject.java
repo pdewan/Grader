@@ -3,6 +3,7 @@ package grader.project.flexible;
 import framework.grading.testing.Checkable;
 import framework.grading.testing.TestCase;
 import framework.logging.loggers.FeedbackTextSummaryLogger;
+import framework.project.StandardProject;
 import grader.basics.execution.CommandGenerator;
 import grader.basics.execution.RunningProject;
 import grader.basics.file.FileProxy;
@@ -276,7 +277,12 @@ public class AFlexibleProject implements FlexibleProject {
         return DEFAULT_CHECK_STYLE_FILE_PREFIX + checkStyleSuffix;
     }
     
-    String checkStyleText = null;
+    protected String checkStyleText = null;
+    @Override
+    public void setCheckstyleText(String newVal) {
+    	checkStyleText = newVal;
+    }
+  
     @Override
     public String getCheckstyleText() {
     	if (checkStyleText == null) { // assume it will never change
@@ -345,7 +351,9 @@ public class AFlexibleProject implements FlexibleProject {
         try { // Added by Josh: Exceptions can occur when making class descriptions
             classesManager.makeClassDescriptions(this);
             classViewManager = new AClassViewManager(classesManager);
-            classesTextManager = new AClassesTextManager(new File(rootCodeFolder.getSourceProjectFolderName()), classViewManager);
+//            classesTextManager = new AClassesTextManager(new File(rootCodeFolder.getSourceProjectFolderName()), classViewManager);
+            classesTextManager = new AClassesTextManager(wrapper.getSourceFolder(), classViewManager);
+
 //            classesTextManager = new AClassesTextManager(new File(sourceFileName), classViewManager);
             classesTextManager.initializeAllSourcesText();
 //            System.out.println("Write sources to:" + sourceFileName);
