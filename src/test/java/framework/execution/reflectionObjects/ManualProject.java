@@ -12,6 +12,7 @@ import grader.basics.execution.NotRunnableException;
 import grader.basics.project.ClassesManager;
 import grader.basics.project.source.BasicTextManager;
 import grader.basics.util.Option;
+import unc.symbolTable.SymbolTable;
 //import scala.Option;
 import util.pipe.InputGenerator;
 
@@ -194,6 +195,12 @@ public class ManualProject implements FatProject {
 
 	@Override
 	public String getStoredCheckstyleText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SymbolTable getSymbolTable() {
 		// TODO Auto-generated method stub
 		return null;
 	}

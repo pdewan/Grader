@@ -19,6 +19,7 @@ import grader.basics.trace.SourceFolderNotFound;
 import grader.basics.util.DirectoryUtils;
 import grader.basics.util.Option;
 import grader.sakai.project.SakaiProject;
+import unc.symbolTable.SymbolTable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -358,6 +359,12 @@ public class OriginalStandardProject implements FatProject {
 
 	@Override
 	public String getStoredCheckstyleText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SymbolTable getSymbolTable() {
 		// TODO Auto-generated method stub
 		return null;
 	}
