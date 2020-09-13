@@ -4,10 +4,6 @@ import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
-import grader.sakai.project.SakaiProject;
-import gradingTools.shared.testcases.MethodExecutionTest;
-
-import java.util.List;
 
 
 public class CheckstylePatternBasedSuperTypeDefinedTestCase 

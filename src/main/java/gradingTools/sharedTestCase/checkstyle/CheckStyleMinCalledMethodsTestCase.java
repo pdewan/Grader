@@ -1,9 +1,9 @@
 package gradingTools.sharedTestCase.checkstyle;
 
-import grader.basics.junit.TestCaseResult;
-import grader.sakai.project.SakaiProject;
-
 import java.util.List;
+
+import grader.basics.junit.TestCaseResult;
+import grader.basics.project.Project;
 
 
 public class CheckStyleMinCalledMethodsTestCase extends CheckStyleTestCase {
@@ -26,7 +26,7 @@ public class CheckStyleMinCalledMethodsTestCase extends CheckStyleTestCase {
 		return "Number of called methods less than" + minimum;
 	}
   //String literal expressions should be on the left side
-	 protected TestCaseResult computeResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+	 protected TestCaseResult computeResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
 	    	return singleMatchScore(aProject, aCheckStyleLines, aFailedLines, autoGrade);
 	    	
 	}

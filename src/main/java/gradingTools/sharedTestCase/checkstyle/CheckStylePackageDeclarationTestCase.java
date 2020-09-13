@@ -1,9 +1,9 @@
 package gradingTools.sharedTestCase.checkstyle;
 
+import java.util.List;
+
 import grader.basics.junit.TestCaseResult;
 import grader.sakai.project.SakaiProject;
-
-import java.util.List;
 
 
 public class CheckStylePackageDeclarationTestCase extends CheckStyleTestCase {

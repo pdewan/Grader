@@ -1,11 +1,10 @@
 package gradingTools.sharedTestCase.checkstyle;
 
+import java.util.List;
+
 import framework.grading.testing.BasicTestCase;
 import grader.basics.execution.RunningProject;
 import grader.basics.project.Project;
-
-import java.util.List;
-
 import util.misc.Common;
 
 /**

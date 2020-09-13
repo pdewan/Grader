@@ -2,8 +2,10 @@ package gradingTools.comp401f15.assignment1.testcases;
 
 import grader.basics.execution.BasicProcessRunner;
 import grader.basics.junit.TestCaseResult;
+import grader.basics.project.Project;
 import grader.sakai.project.SakaiProject;
 import gradingTools.sharedTestCase.checkstyle.CheckStyleClassDefinedTestCase;
+import wrappers.framework.project.ProjectWrapper;
 
 import java.util.List;
 
@@ -45,14 +47,14 @@ public class MainClassDefinedTestCase extends CheckStyleClassDefinedTestCase {
 //	        
 //	 }
 	
-	 protected TestCaseResult computeResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+	 protected TestCaseResult computeResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
 		 TestCaseResult aResult = singleMatchScore(aProject, aCheckStyleLines, aFailedLines, autoGrade);
 		 if (aResult.getPercentage() != 1.0) {
 			
-
-			 if (aProject.getEntryPoints() == null || aProject.getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT) == null)
+			 SakaiProject aSakaiProject = ((ProjectWrapper) aProject).getProject();
+			 if (aSakaiProject.getEntryPoints() == null || aSakaiProject.getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT) == null)
 				 return aResult;
-			 String aMainClassUsed = aProject.getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT);
+			 String aMainClassUsed = aSakaiProject.getEntryPoints().get(BasicProcessRunner.MAIN_ENTRY_POINT);
 			 if (aMainClassUsed.matches(descriptor))
 				 return pass();
 			 if (aMainClassUsed.contains("main.") || aMainClassUsed.contains("Main.") ) {

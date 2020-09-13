@@ -1,6 +1,7 @@
 package gradingTools.comp401f15.assignment12.testcases;
 
 import grader.basics.junit.TestCaseResult;
+import grader.basics.project.Project;
 import grader.sakai.project.SakaiProject;
 import gradingTools.sharedTestCase.checkstyle.CheckStyleTestCase;
 
@@ -52,7 +53,7 @@ public class GenerictClassCheckStyleTestCase extends CheckStyleTestCase {
 		// TODO Auto-generated method stub
 		return typeTag + " should be generic";
 	}
-	 protected TestCaseResult computeResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+	 protected TestCaseResult computeResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
 		 return singleMatchScore(aProject, aCheckStyleLines, aFailedLines, autoGrade);
 //		 if (aResult.getPercentage() != 1.0) {
 //			 if (aProject.getEntryPoints() == null || aProject.getEntryPoints().get(MainClassFinder.MAIN_ENTRY_POINT) == null)

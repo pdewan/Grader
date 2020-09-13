@@ -1,13 +1,12 @@
 package gradingTools.sharedTestCase.checkstyle;
 
+import java.util.List;
+
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
-import grader.sakai.project.SakaiProject;
 import gradingTools.shared.testcases.MethodExecutionTest;
-
-import java.util.List;
 
 
 public class CheckstyleMethodDefinedTestCase extends CheckStyleTestCase {
@@ -73,7 +72,7 @@ public class CheckstyleMethodDefinedTestCase extends CheckStyleTestCase {
 //		return "Method call matching " + method + " not defined by " + getActualType();
 //	}
   //String literal expressions should be on the left side
-	 protected TestCaseResult computeResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+	 protected TestCaseResult computeResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
 		 return singleMatchScore(aProject, aCheckStyleLines, aFailedLines, autoGrade);
 //		 if (aResult.getPercentage() != 1.0) {
 //			 if (aProject.getEntryPoints() == null || aProject.getEntryPoints().get(MainClassFinder.MAIN_ENTRY_POINT) == null)

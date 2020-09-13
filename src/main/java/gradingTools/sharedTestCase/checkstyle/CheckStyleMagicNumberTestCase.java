@@ -1,10 +1,5 @@
 package gradingTools.sharedTestCase.checkstyle;
 
-import grader.basics.junit.TestCaseResult;
-import grader.sakai.project.SakaiProject;
-
-import java.util.List;
-
 public class CheckStyleMagicNumberTestCase extends CheckStyleCountingWarningsTestCase {
 	;
 	public static final String WARNING_NAME = "magic";

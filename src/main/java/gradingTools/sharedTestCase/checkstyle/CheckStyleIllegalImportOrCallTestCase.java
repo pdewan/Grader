@@ -1,9 +1,9 @@
 package gradingTools.sharedTestCase.checkstyle;
 
-import grader.basics.junit.TestCaseResult;
-import grader.sakai.project.SakaiProject;
-
 import java.util.List;
+
+import grader.basics.junit.TestCaseResult;
+import grader.basics.project.Project;
 
 
 public class CheckStyleIllegalImportOrCallTestCase extends CheckStyleTestCase {
@@ -27,7 +27,7 @@ public class CheckStyleIllegalImportOrCallTestCase extends CheckStyleTestCase {
 	public String failMessageSpecifier(List<String> aFailedLines) {
 		return "Illegal type or call in:\n" + beautify(aFailedLines);
 	}
-	 protected TestCaseResult computeResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+	 protected TestCaseResult computeResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
 	    	return singleMatchScore(aProject, aCheckStyleLines, aFailedLines, autoGrade);
 	    	
 	}

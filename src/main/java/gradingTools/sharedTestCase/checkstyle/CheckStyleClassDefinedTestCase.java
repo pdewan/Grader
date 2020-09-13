@@ -1,15 +1,14 @@
 package gradingTools.sharedTestCase.checkstyle;
 
+import java.util.List;
+import java.util.Set;
+
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.ClassDescription;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
-import grader.sakai.project.SakaiProject;
-
-import java.util.List;
-import java.util.Set;
 
 
 public class CheckStyleClassDefinedTestCase extends CheckStyleTestCase {
@@ -70,7 +69,7 @@ public class CheckStyleClassDefinedTestCase extends CheckStyleTestCase {
 		return "Class matching " + descriptor + " not defined";
 	}
   //String literal expressions should be on the left side
-	 protected TestCaseResult computeResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+	 protected TestCaseResult computeResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
 		 return singleMatchScore(aProject, aCheckStyleLines, aFailedLines, autoGrade);
 //		 if (aResult.getPercentage() != 1.0) {
 //			 if (aProject.getEntryPoints() == null || aProject.getEntryPoints().get(MainClassFinder.MAIN_ENTRY_POINT) == null)

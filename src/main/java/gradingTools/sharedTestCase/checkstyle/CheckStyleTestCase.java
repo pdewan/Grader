@@ -3,14 +3,12 @@ package gradingTools.sharedTestCase.checkstyle;
 import java.util.ArrayList;
 import java.util.List;
 
-import wrappers.framework.project.ProjectWrapper;
 import framework.grading.testing.BasicTestCase;
 import grader.basics.junit.NotAutomatableException;
 import grader.basics.junit.TestCaseResult;
 import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 import grader.sakai.project.SakaiProject;
-import grader.util.ProjectIntrospection;
 
 
 public abstract class CheckStyleTestCase extends BasicTestCase {
@@ -111,7 +109,7 @@ public abstract class CheckStyleTestCase extends BasicTestCase {
     	
     	return aSuffix.substring(0, endIndex);
     }
-    protected TestCaseResult test(SakaiProject aProject, String[] aCheckStyleLines, boolean autoGrade) {
+    protected TestCaseResult test(Project aProject, String[] aCheckStyleLines, boolean autoGrade) {
   
     	String aTypeTag = typeTag();
     	if (aTypeTag != null) {
@@ -134,7 +132,7 @@ public abstract class CheckStyleTestCase extends BasicTestCase {
         return partialPass((aTotalClassCount - aNumMatchedInstances)/aTotalClassCount, aNotes, autoGrade);    
     	
     }
-    protected TestCaseResult numMatchesResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+    protected TestCaseResult numMatchesResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
     	int aNumFailedInstances = aFailedLines.size();   
     	int i = 0;
     	double aScore = scoreForMatches(aNumFailedInstances);
@@ -143,21 +141,21 @@ public abstract class CheckStyleTestCase extends BasicTestCase {
     	
     }
     
-    protected TestCaseResult singleMatchScore (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+    protected TestCaseResult singleMatchScore (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
     	
         String aNotes = failMessageSpecifier(aFailedLines); 
         return fail(aNotes, autoGrade);    
     	
     }
     
-    protected TestCaseResult computeResult (SakaiProject aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
+    protected TestCaseResult computeResult (Project aProject, String[] aCheckStyleLines, List<String> aFailedLines, boolean autoGrade) {
     	return numMatchesResult(aProject, aCheckStyleLines, aFailedLines, autoGrade);
     	
     }
     protected boolean isPassed(int aNumMatchedInstances) {
     	return aNumMatchedInstances == 0 && failOnMatch() || aNumMatchedInstances == 1 && !failOnMatch();
     }
-    protected  TestCaseResult test (SakaiProject aProject, String[] aCheckStyleLines, List<String> aMatchedLines, boolean autoGrade) {
+    protected  TestCaseResult test (Project aProject, String[] aCheckStyleLines, List<String> aMatchedLines, boolean autoGrade) {
 //    	int aNumFailedInstances = aFailedLines.size();
 //        int aTotalClassCount = aProject.getClassesManager().getClassDescriptions().size();
 //        String aNotes = failMessageSpecifier() + " in " + aNumFailedInstances + " out of " + aTotalClassCount + " classes ";
@@ -192,8 +190,8 @@ public abstract class CheckStyleTestCase extends BasicTestCase {
     
 
 //    @Override
-    public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
-        if (project.getClassesManager().isEmpty())
+    public TestCaseResult test(Project aProject, boolean autoGrade) throws NotAutomatableException, NotGradableException {
+        if (aProject.getClassesManager().isEmpty())
             throw new NotGradableException();
         String aTypeTag = typeTag();
 //        if (aTypeTag != null) {
@@ -206,9 +204,9 @@ public abstract class CheckStyleTestCase extends BasicTestCase {
 //	     }
 //	     typeName = aClass.getSimpleName();
 //        }
-        SakaiProject aProject = ((ProjectWrapper) project).getProject();
+//        SakaiProject aSakaiProject = ((ProjectWrapper) aProject).getProject();
         String aCheckStyleText = aProject.getCheckstyleText();
-        String aCheckStyleFileName = aProject.getCheckStyleFileName(); // can read lines from this, maybe more efficient
+//        String aCheckStyleFileName = aProject.getCheckStyleFileName(); // can read lines from this, maybe more efficient
         String[] aCheckStyleLines = aCheckStyleText.split(System.getProperty("line.separator"));
         return test(aProject, aCheckStyleLines, autoGrade);
         

@@ -1,9 +1,9 @@
 package gradingTools.sharedTestCase.checkstyle;
 
+import java.util.List;
+
 import grader.basics.junit.TestCaseResult;
 import grader.sakai.project.SakaiProject;
-
-import java.util.List;
 
 public abstract class CheckStyleCountingWarningsTestCase extends CheckStyleTestCase {
 	public static final double DEFAULT_PENALTY_PER_MISTAKE = 0.2;
