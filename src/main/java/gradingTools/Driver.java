@@ -902,8 +902,9 @@ public class Driver {
 			}
 		}
 		// this seems to take the place of UserPropertyWriter
-		course = Character.toUpperCase(course.charAt(0))
-				+ course.substring(1).toLowerCase();
+//		course = Character.toUpperCase(course.charAt(0))
+//				+ course.substring(1).toLowerCase();
+		
 		graderSettingsManager.setModule(course);
 		graderSettingsManager.setStartingOnyen(course, start);
 		GraderSettings.get().set("start", start);

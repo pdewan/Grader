@@ -97,7 +97,16 @@ public class UserPropertyWriter {
 
     private void setupDefault(String defaultProperties) {
         try {
-            PropertiesConfiguration configuration = new PropertiesConfiguration(defaultProperties);
+            PropertiesConfiguration configuration = null;
+            File aDefaultPropertiesFile = new File(defaultProperties);
+            if (aDefaultPropertiesFile.exists()) {
+            		
+            	configuration =	new PropertiesConfiguration(defaultProperties);
+            } else {
+            	configuration = new PropertiesConfiguration();
+            }
+
+//            PropertiesConfiguration configuration = new PropertiesConfiguration(defaultProperties);
             Iterator<String> keys = configuration.getKeys();
             while(keys.hasNext()) {
                 String key = keys.next();
@@ -137,7 +146,9 @@ public class UserPropertyWriter {
         try {
             bw = new BufferedWriter(new FileWriter(userPropertiesFile));
             for (Map.Entry<String, String[]> entry : properties.entrySet()) {
-                bw.write(entry.getKey().replace(" ", "\\ ") + " = " + buildStrFromArr(entry.getValue()).replace(" ", "\\ "));
+            	String aLine = entry.getKey().replace(" ", "\\ ") + " = " + buildStrFromArr(entry.getValue()).replace(" ", "\\ ");
+            	bw.write(aLine);
+//                bw.write(entry.getKey().replace(" ", "\\ ") + " = " + buildStrFromArr(entry.getValue()).replace(" ", "\\ "));
                 bw.newLine();
             }
             bw.flush();

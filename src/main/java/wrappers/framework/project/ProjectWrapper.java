@@ -24,7 +24,11 @@ import grader.project.flexible.FlexibleProject;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
+import grader.settings.GraderSettingsManager;
+import grader.settings.GraderSettingsManagerSelector;
 import util.trace.Tracer;
+import wrappers.grader.sakai.project.ProjectDatabaseFactory;
+import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 
 /**
  * This transforms a "grader" project into a "framework" project.
@@ -201,10 +205,10 @@ public class ProjectWrapper extends StandardProject {
     public BasicTextManager getTextManager() {
     	return project.getClassesTextManager();
     }
-    public String getAssignmentDataFolderName() {
-		return ASakaiProjectDatabase.getCurrentSakaiProjectDatabase().getAssignmentDataFolder().getMixedCaseAbsoluteName();
-		
-	}
+//    public String getAssignmentDataFolderName() {
+//		return ASakaiProjectDatabase.getCurrentSakaiProjectDatabase().getAssignmentDataFolder().getMixedCaseAbsoluteName();
+//		
+//	}
     static public void extractFolder(String zipFile) throws ZipException, IOException 
     {
         Tracer.info(ProjectWrapper.class, "Extracting folder from" + zipFile);
@@ -261,6 +265,61 @@ public class ProjectWrapper extends StandardProject {
             }
         }
     }
-  
+//    public File getCheckstyleOutFolder() {
+//		if (checkstyleOutFolder == null) {
+//			checkstyleOutFolder = new File(project.getOutputFolder());
+//			if (!checkstyleOutFolder.exists()) {
+//				try {
+//					System.err.println("Creating folder:" + checkstyleOutFolder);
+//					checkstyleOutFolder.createNewFile();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}			
+//		}
+//		return checkstyleOutFolder;
+//
+//	}
+//   
+////    @Override
+////    public String createFullCheckStyleOutputFileName() {
+////
+////		String aParentFolder = findCheckstyleOutputParentFolder();
+////		if (aParentFolder == null) {
+////			return null;
+////		}
+//////		String aLogFileName = aParentFolder + "/" + "CheckStyle_All.csv";
+//////		File aLogFile = new File(aLogFileName);
+//////		if (!aLogFile.exists()) {
+//////			return null;
+//////		}
+////////		return createLocalCheckStyleFileName();
+////
+////		return aParentFolder + "/" + createLocalCheckStyleOutputFileName();
+////	}
+//    @Override
+//    protected File getCheckStyleConfigurationDefaultFolder() {
+//    	GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector
+//				.getGraderSettingsManager();
+//		String aModule = graderSettingsManager.getModule();
+//		if (aModule == null) {
+//			System.err.println("NUll module! Internal error");
+//		}
+//		String aFileName = getAssignmentDataFolderName() + aModule + "/checkstyle/";
+//		File aReturnValue = new File(aFileName);
+//		if (!aReturnValue.exists()) {
+//			try {
+//				System.err.println("Creating:" + aReturnValue);
+//				aReturnValue.createNewFile();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		return new File("config" + "/checkstyle/" + aModule);
+////		String aProblem = graderSettingsManager.getNormalizedProblem(aModule);
+////		return new File( ProjectDatabaseWrapper.getCurrentSakaiProjectDatabase().getAssignmentDataFolder().getAbsoluteName());
+//	}
     
 }
