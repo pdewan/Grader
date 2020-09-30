@@ -280,6 +280,12 @@ public class AGraderSettingsManager implements GraderSettingsManager {
         dynamicConfiguration.setProperty(StaticConfigurationUtils.MODULE, newValue);
 
     }
+    
+    @Override
+    public void setNormalizedModule(String newValue) {
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.NORMALIZED_MODULE, newValue);
+
+    }
 
     @Override
     public String getDownloadPath(String aModule) {
@@ -294,7 +300,10 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public void setDownloadPath(String aModule, String aNewValue) {
-        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
+    	ExecutionSpecificationSelector.getExecutionSpecification().setGraderProblemDownloadPath(aNewValue);
+        dynamicConfiguration.setProperty(aModule.toLowerCase() + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
+
+//        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
 
     }
 
@@ -374,13 +383,27 @@ public class AGraderSettingsManager implements GraderSettingsManager {
         dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_NAME, aNewValue);
 
     }
+    
+    
+    @Override
+    public void setNormalizedProblem(String aModule, String aNewValue) {
+//		dynamicConfiguration.setProperty(aModule + "." + PROBLEM_NAME, aNewValue.replaceAll("\\s+", ""));		
+        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.NORMALIZED_PROBLEM_NAME, aNewValue);
+
+    }
 
     @Override
     public String getNormalizedProblem(String aModule) {
 //        return getProblem(aModule).replaceAll("\\s+", "");
-        return getProblem(aModule).replaceAll("[\\s|-]+", "");
+//        return getProblem(aModule).replaceAll("[\\s|-]+", "");
+    	return getNormalizedProblemStatic(getProblem(aModule));
 
     }
+    public static String getNormalizedProblemStatic(String aProblem) {
+//      return getProblem(aModule).replaceAll("\\s+", "");
+      return aProblem.replaceAll("[\\s|-]+", "");
+
+  }
 
     @Override
     public String replaceModuleProblemVars(String original) {

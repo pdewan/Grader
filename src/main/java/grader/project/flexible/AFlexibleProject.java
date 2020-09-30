@@ -344,13 +344,19 @@ public class AFlexibleProject implements FlexibleProject {
     }
 
     public void makeClassDescriptions() {
+    	
         if (isNoProjectFolder()) {
             return;
         }
+//        if (!LanguageDependencyManager.isJava()) {
+//    		return;
+//    	}
 
         try { // Added by Josh: Exceptions can occur when making class descriptions
-            classesManager.makeClassDescriptions(this);
+        	if (LanguageDependencyManager.isJava()) {
+        	classesManager.makeClassDescriptions(this);
             classViewManager = new AClassViewManager(classesManager);
+        	}
 //            classesTextManager = new AClassesTextManager(new File(rootCodeFolder.getSourceProjectFolderName()), classViewManager);
             classesTextManager = new AClassesTextManager(wrapper.getSourceFolder(), classViewManager);
 

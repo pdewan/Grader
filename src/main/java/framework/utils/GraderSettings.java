@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
+import grader.basics.config.ABasicConfigurationManager;
+
 /**
  * This is used to set, get, save, and load settings related to the grader.
  * This is a singleton, so you'll have to do the following {@code GraderSettings.get()} before invoking any method.
@@ -18,10 +20,10 @@ import org.apache.commons.io.FileUtils;
 public class GraderSettings {
 
     private Map<String, String> settings;
-
+    protected String aSettingsFileName;
     private GraderSettings() {
         settings = new HashMap<String, String>();
-        String aSettingsFileName = ".gradersettings";
+         aSettingsFileName = "./" + ABasicConfigurationManager.CONFIG_DIR + "/" + "gradersettings";
         try {
 //            List<String> lines = FileUtils.readLines(new File(".gradersettings"));
             List<String> lines = FileUtils.readLines(new File(aSettingsFileName));
@@ -75,7 +77,9 @@ public class GraderSettings {
      */
     public void save() {
         try {
-            FileWriter writer = new FileWriter(".gradersettings");
+//            FileWriter writer = new FileWriter(".gradersettings");
+            FileWriter writer = new FileWriter(aSettingsFileName);
+
             String data = "";
             for (String key : settings.keySet())
                 data += key + "=" + settings.get(key) + "\n";

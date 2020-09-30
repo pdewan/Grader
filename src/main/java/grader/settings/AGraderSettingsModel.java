@@ -82,8 +82,10 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     String diff;
     String testProjectSrc;
     String currentModule;
+    String currentNormalizedModule;
     List<String> currentProblems;
     String currentProblem;
+    String currentNormalizedProblem;
     String currentModulePrefix;
 //	PropertiesConfiguration configuration, dynamicConfiguration;
 //	PropertiesConfiguration dynamicConfiguration;
@@ -183,10 +185,17 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     }
     // never claled other than from setCurrentModule
     void basicSetCurrentModule(String newValue) {
-    	Tracer.info(this, "Setting Current module to:" + newValue);
-        ModuleUserChange.newCase(currentModule, this, this);
+//    	Tracer.info(this, "Setting Current module to:" + newValue);
+//        ModuleUserChange.newCase(currentModule, this, this);
+//        currentModule = newValue;
+//        currentModule = newValue.toLowerCase();
         currentModule = newValue;
-        BasicStaticConfigurationUtils.setModule(currentModule);
+        currentNormalizedModule = newValue.toLowerCase();
+
+        Tracer.info(this, "Set Current module to:" + currentModule);
+        ModuleUserChange.newCase(currentModule, this, this);
+
+        BasicStaticConfigurationUtils.setModule(currentNormalizedModule);
 //        refreshAll();
 //		 ModuleUserChange.newCase(currentModule, this, this);
 
@@ -307,7 +316,11 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 
         }
         graderSettingsManager.setModule(currentModule);
+        graderSettingsManager.setNormalizedModule(currentNormalizedModule);
         graderSettingsManager.setProblem(currentModule, currentProblem);
+        graderSettingsManager.setNormalizedProblem(currentNormalizedModule, currentNormalizedProblem);
+
+        
 
 //        boolean isPrivacy = StaticConfigurationUtils.getPrivacy(
 //                ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration(),
@@ -564,23 +577,29 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrcFolder);
 
         GraderSettings.get().save();
+        String aPrimaryModule = currentNormalizedModule;
+        String aPrimaryProblem = currentNormalizedProblem;
         graderSettingsManager.setEditor(editor);
         graderSettingsManager.setModule(currentModule);
-        graderSettingsManager.setDownloadPath(currentModule, downloadPath);
-        graderSettingsManager.setStartingOnyen(currentModule, startingOnyen);
-        graderSettingsManager.setEndingOnyen(currentModule, endingOnyen);
+        graderSettingsManager.setNormalizedModule(currentNormalizedModule);
+
+        graderSettingsManager.setDownloadPath(aPrimaryModule, downloadPath);
+        graderSettingsManager.setStartingOnyen(aPrimaryModule, startingOnyen);
+        graderSettingsManager.setEndingOnyen(aPrimaryModule, endingOnyen);
         graderSettingsManager.setProblem(currentModule, currentProblem);
+        graderSettingsManager.setNormalizedProblem(currentNormalizedModule, currentNormalizedProblem);
+
         graderSettingsManager.setDiff(diff);
 
-        graderSettingsManager.setNavigationKind(currentModule, navigationSetter.getNavigationKind());
-        graderSettingsManager.setAnimateGrades(currentModule, navigationSetter.getAutomaticNavigationSetter().getAnimateGrades());
+        graderSettingsManager.setNavigationKind(aPrimaryModule, navigationSetter.getNavigationKind());
+        graderSettingsManager.setAnimateGrades(aPrimaryModule, navigationSetter.getAutomaticNavigationSetter().getAnimateGrades());
 
-        graderSettingsManager.setAnimationPauseTime(currentModule, navigationSetter.getAutomaticNavigationSetter().getAnimationPauseTime());
+        graderSettingsManager.setAnimationPauseTime(aPrimaryModule, navigationSetter.getAutomaticNavigationSetter().getAnimationPauseTime());
 
         String navigationFilter = navigationSetter.getNavigationFilterSetter().getNavigationFilterType().getValue().toString();
-        graderSettingsManager.setNavigationFilter(currentModule,
+        graderSettingsManager.setNavigationFilter(aPrimaryModule,
                 navigationFilter);
-        graderSettingsManager.setNavigationFilterOption(currentModule, navigationFilter, navigationSetter.getNavigationFilterSetter().getParameter());
+        graderSettingsManager.setNavigationFilterOption(aPrimaryModule, navigationFilter, navigationSetter.getNavigationFilterSetter().getParameter());
 
         graderSettingsManager.save();
 
@@ -729,7 +748,8 @@ public class AGraderSettingsModel implements GraderSettingsModel {
         ProblemUserChange.newCase(currentProblem, this, this);
     	Tracer.info(this, "Setting current problem to:" + aProblem);
         currentProblem = aProblem;
-        BasicStaticConfigurationUtils.setProblem(aProblem);
+        currentNormalizedProblem = AGraderSettingsManager.getNormalizedProblemStatic(aProblem);
+        BasicStaticConfigurationUtils.setProblem(currentNormalizedProblem);
     }
 
     void setCurrentProblem(String aProblem) {

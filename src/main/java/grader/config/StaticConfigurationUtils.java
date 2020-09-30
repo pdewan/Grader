@@ -76,8 +76,13 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static final String TEST_PROJECT_SRC = "testProjectSrc";
 
 	public static final String MODULE = "currentModule";
+	public static final String NORMALIZED_MODULE = "currentNormalizedModule";
+
 	public static final String PROBLEM_PATH = "path";
 	public static final String PROBLEM_NAME = "problem";
+	public static final String NORMALIZED_PROBLEM_NAME = "normalizedProblem";
+
+	
 	public static final String START_ONYEN = "start";
 	public static final String END_ONYEN = "end";
 	public static final String WORD_PATH = "Word.path";

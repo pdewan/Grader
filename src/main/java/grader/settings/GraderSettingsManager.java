@@ -63,6 +63,8 @@ public interface GraderSettingsManager {
 	void init();
 	String getTestProjectSrc();
 	void setTestProjectSrc(String newValue);
+	void setNormalizedProblem(String aModule, String aNewValue);
+	void setNormalizedModule(String newValue);
 	
 
 }
