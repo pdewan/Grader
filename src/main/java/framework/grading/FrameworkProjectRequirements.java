@@ -22,6 +22,7 @@ import grader.basics.project.BasicProjectIntrospection;
 import grader.basics.project.CurrentProjectHolder;
 import grader.basics.project.Project;
 import grader.language.LanguageDependencyManager;
+import grader.permissions.Permissible;
 import grader.sakai.project.SakaiProject;
 import grader.settings.GraderSettingsModelSelector;
 
@@ -294,10 +295,12 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         
         return percentage;
     }
-
+    static Object[] emptyArray = {};
     @Override
     public Object[] getPermissions() {
-        return LanguageDependencyManager.getDefaultPermissible().getPermissions();
+    	Permissible aPermissible = LanguageDependencyManager.getDefaultPermissible();
+    	return aPermissible == null?emptyArray:aPermissible.getPermissions();
+//        return LanguageDependencyManager.getDefaultPermissible().getPermissions();
     }
     @Override
     public Object getUserObject (Object aKey) {
