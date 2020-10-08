@@ -6,7 +6,7 @@ import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 import gradingTools.sharedTestCase.CodeInspectorTestCase;
 
-import com.github.antlrjavaparser.api.expr.VariableDeclarationExpr;
+//import com.github.antlrjavaparser.api.expr.VariableDeclarationExpr;
 
 public class VariableTest extends CodeInspectorTestCase{
 	boolean hasList=false;
@@ -37,16 +37,16 @@ public class VariableTest extends CodeInspectorTestCase{
 		return super.test(project, autoGrade);
 	}
 	
-	@Override
-	protected void inspectVariableDeclarationExpr(VariableDeclarationExpr expr) {
-		// Code to check if it's there
-		String line=expr.getType().toString().toLowerCase();
-		if(line.contains("ingredientlist")&&line.contains("[]")&&line.contains("int"))hasList=true;
-		if(line.contains("ingredientlist")&&line.contains("[]")&&line.contains("int")&&line.contains("private"))listVis=true;
-		if(line.contains("totalprice")&&line.contains("double"))hasPrice=true;
-		if(line.contains("totalprice")&&line.contains("double")&&line.contains("private"))priceVis=true;
-		super.inspectVariableDeclarationExpr(expr);
-	}
+//	@Override
+//	protected void inspectVariableDeclarationExpr(VariableDeclarationExpr expr) {
+//		// Code to check if it's there
+//		String line=expr.getType().toString().toLowerCase();
+//		if(line.contains("ingredientlist")&&line.contains("[]")&&line.contains("int"))hasList=true;
+//		if(line.contains("ingredientlist")&&line.contains("[]")&&line.contains("int")&&line.contains("private"))listVis=true;
+//		if(line.contains("totalprice")&&line.contains("double"))hasPrice=true;
+//		if(line.contains("totalprice")&&line.contains("double")&&line.contains("private"))priceVis=true;
+//		super.inspectVariableDeclarationExpr(expr);
+//	}
 
 	@Override
 	public TestCaseResult codeInspectionResult() {

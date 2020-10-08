@@ -68,13 +68,17 @@ public class ARootCodeFolder implements RootCodeFolder {
 
     String findParentOfSomeSourceFile(RootFolderProxy aRoot) { // will  not work with packages
         List<FileProxy> entries = aRoot.getFileEntries();
+        String aSorceFileSuffix = LanguageDependencyManager.getSourceFileSuffix();
         for (FileProxy aFile : entries) {
 //			if (aFile.getAbsoluteName().endsWith(sourceFileSuffix)) {
-            if (aFile.getAbsoluteName().endsWith(LanguageDependencyManager.getSourceFileSuffix())) {
+            if (aFile.getAbsoluteName().endsWith(aSorceFileSuffix)) {
+
+//            if (aFile.getAbsoluteName().endsWith(LanguageDependencyManager.getSourceFileSuffix())) {
 
                 return aFile.getParentFolderName();
             }
         }
+        System.err.println ("No src folder and no file with source file suffix:" + aSorceFileSuffix);
         return null;
 
     }
@@ -112,7 +116,9 @@ public class ARootCodeFolder implements RootCodeFolder {
 //        }
 //		if (sourceFolderName == null || binaryFolderName == null) {
         if (sourceFolderName == null && binaryFolderName == null) {
-            System.out.println(SourceFolderNotFound.newCase(root.getLocalName(), this).getMessage());
+            SourceFolderNotFound.newCase(root.getLocalName(), this).getMessage();
+
+//            System.out.println(SourceFolderNotFound.newCase(root.getLocalName(), this).getMessage());
             sourceFolderName = findParentOfSomeSourceFile(aRoot);
             if (sourceFolderName != null) {
                 SourceFolderAssumed.newCase(sourceFolderName, this);

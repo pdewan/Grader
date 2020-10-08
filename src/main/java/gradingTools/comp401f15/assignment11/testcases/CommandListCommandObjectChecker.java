@@ -14,8 +14,8 @@ import java.util.Vector;
 
 import tools.CompilationNavigation;
 
-import com.github.antlrjavaparser.api.body.ClassOrInterfaceDeclaration;
-import com.github.antlrjavaparser.api.body.MethodDeclaration;
+//import com.github.antlrjavaparser.api.body.ClassOrInterfaceDeclaration;
+//import com.github.antlrjavaparser.api.body.MethodDeclaration;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,17 +51,17 @@ public class CommandListCommandObjectChecker extends AnAbstractFeatureChecker {
             result.getLog().add("There is no List or Vector containing runnables.");
 
         // Check that it runs all of the commands
-        try {
-            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(description.getCompilationUnit());
-            MethodDeclaration method = CompilationNavigation.getMethod(classDef, "run");
-            String code = method.getBody().toString();
-            if (code.contains(".run();"))
-                passedTests++;
-            else
-                result.getLog().add("Command list should run other commands.");
-        } catch (IOException e) {
-            return null;
-        }
+//        try {
+//            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(description.getCompilationUnit());
+//            MethodDeclaration method = CompilationNavigation.getMethod(classDef, "run");
+//            String code = method.getBody().toString();
+//            if (code.contains(".run();"))
+//                passedTests++;
+//            else
+//                result.getLog().add("Command list should run other commands.");
+//        } catch (IOException e) {
+//            return null;
+//        }
 
         result.setScore((passedTests / 3.0) * feature.getMax());
         return result;  //To change body of implemented methods use File | Settings | File Templates.

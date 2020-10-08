@@ -61,6 +61,7 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 		throws IOException,
 		ClassNotFoundException {
 		super(aFatProject, aProject, buildFolder, sourceFolder, aSourceFilePattern);
+		Tracer.info(this, "ProjectClassesManager created");
 		
 	}
 
@@ -79,6 +80,8 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 	}
 
 	protected Class loadClass(String className) throws ClassNotFoundException {
+    	Tracer.info(this, "Loading Class:" + className);
+
 		if (BasicGradingEnvironment.get().isLoadClasses() &&
 			proxyClassLoader != null) // if we are precompiling or cleaning up,
 										 // this will be null

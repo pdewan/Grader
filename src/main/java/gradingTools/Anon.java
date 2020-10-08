@@ -189,7 +189,11 @@ public class Anon {
 //			}
 			if (!entry.isDirectory()) {
 				// if the entry is a file, extracts it
+				try {
 				extractFile(zipIn, filePath);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else {
 				File dir = new File(filePath);
 				dir.mkdirs();

@@ -240,7 +240,8 @@ public class AlphabeticNavigationListManager implements NavigationListManager {
 	 @Override
    	public List<String> getOnyenNavigationList(
 			SakaiProjectDatabase aSakaiProjectDatabase, boolean selectedOnly) {
-    	File aDirectory = new File(GraderSettings.get().get("path"));
+//    	Boolean isHeadless = Driver.isHeadless();
+		File aDirectory = new File(GraderSettings.get().get("path"));
         String aStartOnyen = GraderSettings.get().get("start");
     	String anEndOnyen = GraderSettings.get().get("end");
     	String aGoToOnyen = GraderSettingsModelSelector.getGraderSettingsModel().getOnyens().getOnyenList();

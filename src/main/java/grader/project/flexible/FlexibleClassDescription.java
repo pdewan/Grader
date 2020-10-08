@@ -6,7 +6,7 @@ import util.javac.SourceClass;
 import bus.uigen.reflect.ClassProxy;
 import grader.basics.file.FileProxy;
 
-import com.github.antlrjavaparser.api.CompilationUnit;
+//import com.github.antlrjavaparser.api.CompilationUnit;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 // gets source and object file for a class
@@ -28,7 +28,7 @@ public interface FlexibleClassDescription {
 	SourceClass getJavacSourceClass();
     Class<?> getJavaClass();
 
-    CompilationUnit getCompilationUnit() throws IOException;
+//    CompilationUnit getCompilationUnit() throws IOException;
     public FileProxy getSourceFile() ;
 	public void setSourceFile(FileProxy sourceFile) ;
 	FlexibleProject getProject();

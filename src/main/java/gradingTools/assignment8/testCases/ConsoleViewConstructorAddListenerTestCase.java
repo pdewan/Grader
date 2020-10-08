@@ -7,11 +7,11 @@ import scala.Option;
 import tools.CompilationNavigation;
 import tools.classFinder.ManualClassFinder;
 import tools.classFinder.RootTagFinder;
-
-import com.github.antlrjavaparser.JavaParser;
-import com.github.antlrjavaparser.api.CompilationUnit;
-import com.github.antlrjavaparser.api.body.ClassOrInterfaceDeclaration;
-import com.github.antlrjavaparser.api.body.ConstructorDeclaration;
+//
+//import com.github.antlrjavaparser.JavaParser;
+//import com.github.antlrjavaparser.api.CompilationUnit;
+//import com.github.antlrjavaparser.api.body.ClassOrInterfaceDeclaration;
+//import com.github.antlrjavaparser.api.body.ConstructorDeclaration;
 
 import framework.grading.testing.BasicTestCase;
 import grader.basics.junit.NotAutomatableException;
@@ -43,23 +43,23 @@ public class ConsoleViewConstructorAddListenerTestCase extends BasicTestCase {
             classDescription = ManualClassFinder.find(project, "ConsoleSceneView");
         }
 
-        try {
+//        try {
             Class<?> _class = classDescription.get().getJavaClass();
-            CompilationUnit compilation = JavaParser.parse(classDescription.get().getSource());
-            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(compilation);
-
-            // Find the constructors and look for .addPropertyChangeListener(this) in any of them
-            List<ConstructorDeclaration> constructors = CompilationNavigation.getConstructors(classDef);
-            for (ConstructorDeclaration constructor : constructors) {
-                String code = constructor.toString();
-                if (code.contains(".addPropertyChangeListener(this)"))
-                    return pass();
-            }
+//            CompilationUnit compilation = JavaParser.parse(classDescription.get().getSource());
+//            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(compilation);
+//
+//            // Find the constructors and look for .addPropertyChangeListener(this) in any of them
+//            List<ConstructorDeclaration> constructors = CompilationNavigation.getConstructors(classDef);
+//            for (ConstructorDeclaration constructor : constructors) {
+//                String code = constructor.toString();
+//                if (code.contains(".addPropertyChangeListener(this)"))
+//                    return pass();
+//            }
 
             return fail("Console view should add itself as a listener in the constructor.");
-        } catch (IOException e) {
-            throw new NotGradableException();
-        }
+//        } catch (IOException e) {
+//            throw new NotGradableException();
+//        }
     }
 }
 

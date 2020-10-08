@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import com.github.antlrjavaparser.api.CompilationUnit;
+//import com.github.antlrjavaparser.api.CompilationUnit;
 
 import framework.project.ParsableClassDescription;
 
@@ -54,10 +54,10 @@ public class ManualClassDescription implements ParsableClassDescription {
         return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
-    public CompilationUnit parse() throws IOException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+//    @Override
+//    public CompilationUnit parse() throws IOException {
+//        return null;  //To change body of implemented methods use File | Settings | File Templates.
+//    }
 
     @Override
     public List<Method> getTaggedMethods(String tag) {

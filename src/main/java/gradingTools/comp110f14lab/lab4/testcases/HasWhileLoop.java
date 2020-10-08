@@ -3,7 +3,7 @@ package gradingTools.comp110f14lab.lab4.testcases;
 import grader.basics.junit.TestCaseResult;
 import gradingTools.sharedTestCase.CodeInspectorTestCase;
 
-import com.github.antlrjavaparser.api.stmt.WhileStmt;
+//import com.github.antlrjavaparser.api.stmt.WhileStmt;
 
 public class HasWhileLoop extends CodeInspectorTestCase {
 	
@@ -18,11 +18,11 @@ public class HasWhileLoop extends CodeInspectorTestCase {
 		hasWhileLoop = false;
 	}
 	
-	@Override
-	protected void inspectWhileStatement(WhileStmt statement) {
-		hasWhileLoop = true;
-		super.inspectWhileStatement(statement);
-	}
+//	@Override
+//	protected void inspectWhileStatement(WhileStmt statement) {
+//		hasWhileLoop = true;
+//		super.inspectWhileStatement(statement);
+//	}
 
 	@Override
 	public TestCaseResult codeInspectionResult() {

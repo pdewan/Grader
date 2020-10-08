@@ -183,6 +183,11 @@ public class AGraderSettingsModel implements GraderSettingsModel {
     public String getCurrentModule() {
         return currentModule;
     }
+    
+    public static String toNormalizedModule(String aModule) {
+    	return aModule.toLowerCase();
+    }
+    
     // never claled other than from setCurrentModule
     void basicSetCurrentModule(String newValue) {
 //    	Tracer.info(this, "Setting Current module to:" + newValue);
@@ -190,7 +195,7 @@ public class AGraderSettingsModel implements GraderSettingsModel {
 //        currentModule = newValue;
 //        currentModule = newValue.toLowerCase();
         currentModule = newValue;
-        currentNormalizedModule = newValue.toLowerCase();
+        currentNormalizedModule = toNormalizedModule(newValue);
 
         Tracer.info(this, "Set Current module to:" + currentModule);
         ModuleUserChange.newCase(currentModule, this, this);

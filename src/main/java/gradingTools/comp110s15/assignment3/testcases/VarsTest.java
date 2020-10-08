@@ -6,7 +6,7 @@ import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 import gradingTools.sharedTestCase.CodeInspectorTestCase;
 
-import com.github.antlrjavaparser.api.expr.VariableDeclarationExpr;
+//import com.github.antlrjavaparser.api.expr.VariableDeclarationExpr;
 
 public class VarsTest extends CodeInspectorTestCase {
 
@@ -29,13 +29,13 @@ public class VarsTest extends CodeInspectorTestCase {
 		return super.test(project, autoGrade);
 	}
 	
-	@Override
-	protected void inspectVariableDeclarationExpr(VariableDeclarationExpr expr) {
-		// Code to check if it is there
-		String line=expr.getType().toString().toLowerCase();
-		if(line.contains("string"))hasVar=true;
-		super.inspectVariableDeclarationExpr(expr);
-	}
+//	@Override
+//	protected void inspectVariableDeclarationExpr(VariableDeclarationExpr expr) {
+//		// Code to check if it is there
+//		String line=expr.getType().toString().toLowerCase();
+//		if(line.contains("string"))hasVar=true;
+//		super.inspectVariableDeclarationExpr(expr);
+//	}
 
 	@Override
 	public TestCaseResult codeInspectionResult() {

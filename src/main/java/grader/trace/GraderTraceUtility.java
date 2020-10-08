@@ -6,7 +6,9 @@ import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.SakaiStudentFolder;
 import framework.project.ProjectClassesManager;
 import grader.assignment.timestamp.SakaiTimestampComputer;
+import grader.basics.execution.ARunnerInputStreamProcessor;
 import grader.basics.file.AnAbstractRootFolderProxy;
+import grader.basics.project.BasicProjectClassesManager;
 import grader.compilation.AFilesToCompileFinder;
 import grader.config.AnExecutionSpecification;
 import grader.config.StaticConfigurationUtils;
@@ -52,6 +54,7 @@ public class GraderTraceUtility extends GraderBasicsTraceUtility {
 
 
 			Tracer.setKeywordPrintStatus(ProcessRunner.class, true);
+//			Tracer.setKeywordPrintStatus(ARunnerInputStreamProcessor.class, true);
 			Tracer.setKeywordPrintStatus(AnExecutionSpecification.class, true);
 			Tracer.setKeywordPrintStatus(Driver.class, true);
 			Tracer.setKeywordPrintStatus(AnOverviewProjectStepper.class, true);
@@ -64,6 +67,8 @@ public class GraderTraceUtility extends GraderBasicsTraceUtility {
 			Tracer.setKeywordPrintStatus(SakaiTimestampComputer.class, true);
 			Tracer.setKeywordPrintStatus(ASakaiStudentCodingAssignment.class, true);
 		     Tracer.setKeywordPrintStatus(CsvLogger.class, true);
+				Tracer.setKeywordPrintStatus(ProjectClassesManager.class, true);
+
 
 
 

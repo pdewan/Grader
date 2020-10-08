@@ -6,7 +6,7 @@ import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 import gradingTools.sharedTestCase.CodeInspectorTestCase;
 
-import com.github.antlrjavaparser.api.expr.VariableDeclarationExpr;
+//import com.github.antlrjavaparser.api.expr.VariableDeclarationExpr;
 
 public class HasArray extends CodeInspectorTestCase {
 
@@ -29,12 +29,12 @@ public class HasArray extends CodeInspectorTestCase {
 		return super.test(project, autoGrade);
 	}
 	
-	@Override
-	protected void inspectVariableDeclarationExpr(VariableDeclarationExpr expr) {
-		// Code to check if it is an array
-		if(expr.getType().toString().toLowerCase().contains("int[]")||expr.getType().toString().toLowerCase().contains("myarray[]")||expr.getType().toString().toLowerCase().contains("double[]"))hasArray=true;
-		super.inspectVariableDeclarationExpr(expr);
-	}
+//	@Override
+//	protected void inspectVariableDeclarationExpr(VariableDeclarationExpr expr) {
+//		// Code to check if it is an array
+//		if(expr.getType().toString().toLowerCase().contains("int[]")||expr.getType().toString().toLowerCase().contains("myarray[]")||expr.getType().toString().toLowerCase().contains("double[]"))hasArray=true;
+//		super.inspectVariableDeclarationExpr(expr);
+//	}
 
 	@Override
 	public TestCaseResult codeInspectionResult() {

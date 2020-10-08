@@ -8,6 +8,7 @@ import grader.config.StaticConfigurationUtils;
 import grader.modules.ModuleProblemManager;
 import grader.modules.ModuleProblemManagerSelector;
 import grader.navigation.NavigationKind;
+import net.sf.saxon.expr.PJConverter.ToOneOrMore;
 
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,8 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     public void setStartingOnyen(String aModule,
             String aStartOnyen) {
         dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.START_ONYEN, aStartOnyen);
+        dynamicConfiguration.setProperty(AGraderSettingsModel.toNormalizedModule(aModule) + "." + StaticConfigurationUtils.START_ONYEN, aStartOnyen);
+
         dynamicConfiguration.setProperty(StaticConfigurationUtils.START_ONYEN, aStartOnyen);
 
     }
@@ -277,7 +280,10 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public void setModule(String newValue) {
+    	String aNormalizedModule = AGraderSettingsModel.toNormalizedModule(newValue);
         dynamicConfiguration.setProperty(StaticConfigurationUtils.MODULE, newValue);
+        dynamicConfiguration.setProperty(StaticConfigurationUtils.NORMALIZED_MODULE, newValue);
+
 
     }
     
@@ -301,7 +307,8 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     @Override
     public void setDownloadPath(String aModule, String aNewValue) {
     	ExecutionSpecificationSelector.getExecutionSpecification().setGraderProblemDownloadPath(aNewValue);
-        dynamicConfiguration.setProperty(aModule.toLowerCase() + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
+        dynamicConfiguration.setProperty(AGraderSettingsModel.toNormalizedModule(aModule) + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
+        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
 
 //        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_PATH, aNewValue);
 
@@ -379,8 +386,12 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     @Override
     public void setProblem(String aModule, String aNewValue) {
+    	String aNormalizedProblem = getNormalizedProblemStatic(aNewValue);
 //		dynamicConfiguration.setProperty(aModule + "." + PROBLEM_NAME, aNewValue.replaceAll("\\s+", ""));		
         dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_NAME, aNewValue);
+        dynamicConfiguration.setProperty(AGraderSettingsModel.toNormalizedModule(aModule) + "." + StaticConfigurationUtils.PROBLEM_NAME, aNewValue);
+        dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.PROBLEM_NAME, aNormalizedProblem);
+        dynamicConfiguration.setProperty(AGraderSettingsModel.toNormalizedModule(aModule) + "." + StaticConfigurationUtils.PROBLEM_NAME, aNormalizedProblem);
 
     }
     

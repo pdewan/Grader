@@ -38,8 +38,8 @@ import bus.uigen.reflect.local.AClassProxy;
 // gets the source from AClassesManager
 // converts class name to class object
 
-import com.github.antlrjavaparser.JavaParser;
-import com.github.antlrjavaparser.api.CompilationUnit;
+//import com.github.antlrjavaparser.JavaParser;
+//import com.github.antlrjavaparser.api.CompilationUnit;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
@@ -61,7 +61,7 @@ public class AClassDescription implements FlexibleClassDescription {
 //	
 //	List<String> classNamesCompiled = new ArrayList();
 
-    private CompilationUnit compilationUnit;
+//    private CompilationUnit compilationUnit;
 
     public AClassDescription(String aClassName, StringBuffer aText, long aSourceTime, ProxyClassLoader aClassLoader, FlexibleProject aProject, FileProxy aFileProxy) {
 //		text = Common.toText(aClassName);
@@ -319,14 +319,14 @@ public class AClassDescription implements FlexibleClassDescription {
 //	public String getComment() {
 //		return getQdoxClass().getComment();
 //	}
-    @Override
-    public CompilationUnit getCompilationUnit() throws IOException {
-        if (compilationUnit == null) {
-            compilationUnit = JavaParser.parse(sourceFile.getInputStream());
-            CompilationUnitCreated.newCase(sourceFile.getAbsoluteName(), this);
-        }
-        return compilationUnit;
-    }
+//    @Override
+//    public CompilationUnit getCompilationUnit() throws IOException {
+//        if (compilationUnit == null) {
+//            compilationUnit = JavaParser.parse(sourceFile.getInputStream());
+//            CompilationUnitCreated.newCase(sourceFile.getAbsoluteName(), this);
+//        }
+//        return compilationUnit;
+//    }
 
     public FileProxy getSourceFile() {
         return sourceFile;

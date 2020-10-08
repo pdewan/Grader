@@ -188,6 +188,7 @@ public class AnAutoVisitBehavior implements
             if (project.isNoProjectFolder()) {
                 return false;
             }
+            Tracer.info(this, "Creating project wrapper");
             wrappedProject = new ProjectWrapper(project, BasicGradingEnvironment
                     .get().getAssignmentName());
             ClassLoaderFactory.setCurrentClassLoader(

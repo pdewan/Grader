@@ -61,6 +61,8 @@ import grader.modules.ModuleProblemManager;
 import grader.modules.ModuleProblemManagerSelector;
 import grader.navigation.NavigationKind;
 import grader.sakai.project.ProjectStepper;
+import grader.settings.AGraderSettingsManager;
+import grader.settings.AGraderSettingsModel;
 import grader.settings.GraderSettingsManager;
 import grader.settings.GraderSettingsManagerSelector;
 import grader.settings.GraderSettingsModel;
@@ -175,7 +177,7 @@ public class Driver {
 		try {
 	
 
-		setTracing();
+//		setTracing();
 
 
 		ConfigurationManagerSelector.getConfigurationManager().init(args); // need
@@ -196,6 +198,8 @@ public class Driver {
 		// should not happen prematurely
 		// this should actually happen after settings model is initialized
 		GradingModeConfigurer.configureGradingMode();
+		setTracing();
+
 
 		BasicGradingEnvironment.set(new GradingEnvironment());
 		// moved to configurer
@@ -259,6 +263,8 @@ public class Driver {
 		
 		String settings = configuration.getString("grader.settings", "oe");
 		// String settingsTry = configuration.getString("Grader.Settings");
+//		if (settings.equalsIgnoreCase("oe")) {
+
 		if (settings.equalsIgnoreCase("oe")) {
 			// NavigationFilter gradingBasedFilterer = new
 			// AGradingStatusFilter();
@@ -271,7 +277,7 @@ public class Driver {
 						.getGraderSettingsModel();
 				// settingsModel.setPrivacyMode(StaticConfigurationUtils.getPrivacy(configuration,
 				// graderSettingsManager));
-
+				
 				settingsModel.init();
 			}
 
@@ -841,7 +847,7 @@ public class Driver {
 		ObjectEditor.setDenseMagnification(1.0);
 //		ExecutionSpecificationSelector.getExecutionSpecification().setGraderProblemDownloadPath("foo");
 //		ExecutionSpecificationSelector.getExecutionSpecification().setUseProjectConfiguration(true); // duplicating what is in the ASuite
-//		Tracer.showInfo(true);
+		Tracer.showInfo(true);
 		TraceableWarning.doNotWarn(UnknownPropertyNotification.class);
 
 		Tracer.setMessagePrefixKind(MessagePrefixKind.FULL_CLASS_NAME);
@@ -906,12 +912,25 @@ public class Driver {
 //				+ course.substring(1).toLowerCase();
 		
 		graderSettingsManager.setModule(course);
+		String aNormalizedCourse = AGraderSettingsModel.toNormalizedModule(course);
+//		graderSettingsManager.setNormalizedModule(aNormalizedCourse);
+
 		graderSettingsManager.setStartingOnyen(course, start);
+//		graderSettingsManager.setStartingOnyen(aNormalizedCourse, start);
+
 		GraderSettings.get().set("start", start);
 		graderSettingsManager.setEndingOnyen(course, end);
+//		graderSettingsManager.setEndingOnyen(aNormalizedCourse, end);
+
 		GraderSettings.get().set("end", end);
+//		String aNormalizedProblem = AGraderSettingsManager.getNormalizedProblemStatic(problem);
 		graderSettingsManager.setProblem(course, problem);
+//		graderSettingsManager.setProblem(aNormalizedCourse, problem);
+//		graderSettingsManager.setProblem(aNormalizedCourse, aNormalizedProblem);
+//		graderSettingsManager.setProblem(aNormalizedCourse, problem);
 		graderSettingsManager.setDownloadPath(course, path);
+//		graderSettingsManager.setDownloadPath(aNormalizedCourse, path);
+
 		GraderSettings.get().set("path", path);
 	}
 
