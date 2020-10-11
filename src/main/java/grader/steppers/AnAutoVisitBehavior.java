@@ -568,6 +568,7 @@ public class AnAutoVisitBehavior implements
     @Override
     public void autoGrade() {
 //		project.setHasBeenRun(true);
+    	Tracer.info(this, "Autograde started");
         projectStepper.setChanged(true);
         if (isNotRunnable()) {
             notRunnableProjectFeedback();
@@ -706,6 +707,7 @@ public class AnAutoVisitBehavior implements
         // projectDatabase.getProjectRequirements().checkDueDate(timestamp.get())
         // : 0;
         Tracer.info(this, "Time stamp defined:" + timestamp.get());
+        System.out.println("Calculating credit/penalty for submission at:" + timestamp.get());
         double aMultiplier = timestamp.isDefined()
                 ? projectDatabase.getProjectRequirements().checkDueDate(wrappedProject, timestamp.get())
                 : 0;

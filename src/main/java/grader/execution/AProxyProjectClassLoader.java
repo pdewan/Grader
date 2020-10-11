@@ -117,11 +117,12 @@ public class AProxyProjectClassLoader extends ClassLoader implements ProxyClassL
     	classesLoaded.clear();
     }
     public Class loadClass(String aClassName) throws ClassNotFoundException {
-    	try {
+//    	try {
         return super.loadClass(aClassName);
-    	} catch (Exception e) {
-    		return null;
-    	}
+//    	} catch (Exception e) {
+//    		e.printStackTrace();
+//    		return null;
+//    	}
     }
 
     public static void run(FlexibleProject aProject, String mainClassName) {

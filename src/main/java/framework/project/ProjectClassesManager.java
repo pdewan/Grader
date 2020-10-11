@@ -86,12 +86,16 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 			proxyClassLoader != null) // if we are precompiling or cleaning up,
 										 // this will be null
 		{
+			Tracer.info(this, "Using proxy class loader." + proxyClassLoader);
 			// c = classLoader.loadClass(className);
 			return proxyClassLoader.loadClass(className);
 		}
 		if (BasicGradingEnvironment.get().isLoadClasses() && proxyClassLoader == null) {
+			Tracer.info(this, "Using class loader " + classLoader);
+
 			return classLoader.loadClass(className);
 		}
+		Tracer.info (this, "isLoadClasses" + BasicGradingEnvironment.get().isLoadClasses());
 		return null;
 	}
 
@@ -152,6 +156,8 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 		// may have to unload class so am doing this reset
 		project.setNewClassLoader();
 		proxyClassLoader = project.getClassLoader();
+		Tracer.info(this, "Set class loader to:" + proxyClassLoader);
+
 		project.getClassLoader().setBinaryFileSystemFolderName(buildFolder.getAbsolutePath());
 	}
 
@@ -466,17 +472,22 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 		try {
 			System.out
 				.println(
-					"Class files are the incorrect version for the current Java version. Attempting to recompile files.");
+					"Class files are the incorrect version for the current Java version or could not load class files. Attempting to recompile files.");
 			// List<File> recompiledFileList = new ArrayList<>();
 			// recompiledFileList.add(file);
 			// if (project.hasBeenCompiled() )
 			if (hasBeenCompiled())
 				return;
+//			else {
+//				System.out
+//				.println(
+//					"Project has been compiled once already");
+//			}
 			// project.setHasBeenCompiled(true);
 			maybeSetHasBeenCompiled(true);
 			List<File> recompiledFileList = new ArrayList<>(sourceFiles);
 			// recompiledFileList.add(file);
-			System.out.println("Recompiling files:" + recompiledFileList);
+			System.out.println("Recompiling files:" + recompiledFileList + "from source folder " + " in buildfolder " + buildFolder);
 			RunningProject runningProject = LanguageDependencyManager
 				.getSourceFilesCompiler().compile(basicProject, sourceFolder,
 					buildFolder, basicProject.getObjectFolder(), recompiledFileList);
@@ -502,19 +513,26 @@ public class ProjectClassesManager extends BasicProjectClassesManager implements
 			Class c = null;
 			if (BasicGradingEnvironment.get().isLoadClasses()) {
 				// c = classLoader.loadClass(className);
+				Tracer.info(this, "Loading class:" + className);
 				c = proxyClassLoader.loadClass(className);
+			
+				
 
 			}
 
 			if (c != null) {
 				classDescriptions
 					.add(new BasicClassDescription(c, file));
+				System.out.println("loaded compiled class:" + className);
+			} else {
+				System.err.println("Cold not load compiled class:" + className);
+				
 			}
 		} catch (Exception ex) {
 			// project.setCanBeCompiled(false);
 			maybeSetCanBeCompiled(false);
 
-			System.out.println("Compilation failed: " + ex.toString());
+			System.err.println("Compilation failed: " + ex.toString());
 		} catch (Error e) {
 			Tracer.error("Recompilation had problems");
 			e.printStackTrace();

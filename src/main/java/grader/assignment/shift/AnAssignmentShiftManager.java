@@ -5,6 +5,7 @@ import java.io.File;
 import org.joda.time.DateTime;
 
 import framework.grading.ProjectRequirements;
+import grader.basics.config.BasicExecutionSpecificationSelector;
 import grader.basics.project.Project;
 import grader.basics.trace.CSVSerializable;
 import grader.sakai.project.SakaiProject;
@@ -68,10 +69,16 @@ public class AnAssignmentShiftManager {
 	    	try {
 	    		int anAssignmentNumber = Integer.parseInt(anAssignmentNumberString);
 	    		int aNewAssignmentNumber = anAssignmentNumber + aShift;
+	    		String aNewAssignmentNumberString = anAssignmentNumberString.replaceFirst(Integer.toString(anAssignmentNumber), Integer.toString(aNewAssignmentNumber));
 //	    		String aNewAssignmentClass = ASSIGNENT_ID + aNewAssignmentNumber;
 	    		aNewClassName = aClassName.replaceAll(
-	    				ASSIGNENT_ID + anAssignmentNumber,
-	    				ASSIGNENT_ID + aNewAssignmentNumber);
+//	    				ASSIGNENT_ID + anAssignmentNumber,
+//	    				ASSIGNENT_ID + aNewAssignmentNumber);
+	    		ASSIGNENT_ID + anAssignmentNumberString,
+				ASSIGNENT_ID + aNewAssignmentNumberString);
+	    		if (aNewClassName.equals(aClassName)) {
+	    			return anOriginal;
+	    		}
 	    		Class<?> aNewClass = Class.forName(aNewClassName);
 
 				return (ProjectRequirements) aNewClass.newInstance();
@@ -100,7 +107,10 @@ public class AnAssignmentShiftManager {
 		 
 		 while (true) {
 			 aPercentage = aRequirements.checkDueDate(aDateTime);
-			 if (aPercentage > 0) {
+			 if (!BasicExecutionSpecificationSelector.getBasicExecutionSpecification()
+						.getShiftAssignmentDates() ||
+					 
+					 aPercentage > 0 ) {
 				 break;
 			 }
 			 aShift++;

@@ -142,6 +142,7 @@ public abstract class Checkable implements Gradable {
                 if (isManual()) {
                 	testResult.setAutoGraded(false);
                 }
+                System.out.println("Saving result:" + testResult );
                 result.save(testResult, testCase.getPointWeight());
             	} catch (Exception e) {
             		e.printStackTrace();
