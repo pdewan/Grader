@@ -122,6 +122,7 @@ public class Anon {
 			}
 			else{
 				folderName = findFolderWithCSV(new File(folderName)).getParentFile().getPath();
+				folderName = replaceTrainingSpacesInFolderNames(folderName);
 				unzipAllZipFiles(new File(folderName));
 				Anon_ize_Course_Windows(folderName);
 			}
@@ -170,6 +171,12 @@ public class Anon {
 		}
 	}
 	
+	static String replaceTrainingSpacesInFolderNames(String aFileName) {
+		if (aFileName.endsWith(" ")) {
+			aFileName = aFileName.substring(0, aFileName.length() - 1);
+		}
+		return aFileName.replace(" \\", "\\").replace(" /", "/");
+	}
 	public static String unzip(String zipFilePath, String destDirectory) throws IOException {
 		File destDir = new File(destDirectory);
 		if (!destDir.exists()) {
@@ -182,15 +189,23 @@ public class Anon {
 		while (entry != null) {
 			if (folderName == null && entry.getName().indexOf("/") != -1) {
 				folderName = entry.getName().substring(0,entry.getName().indexOf("/"));
+				folderName = replaceTrainingSpacesInFolderNames(folderName);
 			}
+//			String filePath = destDirectory + File.separator + entry.getName().replace(" /", "\\");
+
 			String filePath = destDirectory + File.separator + entry.getName().replace("/", "\\");
 //			if (filePath.equals("E:\\Assignment 5\\Assignment 1\\Gartland, Alexander(alexjg96)\\Submission attachment(s)\\Assignment1.java\\.checkstyle")) {
 //				int i = 0;
 //			}
+//			filePath = filePath.replace("/", "\\");
+
 			if (!entry.isDirectory()) {
 				// if the entry is a file, extracts it
 				try {
-				extractFile(zipIn, filePath);
+//					extractFile(zipIn, 
+//							filePath);
+				extractFile(zipIn, 
+						replaceTrainingSpacesInFolderNames(filePath));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -206,7 +221,21 @@ public class Anon {
 	}
 
 	private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
-		new File(filePath).getParentFile().mkdirs();
+//		new File(filePath).getParentFile().mkdirs();
+		File aFile = new File(filePath).getParentFile();
+		boolean aSuccess = aFile.mkdirs();
+//		if (!aSuccess) {
+//			System.err.println("Could not create directrory of:" + aFile);
+//			return;
+//		
+//		}
+		boolean aCreateFile = aFile.createNewFile();
+//		if (!aCreateFile) {
+//			System.err.println("Could not create file:" + aFile);
+//			return;
+//
+//		}
+
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
 		byte[] bytesIn = new byte[4096];
 		int read = 0;
@@ -306,6 +335,8 @@ public class Anon {
 		logger.write("CLEARING GRADES.CSV\n");
 		//get csv file
 		File csv=new File(folderName+"/grades.csv");
+
+//		File csv=new File(replaceTrainingSpacesInFolderNames(folderName+"/grades.csv"));
 		//reader for it
 		BufferedReader r = new BufferedReader(new FileReader(csv));
 		//file to be the anoncsv
@@ -615,7 +646,7 @@ public class Anon {
 				findJavaFiles_Windows(file, topFolderName);
 			} else {
 				String fileName = file.getName();
-				if (fileName.endsWith(".java") || fileName.endsWith(".xml") || (fileName.endsWith(".csv") && !fileName.equals("grades.csv")) || fileName.endsWith(".txt")) {
+				if (fileName.endsWith(".java") || fileName.endsWith(".xml") || (fileName.endsWith(".csv") && !fileName.equals("grades.csv")) || fileName.endsWith(".txt") || fileName.endsWith(".json") || fileName.endsWith(".JSON")) {
 					replaceHeaders_Windows(file, topFolderName);
 				}
 			}
