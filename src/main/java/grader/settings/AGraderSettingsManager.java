@@ -411,6 +411,7 @@ public class AGraderSettingsManager implements GraderSettingsManager {
 
     }
     public static String getNormalizedProblemStatic(String aProblem) {
+    	if (aProblem == null) return null;
 //      return getProblem(aModule).replaceAll("\\s+", "");
       return aProblem.replaceAll("[\\s|-]+", "");
 
