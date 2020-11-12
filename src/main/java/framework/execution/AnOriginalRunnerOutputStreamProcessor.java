@@ -43,6 +43,12 @@ public class AnOriginalRunnerOutputStreamProcessor extends ARunnerErrorOrOutStre
 		}
 	}
 
+	@Override
+	protected void handleEndOfOutput() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	// @Override
 	// public void run() {
 	// while (scanner.hasNextLine()) {
