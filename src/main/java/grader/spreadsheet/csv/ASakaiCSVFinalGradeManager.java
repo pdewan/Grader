@@ -219,6 +219,7 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 		String aGradeCell = aRow[aColumn];
 		if (aColumn >= aRow.length) {
 			System.err.println("No column:" + aColumn + " in row:" + Arrays.toString(aRow));
+			return;
 		}
 //		aRow[aColumn] = Double.toString(aScore);
 		if (aColumn == GRADE_COLUMN) { // Sakai limitations

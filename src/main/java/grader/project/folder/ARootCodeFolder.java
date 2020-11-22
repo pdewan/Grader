@@ -78,7 +78,7 @@ public class ARootCodeFolder implements RootCodeFolder {
                 return aFile.getParentFolderName();
             }
         }
-        System.err.println ("No src folder and no file with source file suffix:" + aSorceFileSuffix);
+        System.err.println (aRoot + ": no src folder and no file with source file suffix:" + aSorceFileSuffix);
         return null;
 
     }

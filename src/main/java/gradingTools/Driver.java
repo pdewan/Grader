@@ -74,6 +74,7 @@ import grader.spreadsheet.csv.AFeatureGradeRecorderFactory;
 import grader.spreadsheet.csv.AllStudentsHistoryManagerFactory;
 import grader.trace.GraderTraceUtility;
 import grader.trace.settings.GraderSettingsDisplayed;
+import trace.grader.basics.GraderBasicsTraceUtility;
 
 /**
  * This is the entry class for the grading tools that Maven will reference. Use
@@ -288,7 +289,11 @@ public class Driver {
 					if (i == args.length || args[i].startsWith("-")) {
 						settingsModel.cleanSlateAll();
 						break;
-					} else {
+					} else if (args[i].startsWith("*")) { // added by pd
+						settingsModel.cleanSlateSpecified();
+						break;
+					}
+					else {
 						String onyenArg = args[i];
 						if (onyenArg.startsWith("{")) {
 							String[] onyenList = onyenArg.substring(1,
@@ -332,8 +337,8 @@ public class Driver {
 				settingsModel.preSettings();
 				settingsModel.postSettings();
 				settingsModel.begin();
-				System.out.println("Calling clean slate all in headless mode");
-				settingsModel.cleanSlateAll();
+//				System.out.println("Not Calling clean slate all in headless mode");
+//				settingsModel.cleanSlateAll();
 			}
 			// settingsModel.maybePreCompile();
 			initAssignmentDataFolder();
@@ -847,7 +852,7 @@ public class Driver {
 		ObjectEditor.setDenseMagnification(1.0);
 //		ExecutionSpecificationSelector.getExecutionSpecification().setGraderProblemDownloadPath("foo");
 //		ExecutionSpecificationSelector.getExecutionSpecification().setUseProjectConfiguration(true); // duplicating what is in the ASuite
-		Tracer.showInfo(true);
+		Tracer.showInfo(GraderBasicsTraceUtility.getTracerShowInfo());
 		TraceableWarning.doNotWarn(UnknownPropertyNotification.class);
 
 		Tracer.setMessagePrefixKind(MessagePrefixKind.FULL_CLASS_NAME);

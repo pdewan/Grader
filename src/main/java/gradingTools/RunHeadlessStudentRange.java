@@ -1,12 +1,12 @@
 package gradingTools;
 
-public class RunHeadless {
+public class RunHeadlessStudentRange {
 
 	public static void main(String[] args) {
-		runHeadless(args[0], args[1], args[2]);
+		runHeadlessStudentRange(args[0], args[1], args[2], args[3]);
 	}
 
-	public static void runHeadless (String aCourse, String aProjectFolder, String aStudent ) {
+	public static void runHeadlessStudentRange (String aCourse, String aProjectFolder, String aStudentStart, String aStudentEnd ) {
 		String[] myArgs = {
 				 "--project-requirements",
 				 "--project-name",
@@ -16,16 +16,16 @@ public class RunHeadless {
 				  	"--headless-path",
 				  	aProjectFolder,
 				  	"--headless-start",
-				  	aStudent,
+				  	aStudentStart,
 				  	"--headless-end",
-				  	aStudent,
+				  	aStudentEnd,
 				  	"--course-name",
 				  	aCourse,
 				  	"--logger",
 				  	"feedback-txt+feedback-json+local-txt+local-json",
 				  	"--no-framework-gui",
 				  	"--clean-slate",
-				  	aStudent
+				  	"*"
 		};
 		
 

@@ -87,6 +87,8 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     public void setEndingOnyen(String aModule,
             String anEndOnyen) {
         dynamicConfiguration.setProperty(aModule + "." + StaticConfigurationUtils.END_ONYEN, anEndOnyen);
+        dynamicConfiguration.setProperty(AGraderSettingsModel.toNormalizedModule(aModule) + "." + StaticConfigurationUtils.END_ONYEN, anEndOnyen);
+
         dynamicConfiguration.setProperty(StaticConfigurationUtils.END_ONYEN, anEndOnyen);
 
     }
