@@ -91,7 +91,10 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
         
         for (String childName : childrenNames) {
             FileProxy child = submissionFolder.getFileEntry(childName);
-            if (child.isDirectory() && childName.indexOf("macosx") == -1) { // all names seem to be lowercase so let us not convert again
+            if (child.isDirectory() &&
+            		childName.indexOf("macosx") == -1 &&
+            		childName.indexOf("ogs") == -1 &&
+            		childName.indexOf("onfig") == -1) { // all names seem to be lowercase so let us not convert again
                 if (folderChild != null) {
                     return aFolder;
                 } else {
@@ -101,7 +104,8 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
         }
         if (folderChild == null) {
             ProjectFolderNotFound.newCase(submissionFolder.getLocalName(), this);
-            folderChild = submissionFolder;
+//            folderChild = submissionFolder;
+            folderChild = aFolder;
             ProjectFolderAssumed.newCase(submissionFolder.getLocalName(), this);
 
         }

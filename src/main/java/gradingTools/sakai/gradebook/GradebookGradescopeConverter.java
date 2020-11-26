@@ -79,6 +79,16 @@ public class GradebookGradescopeConverter {
 		}
 
 	}
+	public static void gradescopeToGradebook(String aFolder, String[] anAssignmentNames, String aSakaiInputFileName, String[] aSubstitutions) {
+		for (String anAssignmentName:anAssignmentNames) {
+			String aGradescopeFileName = anAssignmentName + "_scores.csv";
+			String aSakaiFileName = "GradeBook_" + aGradescopeFileName;
+			String aGradeColumnName = anAssignmentName;
+			gradescopeToGradebook(aFolder + aGradescopeFileName, aFolder + aSakaiFileName, aFolder + aSakaiInputFileName, aSubstitutions, aGradeColumnName);
+		}
+	}
+		
+
 	public static void gradescopeToGradebook(String aGradescopeFileName,
 			String aSakaiFileName, String aSakaiInputFile, String[] aSubstitutions, String aGradeColumnName) {
 		// File aSakaiFile = new File(aSakaiFileName);
@@ -183,14 +193,18 @@ public class GradebookGradescopeConverter {
 				continue;
 			}
 //			String aFullName = aRow[0];
-			String anOnyen = aRow[1];
+//			String anOnyen = aRow[1];
+			String anOnyen = aRow[2];
+
 			GradebookEntry aGradebookEntry = anOnyenToGradebook.get(anOnyen);
 			if (aGradebookEntry == null) {
 				System.out.println("did not find in Gradebook:" + anOnyen);
 				continue;
 			}			
 //			String anEmail = aRow[2];
-			String aGrade = aRow[3];
+//			String aGrade = aRow[3];
+			String aGrade = aRow[5];
+
 			if (aGrade.isEmpty()) {
 				aGrade = "0";
 			}
