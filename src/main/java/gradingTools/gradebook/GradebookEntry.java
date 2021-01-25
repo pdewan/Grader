@@ -1,0 +1,17 @@
+package gradingTools.gradebook;
+
+public interface GradebookEntry {
+
+	public abstract String getStudentID();
+
+	public abstract String getFirstName();
+
+	public abstract String getLastName();
+
+	public abstract String getPid();
+
+	String getGrade();
+
+	void setGrade(String grade);
+
+}

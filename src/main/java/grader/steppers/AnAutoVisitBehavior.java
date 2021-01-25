@@ -712,6 +712,7 @@ public class AnAutoVisitBehavior implements
                 ? projectDatabase.getProjectRequirements().checkDueDate(wrappedProject, timestamp.get())
                 : 0;
         MultiplierAutoChange.newCase(projectDatabase, projectStepper, project, projectStepper.getScore(), this);
+        System.out.println("Multiplier:" + timestamp.get());
 
         projectStepper.internalSetMultiplier(aMultiplier);
 

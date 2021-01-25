@@ -1,6 +1,6 @@
 package gradingTools;
 
-import gradingTools.sakai.gradebook.GradebookGradescopeConverter;
+import gradingTools.gradebook.GradebookGradescopeConverter;
 
 public class Comp401GradeBookToGradesScopeFileGenerator {
 //	static String[] onyensToEmail = new String[] {

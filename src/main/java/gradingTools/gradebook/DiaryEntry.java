@@ -1,4 +1,4 @@
-package gradingTools.sakai.gradebook;
+package gradingTools.gradebook;
 
 import org.joda.time.DateTime;
 
@@ -27,5 +27,11 @@ public interface DiaryEntry {
 	void setGradebookEntry(GradebookEntry gradebookEntry);
 	void setDiaryText(StringBuffer aText);
 	StringBuffer getDiaryText();
+
+	DiaryEntry getNextDiaryEntry();
+
+	void setNextDiaryEntry(DiaryEntry nextDiaryEntry);
+
+	DiaryEntry lastDiaryEntry();
 
 }

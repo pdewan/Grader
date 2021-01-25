@@ -355,6 +355,12 @@ public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implement
 		return null;
 	}
 
+	@Override
+	public double getComputedRegularMaxScore() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 //	@Override
 //	public void setTopLevelSuite(GradableJUnitSuite newVal) {
 //		// TODO Auto-generated method stub

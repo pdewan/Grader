@@ -1,4 +1,4 @@
-package gradingTools.sakai.gradebook;
+package gradingTools.gradebook;
 
 import java.io.File;
 import java.io.IOException;

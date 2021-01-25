@@ -204,4 +204,10 @@ public class ManualProject implements FatProject {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String[] getCheckstyleLines() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

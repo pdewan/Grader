@@ -106,6 +106,8 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
             ProjectFolderNotFound.newCase(submissionFolder.getLocalName(), this);
 //            folderChild = submissionFolder;
             folderChild = aFolder;
+            
+            System.out.println("Assuming project folder is:" + aFolder.getAbsoluteName());
             ProjectFolderAssumed.newCase(submissionFolder.getLocalName(), this);
 
         }
@@ -183,6 +185,7 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
             projectFolder = submissionFolder;
 //    		Tracer.error("No project folder found in " + submissionFolder.getAbsoluteName());
         }
+        System.out.println("Project folder:" + projectFolder);
 
     }
 //    void findRubrickAndProjectOld() {

@@ -343,4 +343,10 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 	protected void addPassFailJUnitTestInstance() {
 
     }
+
+	@Override
+	public double getComputedRegularMaxScore() {
+		// TODO Auto-generated method stub
+		return delegateGradableJUnitTestCase.getComputedRegularMaxScore();
+	}
 }

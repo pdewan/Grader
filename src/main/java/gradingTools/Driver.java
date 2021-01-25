@@ -166,7 +166,9 @@ public class Driver {
 	public static void drive(String[] args, int settingsFrameX,
 			int settingsFrameY) {
 		try {
+			double aStartTime = System.currentTimeMillis();
 			_drive(args, settingsFrameX, settingsFrameY);
+			System.err.println("Grading elapsed time (seconds):" + (-aStartTime  + System.currentTimeMillis() )/1000  );
 		} catch (OutOfMemoryError e) {
 			e.printStackTrace();
 			System.exit(-1);
@@ -852,8 +854,10 @@ public class Driver {
 		ObjectEditor.setDenseMagnification(1.0);
 //		ExecutionSpecificationSelector.getExecutionSpecification().setGraderProblemDownloadPath("foo");
 //		ExecutionSpecificationSelector.getExecutionSpecification().setUseProjectConfiguration(true); // duplicating what is in the ASuite
-		Tracer.showInfo(GraderBasicsTraceUtility.getTracerShowInfo());
-		TraceableWarning.doNotWarn(UnknownPropertyNotification.class);
+//		Tracer.showInfo(GraderBasicsTraceUtility.getTracerShowInfo());
+//		Tracer.setMaxTraces(GraderBasicsTraceUtility.getMaxTraces());
+//		Tracer.setMaxPrintedTraces(GraderBasicsTraceUtility.getMaxPrintedTraces());
+//		TraceableWarning.doNotWarn(UnknownPropertyNotification.class);
 
 		Tracer.setMessagePrefixKind(MessagePrefixKind.FULL_CLASS_NAME);
 		TraceableLogFactory.setEnableTraceableLog(false);

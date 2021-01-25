@@ -1,6 +1,7 @@
 package framework.grading.testing;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -100,6 +101,7 @@ public abstract class Checkable implements Gradable {
     public boolean isManual() {
         return manual;
     }
+    static Date date = new Date();
 
     /**
      * This checks the test cases against the project
@@ -142,7 +144,8 @@ public abstract class Checkable implements Gradable {
                 if (isManual()) {
                 	testResult.setAutoGraded(false);
                 }
-                System.out.println("Saving result:" + testResult );
+                date.setTime(System.currentTimeMillis());
+                System.out.println("Saving result:" + testResult + " at " + date );
                 result.save(testResult, testCase.getPointWeight());
             	} catch (Exception e) {
             		e.printStackTrace();

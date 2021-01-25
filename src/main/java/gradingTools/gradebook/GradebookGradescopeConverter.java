@@ -1,8 +1,8 @@
-package gradingTools.sakai.gradebook;
+package gradingTools.gradebook;
 
-import static gradingTools.sakai.gradebook.GradebookUtils.gradebookToMap;
-import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookHeader;
-import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookRow;
+import static gradingTools.gradebook.GradebookUtils.gradebookToMap;
+import static gradingTools.gradebook.GradebookUtils.toGradebookHeader;
+import static gradingTools.gradebook.GradebookUtils.toGradebookRow;
 
 import java.io.File;
 import java.io.IOException;

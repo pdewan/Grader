@@ -207,7 +207,8 @@ public abstract class CheckStyleTestCase extends BasicTestCase {
 //        SakaiProject aSakaiProject = ((ProjectWrapper) aProject).getProject();
         String aCheckStyleText = aProject.getCheckstyleText();
 //        String aCheckStyleFileName = aProject.getCheckStyleFileName(); // can read lines from this, maybe more efficient
-        String[] aCheckStyleLines = aCheckStyleText.split(System.getProperty("line.separator"));
+//        String[] aCheckStyleLines = aCheckStyleText.split(System.getProperty("line.separator"));
+        String[] aCheckStyleLines = aProject.getCheckstyleLines();
         return test(aProject, aCheckStyleLines, autoGrade);
         
     }

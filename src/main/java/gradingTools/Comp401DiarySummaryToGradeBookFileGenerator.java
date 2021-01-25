@@ -3,11 +3,11 @@ package gradingTools;
 import java.io.File;
 import java.util.Map;
 
-import gradingTools.sakai.gradebook.DiaryManagement;
-import gradingTools.sakai.gradebook.GradebookGradescopeConverter;
-import gradingTools.sakai.gradebook.StaticDiaryManagement;
+import gradingTools.gradebook.DiaryManagement;
+import gradingTools.gradebook.GradebookGradescopeConverter;
+import gradingTools.gradebook.StaticDiaryManagement;
 
-public class Comp401DiaryToGradeBookFileGenerator {
+public class Comp401DiarySummaryToGradeBookFileGenerator {
 //	static String[] onyensToEmail = new String[] {
 //		"whglaser:whglaser@ad.unc.edu",
 //		"ellenecs:ellenecs@email.unc.edu"
@@ -34,7 +34,7 @@ public class Comp401DiaryToGradeBookFileGenerator {
 //				"D:\\UNCGoogleDrive\\401-f15\\grades\\Midterm_scores_F17_Sakai_2.csv",
 //				Comp401GradeBookToGradesScopeFileGenerator.GRADEBOOK_TEMPLATE_FILE_NAME,
 //				onyensToEmail);
-		StaticDiaryManagement.diaryToGradebook(				
+		StaticDiaryManagement.diarySummaryToGradebook(				
 				dates, 
 				Comp401GradeBookToGradesScopeFileGenerator.GRADES_DIR +
 				DIARY_FILE_NAME, 

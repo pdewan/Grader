@@ -1,8 +1,8 @@
-package gradingTools.sakai.gradebook;
+package gradingTools.gradebook;
 
-import static gradingTools.sakai.gradebook.GradebookUtils.gradebookToMap;
-import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookHeader;
-import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookRow;
+import static gradingTools.gradebook.GradebookUtils.gradebookToMap;
+import static gradingTools.gradebook.GradebookUtils.toGradebookHeader;
+import static gradingTools.gradebook.GradebookUtils.toGradebookRow;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import util.misc.Common;
 
 
 
-public class DiaryManagement {
+public class StaticDiaryManagement {
 	public static final int EMAIL_COLUMN = 0;
 	public static final int FULL_NAME_COLUMN = 1;
 	public static final int DIARY_GRADE_COLUMN = 2;
@@ -27,44 +27,9 @@ public class DiaryManagement {
 	public static final int GRADER_COMMENTS_COLUMN = 7;
 	public static final int DIARY_TEXT_COLUMN = 8;
 	public static final int DATE_COLUMN = 6;
-	public static final int MIN_COLUMNS = DIARY_TEXT_COLUMN;
 	
-	public static final String CLASS_QA_COLUMN = "ClassQA";
-	public static final String MY_QA_COLUMN = "MyQA";
-	
-	protected int emailColumn() {
-		return EMAIL_COLUMN;
-	}
-	protected int fullNameColumn() {
-		return FULL_NAME_COLUMN;
-	}
-	protected int diaryGradeColumn() {
-		return DIARY_GRADE_COLUMN;
-	}
-	protected int qAGradeColumn() {
-		return QA_GRADE_COLUMN;
-	}
-	protected int graderNameColumn() {
-		return GRADER_NAME_COLUMN;
-	}
-	protected int graderEmailColumn() {
-		return GRADER_EMAIL_COLUMN;
-	}
-	protected int graderCommentsColumn() {
-		return GRADER_COMMENTS_COLUMN;
-	}
-	protected int diaryTextColumn() {
-		return DIARY_TEXT_COLUMN;
-	}
-	protected int dateColumn() {
-		return DATE_COLUMN;
-	}
-	protected int minColumns() {
-		return MIN_COLUMNS;
-	}
-	protected boolean isSummary() {
-		return false;
-	}
+	public static final String CLASS_QA_COLUMN = "Class Q&A";
+	public static final String MY_QA_COLUMN = "My Q&A";
 
 //	public static void diaryToGradebook(String aDate, String aDiaryFileName,
 //			boolean isDiaryPoints,
@@ -80,7 +45,7 @@ public class DiaryManagement {
 //			e.printStackTrace();
 //		}
 //	}	
-	public  void diaryToGradebook(String[] aDates, String aDiaryFileName,
+	public static void diarySummaryToGradebook(String[] aDates, String aDiaryFileName,
 //			boolean isDiaryPoints,
 			Boolean[] isDiaryPoints,
 			String aSakaiInputFile, String[] aSubstitutions, Integer[] aMaxLimits) {
@@ -116,7 +81,7 @@ public class DiaryManagement {
 			e.printStackTrace();
 		}
 	}
-	public  void diaryToGradebook(String aDate, String aDiaryFileName,
+	public static void diaryToGradebook(String aDate, String aDiaryFileName,
 			boolean isDiaryPoints,
 			String aSakaiInputFile, String[] aSubstitutions, String aSakaiFileName, String aGradeColumn, int aMaxLimit) {
 		// File aSakaiFile = new File(aSakaiFileName);
@@ -168,7 +133,7 @@ public class DiaryManagement {
 //		return new DateTime(aNormalizedDateString);		
 		return aDateTime;
 	}
-	public  boolean withinGradingDays(String anExpectedDate, String anActualDate) {
+	public static boolean withinGradingDays(String anExpectedDate, String anActualDate) {
 		
 		return anExpectedDate == null ||  withinGradingDays(toDateTime(anExpectedDate), toDateTime(anActualDate) );
 //		DateTime anExpectedDateTime = toDateTime(anExpectedDate);
@@ -180,7 +145,7 @@ public class DiaryManagement {
 		
 		
 	}
-	public  boolean withinGradingDays(DateTime anExpectedDateTime, DateTime anActualDateTime) {
+	public static boolean withinGradingDays(DateTime anExpectedDateTime, DateTime anActualDateTime) {
 		if (anExpectedDateTime == null) {
 			return true;
 		}
@@ -191,7 +156,7 @@ public class DiaryManagement {
 		
 		
 	}
-	public  String diaryToGradebook(String anExpectedDate, String aDiaryString, boolean isDiaryPoints,
+	public static String diaryToGradebook(String anExpectedDate, String aDiaryString, boolean isDiaryPoints,
 			StringBuffer aGradebookTemplate,
 			String[] aSubstitutions,
 			String aGradeColumnName, 
@@ -225,7 +190,7 @@ public class DiaryManagement {
 		}
 		return retVal;
 	}
-	public  Map<String, DiaryEntry> diaryToMap(String anExpectedDate, String aInputLinesWithoutQuotes,
+	public static Map<String, DiaryEntry> diaryToMap(String anExpectedDate, String aInputLinesWithoutQuotes,
 			StringBuffer aGradebookTemplate,
 			String[] aSubstitutions) {
 		DateTime anExpectedDateTime = toDateTime(anExpectedDate);
@@ -248,13 +213,7 @@ public class DiaryManagement {
 		for (int aRowNum = 0; aRowNum < anInputLines.length; aRowNum++) {
 			
 			String[] aRow = anInputLines[aRowNum].split(",");
-			String anEmail = aRow[ emailColumn()];
-			if (!anEmail.contains("@")) {
-				System.out.println("Ignoring row without email:" + Arrays.toString(aRow));
-				continue;
-			}
-
-			if (aRow.length < minColumns()) {
+			if (aRow.length < 8) {
 				if (aLastDiaryEntry == null) {
 					System.out.println("Ignoring row with < 8 elements and no previous student row " + Arrays.toString(aRow));
 				} else {
@@ -264,7 +223,7 @@ public class DiaryManagement {
 				continue;
 			}
 			try {
-//			String anEmail = aRow[ emailColumn()];
+			String anEmail = aRow[EMAIL_COLUMN];
 			String anOnyen = anEmailToOnyen.get(anEmail);
 			if (anOnyen == null) {
 				String[] aNameAndDomain = anEmail.split("@");
@@ -274,18 +233,15 @@ public class DiaryManagement {
 				}
 				anOnyen = aNameAndDomain[0];				
 			}	
-			DateTime anActualDateTime = null;
-			if (anExpectedDateTime != null) {
-			String anActualDate = aRow[dateColumn()];
-			 anActualDateTime = normalizedDateToDateTime(anActualDate);
+			String anActualDate = aRow[DATE_COLUMN];
+			DateTime anActualDateTime = normalizedDateToDateTime(anActualDate);
 			if (!withinGradingDays(anExpectedDateTime, anActualDateTime)) {
 				continue;
-			}	
-			}
+			}			
 						
 			GradebookEntry aGradebookEntry = anOnyenToGradebook.get(anOnyen);
 			if (aGradebookEntry == null) {
-				String[] aNameComponents = aRow[fullNameColumn()].trim().split(" ");
+				String[] aNameComponents = aRow[FULL_NAME_COLUMN].trim().split(" ");
 				String aFirstName = aNameComponents[0].trim();
 				String aLastName = aNameComponents[aNameComponents.length - 1].trim();
 				for (String aGradebookOnyen: anOnyenToGradebook.keySet() ) {
@@ -306,29 +262,21 @@ public class DiaryManagement {
 //			DiaryEntry 
 			aLastDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
 			if (aLastDiaryEntry == null) {
-				if (isSummary()) {
-					aLastDiaryEntry = new ADiaryEntry(anActualDateTime,
-							anEmail, 
-							aRow[fullNameColumn()].trim(), 
-							0, 
-							0 
-							);
-				} else {
 				aLastDiaryEntry = new ADiaryEntry(anActualDateTime,
 						anEmail, 
-						aRow[fullNameColumn()].trim(), 
+						aRow[FULL_NAME_COLUMN].trim(), 
 						0, 
 						0, 
-						aRow[graderNameColumn()].trim(), 
-						aRow[graderCommentsColumn()].trim());
-			}
+						aRow[GRADER_NAME_COLUMN].trim(), 
+						aRow[GRADER_COMMENTS_COLUMN].trim(),
+						aRow[DIARY_TEXT_COLUMN]);
 				aLastDiaryEntry.setGradebookEntry(aGradebookEntry);
 				anOnyenToDiaryEntry.put(anOnyen, aLastDiaryEntry);
 			}
 			
 //			String anEmail = aRow[2];
-			int aDiaryGrade = Integer.parseInt(aRow[diaryGradeColumn()].trim());
-			int aQAGrade = Integer.parseInt(aRow[qAGradeColumn()].trim());
+			int aDiaryGrade = Integer.parseInt(aRow[DIARY_GRADE_COLUMN].trim());
+			int aQAGrade = Integer.parseInt(aRow[QA_GRADE_COLUMN].trim());
 			aLastDiaryEntry.incrementDiaryPoints(aDiaryGrade);
 			aLastDiaryEntry.incrementQuestionPoints(aQAGrade);
 			

@@ -1,8 +1,8 @@
-package gradingTools.sakai.gradebook;
+package gradingTools.gradebook;
 
-import static gradingTools.sakai.gradebook.GradebookUtils.gradebookToMap;
-import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookHeader;
-import static gradingTools.sakai.gradebook.GradebookUtils.toGradebookRow;
+import static gradingTools.gradebook.GradebookUtils.gradebookToMap;
+import static gradingTools.gradebook.GradebookUtils.toGradebookHeader;
+import static gradingTools.gradebook.GradebookUtils.toGradebookRow;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,7 +21,9 @@ import util.misc.Common;
 public class SummaryDiaryManagement extends DiaryManagement {
 	public static final int EMAIL_COLUMN = 0;
 	public static final int FULL_NAME_COLUMN = 1;
-	public static final int DATE_COLUMN = 2;
+//	public static final int DATE_COLUMN = 2;
+	public static final int DATE_COLUMN = -1;
+
 	public static final int QA_GRADE_COLUMN = 3;
 	public static final int DIARY_GRADE_COLUMN = 4;
 	public static final int TOTAL_GRADE_COLUMN = 5;

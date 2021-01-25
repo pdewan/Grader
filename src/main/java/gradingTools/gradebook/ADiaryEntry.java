@@ -1,4 +1,4 @@
-package gradingTools.sakai.gradebook;
+package gradingTools.gradebook;
 
 import org.joda.time.DateTime;
 
@@ -11,12 +11,15 @@ public class ADiaryEntry implements DiaryEntry {
 	String grader;
 	String comment;
 	GradebookEntry gradebookEntry;
-	StringBuffer diaryText = new StringBuffer();
+	StringBuffer diaryTextStringBuffer = new StringBuffer();
+	String diaryText;
+	DiaryEntry nextDiaryEntry = null;
+	
 	
 	
 	public ADiaryEntry(DateTime date, String email, String fullName,
 			int diaryPoints, int questionPoint, String grader,
-			String comment) {
+			String comment, String aDiaryText) {
 		super();
 		this.date = date;
 		this.email = email;
@@ -25,6 +28,8 @@ public class ADiaryEntry implements DiaryEntry {
 		this.questionPoints = questionPoint;
 		this.grader = grader;
 		this.comment = comment;
+		diaryText = aDiaryText;
+		diaryTextStringBuffer.append(diaryText);
 	}
 	public ADiaryEntry(DateTime date, String email, String fullName,
 			int diaryPoints, int questionPoint) {
@@ -82,10 +87,30 @@ public class ADiaryEntry implements DiaryEntry {
 	}	
 	@Override
 	public StringBuffer getDiaryText() {
-		return diaryText;
+		return diaryTextStringBuffer;
 	}
 	@Override
 	public void setDiaryText(StringBuffer diaryText) {
-		this.diaryText = diaryText;
+		this.diaryTextStringBuffer = diaryText;
+	}
+	@Override
+	public DiaryEntry getNextDiaryEntry() {
+		return nextDiaryEntry;
+	}
+	@Override
+	public void setNextDiaryEntry(DiaryEntry nextDiaryEntry) {
+		this.nextDiaryEntry = nextDiaryEntry;
+	}
+	public static DiaryEntry lastDiaryEntry(DiaryEntry aDiaryEntry) {
+		DiaryEntry aNextDiaryEntry = aDiaryEntry.getNextDiaryEntry();
+		if (aNextDiaryEntry == null) {
+			return aDiaryEntry;
+		} else {
+			return lastDiaryEntry(aNextDiaryEntry);
+		}
+	}
+	@Override
+	public DiaryEntry lastDiaryEntry() {
+		return lastDiaryEntry(this);
 	}
 }

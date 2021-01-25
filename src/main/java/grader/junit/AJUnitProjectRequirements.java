@@ -57,6 +57,13 @@ public class AJUnitProjectRequirements extends FrameworkProjectRequirements impl
 	@Override
 	public void addJUnitTestSuite (Class<?> aJUnitSuiteClass) {
 		// This step is also called in localchecks mode
+		
+		try {
+			aJUnitSuiteClass.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // force its loading
 		Map<String,List<GradableJUnitTest>> aGroupedGradables = BasicJUnitUtils.toGradableTree(aJUnitSuiteClass).groupedGradables;
 //		Map<String,List<GradableJUnitTest>> aGroupedGradables = BasicJUnitUtils.toGroupedGradables(aJUnitSuiteClass);
 		//  these steps seem to be done only in grader mode
