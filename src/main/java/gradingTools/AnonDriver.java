@@ -18,9 +18,9 @@ public class AnonDriver {
 //	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Spring2020\\";
 //	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Comp410\\Fall2019\\";
 //	public static final String ZIP_Folder_NAME = "G:\\My Drive\\SakaiDownloads\\comp401\\Fall12\\";;
-//	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Comp524F20Assignments\\";
+	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Comp524F20Assignments\\";
 //	public static final String ZIP_Folder_NAME = "D:\\sakaidownloads\\Comp524F20Assignments\\";
-	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Comp401Assignments\\Fall18\\";
+//	public static final String ZIP_Folder_NAME = "C:\\Users\\dewan\\Downloads\\Comp401Assignments\\Fall18\\";
 
 
 //	public static final String ZIP_Folder_NAME = "E:\\anon\\";
@@ -35,13 +35,13 @@ public class AnonDriver {
 //			"Assignment 3.zip",
 //			"Assignment 4.zip",
 //			"Assignment 5.zip",
-//			"Assignment 6.zip",
+			"Assignment 6.zip",
 //			"Assignment 7.zip",
 //			"Assignment 8.zip",
 //			"Assignment 9.zip",
-			"Assignment 10.zip",
-			"Assignment 11.zip",
-			"Assignment 12.zip",
+//			"Assignment 10.zip",
+//			"Assignment 11.zip",
+//			"Assignment 12.zip",
 			
 	};
 

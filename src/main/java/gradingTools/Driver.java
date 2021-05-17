@@ -846,7 +846,11 @@ public class Driver {
 	}
 
 	public static void main(String[] args) {
+		try {
 		drive(args, 0, 0);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void setTracing() {
