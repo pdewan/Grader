@@ -12,6 +12,9 @@ import grader.config.ExecutionSpecificationSelector;
 public class GradingModeConfigurer {
 	public static void configureGradingMode() {
 		GradingMode.setGraderRun(true);
+		boolean aManualGradingOnly = 
+				ExecutionSpecificationSelector.getExecutionSpecification().getNavigationKind().equals(BasicStaticConfigurationUtils.MANUAL_GRADING);
+		GradingMode.setManualGradingOnly(aManualGradingOnly);
 		BasicProjectExecution.setReRunInfiniteProcesses(false);
 		BasicExecutionSpecificationSelector.setBasicExecutionSpecification(
 				ExecutionSpecificationSelector.getExecutionSpecification());

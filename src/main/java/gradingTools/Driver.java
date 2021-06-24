@@ -40,6 +40,7 @@ import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
+import grader.basics.config.BasicExecutionSpecificationSelector;
 import grader.basics.execution.BasicProjectExecution;
 import grader.basics.execution.GradingMode;
 import grader.basics.execution.JavaMainClassFinderSelector;
@@ -267,6 +268,9 @@ public class Driver {
 		String settings = configuration.getString("grader.settings", "oe");
 		// String settingsTry = configuration.getString("Grader.Settings");
 //		if (settings.equalsIgnoreCase("oe")) {
+		
+		 boolean aCreateStarterUI = ExecutionSpecificationSelector.getExecutionSpecification().getStarterUI();
+
 
 		if (settings.equalsIgnoreCase("oe")) {
 			// NavigationFilter gradingBasedFilterer = new
@@ -322,8 +326,10 @@ public class Driver {
 					settingsModel.compileExecutor();
 				}
 			}
-		
-			if (isNotHeadless()) {
+//			 boolean aCreateStarterUI = ExecutionSpecificationSelector.getExecutionSpecification().getStarterUI();
+			   
+			if (isNotHeadless() && aCreateStarterUI ) {
+//			if (isNotHeadless()) {
 				settingsFrame = ObjectEditor.edit(settingsModel);
 				settingsFrame.setLocation(settingsFrameX, settingsFrameY);
 				settingsFrame.setTitle("Grader Assistant Starter");
@@ -333,7 +339,14 @@ public class Driver {
 
 				GraderSettingsDisplayed.newCase(settingsModel, Driver.class);
 				settingsModel.awaitBegin();
-			} else {
+				
+			} else if (isNotHeadless() && !aCreateStarterUI) {
+				settingsModel.preSettings();
+				settingsModel.postSettings();
+				settingsModel.begin();
+			}
+			
+			else {
 				settingsModel.getNavigationSetter().setNavigationKind(
 						NavigationKind.AUTOMATIC);
 				settingsModel.preSettings();
@@ -342,6 +355,8 @@ public class Driver {
 //				System.out.println("Not Calling clean slate all in headless mode");
 //				settingsModel.cleanSlateAll();
 			}
+			
+			
 			// settingsModel.maybePreCompile();
 			initAssignmentDataFolder();
 
@@ -350,7 +365,9 @@ public class Driver {
 			BasicGradingEnvironment.get().setAssignmentName(projectName);
 
 			
-		} else if (isNotHeadless()) {
+		}
+		else if (isNotHeadless() && aCreateStarterUI) {
+//		else if (isNotHeadless()) {
 
 			// Start the grading process by, first, getting the settings the
 			// running the project database
@@ -439,6 +456,7 @@ public class Driver {
 		}
 		// if (visitActions.contains(MAKE_CLASS_DESCRIPTION)) {
 		// AProject.setMakeClassDescriptions(true);
+		
 		if (isNotHeadless()) {
 			database.getProjectNavigator().navigate(settingsModel,
 					settingsFrame, true);
@@ -862,7 +880,9 @@ public class Driver {
 //		Tracer.setMaxTraces(GraderBasicsTraceUtility.getMaxTraces());
 //		Tracer.setMaxPrintedTraces(GraderBasicsTraceUtility.getMaxPrintedTraces());
 //		TraceableWarning.doNotWarn(UnknownPropertyNotification.class);
-
+		
+		int maxPrintedTraces = BasicExecutionSpecificationSelector.getBasicExecutionSpecification().getMaxPrintedTraces();
+		Tracer.setMaxPrintedTraces(maxPrintedTraces);
 		Tracer.setMessagePrefixKind(MessagePrefixKind.FULL_CLASS_NAME);
 		TraceableLogFactory.setEnableTraceableLog(false);
 		if (isHeadless()) {

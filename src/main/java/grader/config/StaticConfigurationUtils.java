@@ -485,7 +485,9 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	
 	public static String[] getPotentialMainEntryPointNames() {
 		if (potentialMainEntryPoints == null) {
-		String retVal = getInheritedStringModuleProblemProperty(ENTRY_POINT, null);
+//		String retVal = getInheritedStringModuleProblemProperty(ENTRY_POINT, null);
+		String retVal = ExecutionSpecificationSelector.getExecutionSpecification().getEntryPoint();
+
 		if (retVal != null) {
 			GraderSettingsManager manager = GraderSettingsManagerSelector.getGraderSettingsManager();
 			retVal = manager.replaceModuleProblemVars(retVal);

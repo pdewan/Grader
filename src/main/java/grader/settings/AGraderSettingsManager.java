@@ -1,6 +1,8 @@
 package grader.settings;
 
 import framework.utils.GraderSettings;
+import grader.basics.config.BasicExecutionSpecificationSelector;
+import grader.basics.config.BasicStaticConfigurationUtils;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.config.ConfigurationManagerSelector;
 import grader.config.ExecutionSpecificationSelector;
@@ -42,7 +44,12 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     void maybeConvertToDynamicConfiguration() {
         Map<String, String> settings = GraderSettings.get().getSettings();
 //	    	PropertiesConfiguration dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();
-        if (dynamicConfiguration == null || !dynamicConfiguration.isEmpty()) {
+//        if (dynamicConfiguration == null || !dynamicConfiguration.isEmpty()) {
+
+        boolean aSaveSettings = ExecutionSpecificationSelector.getExecutionSpecification().getSaveInteractiveSettings();
+        if (dynamicConfiguration == null || 
+        		!dynamicConfiguration.isEmpty() || 
+        		aSaveSettings) {
             return;
         }
         for (String key : settings.keySet()) {
@@ -92,12 +99,15 @@ public class AGraderSettingsManager implements GraderSettingsManager {
         dynamicConfiguration.setProperty(StaticConfigurationUtils.END_ONYEN, anEndOnyen);
 
     }
-    public static final String NAVIGATION_KIND = "navigationKind";
+//    public static final String NAVIGATION_KIND = "navigationKind";
+    public static final String NAVIGATION_KIND = BasicStaticConfigurationUtils.NAVIGATION_KIND;
+
 
     @Override
     public NavigationKind getNavigationKind(String aModule) {
-        String aString = dynamicConfiguration.getString(aModule + "." + NAVIGATION_KIND,
-                dynamicConfiguration.getString(NAVIGATION_KIND));
+//        String aString = dynamicConfiguration.getString(aModule + "." + NAVIGATION_KIND,
+//                dynamicConfiguration.getString(NAVIGATION_KIND));
+        String aString = BasicExecutionSpecificationSelector.getBasicExecutionSpecification().getNavigationKind();
         if (aString == null) {
             return null;
         }
@@ -440,7 +450,10 @@ public class AGraderSettingsManager implements GraderSettingsManager {
     @Override
     public void save() {
         try {
+        	 boolean aSaveSettings = ExecutionSpecificationSelector.getExecutionSpecification().getSaveInteractiveSettings();
+ 	        if (aSaveSettings) {
             dynamicConfiguration.save();
+ 	        }
             ExecutionSpecificationSelector.getExecutionSpecification().loadFromConfiguration();
         } catch (ConfigurationException e) {
             // TODO Auto-generated catch block

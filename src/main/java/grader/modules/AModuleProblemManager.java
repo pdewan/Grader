@@ -49,7 +49,10 @@ public class AModuleProblemManager implements ModuleProblemManager{
 				return;
 			}
 			dynamicModuleConfiguration.setProperty(BasicStaticConfigurationUtils.MODULES, getModules());
+	        boolean aSaveSettings = ExecutionSpecificationSelector.getExecutionSpecification().getSaveInteractiveSettings();
+	        if (aSaveSettings) {
 			dynamicModuleConfiguration.save();
+	        }
         } catch (ConfigurationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

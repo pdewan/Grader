@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import framework.grading.FrameworkProjectRequirements;
+import grader.basics.execution.GradingMode;
 import grader.basics.junit.BasicJUnitUtils;
 import grader.basics.junit.GradableJUnitTest;
 //import gradingTools.comp999junit.assignment1.testcases.reflection.ReflectiveCartesianPointSuite;
@@ -57,6 +58,9 @@ public class AJUnitProjectRequirements extends FrameworkProjectRequirements impl
 	@Override
 	public void addJUnitTestSuite (Class<?> aJUnitSuiteClass) {
 		// This step is also called in localchecks mode
+		if (GradingMode.isManualGradingOnly() && GradingMode.getGraderRun()) {
+			return;
+		}
 		
 		try {
 			aJUnitSuiteClass.newInstance();
