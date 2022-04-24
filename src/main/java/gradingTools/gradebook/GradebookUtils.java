@@ -26,6 +26,20 @@ public class GradebookUtils {
 		}
 		return retVal;		
 	}
+	public static Map<String, GradebookEntry> gradebookToPIDMap(StringBuffer aSakaiString) {
+		String aInputLinesWithoutQuotes = aSakaiString.toString().replaceAll(
+				"\"", "");
+		Map<String, GradebookEntry> retVal = new HashMap<String, GradebookEntry>();
+		String[] anInputLines = aInputLinesWithoutQuotes.toString().split("\n");
+		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
+			GradebookEntry aGradebookEntry = toGradebookEntry(anInputLines[aRowNum]);
+			if (aGradebookEntry == null) {
+				continue;
+			}
+			retVal.put(aGradebookEntry.getPid(), aGradebookEntry);			
+		}
+		return retVal;		
+	}
 	public static Map<String, GradebookEntry> gradebookToMap(File aFile) {
 		try {
 			StringBuffer aGradebookString = Common.toStringBuffer(aFile);

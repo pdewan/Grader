@@ -40,8 +40,11 @@ public class Comp401GradescopeToGradeBookFileGenerator {
    	 return Comp401GradeBookToGradesScopeFileGenerator.GRADES_DIR + GRADE_COLUMN_NAME + ".csv";
    }
 	
-	static String[] onyensToEmail = new String[] {
+	static String[] emailToOnyen = new String[] {
 //		"whglaser:whglaser@ad.unc.edu"
+			//Elad,Ohana,720387631,elad_ohana@med.unc.edu,COMP301.001.S121,,123.0,Missing
+
+//			"elad_ohana@med.unc.edu:elad",
 	};
 
 	public static void main (String[] args) {
@@ -60,7 +63,7 @@ public class Comp401GradescopeToGradeBookFileGenerator {
 //				"D:\\UNCGoogleDrive\\401-f15\\grades\\Final_scores.csv", 
 //				"D:\\UNCGoogleDrive\\401-f15\\grades\\Final_scores_F17_Sakai.csv",
 				Comp401GradeBookToGradesScopeFileGenerator.GRADEBOOK_TEMPLATE_FILE_NAME,
-				onyensToEmail,
+				emailToOnyen,
 				GRADE_COLUMN_NAME
 //				,true
 				);

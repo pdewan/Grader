@@ -126,10 +126,13 @@ public class StandardProject extends BasicProject implements FatProject {
       return ASakaiProjectDatabase.getCurrentSakaiProjectDatabase().getAssignmentDataFolder().getMixedCaseAbsoluteName();
       
     }
+    @Override
     public File getCheckstyleOutFolder() {
     	return getCheckstyleOutFolder(project);
 //    	return new File (project.getOutputFolder());
     }
+    
+    
   @Override
   protected File getCheckStyleConfigurationDefaultFolder() {
     GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector
@@ -160,6 +163,24 @@ public class StandardProject extends BasicProject implements FatProject {
 //    protected File getCheckStyleConfigurationDefaultFolder() {
 //		return new File("config" + "/checkstyle/");
 //	}
+  @Override
+  public File getValgrindConfigurationFolder() {
+    GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector
+      .getGraderSettingsManager();
+  String aModule = graderSettingsManager.getModule();
+  if (aModule == null) {
+    System.err.println("NUll module! Internal error");
+  }
+
+  return new File("config" + "/valgrind/" + aModule);
+//  String aProblem = graderSettingsManager.getNormalizedProblem(aModule);
+//  return new File( ProjectDatabaseWrapper.getCurrentSakaiProjectDatabase().getAssignmentDataFolder().getAbsoluteName());
+}
+    
+//    protected File getCheckStyleConfigurationDefaultFolder() {
+//		return new File("config" + "/checkstyle/");
+//	}
+  
     public String getCheckstyleText() {
     	String retVal = super.getCheckstyleText();
     	project.setCheckstyleText(retVal);

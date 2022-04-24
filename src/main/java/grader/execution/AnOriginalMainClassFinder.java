@@ -4,6 +4,7 @@ package grader.execution;
 import grader.basics.execution.BasicProcessRunner;
 import grader.basics.execution.CommandGenerator;
 import grader.basics.execution.NotRunnableException;
+import grader.basics.execution.RunningProject;
 import grader.basics.file.FileProxy;
 import grader.basics.project.Project;
 import grader.config.StaticConfigurationUtils;
@@ -12,6 +13,7 @@ import grader.project.flexible.FlexibleClassesManager;
 import grader.project.flexible.FlexibleProject;
 import grader.project.folder.RootCodeFolder;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import util.misc.Common;
+import util.pipe.InputGenerator;
 import wrappers.framework.project.ProjectWrapper;
 
 public class AnOriginalMainClassFinder implements CommandGenerator {
@@ -187,6 +190,43 @@ public class AnOriginalMainClassFinder implements CommandGenerator {
 
 	@Override
 	public void setUserBinary(String newVal) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<String> processedCommands(List<String> basicCommand, Project aProject, String aProcessName,
+			File aBuildFolder, String anEntryPoint, String anEntryTagTarget, String[] anArgs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void runPreIndividualCommand(RunningProject runner, InputGenerator anOutputBasedInputGenerator,
+			String[] aCommand, String input, String[] args, int timeout, String aProcessName, boolean anOnlyProcess)
+			throws NotRunnableException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void runPostIndividualCommand(RunningProject runner, InputGenerator anOutputBasedInputGenerator,
+			String[] aCommand, String input, String[] args, int timeout, String aProcessName, boolean anOnlyProcess)
+			throws NotRunnableException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void runPreTeamCommands(String aProcessTeam, RunningProject runner,
+			InputGenerator anOutputBasedInputGenerator) throws NotRunnableException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void runPostTeamCommands(String aProcessTeam, RunningProject runner,
+			InputGenerator anOutputBasedInputGenerator) throws NotRunnableException {
 		// TODO Auto-generated method stub
 		
 	}
