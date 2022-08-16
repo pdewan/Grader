@@ -707,7 +707,8 @@ public class AnAutoVisitBehavior implements
         // projectDatabase.getProjectRequirements().checkDueDate(timestamp.get())
         // : 0;
         Tracer.info(this, "Time stamp defined:" + timestamp.get());
-        System.out.println("Calculating credit/penalty for submission at:" + timestamp.get());
+        double anOriginalScore = projectStepper.getScore();
+        System.out.println("Calculating credit/penalty for submission with score " + anOriginalScore + "  at:" + timestamp.get());
         double aMultiplier = timestamp.isDefined()
                 ? projectDatabase.getProjectRequirements().checkDueDate(wrappedProject, timestamp.get())
                 : 0;

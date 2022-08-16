@@ -193,6 +193,8 @@ public class GradebookGradescopeConverter {
 
 	public static GradebookEntry getGradebookEntryFromOnyen(String anOnyen,
 			Map<String, GradebookEntry> anOnyenToGradebook, String[] aRow, Map<String, String> anEmailToOnyen) {
+		try {
+		
 		if (Character.isDigit(anOnyen.charAt(0))) {
 			String anEmail = aRow[3];
 			anOnyen = emailToOnyen(anEmail, anEmailToOnyen);
@@ -206,6 +208,10 @@ public class GradebookGradescopeConverter {
 			anOnyen = emailToOnyen(anOnyen, anEmailToOnyen);
 		}
 		return anOnyenToGradebook.get(anOnyen);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 
@@ -241,6 +247,9 @@ public class GradebookGradescopeConverter {
 //			String anOnyen = aRow[1];
 			String aPID = aRow[1];
 			String anOnyen = aRow[2];
+			if (aPID.isEmpty()) {
+				continue;
+			}
 			try {
 				GradebookEntry aGradebookEntry = null;
 				if (aPID != null &&
