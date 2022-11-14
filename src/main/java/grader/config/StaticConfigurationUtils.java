@@ -804,21 +804,23 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static String[] getExecutionCommand(Project aProject,
 			String aProcessName, File aBuildFolder, String anEntryPoint,
 			String anEntryTagTarget, String[] anArgs) {
-	
-
-			List<String> basicCommand = null;
-			if (aProcessName == null || aProcessName.isEmpty()) {
-			
-				basicCommand = getExecutionCommand();
-			} else {
-			
-				basicCommand = getBasicCommand(aProcessName);
-
-			}
-			Tracer.info(StaticConfigurationUtils.class, "Basic Command:" + basicCommand);
-
-//			System.out.println("Basic Command:" + basicCommand);
-		String[] retVal = BasicStaticConfigurationUtils.getExecutionCommand(basicCommand, aProject, aProcessName, aBuildFolder, anEntryPoint, anEntryTagTarget, anArgs);
+//	
+//
+//			List<String> basicCommand = null;
+//			if (aProcessName == null || aProcessName.isEmpty()) {
+//			
+//				basicCommand = getExecutionCommand();
+//			} else {
+//			
+//				basicCommand = getBasicCommand(aProcessName);
+//
+//			}
+//			Tracer.info(StaticConfigurationUtils.class, "Basic Command:" + basicCommand);
+//
+////			System.out.println("Basic Command:" + basicCommand);
+//		String[] retVal = BasicStaticConfigurationUtils.getExecutionCommand(basicCommand, aProject, aProcessName, aBuildFolder, anEntryPoint, anEntryTagTarget, anArgs);
+		// EXECUTION_COMMAND canot be set separately now
+		String[] retVal = BasicLanguageDependencyManager.getMainClassFinder().getExecutionCommand(aProject, aBuildFolder, anEntryPoint, anArgs);
 		List<String> aListRetVal = Arrays.asList(retVal);
 		
 		replacePermissionVariables(aListRetVal, aProject);

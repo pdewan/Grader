@@ -2,6 +2,7 @@ package grader.project.folder;
 
 import grader.basics.file.FileProxy;
 import grader.basics.file.RootFolderProxy;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
 import grader.basics.file.zipfile.AZippedRootFolderProxy;
 import grader.basics.project.Project;
 import grader.basics.trace.BinaryFolderNotFound;
@@ -84,13 +85,66 @@ public class ARootCodeFolder implements RootCodeFolder {
         return null;
 
     }
+//    File findChild (String aFileName, String aChild) {
+//    	String aChildFileName = aFileName + "/" + aChild;
+//    	File retVal = new File (aChildFileName);
+//    	if (retVal.exists()) {
+//    		return retVal;
+//    	}
+//    	return null;
+//    }
+//    RootFolderProxy maybeToGradescopeProjectFolder(RootFolderProxy aProjectFolder) {
+//    	String aProjectFolderName = aProjectFolder.getAbsoluteName();
+//    	if (!aProjectFolderName.contains("grade, me")) {
+//    		return aProjectFolder;
+//    	}
+//    	System.out.println("Gradescope project folder" + aProjectFolderName);
+////    	FileProxy aSubmissionChild = aProjectFolder.getFileEntry("submission");
+////    	if (aSubmissionChild != null) {
+////    		List<FileProxy> aChildren = aSubmissionChild.getChildren();
+////    		if (aChildren.size() == 1) {
+////    			return aChildren.get(0);
+////    		}
+//////    		return aSubmissionChild;
+////    	};
+////    	return aProjectFolder;
+////    	String aSubmissionChildFolderName = aProjectFolderName+"/submission";
+////    	File aProjectFolderFile = new File(aProjectFolderName);
+//    	File aChild = findChild(aProjectFolderName, "submission");
+//    	if (aChild == null) 
+//    		aChild = findChild(aProjectFolderName, "autograder/submission"); 
+//    	if (aChild != null) {
+//    		File[] aFiles = aChild.listFiles();
+//    		if (aFiles.length == 1) {
+//    			return new AFileSystemFileProxy(aFiles[0]);
+//    		}
+////    		return aSubmissionChildFolder;
+//    	}    	
+//    	
+////    	File[] aProjectFiles = aProjectFolderFile.listFiles();
+////    	File aSubmissionChildFolder = new File (aSubmissionChildFolderName);
+////    	if (aSubmissionChildFolder.exists()) {
+////    		File[] aFiles = aSubmissionChildFolder.listFiles();
+////    		if (aFiles.length == 0) {
+////    			return new AFileSystemFileProxy(aFiles[0]);
+////    		}
+//////    		return aSubmissionChildFolder;
+////    	}    	
+//    	return aProjectFolder;      	
+//    }
 
     public ARootCodeFolder(RootFolderProxy aRoot) {
 //		if (aRoot.getAbsoluteName().indexOf("erichman") != -1) {
 //			System.out.println (" found erichman");
 //		}
         // this code is a bit of a mess, need to clean this up
-        root = aRoot;
+    	
+//        root = aRoot;
+//        root = maybeToGradescopeProjectFolder(aRoot);
+//        if (root != aRoot) {
+//        	System.out.println("Changed project folder from " + aRoot +" to " + aRoot);
+//        }
+    	root = aRoot;
         setSeparateSourceBinary();
         // should we not be doing this only if there is a separate source and binary?
         sourceFolderName = getFolderWithName(aRoot, Project.SOURCE);

@@ -171,6 +171,8 @@ public class ProcessRunner extends BasicProcessRunner implements Runner {
 
 	protected String[] getExecutionCommand(Project aProject, File aBuildFolder, String anEntryPoint, String[] anArgs) {
 		return StaticConfigurationUtils.getExecutionCommand(aProject, aBuildFolder, anEntryPoint);
+//		return BasicStaticConfigurationUtils.getExecutionCommand(aProject, null, aBuildFolder, anEntryPoint, anEntryPoint, anArgs);
+//		return BasicStaticConfigurationUtils.getExecutionCommand(aProject, null, aBuildFolder, anEntryPoint, anEntryPoint, anArgs);
 	}
 
 	protected void maybeSetInputAndArgs(String input, String[] args) {

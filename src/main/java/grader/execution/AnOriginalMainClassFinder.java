@@ -210,9 +210,7 @@ public class AnOriginalMainClassFinder implements CommandGenerator {
 	}
 
 	@Override
-	public void runPostIndividualCommand(RunningProject runner, InputGenerator anOutputBasedInputGenerator,
-			String[] aCommand, String input, String[] args, int timeout, String aProcessName, boolean anOnlyProcess)
-			throws NotRunnableException {
+	public void runPostIndividualCommand(RunningProject runner) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -229,6 +227,12 @@ public class AnOriginalMainClassFinder implements CommandGenerator {
 			InputGenerator anOutputBasedInputGenerator) throws NotRunnableException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String[] getExecutionCommand(Project aProject, File aBuildFolder, String anEntryPoint, String[] anArgs) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

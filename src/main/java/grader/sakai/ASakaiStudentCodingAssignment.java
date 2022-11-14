@@ -2,6 +2,8 @@ package grader.sakai;
 
 import grader.basics.file.FileProxy;
 import grader.basics.file.RootFolderProxy;
+import grader.basics.file.filesystem.AFileSystemFileProxy;
+import grader.basics.file.filesystem.AFileSystemRootFolderProxy;
 import grader.basics.file.zipfile.AZippedRootFolderProxy;
 import grader.basics.trace.ProjectFolderNotFound;
 import grader.project.flexible.AFlexibleProject;
@@ -10,6 +12,8 @@ import grader.trace.project.ProjectFolderAssumed;
 import grader.trace.project.RubrickFileLoaded;
 import util.trace.Tracer;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
@@ -147,11 +151,102 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
         }
         return null;
     }
+    
+    boolean isGradescopeFolder(String aSubmissionFolderName) {
+    	return (!aSubmissionFolderName.endsWith(".zip") &&
+    			aSubmissionFolderName.contains("autograder"));
+    	
+    }
+    public static File findChildFile(File aFolder, String aChildName) {
+//    	File dir = new File(directory);
+//    	FilenameFilter foo;
+    	if (!aFolder.isDirectory()) {
+    		return null;
+    	}
+
+    	File[] matches = aFolder.listFiles(new FilenameFilter()
+    	{
+    	  public boolean accept(File dir, String name)
+    	  {
+    	     return name.equals("aChildName");
+    	  }
+    	});
+    	if (matches.length == 1) {
+    		return matches[0];
+    	}
+    	
+    		return null;
+    	
+    }
+    /*
+     * Project folder:/autograder/source/Assignment5/grade, me(student)/Submission attachment(s)/submission/autograder
+Buildfolder:/autograder/source/Assignment5/grade, me(student)/Submission attachment(s)/submission/autograder/submission/F22A5Fixed/bin classpath: .:..::.:/autograder/source/Comp524GraderAll.jar:.:./source/AssignmentSetup.jar:.:/autograder/source/Comp524GraderAll.jar:.::./source/AssignmentSetup.jar
+Project folder:/autograder/source/Assignment5/grade, me(student)/Submission attachment(s)/submission.zip
+Project folder:/autograder/source/Assignment5/grade, me(student)/Submission attachment(s)/submission/autograder
+Buffer traced messages =true
+     */
+//    private static final String GRADESOPE_SUFFIX = 
+    File findChild (String aFileName, String aChild) {
+    	String aChildFileName = aFileName + "/" + aChild;
+    	File retVal = new File (aChildFileName);
+    	if (retVal.exists()) {
+    		return retVal;
+    	}
+    	return null;
+    }
+    RootFolderProxy maybeToGradescopeProjectFolder(RootFolderProxy aProjectFolder) {
+    	String aProjectFolderName = aProjectFolder.getAbsoluteName();
+    	if (!aProjectFolderName.contains("grade, me")) {
+    		return aProjectFolder;
+    	}
+    	System.out.println("Gradescope project folder" + aProjectFolderName);
+//    	FileProxy aSubmissionChild = aProjectFolder.getFileEntry("submission");
+//    	if (aSubmissionChild != null) {
+//    		List<FileProxy> aChildren = aSubmissionChild.getChildren();
+//    		if (aChildren.size() == 1) {
+//    			return aChildren.get(0);
+//    		}
+////    		return aSubmissionChild;
+//    	};
+//    	return aProjectFolder;
+//    	String aSubmissionChildFolderName = aProjectFolderName+"/submission";
+//    	File aProjectFolderFile = new File(aProjectFolderName);
+    	File aChild = findChild(aProjectFolderName, "submission");
+    	if (aChild == null) 
+    		aChild = findChild(aProjectFolderName, "autograder/submission"); 
+    	if (aChild != null) {
+    		File[] aFiles = aChild.listFiles();
+    		for (File aFile:aFiles) {
+    			if (aFile.isDirectory()) {
+    				return new AFileSystemRootFolderProxy(aFile);
+    			}
+    		}
+    	
+//    		return aSubmissionChildFolder;
+    	}    	
+    	
+//    	File[] aProjectFiles = aProjectFolderFile.listFiles();
+//    	File aSubmissionChildFolder = new File (aSubmissionChildFolderName);
+//    	if (aSubmissionChildFolder.exists()) {
+//    		File[] aFiles = aSubmissionChildFolder.listFiles();
+//    		if (aFiles.length == 0) {
+//    			return new AFileSystemFileProxy(aFiles[0]);
+//    		}
+////    		return aSubmissionChildFolder;
+//    	}    	
+    	return aProjectFolder;      	
+    }
+    
 
     void findRubrickAndProject() {
+//    	submissionFolder = toGradescopeProjectFolder(submissionFolder);
     	rubrick = findRubrick(submissionFolder);
 //        FileProxy zipFile = getZipChild(submissionFolder);
         zipFile = getZipChild(submissionFolder);
+        String aSubmissionFolderName = submissionFolder.getAbsoluteName();
+      
+//        File aSubmissionFolderFile = new File(aSubmissionFolderName);
+        
         
         if (zipFile == null) {
             projectFolder = getUniqueNonMACOSFolderChild(submissionFolder);
@@ -185,7 +280,8 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
             projectFolder = submissionFolder;
 //    		Tracer.error("No project folder found in " + submissionFolder.getAbsoluteName());
         }
-        System.out.println("Project folder:" + projectFolder);
+//       projectFolder = maybeToGradescopeProjectFolder(projectFolder);
+//        System.out.println("Project folder:" + projectFolder);
 
     }
 //    void findRubrickAndProjectOld() {

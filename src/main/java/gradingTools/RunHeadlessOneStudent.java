@@ -2,9 +2,42 @@ package gradingTools;
 
 public class RunHeadlessOneStudent {
 
+//	public static void main(String[] args) {
+//		runHeadlessOneStudent(args[0], args[1], args[2]);
+//	}
 	public static void main(String[] args) {
-		runHeadlessOneStudent(args[0], args[1], args[2]);
+		runHeadlessOneStudent(args[0], args[1], args[2], args[3]);
 	}
+	public static void runHeadlessOneStudent (String aCourse, 
+			String anAssignment, 
+			String aProjectFolder, 
+			String aStudent ) {
+		String[] myArgs = {
+				 "--project-requirements",
+				 "--project-name",
+				 anAssignment,
+				  "--grader-controller",
+				  	"AHeadlessGradingManager",
+				  	"--headless-path",
+				  	aProjectFolder,
+				  	"--headless-start",
+				  	aStudent,
+				  	"--headless-end",
+				  	aStudent,
+				  	"--course-name",
+				  	aCourse,
+				  	"--logger",
+				  	"feedback-txt+feedback-json+local-txt+local-json",
+				  	"--no-framework-gui",
+				  	"--clean-slate",
+				  	aStudent
+		};
+		
+
+		Driver.main(myArgs);
+
+		System.exit(0);
+		}
 
 	public static void runHeadlessOneStudent (String aCourse, String aProjectFolder, String aStudent ) {
 		String[] myArgs = {
