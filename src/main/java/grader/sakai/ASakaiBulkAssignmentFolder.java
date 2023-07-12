@@ -29,7 +29,9 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
     public static String DEFAULT_GRADER_DATA_FOLDER= "-GraderData";
 
     public static String DEFAULT_ASSIGNMENT_NAME = "Assignment 11";
-    public static String GRADES_SPREADSHEET_NAME = "grades.csv";
+//    public static String GRADES_SPREADSHEET_NAME = "grades.csv";
+//    public static String ANON_GRADES_SPREADSHEET_NAME = "ANONGrades.csv";
+
     boolean isAssignmentRoot;
 
     String bulkDownloadDirectory;
@@ -125,18 +127,26 @@ public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
 //        return rootBulkDownloadFolder.getFileEntry(rootBulkDownloadFolder.getAbsoluteName() + "/" + assignmentName);
     }
 
-    FileProxy extractGradeSpreadsheet() {
-    	String gradeSpreadsheetFullName = assignmentFolder.getAbsoluteName().replace("\\", "/") + "/" + GRADES_SPREADSHEET_NAME;
-    	FileProxy retVal = rootBulkDownloadFolder.getFileEntry(gradeSpreadsheetFullName);
-    	if (retVal == null)
-    		System.out.println(FinalGradeFileNotFound.newCase(gradeSpreadsheetFullName, this).getMessage());
-    	else 
-    		FinalGradeFileLoaded.newCase(gradeSpreadsheetFullName, this);
-    	return retVal;
-//    	return rootBulkDownloadFolder.getFileEntry(gradeSpreadsheetFullName);
-    	
-    	
-    }
+//    FileProxy extractGradeSpreadsheet() {
+//    	String anAssignmentFolderName = assignmentFolder.getAbsoluteName().replace("\\", "/") + "/";
+////    	String gradeSpreadsheetFullName = assignmentFolder.getAbsoluteName().replace("\\", "/") + "/" + GRADES_SPREADSHEET_NAME;
+//    	String gradeSpreadsheetFullName = anAssignmentFolderName + GRADES_SPREADSHEET_NAME;
+//
+//    	FileProxy retVal = rootBulkDownloadFolder.getFileEntry(gradeSpreadsheetFullName);
+//    	if (retVal == null) {
+//        	 gradeSpreadsheetFullName = anAssignmentFolderName + ANON_GRADES_SPREADSHEET_NAME;
+//        	 retVal = rootBulkDownloadFolder.getFileEntry(gradeSpreadsheetFullName);
+//    	}
+//    		
+//    	
+//    	if (retVal == null)
+//    		System.out.println(FinalGradeFileNotFound.newCase(gradeSpreadsheetFullName, this).getMessage());
+//    	else 
+//    		FinalGradeFileLoaded.newCase(gradeSpreadsheetFullName, this);
+//    	return retVal;
+//    	
+//    	
+//    }
 
     public RootFolderProxy getAssignmentFolder() {
         return assignmentFolder;

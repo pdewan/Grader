@@ -790,6 +790,16 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		return sourceChecks;
 	}
 	
+	public String getPiazzaPosts() {
+		return "piazza posts";
+	}
+	public String getZoomChats() {
+		return "zoom chats";
+	}
+	public String getLocalCheckLogs() {
+		return "local check logs";
+	}
+	
 	
 	@Override
 	public void setSource(String newVal) {
@@ -1878,25 +1888,26 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void downloadSource() {
-		final Path projectSource = Paths.get(project.getSourceProjectFolderName());
-		final Path testSource = Paths.get(GraderSettingsManagerSelector.getGraderSettingsManager().getTestProjectSrc());
-
-		Tracer.info("Copying project source to test directory. (" + projectSource + " --> " + testSource + ")");
+	
+	private static void downloadFolder(Path aSourcePath, Path aDestinationPath) {
+		Tracer.info("Copying project source to test directory. (" + aSourcePath + " --> " + aDestinationPath + ")");
 //		System.out.println("Project source:" + project.getSourceProjectFolderName());
 //		System.out.println("Test project source:" + BasicExecutionSpecificationSelector.getBasicExecutionSpecification().getStringProperty(StaticConfigurationUtils.TEST_PROJECT_SRC, null));
 //		System.out.println(
 //				"Test project source:" + GraderSettingsManagerSelector.getGraderSettingsManager().getTestProjectSrc());
 
 		try {
-			Files.walkFileTree(testSource, new SimpleFileVisitor<Path>() {
+			if (aDestinationPath.toFile().exists()) {
+			Files.walkFileTree(aDestinationPath, new SimpleFileVisitor<Path>() {
 		         @Override
 		         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
 		             throws IOException
 		         {
+		        	 try {
 		             Files.delete(file);
+		        	 } catch (Exception e) {
+		        		 e.printStackTrace();
+		        	 }
 		             return FileVisitResult.CONTINUE;
 		         }
 		         @Override
@@ -1912,13 +1923,15 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		             }
 		         }
 		     });
-			Files.createDirectories(testSource);
-			Files.walkFileTree(projectSource, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
+			}
+			Files.createDirectories(aDestinationPath);
+			if (aDestinationPath.toFile().exists()) {
+			Files.walkFileTree(aSourcePath, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
 					new SimpleFileVisitor<Path>() {
 						@Override
 						public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
 								throws IOException {
-							Path targetdir = testSource.resolve(projectSource.relativize(dir));
+							Path targetdir = aDestinationPath.resolve(aSourcePath.relativize(dir));
 							try {
 								Files.copy(dir, targetdir);
 							} catch (FileAlreadyExistsException e) {
@@ -1930,15 +1943,88 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 
 						@Override
 						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-							Files.copy(file, testSource.resolve(projectSource.relativize(file)));
+							Files.copy(file, aDestinationPath.resolve(aSourcePath.relativize(file)));
 							return FileVisitResult.CONTINUE;
 						}
 					});
+			}
 
 		} catch (IOException e) {
 			Tracer.error("Failed to copy project source to test directory.");
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void downloadSource() {
+		String aProjectSourceFolderName = project.getSourceProjectFolderName();
+		String aTestSourceFolderName = GraderSettingsManagerSelector.getGraderSettingsManager().getTestProjectSrc();
+		final Path projectSource = Paths.get(aProjectSourceFolderName);
+		final Path testSource = Paths.get(aTestSourceFolderName);
+		downloadFolder(projectSource, testSource);
+		String aProjectLogsFolderName = aProjectSourceFolderName.replace("src", "Logs");
+		String aTestLogsFolderName = aTestSourceFolderName.replace("src", "Logs/Imported");
+
+		final Path projectLogs = Paths.get(aProjectLogsFolderName);
+		final Path testLogs = Paths.get(aTestLogsFolderName);
+		downloadFolder(projectLogs, testLogs);
+
+//
+//		Tracer.info("Copying project source to test directory. (" + projectSource + " --> " + testSource + ")");
+////		System.out.println("Project source:" + project.getSourceProjectFolderName());
+////		System.out.println("Test project source:" + BasicExecutionSpecificationSelector.getBasicExecutionSpecification().getStringProperty(StaticConfigurationUtils.TEST_PROJECT_SRC, null));
+////		System.out.println(
+////				"Test project source:" + GraderSettingsManagerSelector.getGraderSettingsManager().getTestProjectSrc());
+//
+//		try {
+//			Files.walkFileTree(testSource, new SimpleFileVisitor<Path>() {
+//		         @Override
+//		         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+//		             throws IOException
+//		         {
+//		             Files.delete(file);
+//		             return FileVisitResult.CONTINUE;
+//		         }
+//		         @Override
+//		         public FileVisitResult postVisitDirectory(Path dir, IOException e)
+//		             throws IOException
+//		         {
+//		             if (e == null) {
+//		                 Files.delete(dir);
+//		                 return FileVisitResult.CONTINUE;
+//		             } else {
+//		                 // directory iteration failed
+//		                 throw e;
+//		             }
+//		         }
+//		     });
+//			Files.createDirectories(testSource);
+//			Files.walkFileTree(projectSource, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
+//					new SimpleFileVisitor<Path>() {
+//						@Override
+//						public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+//								throws IOException {
+//							Path targetdir = testSource.resolve(projectSource.relativize(dir));
+//							try {
+//								Files.copy(dir, targetdir);
+//							} catch (FileAlreadyExistsException e) {
+//								if (!Files.isDirectory(targetdir))
+//									throw e;
+//							}
+//							return FileVisitResult.CONTINUE;
+//						}
+//
+//						@Override
+//						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+//							Files.copy(file, testSource.resolve(projectSource.relativize(file)));
+//							return FileVisitResult.CONTINUE;
+//						}
+//					});
+//
+//		} catch (IOException e) {
+//			Tracer.error("Failed to copy project source to test directory.");
+//			e.printStackTrace();
+//		}
 	}
 	@Override
 	public void uploadSource() {

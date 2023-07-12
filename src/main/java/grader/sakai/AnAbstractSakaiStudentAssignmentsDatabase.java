@@ -52,6 +52,16 @@ public abstract class AnAbstractSakaiStudentAssignmentsDatabase<GenericAssignmen
           createStudentAssignments(studentFolderNames);
     }
     
+    public static boolean caseIndependentContains(Collection<String> aCollection, String aCandidate) {
+    	String aCandidateLC = aCandidate.toLowerCase();
+    	for (String anElement:aCollection) {
+    		if (anElement.toLowerCase().equals(aCandidateLC)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     protected void createStudentAssignments( Set<String> studentFolderNames ) {
     	List<String> aRawOnyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();
     	 Set<String> aRawOnyenSet = new HashSet(aRawOnyens);
@@ -68,7 +78,8 @@ public abstract class AnAbstractSakaiStudentAssignmentsDatabase<GenericAssignmen
                      
                   	continue;
                   }
-                 if (!aRawOnyenSet.contains(anOnyen) ) {
+                 if (!caseIndependentContains(aRawOnyenSet, anOnyen)) {
+//                 if (!aRawOnyenSet.contains(anOnyen) ) {
                 
                  	continue;
                  }
@@ -89,7 +100,14 @@ public abstract class AnAbstractSakaiStudentAssignmentsDatabase<GenericAssignmen
     
     @Override
     public GenericAssignment getStudentAssignmentFromOnyen(String anOnyen) {
-    	return onyenToStudentAssignment.get(anOnyen);
+//    	return onyenToStudentAssignment.get(anOnyen);
+    	GenericAssignment retVal = onyenToStudentAssignment.get(anOnyen);
+    	if (retVal == null) {
+    		retVal = onyenToStudentAssignment.get(anOnyen.toLowerCase());
+    	}
+    	return retVal;
+//    	return onyenToStudentAssignment.get(anOnyen);
+
     }
     @Override
 	public void removeStudentAssignment(String anOnyen) {

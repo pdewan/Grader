@@ -35,7 +35,7 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	MainProjectStepper mainProjectStepper;
 	
 //	@Position(0)
-	@Row(0)
+//	@Row(0)
 	@Visible(true)
 	@Label("Main")
 	@Override
@@ -211,7 +211,7 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	}
 	@Visible(true)
 //	@Position(1)
-	@Row(1)
+	@Row(2)
 	@PreferredWidgetClass(JTextArea.class)
 	@Explanation("The contents of the summary seen by the student.")
 	public String getFeedback() {
@@ -224,7 +224,7 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	@Override
 	@Visible(false)
 //	@Position(4)
-	@Row(4)
+//	@Row(4)
 	@Explanation("Changes to filter settings will be used in subsequent navigation commands.")
 	public NavigationSetter getNavigationSetter() {
 		return mainProjectStepper.getNavigationSetter();
@@ -414,7 +414,7 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	@Override
 	@Visible(false)
 //	@Position(2)
-	@Row(2)
+//	@Row(2)
 	@PreferredWidgetClass(JTextArea.class)
 	@Explanation("Correct result (if provided) diffed with actual result.")
 	public String getResultDiff() {
@@ -424,6 +424,7 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	@Visible(true)
 //	@Position(2)
 	@Row(3)
+//	@Row(2)
 	@PreferredWidgetClass(JTextArea.class)
 	@Explanation("Results of style checker")
 	public String getSourceChecks() {
@@ -432,7 +433,7 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	@Override
 	@Visible(true)
 //	@Position(3)
-	@Row(3)
+	@Row(1)
 	@PreferredWidgetClass(JTextArea.class)
 	@Explanation("Comment on the source code by editing it.")
 	public String getSource() {
@@ -451,14 +452,25 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	@Override
 	@Visible(true)
 //	@Position(5)
-	@Row(5)
+//	@Row(5)
 	@PreferredWidgetClass(JTextArea.class)
 	@Explanation("History of manual interventions for this student.")
 	public String getStudentHistory() {
 		return mainProjectStepper.getStudentHistory();
 	}
-	
-	
+	@Visible(true)
+//	@Row(6)
+	@PreferredWidgetClass(JTextArea.class)
+	public String getPiazzaPosts() {
+		return "piazza posts";
+	}
+//	public String getZoomChats() {
+//		return "zoom chats";
+//	}
+//	public String getLocalCheckLogs() {
+//		return "local check logs";
+//	}
+//	
 	@Override
 	public void internalSetSource(String newValue) {
 		

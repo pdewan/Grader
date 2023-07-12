@@ -1,7 +1,10 @@
 package grader.spreadsheet.csv;
 
+import java.io.File;
+
 import framework.utils.GraderSettings;
 import grader.sakai.ASakaiBulkAssignmentFolder;
+import grader.sakai.ASakaiGradeSpreadsheetExtractor;
 import grader.sakai.project.SakaiProjectDatabase;
 import grader.spreadsheet.FinalGradeRecorder;
 import grader.spreadsheet.FinalGradeRecorderFactory;
@@ -30,7 +33,16 @@ public class AFinalGradeRecorderFactory implements FinalGradeRecorderFactory{
 	public  FinalGradeRecorder getOrCreateFeatureGradeRecorder() {
 		if (recorder == null) {
 			String aPath = GraderSettings.get().get("path");
-			recorder = new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiBulkAssignmentFolder.GRADES_SPREADSHEET_NAME);
+			File aSpreadsheetFile = new File (aPath + "/" + ASakaiGradeSpreadsheetExtractor.GRADES_SPREADSHEET_NAME);
+			if (!aSpreadsheetFile.exists()) {
+				 aSpreadsheetFile = new File (aPath + "/" + ASakaiGradeSpreadsheetExtractor.ANON_GRADES_SPREADSHEET_NAME);
+
+			}
+//			recorder = new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiBulkAssignmentFolder.GRADES_SPREADSHEET_NAME);
+			
+//			recorder = new ASakaiCSVFinalGradeManager(aPath + "/" + ASakaiGradeSpreadsheetExtractor.GRADES_SPREADSHEET_NAME);
+			recorder = new ASakaiCSVFinalGradeManager(aSpreadsheetFile.getAbsoluteFile());
+
 		}
 		return recorder;
 
