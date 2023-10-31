@@ -368,6 +368,15 @@ public class AnExecutionSpecification extends ABasicExecutionSpecification imple
 		
 	}
 	
+	@Override
+	public boolean isIgnoreTimestamp() {
+		return getBooleanProperty(StaticConfigurationUtils.IGNORE_TIMESTAMP, StaticConfigurationUtils.DEFAULT_IGNORE_TIMESTAMP);
+	}
+	@Override
+	public void setIgnoreTimestamp(boolean newVal) {
+		runtimeGraderBooleanProperties.put(StaticConfigurationUtils.IGNORE_TIMESTAMP, newVal);
+	}
+	
 	
 //	 
 //

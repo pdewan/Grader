@@ -25,7 +25,7 @@ public class ASakaiStudentCodingAssignmentsDatabase extends AnAbstractSakaiStude
     public void cleanAllFeedbackAndSubmissionFolders() {
     	for (StudentAssignment studentAssignment:getStudentAssignments()) {
     		studentAssignment.cleanFeedbackFolder();
-    		studentAssignment.cleanSubmissionFolder();
+//    		studentAssignment.cleanSubmissionFolder();
     	}
     	
     }

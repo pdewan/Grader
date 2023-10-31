@@ -161,7 +161,7 @@ public class AnAssignmentShiftManager {
 		 System.out.println("Shifted class" + getRequirement(anOriginal, 3));
 	 }
 	 /*
-	  * public Assignment1Requirements() {
+	  * public Assignment0Requirements() {
     	addDueDate("08/26/2015 23:55:00", 1.05);
     	addDueDate("08/28/2015 23:55:00", 1);
     	addDueDate("09/02/2015 23:55:00", 0.9);

@@ -100,6 +100,8 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 	public static final String DEFAULT_LOGGERS = "csv + feedback";	
 	public static final String REQUIREMENTS = "requirements";
 	public static final String DEFAULT_REQUIREMENTS = "gradingTools.{modulename}.{problemname}.{problemName}Requirements";
+	public static final String IGNORE_TIMESTAMP = "ignoreTimestamp";
+	public static final boolean DEFAULT_IGNORE_TIMESTAMP = false;
 	
 	protected static boolean doPermissions = true;
 

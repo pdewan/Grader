@@ -104,13 +104,18 @@ public class ASakaiStudentAssignment implements StudentAssignment {
 				if (timeStamp != null) {
 					date = SakaiDateUtil.toDate(timeStamp);
 					TimestampFileLoaded.newCase(timeStampFile.getAbsoluteName(), this);
+				} else if (ExecutionSpecificationSelector.getExecutionSpecification().isIgnoreTimestamp()) {
+					date = new Date(System.currentTimeMillis());
+				} else {
+					date = null;
 				}
 			} catch (Exception e) {
 				// Don't stop here
 			}
 			// System.out.println("&&& " + Boolean.toString(timeStamp == null) +
 			// ", " + Boolean.toString(date == null));
-			submitted = timeStamp != null && date != null;
+			submitted = //timeStamp != null &&
+					date != null;
 			findDocuments();
 		} catch (SubmissionFolderNotFound sfnf) {
 			// sfnf.printStackTrace();

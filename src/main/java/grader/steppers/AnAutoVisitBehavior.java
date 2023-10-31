@@ -11,6 +11,7 @@ import grader.auto_notes.NotesGenerator;
 import grader.basics.execution.RunningProject;
 import grader.basics.settings.BasicGradingEnvironment;
 import grader.basics.util.Option;
+import grader.config.ExecutionSpecificationSelector;
 import grader.language.LanguageDependencyManager;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
@@ -570,7 +571,9 @@ public class AnAutoVisitBehavior implements
 //		project.setHasBeenRun(true);
     	Tracer.info(this, "Autograde started");
         projectStepper.setChanged(true);
-        if (isNotRunnable()) {
+        boolean anIsLoadClasses = ExecutionSpecificationSelector.getExecutionSpecification().isLoadClasses();
+        if (isNotRunnable() && 
+        		anIsLoadClasses) {
             notRunnableProjectFeedback();
             for (GradingFeature gradingFeature : projectDatabase
                     .getGradingFeatures()) {
@@ -711,9 +714,10 @@ public class AnAutoVisitBehavior implements
         System.out.println("Calculating credit/penalty for submission with score " + anOriginalScore + "  at:" + timestamp.get());
         double aMultiplier = timestamp.isDefined()
                 ? projectDatabase.getProjectRequirements().checkDueDate(wrappedProject, timestamp.get())
-                : 0;
+//                : 0;
+                		:0.5;// just in case some legit project got here
         MultiplierAutoChange.newCase(projectDatabase, projectStepper, project, projectStepper.getScore(), this);
-        System.out.println("Multiplier:" + timestamp.get());
+        System.out.println("Multiplier:" + aMultiplier + " for time stamp:" + timestamp.get());
 
         projectStepper.internalSetMultiplier(aMultiplier);
 

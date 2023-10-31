@@ -161,9 +161,12 @@ public class ASakaiCSVFinalGradeManager implements SakaiCSVFinalGradeRecorder {
 	}
 	
 	public String[] getRow(List<String[]> aSheet, String anOnyen) {
+		String anOnyenLowerCase = anOnyen.toLowerCase();
 		 for (int rowNum = 0; rowNum < aSheet.size(); rowNum ++) {
 			 String[] aRow = aSheet.get(rowNum);
-			 if (aRow[ONYEN_COLUMN].equals(anOnyen))
+//			 if (aRow[ONYEN_COLUMN].equals(anOnyen))
+			if (aRow[ONYEN_COLUMN].toLowerCase().equals(anOnyenLowerCase))
+
 				 return aRow;
 		 }
 		 return null;

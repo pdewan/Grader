@@ -41,6 +41,8 @@ public interface ExecutionSpecification extends BasicExecutionSpecification {
 	void setPrivacy(boolean newVal);
 	String getLoggers();
 	void setLoggers(String newVal);
+	boolean isIgnoreTimestamp();
+	void setIgnoreTimestamp(boolean newVal);
 
 
 //	public abstract List<String> getProcesses(String aProcessTeam);
