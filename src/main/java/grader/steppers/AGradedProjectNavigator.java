@@ -912,7 +912,13 @@ public class AGradedProjectNavigator /*extends AClearanceManager*/ implements
 		}
 	}
 	public void internalSetCurrentOnyenIndex(int newValue) {
-		if (newValue == currentOnyenIndex) return;
+//		if (newValue == currentOnyenIndex) return;
+		if (newValue == currentOnyenIndex) { // this is alwways true!
+			setSequenceNumber();
+
+			return;
+		}
+
 		if (currentOnyenIndex != - 1) {
 		refreshFilteredSet();// check the current item, probbaly will be removed from filter
 		}

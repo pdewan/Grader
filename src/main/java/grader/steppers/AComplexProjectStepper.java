@@ -464,13 +464,15 @@ public class AComplexProjectStepper implements ComplexProjectStepper{
 	public String getPiazzaPosts() {
 		return "piazza posts";
 	}
-//	public String getZoomChats() {
-//		return "zoom chats";
-//	}
-//	public String getLocalCheckLogs() {
-//		return "local check logs";
-//	}
-//	
+	public String getZoomChats() {
+		return "zoom chats";
+	}
+	@Visible(true)
+	@PreferredWidgetClass(JTextArea.class)
+	public String getLocalCheckLogs() {
+		return "local check logs";
+	}
+	
 	@Override
 	public void internalSetSource(String newValue) {
 		

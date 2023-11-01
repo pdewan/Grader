@@ -790,9 +790,9 @@ public class AnOverviewProjectStepper extends AClearanceManager implements
 		return sourceChecks;
 	}
 	
-	public String getPiazzaPosts() {
-		return "piazza posts";
-	}
+//	public String getPiazzaPosts() {
+//		return "piazza posts";
+//	}
 	public String getZoomChats() {
 		return "zoom chats";
 	}
