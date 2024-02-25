@@ -25,6 +25,7 @@ import grader.basics.project.NotGradableException;
 import grader.basics.project.Project;
 //import grader.junit.test.directreference.ACartesianPointJUnitTester;
 import grader.basics.testcase.JUnitTestCase;
+import grader.basics.testcase.PassFailJUnitTestCase;
 
 public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implements GraderTestCase{
 	public static int DEFAULT_SCORE = 10;	
@@ -320,7 +321,7 @@ public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implement
 	}
 
 	@Override
-	public JUnitTestCase getJUnitTestCase() {
+	public PassFailJUnitTestCase getJUnitTestCase() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -359,6 +360,18 @@ public class AnOriginalJUnitTestToGraderTestCase extends BasicTestCase implement
 	public double getComputedRegularMaxScore() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean isPreTest() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setPreTest(boolean newVal) {
+		// TODO Auto-generated method stub
+		
 	}
 
 //	@Override

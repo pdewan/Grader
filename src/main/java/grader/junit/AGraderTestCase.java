@@ -304,7 +304,7 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 	}
 
 	@Override
-	public JUnitTestCase getJUnitTestCase() {
+	public PassFailJUnitTestCase getJUnitTestCase() {
 		return delegateGradableJUnitTestCase.getJUnitTestCase();
 	}
 
@@ -348,5 +348,15 @@ public class AGraderTestCase extends BasicTestCase implements GraderTestCase{
 	public double getComputedRegularMaxScore() {
 		// TODO Auto-generated method stub
 		return delegateGradableJUnitTestCase.getComputedRegularMaxScore();
+	}
+
+	@Override
+	public boolean isPreTest() {
+		return delegateGradableJUnitTestCase.isPreTest();
+	}
+
+	@Override
+	public void setPreTest(boolean newVal) {
+		delegateGradableJUnitTestCase.setPreTest(newVal);	
 	}
 }
