@@ -822,7 +822,10 @@ public class StaticConfigurationUtils extends BasicStaticConfigurationUtils{
 ////			System.out.println("Basic Command:" + basicCommand);
 //		String[] retVal = BasicStaticConfigurationUtils.getExecutionCommand(basicCommand, aProject, aProcessName, aBuildFolder, anEntryPoint, anEntryTagTarget, anArgs);
 		// EXECUTION_COMMAND canot be set separately now
-		String[] retVal = BasicLanguageDependencyManager.getMainClassFinder().getExecutionCommand(aProject, aBuildFolder, anEntryPoint, anArgs);
+		String anEntry = anEntryPoint == null?anEntryTagTarget:anEntryPoint; // hack, but I think only one will be true
+//		String[] retVal = BasicLanguageDependencyManager.getMainClassFinder().getExecutionCommand(aProject, aBuildFolder, anEntryPoint, anArgs);
+		String[] retVal = BasicLanguageDependencyManager.getMainClassFinder().getExecutionCommand(aProject, aBuildFolder, anEntry, anArgs);
+
 		List<String> aListRetVal = Arrays.asList(retVal);
 		
 		replacePermissionVariables(aListRetVal, aProject);
