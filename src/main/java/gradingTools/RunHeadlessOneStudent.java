@@ -13,7 +13,7 @@ public class RunHeadlessOneStudent {
 			String aProjectFolder, 
 			String aStudent ) {
 		String[] myArgs = {
-				 "--project-requirements",
+				 "--project-requirements",	
 				 "--project-name",
 				 anAssignment,
 				  "--grader-controller",
@@ -26,6 +26,7 @@ public class RunHeadlessOneStudent {
 				  	aStudent,
 				  	"--course-name",
 				  	aCourse,
+					
 				  	"--logger",
 				  	"feedback-txt+feedback-json+local-txt+local-json",
 				  	"--no-framework-gui",

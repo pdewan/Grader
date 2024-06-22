@@ -29,12 +29,14 @@ public class UserPropertyWriter {
     }
 
     public void setUserProperties(String... userProperties) {
+//    	 String problem = null;
+//         String module = null; // it never seems to be set, and is yet retrieved a lot
         for(int i = 0; i < userProperties.length; i ++) {
             String propName = null;
             String propValue = null;
-            
-            String problem = null;
-            String module = null; // it never seems to be set, and is yet retrieved a lot
+           // pd deletion 
+//            String problem = null;
+//            String module = null; // it never seems to be set, and is yet retrieved a lot
 
             userProperties[i] = userProperties[i].trim();
             switch (userProperties[i]) {
@@ -51,12 +53,14 @@ public class UserPropertyWriter {
 //                    propValue = userProperties[++i].trim();
 //                    break;
                 case "--project-name":
-                    problem = userProperties[++i].trim();
-                    if (module != null) {
-                        propName = "" + module + ".problem";
-                        propValue = problem;
-                        problem = null;
-                    }
+                	propName = StaticConfigurationUtils.PROBLEM_NAME;
+                	propValue = userProperties[++i].trim();
+//                    problem = userProperties[++i].trim();
+//                    if (module != null) {
+//                        propName = "" + module + ".problem";
+//                        propValue = problem;
+//                        problem = null;
+//                    }
                     break;
                 case "--grader-controller": // this seems to be the only interesting property here
                     propName = "grader.controller";
@@ -83,10 +87,12 @@ public class UserPropertyWriter {
                 case "--course-name":
                     propName = "currentModule";
                     propValue = userProperties[++i].trim();
-                    if (problem != null) {
-                        propName = "" + module + ".problem";
-                        propValue = problem;
-                    }
+//                    module = propValue; // pd addition
+//                    if (problem != null) {
+////                        propName = "" + module + ".problem"; // pd deletion
+////                        propValue = problem; // pd deletion
+//                    	 properties.put(module + ".problem", new String[]{problem}); // pd addition
+//                    }
             }
 
             if (propName != null) {
