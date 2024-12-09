@@ -1,8 +1,7 @@
 package gradingTools.gradebook;
 
-import static gradingTools.gradebook.GradebookUtils.gradebookToMap;
-import static gradingTools.gradebook.GradebookUtils.toGradebookHeader;
-import static gradingTools.gradebook.GradebookUtils.toGradebookRow;
+import static gradingTools.gradebook.CanvasUtils.gradebookToMap;
+import static gradingTools.gradebook.CanvasUtils.toGradebookRow;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,7 +16,7 @@ import util.misc.Common;
 
 
 
-public class DiaryManagement {
+public class DiaryManagementCanvas {
 	public static final int EMAIL_COLUMN = 0;
 	public static final int FULL_NAME_COLUMN = 1;
 	public static final int DIARY_GRADE_COLUMN = 2;
@@ -80,42 +79,42 @@ public class DiaryManagement {
 //			e.printStackTrace();
 //		}
 //	}	
-	public  void diarySummaryToGradebook(String[] aDates, String aDiaryFileName,
-//			boolean isDiaryPoints,
-			Boolean[] isDiaryPoints,
-			String aSakaiInputFile, String[] aSubstitutions, Integer[] aMaxLimits) {
-		try {
-			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
-			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
-			String aInputLinesWithoutQuotes = aDiaryString.toString()
-					.replaceAll("\"", "");
-			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
-			for (int i = 0; i < aDates.length && i < aMaxLimits.length && i < isDiaryPoints.length; i++) {
-			  String aDate = aDates[i];
-//			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
-//			  boolean isDiaryPoints = isDiaryPointsArr[i];
-//			  String aGradeColumnName = isDiaryPoints[i]?"Diary":"QA";
-			  String aGradeColumnName = isDiaryPoints[i]?CLASS_QA_COLUMN:MY_QA_COLUMN;
-
-//			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
-			  String aFileSuffix = aGradeColumnName;
-
-
-//			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
-			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aFileSuffix+ aDate.replace("/", "_") + ".csv";
-
-//			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString, aSubstitutions);		
-			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints[i], aGradebookInputString, aSubstitutions, aGradeColumnName, aMaxLimits[i]);		
-
-			  Common.writeText(aSakaiFileName, aGradebookString);
-			}
-
-		} catch (Exception e) {
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public  void diarySummaryToGradebook(String[] aDates, String aDiaryFileName,
+////			boolean isDiaryPoints,
+//			Boolean[] isDiaryPoints,
+//			String aSakaiInputFile, String[] aSubstitutions, Integer[] aMaxLimits) {
+//		try {
+//			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
+//			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
+//			String aInputLinesWithoutQuotes = aDiaryString.toString()
+//					.replaceAll("\"", "");
+//			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
+//			for (int i = 0; i < aDates.length && i < aMaxLimits.length && i < isDiaryPoints.length; i++) {
+//			  String aDate = aDates[i];
+////			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
+////			  boolean isDiaryPoints = isDiaryPointsArr[i];
+////			  String aGradeColumnName = isDiaryPoints[i]?"Diary":"QA";
+//			  String aGradeColumnName = isDiaryPoints[i]?CLASS_QA_COLUMN:MY_QA_COLUMN;
+//
+////			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
+//			  String aFileSuffix = aGradeColumnName;
+//
+//
+////			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
+//			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aFileSuffix+ aDate.replace("/", "_") + ".csv";
+//
+////			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString, aSubstitutions);		
+//			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints[i], aGradebookInputString, aSubstitutions, aGradeColumnName, aMaxLimits[i]);		
+//
+//			  Common.writeText(aSakaiFileName, aGradebookString);
+//			}
+//
+//		} catch (Exception e) {
+//			
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	public  void diarySummaryToCanvas(String[] aDates, String aDiaryFileName,
 //			boolean isDiaryPoints,
 			Boolean[] isDiaryPoints,
@@ -152,61 +151,61 @@ public class DiaryManagement {
 			e.printStackTrace();
 		}
 	}
-	public  void diaryToGradebook(String[] aDates, String aDiaryFileName,
+//	public  void diaryToGradebook(String[] aDates, String aDiaryFileName,
+////			boolean isDiaryPoints,
+//			Boolean[] isDiaryPoints,
+//			String aSakaiInputFile, String[] aSubstitutions, Integer[] aMaxLimits) {
+//		try {
+//			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
+//			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
+//			String aInputLinesWithoutQuotes = aDiaryString.toString()
+//					.replaceAll("\"", "");
+//			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
+//			for (int i = 0; i < aDates.length && i < aMaxLimits.length && i < isDiaryPoints.length; i++) {
+//			  String aDate = aDates[i];
+////			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
+////			  boolean isDiaryPoints = isDiaryPointsArr[i];
+////			  String aGradeColumnName = isDiaryPoints[i]?"Diary":"QA";
+//			  String aGradeColumnName = isDiaryPoints[i]?CLASS_QA_COLUMN:MY_QA_COLUMN;
+//
+////			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
+//			  String aFileSuffix = aGradeColumnName;
+//
+//
+////			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
+//			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aFileSuffix+ aDate.replace("/", "_") + ".csv";
+//
+////			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString, aSubstitutions);		
+//			  String aGradebookString = detailedDiaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints[i], aGradebookInputString, aSubstitutions, aGradeColumnName, aMaxLimits[i]);		
+//
+//			  Common.writeText(aSakaiFileName, aGradebookString);
+//			}
+//
+//		} catch (Exception e) {
+//			
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	public  void diaryToGradebook(String aDate, String aDiaryFileName,
 //			boolean isDiaryPoints,
-			Boolean[] isDiaryPoints,
-			String aSakaiInputFile, String[] aSubstitutions, Integer[] aMaxLimits) {
-		try {
-			String[] aDiaryFileComponents = aDiaryFileName.split("\\.");
-			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
-			String aInputLinesWithoutQuotes = aDiaryString.toString()
-					.replaceAll("\"", "");
-			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
-			for (int i = 0; i < aDates.length && i < aMaxLimits.length && i < isDiaryPoints.length; i++) {
-			  String aDate = aDates[i];
-//			  boolean isDiaryPoints = aDate.isEmpty()?false:true;
-//			  boolean isDiaryPoints = isDiaryPointsArr[i];
-//			  String aGradeColumnName = isDiaryPoints[i]?"Diary":"QA";
-			  String aGradeColumnName = isDiaryPoints[i]?CLASS_QA_COLUMN:MY_QA_COLUMN;
-
-//			  String aDiaryOrQA = isDiaryPoints?"_diary_":"_QA_";
-			  String aFileSuffix = aGradeColumnName;
-
-
-//			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aDiaryOrQA+ aDate.replace("/", "_") + ".csv";
-			  String aSakaiFileName = aDiaryFileComponents[0] + "_gradebook_" + aFileSuffix+ aDate.replace("/", "_") + ".csv";
-
-//			  String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString, aSubstitutions);		
-			  String aGradebookString = detailedDiaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints[i], aGradebookInputString, aSubstitutions, aGradeColumnName, aMaxLimits[i]);		
-
-			  Common.writeText(aSakaiFileName, aGradebookString);
-			}
-
-		} catch (Exception e) {
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public  void diaryToGradebook(String aDate, String aDiaryFileName,
-			boolean isDiaryPoints,
-			String aSakaiInputFile, String[] aSubstitutions, String aSakaiFileName, String aGradeColumn, int aMaxLimit) {
-		// File aSakaiFile = new File(aSakaiFileName);
-		try {
-
-			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
-			String aInputLinesWithoutQuotes = aDiaryString.toString()
-					.replaceAll("\"", "");
-			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
-			String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString,
-					aSubstitutions, aGradeColumn, aMaxLimit);
-		 
-			Common.writeText(aSakaiFileName, aGradebookString);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}	
+//			String aSakaiInputFile, String[] aSubstitutions, String aSakaiFileName, String aGradeColumn, int aMaxLimit) {
+//		// File aSakaiFile = new File(aSakaiFileName);
+//		try {
+//
+//			StringBuffer aDiaryString = Common.toText(aDiaryFileName);
+//			String aInputLinesWithoutQuotes = aDiaryString.toString()
+//					.replaceAll("\"", "");
+//			StringBuffer aGradebookInputString = Common.toText(aSakaiInputFile);
+//			String aGradebookString = diaryToGradebook(aDate, aInputLinesWithoutQuotes, isDiaryPoints, aGradebookInputString,
+//					aSubstitutions, aGradeColumn, aMaxLimit);
+//		 
+//			Common.writeText(aSakaiFileName, aGradebookString);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}	
 
 	static DateTime now = DateTime.now();
 	public static long GRADING_DAY_PERIOD_MS = 7*FrameworkProjectRequirements.MILLI_SECONDS_IN_DAY;
@@ -281,90 +280,88 @@ public class DiaryManagement {
 //		String[] aGradeBookLines = aGradebookTemplate.toString().split("\n");
 
 		Map<String, DiaryEntry> anOnyenToDiaryEntry = diaryToMap(anExpectedDate, aDiaryString, aGradebookTemplate, aSubstitutions);
-		StringBuilder aGradebookString = new StringBuilder();
-		aGradebookString.append(toGradebookHeader(aGradeColumnName));
-		for (String anOnyen:anOnyenToDiaryEntry.keySet()) {
+		String[] aGradebookLines = aGradebookTemplate.toString().split("\n");
+		StringBuffer anOutputBuffer = new StringBuffer(aGradebookTemplate.capacity());
+		StringBuffer aLineBuffer = new StringBuffer();
+		for (int anIndex = 0; anIndex < CanvasUtils.START_ROW; anIndex++) {
+			anOutputBuffer.append(aGradebookLines[anIndex]);
+			anOutputBuffer.append("\r\n");
+		}
+		for (int anIndex = CanvasUtils.START_ROW; anIndex < aGradebookLines.length; anIndex++) {
+			String aLine = aGradebookLines[anIndex];
+			aLineBuffer.setLength(0);
+			aLineBuffer.append(aLine);
+			GradebookEntry aGradeBookEntry = CanvasUtils.toGradebookEntry(aLine);
+			String anOnyen = aGradeBookEntry.getStudentID();
 			DiaryEntry aDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
-			int anIntGrade = isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints();
+			int anIntGrade = 0;
+			if (aDiaryEntry == null) {
+				System.out.println("Null diary entry for:" + anOnyen);
+				
+			} else {
+		    anIntGrade = isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints();
+			}
 			if (aMaxLimit != null && aMaxLimit >= 0) {
 				anIntGrade = Math.min(anIntGrade, aMaxLimit);
 			}
-//			String aGrade = Integer.toString(
-//					isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints());
 			String aGrade = Integer.toString(
 					anIntGrade);
-			String aGradebookRow = toGradebookRow(aDiaryEntry.getGradebookEntry(), aGrade);
-			aGradebookString.append(aGradebookRow);
+			toGradebookRow(aLineBuffer, aGrade);
+			anOutputBuffer.append(aLineBuffer);
+			anOutputBuffer.append("\r\n");
 		}
-//		String aGradebookRow = toGradebookRow(aGradebookEntry, aDiaryGrade);
-//		aGradebookString.append(aGradebookRow);
+		return anOutputBuffer.toString();
 		
-		return aGradebookString.toString();
+		
 		
 	}
 	
-	public  String diaryToCanvas(String anExpectedDate, String aDiaryString, boolean isDiaryPoints,
-			StringBuffer aGradebookTemplate,
-			String[] aSubstitutions,
-			String aGradeColumnName, 
-			Integer aMaxLimit) {
-		Map<String, DiaryEntry> anOnyenToDiaryEntry = diaryToMap(anExpectedDate, aDiaryString, aGradebookTemplate, aSubstitutions);
-		StringBuilder aGradebookString = new StringBuilder();
-		String[] aGradeBookLines = aGradebookTemplate.toString().split("\n");
-		
+	
+//	public  String detailedDiaryToGradebook(String anExpectedDate, String aDiaryString, boolean isDiaryPoints,
+//			StringBuffer aGradebookTemplate,
+//			String[] aSubstitutions,
+//			String aGradeColumnName, 
+//			Integer aMaxLimit) {
+//		Map<String, DiaryEntry> anOnyenToDiaryEntry = detailedDiaryToMap(anExpectedDate, aDiaryString, aGradebookTemplate, aSubstitutions);
+//		StringBuilder aGradebookString = new StringBuilder();
 //		aGradebookString.append(toGradebookHeader(aGradeColumnName));
-		for (String anOnyen:anOnyenToDiaryEntry.keySet()) {
-			DiaryEntry aDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
-			int anIntGrade = isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints();
-			if (aMaxLimit != null && aMaxLimit >= 0) {
-				anIntGrade = Math.min(anIntGrade, aMaxLimit);
-			}
+//		for (String anOnyen:anOnyenToDiaryEntry.keySet()) {
+//			DiaryEntry aDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
+//			int anIntGrade = isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints();
+//			if (aMaxLimit != null && aMaxLimit >= 0) {
+//				anIntGrade = Math.min(anIntGrade, aMaxLimit);
+//			}
+////			String aGrade = Integer.toString(
+////					isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints());
 //			String aGrade = Integer.toString(
-//					isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints());
-			String aGrade = Integer.toString(
-					anIntGrade);
-			String aGradebookRow = toGradebookRow(aDiaryEntry.getGradebookEntry(), aGrade);
-			aGradebookString.append(aGradebookRow);
-		}
-//		String aGradebookRow = toGradebookRow(aGradebookEntry, aDiaryGrade);
-//		aGradebookString.append(aGradebookRow);
-		
-		return aGradebookString.toString();
-		
-	}
-	public  String detailedDiaryToGradebook(String anExpectedDate, String aDiaryString, boolean isDiaryPoints,
-			StringBuffer aGradebookTemplate,
-			String[] aSubstitutions,
-			String aGradeColumnName, 
-			Integer aMaxLimit) {
-		Map<String, DiaryEntry> anOnyenToDiaryEntry = detailedDiaryToMap(anExpectedDate, aDiaryString, aGradebookTemplate, aSubstitutions);
-		StringBuilder aGradebookString = new StringBuilder();
-		aGradebookString.append(toGradebookHeader(aGradeColumnName));
-		for (String anOnyen:anOnyenToDiaryEntry.keySet()) {
-			DiaryEntry aDiaryEntry = anOnyenToDiaryEntry.get(anOnyen);
-			int anIntGrade = isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints();
-			if (aMaxLimit != null && aMaxLimit >= 0) {
-				anIntGrade = Math.min(anIntGrade, aMaxLimit);
-			}
-//			String aGrade = Integer.toString(
-//					isDiaryPoints?aDiaryEntry.getDiaryPoints():aDiaryEntry.getQuestionPoints());
-			String aGrade = Integer.toString(
-					anIntGrade);
-			String aGradebookRow = toGradebookRow(aDiaryEntry.getGradebookEntry(), aGrade);
-			aGradebookString.append(aGradebookRow);
-		}
-//		String aGradebookRow = toGradebookRow(aGradebookEntry, aDiaryGrade);
-//		aGradebookString.append(aGradebookRow);
-		
-		return aGradebookString.toString();
-		
-	}
+//					anIntGrade);
+//			String aGradebookRow = toGradebookRow(aDiaryEntry.getGradebookEntry(), aGrade);
+//			aGradebookString.append(aGradebookRow);
+//		}
+////		String aGradebookRow = toGradebookRow(aGradebookEntry, aDiaryGrade);
+////		aGradebookString.append(aGradebookRow);
+//		
+//		return aGradebookString.toString();
+//		
+//	}
 	static StringBuffer toText (String[] aStrings) {
 		StringBuffer retVal = new StringBuffer();
 		for (String aString:aStrings) {
 			retVal.append(aString);
 		}
 		return retVal;
+	}
+	protected static boolean matches (String aDiaryFirstName, String aDiaryLastName, String aGradebookFirstName, String aGradebookLastName) {
+		boolean aMatch = 
+				aGradebookLastName.equals(aDiaryLastName) &&
+				aGradebookFirstName.startsWith(aDiaryFirstName);
+		if (!aMatch && aDiaryFirstName.equals(aDiaryLastName)) {
+			
+			return aGradebookLastName.equals(aDiaryFirstName) ||
+					aGradebookFirstName.equals(aDiaryFirstName);
+		}
+		return aMatch;
+				
 	}
 	public  Map<String, DiaryEntry> diaryToMap(String anExpectedDate, String aInputLinesWithoutQuotes,
 			StringBuffer aGradebookTemplate,
@@ -386,7 +383,7 @@ public class DiaryManagement {
 		Map<String, GradebookEntry> anOnyenToGradebook = gradebookToMap(aGradebookTemplate);
 		Map<String, DiaryEntry> anOnyenToDiaryEntry = new HashMap<>();
 		DiaryEntry aLastDiaryEntry = null;
-		for (int aRowNum = 0; aRowNum < anInputLines.length; aRowNum++) {
+		for (int aRowNum = CanvasUtils.START_ROW; aRowNum < anInputLines.length; aRowNum++) {
 			
 			String[] aRow = anInputLines[aRowNum].split(",");
 			String anEmail = aRow[ emailColumn()];
@@ -426,20 +423,32 @@ public class DiaryManagement {
 						
 			GradebookEntry aGradebookEntry = anOnyenToGradebook.get(anOnyen);
 			if (aGradebookEntry == null) {
+//				System.out.println("Guessing onyen for:" + anOnyen);
 				String[] aNameComponents = aRow[fullNameColumn()].trim().split(" ");
 				String aFirstName = aNameComponents[0].trim();
 				String aLastName = aNameComponents[aNameComponents.length - 1].trim();
 				for (String aGradebookOnyen: anOnyenToGradebook.keySet() ) {
+					
 					GradebookEntry aTestEntry = anOnyenToGradebook.get(aGradebookOnyen);
 //					String aGradebookFullName = aGradebookEntry.getFirstName() + " " + aGradebookEntry.getLastName();
-					if (aTestEntry.getFirstName().equals(aFirstName) && aTestEntry.getLastName().equals(aLastName)) {
+					if (
+							matches(aFirstName, aLastName, aTestEntry.getFirstName(), aTestEntry.getLastName()) 
+//							aTestEntry.getLastName().equals(aLastName) &&
+//							aTestEntry.getFirstName().startsWith(aFirstName)
+
+//							aTestEntry.getFirstName().equals(aFirstName)
+							)
+							{
+						System.out.println("Predicted onyen for:" + anOnyen + " is " + aGradebookOnyen + "\n");
+
 						anOnyen = aGradebookOnyen;
+
 						aGradebookEntry = aTestEntry;
 						break;
 					}
 				}
 				if (aGradebookEntry == null) {
-					System.out.println("did not find in Gradebook:" + anOnyen);
+					System.out.println("did not find in Gradebook:" + anOnyen + ":" + aFirstName + "," + aLastName);
 					continue;
 				}
 			}
