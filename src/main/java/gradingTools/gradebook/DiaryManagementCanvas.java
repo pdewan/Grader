@@ -383,7 +383,7 @@ public class DiaryManagementCanvas {
 		Map<String, GradebookEntry> anOnyenToGradebook = gradebookToMap(aGradebookTemplate);
 		Map<String, DiaryEntry> anOnyenToDiaryEntry = new HashMap<>();
 		DiaryEntry aLastDiaryEntry = null;
-		for (int aRowNum = CanvasUtils.START_ROW; aRowNum < anInputLines.length; aRowNum++) {
+		for (int aRowNum = 1; aRowNum < anInputLines.length; aRowNum++) {
 			
 			String[] aRow = anInputLines[aRowNum].split(",");
 			String anEmail = aRow[ emailColumn()];
